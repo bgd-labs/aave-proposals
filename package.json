@@ -1,0 +1,22 @@
+{
+  "name": "bgd-forge-template",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgd-labs/bgd-forge-template.git"
+  },
+  "keywords": [],
+  "author": "BGD labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bgd-labs/bgd-forge-template/issues"
+  },
+  "homepage": "https://github.com/bgd-labs/bgd-forge-template#readme",
+  "devDependencies": {
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
+  }
+}

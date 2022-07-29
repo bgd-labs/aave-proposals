@@ -1,0 +1,7 @@
+[default]
+src = 'src'
+test = 'test'
+out = 'out'
+libs = ['lib']
+
+# See more config options https://github.com/gakonst/foundry/tree/master/config
