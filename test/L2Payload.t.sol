@@ -87,12 +87,6 @@ contract L2PayloadTest is Test {
     vm.warp(
       block.timestamp + IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getDelay() + 1
     );
-    IBridgeExecutor.ActionsSet memory set = IBridgeExecutor(
-      AaveV3Polygon.ACL_ADMIN
-    ).getActionsSetById(
-        IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getActionsSetCount() - 1
-      );
-    assertTrue(set.withDelegatecalls[0]);
     // execute the proposal
     IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).execute(
       IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getActionsSetCount() - 1

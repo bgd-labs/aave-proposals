@@ -66,40 +66,40 @@ contract L2Payload is IProposalGenericExecutor {
     // 2. Listing of MIMATIC, with all its configurations
     // ------------------------------------------------
 
-    // ConfiguratorInputTypes.InitReserveInput[]
-    //   memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](
-    //     1
-    //   );
-    // initReserveInputs[0] = ConfiguratorInputTypes.InitReserveInput({
-    //   aTokenImpl: ATOKEN_IMPL,
-    //   stableDebtTokenImpl: SDTOKEN_IMPL,
-    //   variableDebtTokenImpl: VDTOKEN_IMPL,
-    //   underlyingAssetDecimals: IERC20(UNDERLYING).decimals(),
-    //   interestRateStrategyAddress: RATE_STRATEGY,
-    //   underlyingAsset: UNDERLYING,
-    //   treasury: AaveV3Polygon.COLLECTOR,
-    //   incentivesController: INCENTIVES_CONTROLLER,
-    //   aTokenName: ATOKEN_NAME,
-    //   aTokenSymbol: ATOKEN_SYMBOL,
-    //   variableDebtTokenName: VDTOKEN_NAME,
-    //   variableDebtTokenSymbol: VDTOKEN_SYMBOL,
-    //   stableDebtTokenName: SDTOKEN_NAME,
-    //   stableDebtTokenSymbol: SDTOKEN_SYMBOL,
-    //   params: bytes('')
-    // });
+    ConfiguratorInputTypes.InitReserveInput[]
+      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](
+        1
+      );
+    initReserveInputs[0] = ConfiguratorInputTypes.InitReserveInput({
+      aTokenImpl: ATOKEN_IMPL,
+      stableDebtTokenImpl: SDTOKEN_IMPL,
+      variableDebtTokenImpl: VDTOKEN_IMPL,
+      underlyingAssetDecimals: IERC20(UNDERLYING).decimals(),
+      interestRateStrategyAddress: RATE_STRATEGY,
+      underlyingAsset: UNDERLYING,
+      treasury: AaveV3Polygon.COLLECTOR,
+      incentivesController: INCENTIVES_CONTROLLER,
+      aTokenName: ATOKEN_NAME,
+      aTokenSymbol: ATOKEN_SYMBOL,
+      variableDebtTokenName: VDTOKEN_NAME,
+      variableDebtTokenSymbol: VDTOKEN_SYMBOL,
+      stableDebtTokenName: SDTOKEN_NAME,
+      stableDebtTokenSymbol: SDTOKEN_SYMBOL,
+      params: bytes('')
+    });
 
-    // IPoolConfigurator configurator = AaveV3Polygon.POOL_CONFIGURATOR;
+    IPoolConfigurator configurator = AaveV3Polygon.POOL_CONFIGURATOR;
 
-    // configurator.initReserves(initReserveInputs);
+    configurator.initReserves(initReserveInputs);
 
-    // configurator.setSupplyCap(UNDERLYING, SUPPLY_CAP);
+    configurator.setSupplyCap(UNDERLYING, SUPPLY_CAP);
 
-    // configurator.setReserveBorrowing(UNDERLYING, true);
+    configurator.setReserveBorrowing(UNDERLYING, true);
 
-    // configurator.setReserveFactor(UNDERLYING, RESERVE_FACTOR);
+    configurator.setReserveFactor(UNDERLYING, RESERVE_FACTOR);
 
-    // configurator.setAssetEModeCategory(UNDERLYING, EMODE_CATEGORY);
+    configurator.setAssetEModeCategory(UNDERLYING, EMODE_CATEGORY);
 
-    // configurator.setLiquidationProtocolFee(UNDERLYING, LIQ_PROTOCOL_FEE);
+    configurator.setLiquidationProtocolFee(UNDERLYING, LIQ_PROTOCOL_FEE);
   }
 }
