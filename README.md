@@ -1,11 +1,11 @@
-# BGD forge template
+# BGD v3 bridge listing example
 
-Basic template with prettier and rest configuration
+This template contains a code example for executing code on l2 via bridge executor.
 
-To create a new project using this template run
-```shell
-$ forge init --template bgd-labs/bgd-forge-template my_new_project
-```
+The flow here is:
+- create payload on l2
+- create a proposal on l1 which will call `sendMessageToChild(address,bytes)` where `address` is the ACL_ADMIN on the receiving chain and `bytes` the payload to be executed emitting `(uint256 id, address contractAddress, bytes data)`
+- on l2 `onStateReceive(uint256,bytes)` will arrive where `uint256` is the `id` emitted and `bytes` is `(address rootMessageSender, address receiver, bytes memory data)`
 
 ## Recommended modules
 

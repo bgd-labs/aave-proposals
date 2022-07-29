@@ -11,7 +11,6 @@ contract Deploy is Script {
   address public constant FX_CHILD_ADDRESS = 0x8397259c983751DAf40400790063935a11afa28a;
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
-  address public constant BRIDGE_ADMIN = 0x0000000000000000000000000000000000001001;
 
   function _createL2PayloadExecutor(address l2payload) internal pure returns(bytes memory) {
     address[] memory targets = new address[](1);
@@ -59,8 +58,8 @@ contract Deploy is Script {
     );
   }
 
-  function run() external {
-    vm.startBroadcast();
-    vm.stopBroadcast();
-  }
+  // function run() external {
+  //   vm.startBroadcast();
+  //   vm.stopBroadcast();
+  // }
 }
