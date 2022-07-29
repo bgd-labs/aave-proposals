@@ -30,10 +30,14 @@ contract L2PayloadTest is Test {
   }
 
   struct EventData {
+    bytes32 what;
     uint256 topic1;
-    uint256 topic2;
     address receiver;
     bytes rest;
+  }
+
+  function _cutBytes(bytes calldata input) public returns (bytes calldata) {
+    return input[64:];
   }
 
   function testL2ExecuteBridger() public {
@@ -74,12 +78,10 @@ contract L2PayloadTest is Test {
     // mock bridge execution
     emit log_bytes(entries[2].data);
 
-    EventData memory log = abi.decode(entries[2].data, (EventData));
-    emit log_address(log.receiver);
-    emit log_bytes(log.rest);
+    emit log_bytes(this._cutBytes(entries[2].data));
     IStateReceiver(deploy.FX_CHILD_ADDRESS()).onStateReceive(
       uint256(entries[2].topics[1]),
-      abi.encode(address(GovHelpers.SHORT_EXECUTOR), log.receiver, log.rest)
+      this._cutBytes(entries[2].data)
     );
   }
 }
