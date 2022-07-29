@@ -7,9 +7,9 @@ import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
-
+import {GenericL2Executor} from '../src/contracts/GenericL2Executor.sol';
 import {L2Payload} from '../src/contracts/L2Payload.sol';
-import {IStateReceiver} from '../src/interfaces/FxChild.sol';
+import {IStateReceiver} from '../src/interfaces/IFx.sol';
 import {Deploy} from '../script/Deploy.s.sol';
 
 contract L2PayloadTest is Test {
@@ -18,7 +18,10 @@ contract L2PayloadTest is Test {
   uint256 l2Fork;
   L2Payload public l2payload;
   Deploy deploy;
-  address public constant BRIDGE_ADMIN = 0x0000000000000000000000000000000000001001;
+  address public constant BRIDGE_ADMIN =
+    0x0000000000000000000000000000000000001001;
+  address public constant FX_ROOT_ADDRESS =
+    0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
 
   function setUp() public {
     l2Fork = vm.createSelectFork('https://polygon-rpc.com', 31237525);
@@ -26,39 +29,57 @@ contract L2PayloadTest is Test {
     deploy = new Deploy();
   }
 
-  function testProposal() public {
+  struct EventData {
+    uint256 topic1;
+    uint256 topic2;
+    address receiver;
+    bytes rest;
+  }
+
+  function testL2ExecuteBridger() public {
     // deploy l2 payload
     vm.selectFork(l2Fork);
     l2payload = new L2Payload();
 
-    // depoly l1 proposal
+    // deploy generic executor
     vm.selectFork(mainnetFork);
-    // TODO: there's seems to be an issue with foundry when I do a `vm.startPrank(AAVE_WHALE);` here
-    // instead of in scripts it will fail
-    uint256 proposalId = deploy.createL1Proposal(address(l2payload));
-    vm.stopPrank();
+    GenericL2Executor bridger = new GenericL2Executor(
+      FX_ROOT_ADDRESS,
+      AaveV3Polygon.ACL_ADMIN
+    );
 
-    // execute & bridge the payload
+    uint256 proposalId = deploy.createProposal(
+      address(bridger),
+      address(l2payload)
+    );
+
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
 
-    // the execution will yield multiple events, we search the StateSynced one for mocking the bridging
     Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(keccak256('StateSynced(uint256,address,bytes)'), entries[2].topics[0]);
+    assertEq(
+      keccak256('StateSynced(uint256,address,bytes)'),
+      entries[2].topics[0]
+    );
     console.log(uint256(entries[2].topics[1]));
     console.log(address(uint160(uint256(entries[2].topics[2]))));
-    assertEq(address(uint160(uint256(entries[2].topics[2]))), deploy.FX_CHILD_ADDRESS());
+    assertEq(
+      address(uint160(uint256(entries[2].topics[2]))),
+      deploy.FX_CHILD_ADDRESS()
+    );
 
     vm.selectFork(l2Fork);
     vm.stopPrank();
     vm.startPrank(BRIDGE_ADMIN);
     // mock bridge execution
+    emit log_bytes(entries[2].data);
+
+    EventData memory log = abi.decode(entries[2].data, (EventData));
+    emit log_address(log.receiver);
+    emit log_bytes(log.rest);
     IStateReceiver(deploy.FX_CHILD_ADDRESS()).onStateReceive(
       uint256(entries[2].topics[1]),
-      abi.encode(
-        address(GovHelpers.SHORT_EXECUTOR),
-        entries[2].data
-      )
+      abi.encode(address(GovHelpers.SHORT_EXECUTOR), log.receiver, log.rest)
     );
   }
 }

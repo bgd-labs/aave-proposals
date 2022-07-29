@@ -12,39 +12,16 @@ contract Deploy is Script {
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
-  function _createL2PayloadExecutor(address l2payload) internal pure returns(bytes memory) {
-    address[] memory targets = new address[](1);
-    targets[0] = l2payload; // the payload address on the sidechain
-    uint256[] memory values = new uint256[](1);
-    values[0] = 0;
-    string[] memory signatures = new string[](1);
-    signatures[0] = 'execute()';
-    bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = '';
-    bool[] memory withDelegatecalls = new bool[](1);
-    withDelegatecalls[0] = true;
-
-    bytes memory actions = abi.encode(
-      targets,
-      values,
-      signatures,
-      calldatas,
-      withDelegatecalls
-    );
-    return abi.encode(AaveV3Polygon.ACL_ADMIN, actions);
-  }
-
-  function createL1Proposal(address l2payload) public returns(uint256) {
+  function createProposal(address bridger, address l2payload) public returns(uint256) {
     vm.startPrank(AAVE_WHALE);
-    bytes memory callData = _createL2PayloadExecutor(l2payload);
     address[] memory targets = new address[](1);
-    targets[0] = FX_ROOT_ADDRESS; // the payload address on the sidechain
+    targets[0] = bridger; // the payload address on the sidechain
     uint256[] memory values = new uint256[](1);
     values[0] = 0;
     string[] memory signatures = new string[](1);
-    signatures[0] = 'sendMessageToChild(address,bytes)';
+    signatures[0] = 'execute(address)';
     bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = callData;
+    calldatas[0] = abi.encode(l2payload);
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = false;
     return AaveGovernanceV2.GOV.create(

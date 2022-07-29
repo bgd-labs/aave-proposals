@@ -14,3 +14,11 @@ interface IStateReceiver {
 interface IFxMessageProcessor {
     function processMessageFromRoot(uint256 stateId, address rootMessageSender, bytes calldata data) external;
 }
+
+interface IStateSender {
+    function syncState(address receiver, bytes calldata data) external;
+}
+
+interface IFxStateSender {
+    function sendMessageToChild(address _receiver, bytes calldata _data) external;
+}
