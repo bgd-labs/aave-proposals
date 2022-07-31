@@ -55,6 +55,9 @@ contract L2Payload is IProposalGenericExecutor {
   uint8 public constant EMODE_CATEGORY = 1; // Stablecoins
 
   function execute() external override {
+    // Needed in the first proposal only to make the bridge executor a pool admin
+    AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
+
     address[] memory assets = new address[](1);
     assets[0] = UNDERLYING;
     address[] memory sources = new address[](1);
