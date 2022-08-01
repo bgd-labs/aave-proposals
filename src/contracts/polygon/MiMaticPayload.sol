@@ -4,21 +4,24 @@ pragma solidity ^0.8.15;
 import 'forge-std/console.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
-import {IERC20} from '../interfaces/IERC20.sol';
+import {IERC20} from '../../interfaces/IERC20.sol';
 
 interface IProposalGenericExecutor {
   function execute() external;
 }
 
 /**
- * @dev This steward lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
+ * @dev This payload lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
  * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0x751b8fd1c77677643e419d327bdf749c29ccf0a0269e58ed2af0013843376051
  * The proposal is, as agreed with the proposer, more conservative than the approved parameters:
  * - Not enabled as collateral initially and thus not be isolated / have a debt ceiling.
  * - The eMode lq treshold will be 97.5, instead of the suggested 98% as the parameters are per emode not per asset
  * - Adding a 10M supply cap.
  */
-contract L2Payload is IProposalGenericExecutor {
+contract MiMaticPayload is IProposalGenericExecutor {
+  // **************************
+  // Protocol's contracts
+  // **************************
   address public constant INCENTIVES_CONTROLLER =
     0x929EC64c34a17401F460460D4B9390518E5B473e;
 
@@ -55,9 +58,13 @@ contract L2Payload is IProposalGenericExecutor {
   uint8 public constant EMODE_CATEGORY = 1; // Stablecoins
 
   function execute() external override {
-    // Needed in the first proposal only to make the bridge executor a pool admin
+    // -------------
+    // 0. Claim pool
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 
+    // ----------------------------
+    // 1. New price feed on oracle
+    // ----------------------------
     address[] memory assets = new address[](1);
     assets[0] = UNDERLYING;
     address[] memory sources = new address[](1);

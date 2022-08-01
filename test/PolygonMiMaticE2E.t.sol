@@ -7,57 +7,50 @@ import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
-import {GenericL2Executor} from '../src/contracts/GenericL2Executor.sol';
-import {L2Payload} from '../src/contracts/L2Payload.sol';
+import {GenericPolygonExecutor} from '../src/contracts/polygon/GenericPolygonExecutor.sol';
+import {MiMaticPayload} from '../src/contracts/polygon/MiMaticPayload.sol';
 import {IStateReceiver} from '../src/interfaces/IFx.sol';
 import {IBridgeExecutor} from '../src/interfaces/IBridgeExecutor.sol';
-import {Deploy} from '../script/Deploy.s.sol';
+import {DeployL1Proposal} from '../script/DeployL1Proposal.s.sol';
 
-contract L2PayloadTest is Test {
+contract PolygonMiMaticE2ETest is Test {
   // the identifiers of the forks
   uint256 mainnetFork;
-  uint256 l2Fork;
-  L2Payload public l2payload;
-  Deploy deploy;
+  uint256 polygonFork;
+
+  MiMaticPayload public miMaticPayload;
+  DeployL1Proposal deployl1Proposal;
   address public constant BRIDGE_ADMIN =
     0x0000000000000000000000000000000000001001;
-  address public constant FX_ROOT_ADDRESS =
-    0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
+  address public constant FX_CHILD_ADDRESS =
+    0x8397259c983751DAf40400790063935a11afa28a;
 
   function setUp() public {
-    l2Fork = vm.createSelectFork('https://polygon-rpc.com', 31237525);
+    polygonFork = vm.createSelectFork('https://polygon-rpc.com', 31237525);
     mainnetFork = vm.createSelectFork('https://rpc.flashbots.net/', 15231241);
-    deploy = new Deploy();
+    deployl1Proposal = new DeployL1Proposal();
   }
 
-  struct EventData {
-    bytes32 what;
-    uint256 topic1;
-    address receiver;
-    bytes rest;
-  }
-
+  // utility to transform memory to calldata so array range access is available
   function _cutBytes(bytes calldata input) public returns (bytes calldata) {
     return input[64:];
   }
 
   function testL2ExecuteBridger() public {
-    // deploy l2 payload
-    vm.selectFork(l2Fork);
-    l2payload = new L2Payload();
-
-    // deploy generic executor
+    // 0. deploy generic executor
     vm.selectFork(mainnetFork);
-    GenericL2Executor bridger = new GenericL2Executor(
-      FX_ROOT_ADDRESS,
-      AaveV3Polygon.ACL_ADMIN
+    GenericPolygonExecutor bridgeExecutor = new GenericPolygonExecutor(); // TODO: should be replaced with address once deployed
+
+    // 1. deploy l2 payload
+    vm.selectFork(polygonFork);
+    miMaticPayload = new MiMaticPayload();
+
+    uint256 proposalId = deployl1Proposal.createProposal(
+      address(bridgeExecutor),
+      address(miMaticPayload)
     );
 
-    uint256 proposalId = deploy.createProposal(
-      address(bridger),
-      address(l2payload)
-    );
-
+    // 2. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
 
@@ -66,24 +59,19 @@ contract L2PayloadTest is Test {
       keccak256('StateSynced(uint256,address,bytes)'),
       entries[2].topics[0]
     );
-    address fxChild = address(uint160(uint256(entries[2].topics[2])));
-    console.log(uint256(entries[2].topics[1]));
-    console.log(address(uint160(uint256(entries[2].topics[2]))));
-    assertEq(
-      address(uint160(uint256(entries[2].topics[2]))),
-      deploy.FX_CHILD_ADDRESS()
-    );
+    assertEq(address(uint160(uint256(entries[2].topics[2]))), FX_CHILD_ADDRESS);
 
-    vm.selectFork(l2Fork);
+    vm.selectFork(polygonFork);
     vm.stopPrank();
     vm.startPrank(BRIDGE_ADMIN);
 
-    // bridge payload which will queue the proposal
-    IStateReceiver(fxChild).onStateReceive(
+    // 3. mock the receive on l2 with the data emitted on StateSynced
+    IStateReceiver(FX_CHILD_ADDRESS).onStateReceive(
       uint256(entries[2].topics[1]),
       this._cutBytes(entries[2].data)
     );
 
+    // 4. execute proposal on l2
     vm.warp(
       block.timestamp + IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getDelay() + 1
     );
