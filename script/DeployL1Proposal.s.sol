@@ -7,9 +7,11 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 contract DeployL1Proposal is Script {
+  // TODO: remove
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
+  // TODO: remove bridger param
   function createProposal(address bridger, address l2payload)
     public
     returns (uint256)

@@ -42,7 +42,11 @@ contract PolygonMiMaticE2ETest is Test {
   }
 
   // utility to transform memory to calldata so array range access is available
-  function _cutBytes(bytes calldata input) public returns (bytes calldata) {
+  function _cutBytes(bytes calldata input)
+    public
+    pure
+    returns (bytes calldata)
+  {
     return input[64:];
   }
 
