@@ -6,11 +6,11 @@ import 'forge-std/console.sol';
 import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
-import {GenericPolygonExecutor} from '../src/contracts/polygon/GenericPolygonExecutor.sol';
-import {MiMaticPayload} from '../src/contracts/polygon/MiMaticPayload.sol';
-import {IStateReceiver} from '../src/interfaces/IFx.sol';
-import {IBridgeExecutor} from '../src/interfaces/IBridgeExecutor.sol';
-import {DeployL1Proposal} from '../script/DeployL1Proposal.s.sol';
+import {GenericPolygonExecutor} from '../contracts/polygon/GenericPolygonExecutor.sol';
+import {MiMaticPayload} from '../contracts/polygon/MiMaticPayload.sol';
+import {IStateReceiver} from '../interfaces/IFx.sol';
+import {IBridgeExecutor} from '../interfaces/IBridgeExecutor.sol';
+import {DeployL1Proposal} from '../../script/DeployL1Proposal.s.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from './helpers/AaveV3Helpers.sol';
 
 contract PolygonMiMaticE2ETest is Test {
