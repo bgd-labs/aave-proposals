@@ -10,6 +10,7 @@ import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {GenericL2Executor} from '../src/contracts/GenericL2Executor.sol';
 import {L2Payload} from '../src/contracts/L2Payload.sol';
 import {IStateReceiver} from '../src/interfaces/IFx.sol';
+import {IBridgeExecutor} from '../src/interfaces/IBridgeExecutor.sol';
 import {Deploy} from '../script/Deploy.s.sol';
 
 contract L2PayloadTest is Test {
@@ -30,10 +31,14 @@ contract L2PayloadTest is Test {
   }
 
   struct EventData {
+    bytes32 what;
     uint256 topic1;
-    uint256 topic2;
     address receiver;
     bytes rest;
+  }
+
+  function _cutBytes(bytes calldata input) public returns (bytes calldata) {
+    return input[64:];
   }
 
   function testL2ExecuteBridger() public {
@@ -61,6 +66,7 @@ contract L2PayloadTest is Test {
       keccak256('StateSynced(uint256,address,bytes)'),
       entries[2].topics[0]
     );
+    address fxChild = address(uint160(uint256(entries[2].topics[2])));
     console.log(uint256(entries[2].topics[1]));
     console.log(address(uint160(uint256(entries[2].topics[2]))));
     assertEq(
@@ -71,15 +77,19 @@ contract L2PayloadTest is Test {
     vm.selectFork(l2Fork);
     vm.stopPrank();
     vm.startPrank(BRIDGE_ADMIN);
-    // mock bridge execution
-    emit log_bytes(entries[2].data);
 
-    EventData memory log = abi.decode(entries[2].data, (EventData));
-    emit log_address(log.receiver);
-    emit log_bytes(log.rest);
-    IStateReceiver(deploy.FX_CHILD_ADDRESS()).onStateReceive(
+    // bridge payload which will queue the proposal
+    IStateReceiver(fxChild).onStateReceive(
       uint256(entries[2].topics[1]),
-      abi.encode(address(GovHelpers.SHORT_EXECUTOR), log.receiver, log.rest)
+      this._cutBytes(entries[2].data)
+    );
+
+    vm.warp(
+      block.timestamp + IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getDelay() + 1
+    );
+    // execute the proposal
+    IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).execute(
+      IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getActionsSetCount() - 1
     );
   }
 }
