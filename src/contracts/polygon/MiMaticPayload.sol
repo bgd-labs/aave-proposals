@@ -48,7 +48,7 @@ contract MiMaticPayload is IProposalGenericExecutor {
   address public constant SDTOKEN_IMPL =
     0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
   address public constant RATE_STRATEGY =
-    0xf4a0039F2d4a2EaD5216AbB6Ae4C4C3AA2dB9b82;
+    0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
 
   uint256 public constant RESERVE_FACTOR = 1000; // 10%
 
