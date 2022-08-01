@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import 'forge-std/console.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
-import {IERC20} from '../../interfaces/IERC20.sol';
+import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
 
 interface IProposalGenericExecutor {
   function execute() external;
@@ -86,7 +86,7 @@ contract MiMaticPayload is IProposalGenericExecutor {
       aTokenImpl: ATOKEN_IMPL,
       stableDebtTokenImpl: SDTOKEN_IMPL,
       variableDebtTokenImpl: VDTOKEN_IMPL,
-      underlyingAssetDecimals: IERC20(UNDERLYING).decimals(),
+      underlyingAssetDecimals: IERC20Metadata(UNDERLYING).decimals(),
       interestRateStrategyAddress: RATE_STRATEGY,
       underlyingAsset: UNDERLYING,
       treasury: AaveV3Polygon.COLLECTOR,
