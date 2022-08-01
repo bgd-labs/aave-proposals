@@ -50,7 +50,7 @@ contract PolygonMiMaticE2ETest is Test {
     return input[64:];
   }
 
-  function testL2ExecuteBridger() public {
+  function testProposalE2E() public {
     vm.selectFork(polygonFork);
     ReserveConfig[] memory allConfigsBefore = AaveV3Helpers._getReservesConfigs(
       false
