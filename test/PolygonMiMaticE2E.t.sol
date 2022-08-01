@@ -45,6 +45,7 @@ contract PolygonMiMaticE2ETest is Test {
     vm.selectFork(polygonFork);
     miMaticPayload = new MiMaticPayload();
 
+    vm.selectFork(mainnetFork);
     uint256 proposalId = deployl1Proposal.createProposal(
       address(bridgeExecutor),
       address(miMaticPayload)
