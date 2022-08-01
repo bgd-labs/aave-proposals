@@ -1,19 +1,28 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.15;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 import {IFxStateSender} from '../../interfaces/IFx.sol';
-import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 /**
+ * @title A generic executor for proposals targeting the polygon v3 market
+ * @author BGD Labs
+ * @notice You can **only** use this executor when the polygon payload has a `execute()` signature without parameters
+ * @notice You can **only** use this executor when the polygon payload is expected to be executed via `DELEGATECALL`
  * @dev This executor is a generic wrapper to be used with FX bridges (https://github.com/fx-portal/contracts)
  * It encodes a parameterless `execute()` with delegate calls and a specified target.
- * This encoded abi is then send to the FX-root to be synced to the FX-child.
+ * This encoded abi is then send to the FX-root to be synced to the FX-child on the polygon network.
+ * Once synced the POLYGON_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
 contract GenericPolygonExecutor {
   address public constant FX_ROOT_ADDRESS =
     0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
-  address public immutable ACL_ADMIN = AaveV3Polygon.ACL_ADMIN;
+  address public constant POLYGON_BRIDGE_EXECUTOR =
+    0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
 
+  /**
+   * @dev this function will be executed once the proposal passes the mainnet vote.
+   * @param l2PayloadContract the polygon contract containing the `execute()` signature.
+   */
   function execute(address l2PayloadContract) public {
     address[] memory targets = new address[](1);
     targets[0] = l2PayloadContract;
@@ -33,6 +42,9 @@ contract GenericPolygonExecutor {
       calldatas,
       withDelegatecalls
     );
-    IFxStateSender(FX_ROOT_ADDRESS).sendMessageToChild(ACL_ADMIN, actions);
+    IFxStateSender(FX_ROOT_ADDRESS).sendMessageToChild(
+      POLYGON_BRIDGE_EXECUTOR,
+      actions
+    );
   }
 }

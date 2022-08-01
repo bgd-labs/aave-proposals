@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.15;
+pragma solidity ^0.8.0;
 
 import 'forge-std/console.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
-import {IERC20} from '../../interfaces/IERC20.sol';
+import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
 
 interface IProposalGenericExecutor {
   function execute() external;
 }
 
 /**
+ * @author BGD Labs
  * @dev This payload lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
  * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0x751b8fd1c77677643e419d327bdf749c29ccf0a0269e58ed2af0013843376051
  * The proposal is, as agreed with the proposer, more conservative than the approved parameters:
@@ -59,7 +60,9 @@ contract MiMaticPayload is IProposalGenericExecutor {
 
   function execute() external override {
     // -------------
-    // 0. Claim pool
+    // 0. Claim pool admin
+    // Only needed for the first proposal on any market
+    // -------------
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 
     // ----------------------------
@@ -84,7 +87,7 @@ contract MiMaticPayload is IProposalGenericExecutor {
       aTokenImpl: ATOKEN_IMPL,
       stableDebtTokenImpl: SDTOKEN_IMPL,
       variableDebtTokenImpl: VDTOKEN_IMPL,
-      underlyingAssetDecimals: IERC20(UNDERLYING).decimals(),
+      underlyingAssetDecimals: IERC20Metadata(UNDERLYING).decimals(),
       interestRateStrategyAddress: RATE_STRATEGY,
       underlyingAsset: UNDERLYING,
       treasury: AaveV3Polygon.COLLECTOR,

@@ -1,26 +1,19 @@
-# BGD v3 bridge listing example
+# BGD v3 bridge listing template
 
-This template contains a code example for executing code on l2 via bridge executor.
+This template contains an opinionated smart contract template for creating proposals to list assets on the aave polygon v3 market.
 
-The flow here is:
-- create payload on l2
-- create a proposal on l1 which will call `sendMessageToChild(address,bytes)` where `address` is the ACL_ADMIN on the receiving chain and `bytes` the payload to be executed emitting `(uint256 id, address contractAddress, bytes data)`
-- on l2 `onStateReceive(uint256,bytes)` will arrive where `uint256` is the `id` emitted and `bytes` is `(address rootMessageSender, address receiver, bytes memory data)`
+For a proposal to be executed on polygon it needs to pass mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon). Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
 
-## Recommended modules
+To simplify the process of creating a cross chain proposal process we created an opinionated [GenericPolygonExecutor](/src/contracts/polygon/GenericPolygonExecutor.sol) which expects a payload deployed on the polygon network as the only parameter. The mainnet proposal payload will then be a simple `execute()` signature with `DELEGATECALL` enabled.
 
-[bgd-labs/solidity-utils](https://github.com/bgd-labs/solidity-utils) - common contracts we use everywhere, ie transparent proxy and around
+## Getting started
 
-[bgd-labs/aave-address-book](https://github.com/bgd-labs/aave-address-book) - the best and only source about all deployed Aave ecosystem related contracts across all the chains
+To create a proposal you have to do two things:
 
-[bgd-labs/aave-helpers](https://github.com/bgd-labs/aave-helpers) - useful utils for integration, and not only testing related to Aave ecosystem contracts
+1. create and deploy the polygon payload for your proposal ([see MiMatic as reference](/src/contracts/polygon/MiMaticPayload.sol))
+2. run the deploy script to create the mainnet proposal
 
-[Rari-Capital/solmate](https://github.com/Rari-Capital/solmate)  - one of the best sources of base contracts for ERC20, ERC21, which will work with transparent proxy pattern out of the box
+## References
 
-[OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) - another very reputable and well organized source of base contracts for tokens, access control and many others
-
-## Development
-
-This project uses [Foundry](https://getfoundry.sh). See the [book](https://book.getfoundry.sh/getting-started/installation.html) for instructions on how to install and use Foundry.
-
-
+- [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge).
+- [first ever polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
