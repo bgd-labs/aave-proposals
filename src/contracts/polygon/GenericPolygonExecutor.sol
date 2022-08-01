@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.15;
 
-import {IFxStateSender} from '../interfaces/IFx.sol';
+import {IFxStateSender} from '../../interfaces/IFx.sol';
+import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
-contract GenericL2Executor {
-  address public immutable FX_ROOT_ADDRESS;
-  address public immutable ACL_ADMIN;
-
-  constructor(address fxRoot, address aclAdmin) {
-    FX_ROOT_ADDRESS = fxRoot;
-    ACL_ADMIN = aclAdmin;
-  }
+/**
+ * @dev This executor is a generic wrapper to be used with FX bridges (https://github.com/fx-portal/contracts)
+ * It encodes a parameterless `execute()` with delegate calls and a specified target.
+ * This encoded abi is then send to the FX-root to be synced to the FX-child.
+ */
+contract GenericPolygonExecutor {
+  address public constant FX_ROOT_ADDRESS =
+    0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
+  address public immutable ACL_ADMIN = AaveV3Polygon.ACL_ADMIN;
 
   function execute(address l2PayloadContract) public {
     address[] memory targets = new address[](1);

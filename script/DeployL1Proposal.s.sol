@@ -6,11 +6,7 @@ import {Script} from 'forge-std/Script.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
-contract Deploy is Script {
-  address public constant FX_ROOT_ADDRESS =
-    0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
-  address public constant FX_CHILD_ADDRESS =
-    0x8397259c983751DAf40400790063935a11afa28a;
+contract DeployL1Proposal is Script {
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
@@ -19,7 +15,6 @@ contract Deploy is Script {
     returns (uint256)
   {
     vm.startPrank(AAVE_WHALE);
-    console.log(l2payload);
     address[] memory targets = new address[](1);
     targets[0] = bridger; // the payload address on the sidechain
     uint256[] memory values = new uint256[](1);
