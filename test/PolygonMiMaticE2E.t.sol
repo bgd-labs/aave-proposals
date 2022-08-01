@@ -5,7 +5,6 @@ import {Vm} from 'forge-std/Vm.sol';
 import 'forge-std/console.sol';
 import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 import {GenericPolygonExecutor} from '../src/contracts/polygon/GenericPolygonExecutor.sol';
 import {MiMaticPayload} from '../src/contracts/polygon/MiMaticPayload.sol';
@@ -25,6 +24,8 @@ contract PolygonMiMaticE2ETest is Test {
     0x0000000000000000000000000000000000001001;
   address public constant FX_CHILD_ADDRESS =
     0x8397259c983751DAf40400790063935a11afa28a;
+  address public constant POLYGON_BRIDGE_EXECUTOR =
+    0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
 
   address public constant MIMATIC = 0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
   address public constant MIMATIC_WHALE =
@@ -88,11 +89,11 @@ contract PolygonMiMaticE2ETest is Test {
 
     // 4. execute proposal on l2
     vm.warp(
-      block.timestamp + IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getDelay() + 1
+      block.timestamp + IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getDelay() + 1
     );
     // execute the proposal
-    IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).execute(
-      IBridgeExecutor(AaveV3Polygon.ACL_ADMIN).getActionsSetCount() - 1
+    IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).execute(
+      IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getActionsSetCount() - 1
     );
     vm.stopPrank();
 

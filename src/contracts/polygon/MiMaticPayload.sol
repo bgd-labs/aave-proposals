@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.15;
+pragma solidity ^0.8.0;
 
 import 'forge-std/console.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
@@ -59,7 +59,9 @@ contract MiMaticPayload is IProposalGenericExecutor {
 
   function execute() external override {
     // -------------
-    // 0. Claim pool
+    // 0. Claim pool admin
+    // Only needed for the first proposal on any market
+    // -------------
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 
     // ----------------------------
