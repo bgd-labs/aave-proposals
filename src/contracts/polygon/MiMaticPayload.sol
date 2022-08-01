@@ -11,6 +11,7 @@ interface IProposalGenericExecutor {
 }
 
 /**
+ * @author BGD Labs
  * @dev This payload lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
  * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0x751b8fd1c77677643e419d327bdf749c29ccf0a0269e58ed2af0013843376051
  * The proposal is, as agreed with the proposer, more conservative than the approved parameters:
