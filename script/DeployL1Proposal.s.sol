@@ -7,40 +7,36 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 contract DeployL1Proposal is Script {
-  // TODO: remove
-  address public constant AAVE_WHALE =
-    address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
+  // TODO: BRIDGE_EXECUTOR should be set once deployed
+  address internal constant BRIDGE_EXECUTOR = address(0);
+  address internal constant L2_PAYLOAD = address(0);
 
-  // TODO: remove bridger param
-  function createProposal(address bridger, address l2payload)
-    public
-    returns (uint256)
-  {
-    vm.startPrank(AAVE_WHALE);
+  function run() external {
+    require(
+      BRIDGE_EXECUTOR != address(0),
+      "ERROR: BRIDGE_EXECUTOR can't be address(0)"
+    );
+    require(L2_PAYLOAD != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
+    vm.startBroadcast();
     address[] memory targets = new address[](1);
-    targets[0] = bridger; // the payload address on the sidechain
+    targets[0] = BRIDGE_EXECUTOR;
     uint256[] memory values = new uint256[](1);
     values[0] = 0;
     string[] memory signatures = new string[](1);
     signatures[0] = 'execute(address)';
     bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = abi.encode(l2payload);
+    calldatas[0] = abi.encode(L2_PAYLOAD);
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
-    return
-      AaveGovernanceV2.GOV.create(
-        IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
-        targets,
-        values,
-        signatures,
-        calldatas,
-        withDelegatecalls,
-        bytes32(0)
-      );
+    AaveGovernanceV2.GOV.create(
+      IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
+      targets,
+      values,
+      signatures,
+      calldatas,
+      withDelegatecalls,
+      bytes32(0)
+    );
+    vm.stopBroadcast();
   }
-
-  // function run() external {
-  //   vm.startBroadcast();
-  //   vm.stopBroadcast();
-  // }
 }

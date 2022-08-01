@@ -5,12 +5,12 @@ import {Vm} from 'forge-std/Vm.sol';
 import 'forge-std/console.sol';
 import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
 import {GenericPolygonExecutor} from '../contracts/polygon/GenericPolygonExecutor.sol';
 import {MiMaticPayload} from '../contracts/polygon/MiMaticPayload.sol';
 import {IStateReceiver} from '../interfaces/IFx.sol';
 import {IBridgeExecutor} from '../interfaces/IBridgeExecutor.sol';
-import {DeployL1Proposal} from '../../script/DeployL1Proposal.s.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from './helpers/AaveV3Helpers.sol';
 
 contract PolygonMiMaticE2ETest is Test {
@@ -19,7 +19,7 @@ contract PolygonMiMaticE2ETest is Test {
   uint256 polygonFork;
 
   MiMaticPayload public miMaticPayload;
-  DeployL1Proposal deployl1Proposal;
+
   address public constant BRIDGE_ADMIN =
     0x0000000000000000000000000000000000001001;
   address public constant FX_CHILD_ADDRESS =
@@ -35,10 +35,38 @@ contract PolygonMiMaticE2ETest is Test {
   address public constant DAI_WHALE =
     0xd7052EC0Fe1fe25b20B7D65F6f3d490fCE58804f;
 
+  address public constant AAVE_WHALE =
+    address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
+
   function setUp() public {
     polygonFork = vm.createSelectFork('https://polygon-rpc.com', 31237525);
     mainnetFork = vm.createSelectFork('https://rpc.flashbots.net/', 15231241);
-    deployl1Proposal = new DeployL1Proposal();
+  }
+
+  function _createProposal(address bridgeExecutor, address l2payload)
+    internal
+    returns (uint256)
+  {
+    address[] memory targets = new address[](1);
+    targets[0] = bridgeExecutor;
+    uint256[] memory values = new uint256[](1);
+    values[0] = 0;
+    string[] memory signatures = new string[](1);
+    signatures[0] = 'execute(address)';
+    bytes[] memory calldatas = new bytes[](1);
+    calldatas[0] = abi.encode(l2payload);
+    bool[] memory withDelegatecalls = new bool[](1);
+    withDelegatecalls[0] = true;
+    return
+      AaveGovernanceV2.GOV.create(
+        IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
+        targets,
+        values,
+        signatures,
+        calldatas,
+        withDelegatecalls,
+        bytes32(0)
+      );
   }
 
   // utility to transform memory to calldata so array range access is available
@@ -64,13 +92,16 @@ contract PolygonMiMaticE2ETest is Test {
     vm.selectFork(polygonFork);
     miMaticPayload = new MiMaticPayload();
 
+    // 2. create l1 proposal
     vm.selectFork(mainnetFork);
-    uint256 proposalId = deployl1Proposal.createProposal(
+    vm.startPrank(AAVE_WHALE);
+    uint256 proposalId = _createProposal(
       address(bridgeExecutor),
       address(miMaticPayload)
     );
+    vm.stopPrank();
 
-    // 2. execute proposal and record logs so we can extract the emitted StateSynced event
+    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
 
@@ -81,17 +112,15 @@ contract PolygonMiMaticE2ETest is Test {
     );
     assertEq(address(uint160(uint256(entries[2].topics[2]))), FX_CHILD_ADDRESS);
 
+    // 4. mock the receive on l2 with the data emitted on StateSynced
     vm.selectFork(polygonFork);
-    vm.stopPrank();
     vm.startPrank(BRIDGE_ADMIN);
-
-    // 3. mock the receive on l2 with the data emitted on StateSynced
     IStateReceiver(FX_CHILD_ADDRESS).onStateReceive(
       uint256(entries[2].topics[1]),
       this._cutBytes(entries[2].data)
     );
 
-    // 4. execute proposal on l2
+    // 5. execute proposal on l2
     vm.warp(
       block.timestamp + IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getDelay() + 1
     );
@@ -101,7 +130,7 @@ contract PolygonMiMaticE2ETest is Test {
     );
     vm.stopPrank();
 
-    // 5. verify results
+    // 6. verify results
     ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
       false
     );
