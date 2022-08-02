@@ -8,7 +8,7 @@ For a proposal to be executed on polygon it needs to pass mainnet governance pro
 
 To simplify the process of creating a cross chain proposal this repository contains an opinionated [GenericPolygonExecutor](/src/contracts/polygon/GenericPolygonExecutor.sol) which expects a payload address deployed on the polygon network as the only parameter. The mainnet proposal payload will then be a simple `execute()` signature with `DELEGATECALL` enabled.
 
-![visualization](https://excalidraw.com/#json=zjANLPK6HuYvL-_fg1hHS,sCdrwK6comuxhaac3l6_xg)
+![visualization](/bridge-listing.png)
 
 ## Getting started
 
