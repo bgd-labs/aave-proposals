@@ -4,7 +4,11 @@ This template contains an opinionated smart contract template for creating propo
 
 For a proposal to be executed on polygon it needs to pass mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon). Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
 
-To simplify the process of creating a cross chain proposal process we created an opinionated [GenericPolygonExecutor](/src/contracts/polygon/GenericPolygonExecutor.sol) which expects a payload deployed on the polygon network as the only parameter. The mainnet proposal payload will then be a simple `execute()` signature with `DELEGATECALL` enabled.
+## About
+
+To simplify the process of creating a cross chain proposal this repository contains an opinionated [GenericPolygonExecutor](/src/contracts/polygon/GenericPolygonExecutor.sol) which expects a payload address deployed on the polygon network as the only parameter. The mainnet proposal payload will then be a simple `execute()` signature with `DELEGATECALL` enabled.
+
+![visualization](https://excalidraw.com/#json=zjANLPK6HuYvL-_fg1hHS,sCdrwK6comuxhaac3l6_xg)
 
 ## Getting started
 

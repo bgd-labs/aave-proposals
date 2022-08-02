@@ -8,18 +8,18 @@ import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 contract DeployL1Proposal is Script {
   // TODO: BRIDGE_EXECUTOR should be set once deployed
-  address internal constant BRIDGE_EXECUTOR = address(0);
+  address internal constant GENERIC_POLYGON_EXECUTOR = address(0);
   address internal constant L2_PAYLOAD = address(0);
 
   function run() external {
     require(
-      BRIDGE_EXECUTOR != address(0),
+      GENERIC_POLYGON_EXECUTOR != address(0),
       "ERROR: BRIDGE_EXECUTOR can't be address(0)"
     );
     require(L2_PAYLOAD != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
     vm.startBroadcast();
     address[] memory targets = new address[](1);
-    targets[0] = BRIDGE_EXECUTOR;
+    targets[0] = GENERIC_POLYGON_EXECUTOR;
     uint256[] memory values = new uint256[](1);
     values[0] = 0;
     string[] memory signatures = new string[](1);
