@@ -13,7 +13,7 @@ import {IFxStateSender} from '../../interfaces/IFx.sol';
  * This encoded abi is then send to the FX-root to be synced to the FX-child on the polygon network.
  * Once synced the POLYGON_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
-contract GenericPolygonExecutor {
+contract CrosschainForwarderPolygon {
   address public constant FX_ROOT_ADDRESS =
     0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
   address public constant POLYGON_BRIDGE_EXECUTOR =

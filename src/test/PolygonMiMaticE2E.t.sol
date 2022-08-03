@@ -7,7 +7,7 @@ import {Test} from 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
-import {GenericPolygonExecutor} from '../contracts/polygon/GenericPolygonExecutor.sol';
+import {CrosschainForwarderPolygon} from '../contracts/polygon/CrosschainForwarderPolygon.sol';
 import {MiMaticPayload} from '../contracts/polygon/MiMaticPayload.sol';
 import {IStateReceiver} from '../interfaces/IFx.sol';
 import {IBridgeExecutor} from '../interfaces/IBridgeExecutor.sol';
@@ -86,7 +86,7 @@ contract PolygonMiMaticE2ETest is Test {
 
     // 0. deploy generic executor
     vm.selectFork(mainnetFork);
-    GenericPolygonExecutor bridgeExecutor = new GenericPolygonExecutor(); // TODO: should be replaced with address once deployed
+    CrosschainForwarderPolygon bridgeExecutor = new CrosschainForwarderPolygon(); // TODO: should be replaced with address once deployed
 
     // 1. deploy l2 payload
     vm.selectFork(polygonFork);
