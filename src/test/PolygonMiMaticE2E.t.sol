@@ -179,23 +179,23 @@ contract PolygonMiMaticE2ETest is Test {
       })
     );
 
-    // AaveV3Helpers._validateAssetSourceOnOracle(
-    //   MIMATIC,
-    //   miMaticPayload.PRICE_FEED()
-    // );
+    AaveV3Helpers._validateAssetSourceOnOracle(
+      MIMATIC,
+      miMaticPayload.PRICE_FEED()
+    );
 
-    // // impl should be same as USDC
-    // AaveV3Helpers._validateReserveTokensImpls(
-    //   vm,
-    //   AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
-    //   ReserveTokens({
-    //     aToken: miMaticPayload.ATOKEN_IMPL(),
-    //     stableDebtToken: miMaticPayload.SDTOKEN_IMPL(),
-    //     variableDebtToken: miMaticPayload.VDTOKEN_IMPL()
-    //   })
-    // );
+    // impl should be same as USDC
+    AaveV3Helpers._validateReserveTokensImpls(
+      vm,
+      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
+      ReserveTokens({
+        aToken: miMaticPayload.ATOKEN_IMPL(),
+        stableDebtToken: miMaticPayload.SDTOKEN_IMPL(),
+        variableDebtToken: miMaticPayload.VDTOKEN_IMPL()
+      })
+    );
 
-    // _validatePoolActionsPostListing(allConfigsAfter);
+    _validatePoolActionsPostListing(allConfigsAfter);
   }
 
   function _validatePoolActionsPostListing(
@@ -225,25 +225,26 @@ contract PolygonMiMaticE2ETest is Test {
     );
 
     // We check revert when trying to borrow (not enabled as collateral, so any mode works)
-    try
-      AaveV3Helpers._borrow(
-        vm,
-        MIMATIC_WHALE,
-        MIMATIC_WHALE,
-        MIMATIC,
-        10 ether,
-        1,
-        sMIMATIC
-      )
-    {
-      revert('_testProposal() : BORROW_NOT_REVERTING');
-    } catch Error(string memory revertReason) {
-      require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('34')),
-        '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-      );
-      vm.stopPrank();
-    }
+    // https://github.com/foundry-rs/foundry/issues/2549
+    // try
+    //   AaveV3Helpers._borrow(
+    //     vm,
+    //     MIMATIC_WHALE,
+    //     MIMATIC_WHALE,
+    //     MIMATIC,
+    //     10 ether,
+    //     1,
+    //     sMIMATIC
+    //   );
+    // {
+    //   revert('_testProposal() : BORROW_NOT_REVERTING');
+    // } catch Error(string memory revertReason) {
+    //   require(
+    //     keccak256(bytes(revertReason)) == keccak256(bytes('34')),
+    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
+    //   );
+    //   vm.stopPrank();
+    // }
 
     vm.startPrank(DAI_WHALE);
     IERC20(DAI).transfer(MIMATIC_WHALE, 666 ether);

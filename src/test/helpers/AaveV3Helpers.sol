@@ -782,7 +782,7 @@ library AaveV3Helpers {
     uint256 amount,
     uint256 interestRateMode,
     address debtToken
-  ) public {
+  ) internal {
     uint256 debtBefore = IERC20(debtToken).balanceOf(onBehalfOf);
     vm.deal(borrower, 1 ether);
     vm.startPrank(borrower);
@@ -843,7 +843,7 @@ library AaveV3Helpers {
   }
 
   function _validateAssetSourceOnOracle(address asset, address expectedSource)
-    external
+    internal
   {
     IAaveOracle oracle = IAaveOracle(
       IAddressesProvider(ADDRESSES_PROVIDER).getPriceOracle()
