@@ -10,6 +10,28 @@ To simplify the process of creating a cross chain proposal this repository conta
 
 ![visualization](/bridge-listing.png)
 
+## Getting started
+
+### Build
+
+```sh
+forge build
+```
+
+### Test
+
+```sh
+forge test
+```
+
+### Deploy
+
+```sh
+# only needed for deployment
+cp .env.example .env
+sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
+```
+
 ## Creating the proposal
 
 To create a proposal you have to do two things:
