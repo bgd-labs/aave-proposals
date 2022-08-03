@@ -1,4 +1,4 @@
-# BGD v3 bridge listing template
+# Aave v3 cross-chain listing template
 
 This template contains an opinionated smart contract template for creating proposals to list assets on the aave polygon v3 market.
 
@@ -14,8 +14,10 @@ To simplify the process of creating a cross chain proposal this repository conta
 
 To create a proposal you have to do two things:
 
-1. create and deploy the polygon payload for your proposal ([see MiMatic as reference](/src/contracts/polygon/MiMaticPayload.sol))
-2. run the deploy script to create the mainnet proposal
+1. deploy the Polygon Payload ([see MiMatic](/src/contracts/polygon/MiMaticPayload.sol))
+2. create the mainnet proposal ([see DeployL1Proposal](/script/DeployL1Proposal.s.sol))
+
+While the order of actions is important as the mainnet proposal needs the l2 payload address, both actions can be performed by different parties / addresses.
 
 ## References
 
