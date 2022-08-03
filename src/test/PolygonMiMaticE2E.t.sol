@@ -20,6 +20,8 @@ contract PolygonMiMaticE2ETest is Test {
 
   MiMaticPayload public miMaticPayload;
 
+  address public constant CROSSCHAIN_FORWARDER_POLYGON =
+    0x158a6bC04F0828318821baE797f50B0A1299d45b;
   address public constant BRIDGE_ADMIN =
     0x0000000000000000000000000000000000001001;
   address public constant FX_CHILD_ADDRESS =
@@ -39,16 +41,13 @@ contract PolygonMiMaticE2ETest is Test {
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    polygonFork = vm.createSelectFork('https://polygon-rpc.com', 31237525);
-    mainnetFork = vm.createSelectFork('https://rpc.flashbots.net/', 15231241);
+    polygonFork = vm.createFork('https://polygon-rpc.com', 31237525);
+    mainnetFork = vm.createFork('https://rpc.flashbots.net/', 15269562);
   }
 
-  function _createProposal(address bridgeExecutor, address l2payload)
-    internal
-    returns (uint256)
-  {
+  function _createProposal(address l2payload) internal returns (uint256) {
     address[] memory targets = new address[](1);
-    targets[0] = bridgeExecutor;
+    targets[0] = CROSSCHAIN_FORWARDER_POLYGON;
     uint256[] memory values = new uint256[](1);
     values[0] = 0;
     string[] memory signatures = new string[](1);
@@ -84,10 +83,6 @@ contract PolygonMiMaticE2ETest is Test {
       false
     );
 
-    // 0. deploy generic executor
-    vm.selectFork(mainnetFork);
-    CrosschainForwarderPolygon bridgeExecutor = new CrosschainForwarderPolygon(); // TODO: should be replaced with address once deployed
-
     // 1. deploy l2 payload
     vm.selectFork(polygonFork);
     miMaticPayload = new MiMaticPayload();
@@ -95,10 +90,7 @@ contract PolygonMiMaticE2ETest is Test {
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AAVE_WHALE);
-    uint256 proposalId = _createProposal(
-      address(bridgeExecutor),
-      address(miMaticPayload)
-    );
+    uint256 proposalId = _createProposal(address(miMaticPayload));
     vm.stopPrank();
 
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event

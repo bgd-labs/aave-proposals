@@ -8,14 +8,11 @@ import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 contract DeployL1Proposal is Script {
   // TODO: BRIDGE_EXECUTOR should be set once deployed
-  address internal constant CROSSCHAIN_FORWARDER_POLYGON = address(0);
+  address internal constant CROSSCHAIN_FORWARDER_POLYGON =
+    address(0x158a6bC04F0828318821baE797f50B0A1299d45b);
   address internal constant L2_PAYLOAD = address(0);
 
   function run() external {
-    require(
-      CROSSCHAIN_FORWARDER_POLYGON != address(0),
-      "ERROR: BRIDGE_EXECUTOR can't be address(0)"
-    );
     require(L2_PAYLOAD != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
     vm.startBroadcast();
     address[] memory targets = new address[](1);

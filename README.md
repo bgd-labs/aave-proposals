@@ -10,7 +10,7 @@ To simplify the process of creating a cross chain proposal this repository conta
 
 ![visualization](/bridge-listing.png)
 
-## Getting started
+## Creating the proposal
 
 To create a proposal you have to do two things:
 
@@ -18,6 +18,11 @@ To create a proposal you have to do two things:
 2. create the mainnet proposal ([see DeployL1Proposal](/script/DeployL1Proposal.s.sol))
 
 While the order of actions is important as the mainnet proposal needs the l2 payload address, both actions can be performed by different parties / addresses.
+The address creating the mainnet proposal requires 80k AAVE of proposition power.
+
+## Deployed addresses
+
+- [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
 
 ## References
 
