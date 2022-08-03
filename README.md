@@ -19,5 +19,5 @@ To create a proposal you have to do two things:
 
 ## References
 
-- [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge).
+- [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge)
 - [first ever polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
