@@ -4,4 +4,8 @@ test = 'test'
 out = 'out'
 libs = ['lib']
 
+[rpc_endpoints]
+polygon = "${RPC_POLYGON}"
+mainnet = "${RPC_MAINNET}"
+
 # See more config options https://github.com/gakonst/foundry/tree/master/config
