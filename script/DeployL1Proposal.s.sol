@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/console.sol';
 import {Script} from 'forge-std/Script.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 
 contract DeployL1Proposal is Script {
   // TODO: BRIDGE_EXECUTOR should be set once deployed
