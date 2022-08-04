@@ -32,11 +32,11 @@ contract MiMaticPayload is IProposalGenericExecutor {
   address public constant UNDERLYING =
     0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
   string public constant ATOKEN_NAME = 'Aave Polygon MIMATIC';
-  string public constant ATOKEN_SYMBOL = 'aAvaMIMATIC';
+  string public constant ATOKEN_SYMBOL = 'aPolyMIMATIC';
   string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt MIMATIC';
-  string public constant VDTOKEN_SYMBOL = 'variableDebtAvaMIMATIC';
+  string public constant VDTOKEN_SYMBOL = 'variableDebtPolyMIMATIC';
   string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt MIMATIC';
-  string public constant SDTOKEN_SYMBOL = 'stableDebtAvaMIMATIC';
+  string public constant SDTOKEN_SYMBOL = 'stableDebtPolyMIMATIC';
 
   address public constant PRICE_FEED =
     0xd8d483d813547CfB624b8Dc33a00F2fcbCd2D428;
