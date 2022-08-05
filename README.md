@@ -50,3 +50,8 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 - [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge)
 - [first ever polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
+
+## Misc
+
+- the deploy script currently requires the --legacy flag due to issues with polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
+- some of the tests are currently commented out due to a bug on foundry causing public library methods to revert https://github.com/foundry-rs/foundry/issues/2549
