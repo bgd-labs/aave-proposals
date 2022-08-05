@@ -10,13 +10,12 @@ on:
     branches:
       - main
 
+env:
+  RPC_MAINNET: https://rpc.flashbots.net/
+  FORK_BLOCK_MAINNET: 15269562
+  RPC_POLYGON: https://polygon-rpc.com
+  FORK_BLOCK_POLYGON: 31237525
+
 jobs:
   test:
-    runs-on: ubuntu-latest
-    env:
-      RPC_MAINNET: https://rpc.flashbots.net/
-      FORK_BLOCK_MAINNET: 15269562
-      RPC_POLYGON: https://polygon-rpc.com
-      FORK_BLOCK_POLYGON: 31237525
-    steps:
-      - uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main
+    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main #a009a36b8fd8808925a73ca541304256419ec783
