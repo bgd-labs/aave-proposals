@@ -7,7 +7,7 @@ import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @dev This steward enables FRAX as collateral on AAVE V3 Polygon
+ * @dev This steward lists FRAX as collateral and borrowing asset on AAVE V3 Polygon
  * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0xa464894c571fecf559fab1f1a8daf514250955d5ed2bc21eb3a153d03bbe67db
  * Opposed to the suggested parameters this proposal will
  * - Lowering the suggested 50M ceiling to a 2M ceiling
@@ -32,7 +32,7 @@ contract FraxPayload is IProposalGenericExecutor {
   string public constant ATOKEN_SYMBOL = 'aPolFRAX';
   string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt FRAX';
   string public constant VDTOKEN_SYMBOL = 'variableDebtPolFRAX';
-  string public constant SDTOKEN_NAME = 'Aave Fantom Stable Debt FRAX';
+  string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt FRAX';
   string public constant SDTOKEN_SYMBOL = 'stableDebtPolFRAX';
 
   address public constant PRICE_FEED =
