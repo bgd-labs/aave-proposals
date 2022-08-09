@@ -63,9 +63,7 @@ contract FraxPayload is IProposalGenericExecutor {
 
   function execute() external override {
     // -------------
-    // TODO: this should be removed once first proposal passes
     // Claim pool admin
-    // Only needed for the first proposal on any market
     // -------------
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 

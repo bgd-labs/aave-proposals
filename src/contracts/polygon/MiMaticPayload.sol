@@ -57,7 +57,6 @@ contract MiMaticPayload is IProposalGenericExecutor {
   function execute() external override {
     // -------------
     // 0. Claim pool admin
-    // Only needed for the first proposal on any market
     // -------------
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 
