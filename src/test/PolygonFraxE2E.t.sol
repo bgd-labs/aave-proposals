@@ -4,19 +4,18 @@ pragma solidity ^0.8.0;
 import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
-
-import {CrosschainForwarderPolygon} from '../contracts/polygon/CrosschainForwarderPolygon.sol';
-import {MiMaticPayload} from '../contracts/polygon/MiMaticPayload.sol';
+import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from './helpers/AaveV3Helpers.sol';
 import {IStateReceiver} from '../interfaces/IFx.sol';
 import {IBridgeExecutor} from '../interfaces/IBridgeExecutor.sol';
-import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from './helpers/AaveV3Helpers.sol';
+import {CrosschainForwarderPolygon} from '../contracts/polygon/CrosschainForwarderPolygon.sol';
+import {FraxPayload} from '../contracts/polygon/FraxPayload.sol';
 
-contract PolygonMiMaticE2ETest is Test {
+contract PolygonFraxE2ETest is Test {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 polygonFork;
 
-  MiMaticPayload public miMaticPayload;
+  FraxPayload public fraxPayload;
 
   address public constant CROSSCHAIN_FORWARDER_POLYGON =
     0x158a6bC04F0828318821baE797f50B0A1299d45b;
@@ -27,20 +26,252 @@ contract PolygonMiMaticE2ETest is Test {
   address public constant POLYGON_BRIDGE_EXECUTOR =
     0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
 
-  address public constant MIMATIC = 0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
-  address public constant MIMATIC_WHALE =
-    0x95dD59343a893637BE1c3228060EE6afBf6F0730;
+  address public constant FRAX = 0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89;
+  address public constant FRAX_WHALE =
+    0x6e1A844AFff1aa2a8ba3127dB83088e196187110;
 
   address public constant DAI = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
   address public constant DAI_WHALE =
     0xd7052EC0Fe1fe25b20B7D65F6f3d490fCE58804f;
-
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    polygonFork = vm.createFork('https://polygon-rpc.com', 31237525);
-    mainnetFork = vm.createFork('https://rpc.flashbots.net/', 15269562);
+    polygonFork = vm.createFork('https://polygon-rpc.com', 31507646);
+    mainnetFork = vm.createFork('https://rpc.flashbots.net/', 15275388);
+  }
+
+  function testProposalE2E() public {
+    vm.selectFork(polygonFork);
+
+    // we get all configs to later on check that payload only changes FRAX
+    ReserveConfig[] memory allConfigsBefore = AaveV3Helpers._getReservesConfigs(
+      false
+    );
+
+    // 1. deploy l2 payload
+    vm.selectFork(polygonFork);
+    fraxPayload = new FraxPayload();
+
+    // 2. create l1 proposal
+    vm.selectFork(mainnetFork);
+    vm.startPrank(AAVE_WHALE);
+    uint256 proposalId = _createProposal(address(fraxPayload));
+    vm.stopPrank();
+
+    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
+    vm.recordLogs();
+    GovHelpers.passVoteAndExecute(vm, proposalId);
+
+    Vm.Log[] memory entries = vm.getRecordedLogs();
+    assertEq(
+      keccak256('StateSynced(uint256,address,bytes)'),
+      entries[2].topics[0]
+    );
+    assertEq(address(uint160(uint256(entries[2].topics[2]))), FX_CHILD_ADDRESS);
+
+    // 4. mock the receive on l2 with the data emitted on StateSynced
+    vm.selectFork(polygonFork);
+    vm.startPrank(BRIDGE_ADMIN);
+    IStateReceiver(FX_CHILD_ADDRESS).onStateReceive(
+      uint256(entries[2].topics[1]),
+      this._cutBytes(entries[2].data)
+    );
+    vm.stopPrank();
+
+    // 5. execute proposal on l2
+    vm.warp(
+      block.timestamp + IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getDelay() + 1
+    );
+
+    // execute the proposal
+    IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).execute(
+      IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getActionsSetCount() - 1
+    );
+
+    // 6. verify results
+    ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
+      false
+    );
+
+    ReserveConfig memory expectedAssetConfig = ReserveConfig({
+      symbol: 'FRAX',
+      underlying: FRAX,
+      aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      decimals: 18,
+      ltv: 7500,
+      liquidationThreshold: 8000,
+      liquidationBonus: 10500,
+      liquidationProtocolFee: 1000,
+      reserveFactor: 1000,
+      usageAsCollateralEnabled: true,
+      borrowingEnabled: true,
+      interestRateStrategy: AaveV3Helpers
+        ._findReserveConfig(allConfigsAfter, 'USDT', false)
+        .interestRateStrategy,
+      stableBorrowRateEnabled: false,
+      isActive: true,
+      isFrozen: false,
+      isSiloed: false,
+      supplyCap: 50_000_000,
+      borrowCap: 0,
+      debtCeiling: 2_000_000_00,
+      eModeCategory: 1
+    });
+
+    AaveV3Helpers._validateReserveConfig(expectedAssetConfig, allConfigsAfter);
+
+    AaveV3Helpers._noReservesConfigsChangesApartNewListings(
+      allConfigsBefore,
+      allConfigsAfter
+    );
+
+    AaveV3Helpers._validateReserveTokensImpls(
+      vm,
+      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'FRAX', false),
+      ReserveTokens({
+        aToken: fraxPayload.ATOKEN_IMPL(),
+        stableDebtToken: fraxPayload.SDTOKEN_IMPL(),
+        variableDebtToken: fraxPayload.VDTOKEN_IMPL()
+      })
+    );
+
+    AaveV3Helpers._validateAssetSourceOnOracle(FRAX, fraxPayload.PRICE_FEED());
+
+    // impl should be same as USDC
+    AaveV3Helpers._validateReserveTokensImpls(
+      vm,
+      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
+      ReserveTokens({
+        aToken: fraxPayload.ATOKEN_IMPL(),
+        stableDebtToken: fraxPayload.SDTOKEN_IMPL(),
+        variableDebtToken: fraxPayload.VDTOKEN_IMPL()
+      })
+    );
+
+    _validatePoolActionsPostListing(allConfigsAfter);
+  }
+
+  function _validatePoolActionsPostListing(
+    ReserveConfig[] memory allReservesConfigs
+  ) internal {
+    address aFRAX = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+      .aToken;
+    address vFRAX = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+      .variableDebtToken;
+    address sFRAX = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+      .stableDebtToken;
+    address vDAI = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'DAI', false)
+      .variableDebtToken;
+
+    AaveV3Helpers._deposit(
+      vm,
+      FRAX_WHALE,
+      FRAX_WHALE,
+      FRAX,
+      666 ether,
+      true,
+      aFRAX
+    );
+
+    AaveV3Helpers._borrow(vm, FRAX_WHALE, FRAX_WHALE, DAI, 2 ether, 2, vDAI);
+
+    AaveV3Helpers._borrow(
+      vm,
+      FRAX_WHALE,
+      FRAX_WHALE,
+      FRAX,
+      200 ether,
+      2,
+      vFRAX
+    );
+
+    // TODO: uncomment when foundry fixes bug with public methods on libs
+    // We check proper revert when going over liquidation threshold
+    // try
+    //   AaveV3Helpers._borrow(
+    //     vm,
+    //     FRAX_WHALE,
+    //     FRAX_WHALE,
+    //     FRAX,
+    //     200 ether,
+    //     2,
+    //     vFRAX
+    //   )
+    // {
+    //   revert('_testProposal() : BORROW_NOT_REVERTING');
+    // } catch Error(string memory revertReason) {
+    //   require(
+    //     keccak256(bytes(revertReason)) == keccak256(bytes('36')),
+    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
+    //   );
+    //   vm.stopPrank();
+    // }
+
+    // We check revert when trying to borrow at stable
+    // try
+    //   AaveV3Helpers._borrow(
+    //     vm,
+    //     FRAX_WHALE,
+    //     FRAX_WHALE,
+    //     FRAX,
+    //     10 ether,
+    //     1,
+    //     sFRAX
+    //   )
+    // {
+    //   revert('_testProposal() : BORROW_NOT_REVERTING');
+    // } catch Error(string memory revertReason) {
+    //   require(
+    //     keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
+    //   );
+    //   vm.stopPrank();
+    // }
+
+    vm.startPrank(DAI_WHALE);
+    IERC20(DAI).transfer(FRAX_WHALE, 300 ether);
+    vm.stopPrank();
+
+    // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
+    skip(1);
+
+    AaveV3Helpers._repay(
+      vm,
+      FRAX_WHALE,
+      FRAX_WHALE,
+      DAI,
+      IERC20(DAI).balanceOf(FRAX_WHALE),
+      2,
+      vDAI,
+      true
+    );
+
+    AaveV3Helpers._repay(
+      vm,
+      FRAX_WHALE,
+      FRAX_WHALE,
+      FRAX,
+      IERC20(FRAX).balanceOf(FRAX_WHALE),
+      2,
+      vFRAX,
+      true
+    );
+
+    AaveV3Helpers._withdraw(
+      vm,
+      FRAX_WHALE,
+      FRAX_WHALE,
+      FRAX,
+      type(uint256).max,
+      aFRAX
+    );
   }
 
   function _createProposal(address l2payload) internal returns (uint256) {
@@ -73,214 +304,5 @@ contract PolygonMiMaticE2ETest is Test {
     returns (bytes calldata)
   {
     return input[64:];
-  }
-
-  function testProposalE2E() public {
-    vm.selectFork(polygonFork);
-    ReserveConfig[] memory allConfigsBefore = AaveV3Helpers._getReservesConfigs(
-      false
-    );
-
-    // 1. deploy l2 payload
-    vm.selectFork(polygonFork);
-    miMaticPayload = new MiMaticPayload();
-
-    // 2. create l1 proposal
-    vm.selectFork(mainnetFork);
-    vm.startPrank(AAVE_WHALE);
-    uint256 proposalId = _createProposal(address(miMaticPayload));
-    vm.stopPrank();
-
-    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
-    vm.recordLogs();
-    GovHelpers.passVoteAndExecute(vm, proposalId);
-
-    Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(
-      keccak256('StateSynced(uint256,address,bytes)'),
-      entries[2].topics[0]
-    );
-    assertEq(address(uint160(uint256(entries[2].topics[2]))), FX_CHILD_ADDRESS);
-
-    // 4. mock the receive on l2 with the data emitted on StateSynced
-    vm.selectFork(polygonFork);
-    vm.startPrank(BRIDGE_ADMIN);
-    IStateReceiver(FX_CHILD_ADDRESS).onStateReceive(
-      uint256(entries[2].topics[1]),
-      this._cutBytes(entries[2].data)
-    );
-    vm.stopPrank();
-
-    // 5. execute proposal on l2
-    vm.warp(
-      block.timestamp + IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getDelay() + 1
-    );
-    // execute the proposal
-    IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).execute(
-      IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getActionsSetCount() - 1
-    );
-
-    // 6. verify results
-    ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
-      false
-    );
-
-    ReserveConfig memory expectedAssetConfig = ReserveConfig({
-      symbol: 'miMATIC',
-      underlying: MIMATIC,
-      aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-      variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-      stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-      decimals: 18,
-      ltv: 0,
-      liquidationThreshold: 0,
-      liquidationBonus: 0,
-      liquidationProtocolFee: 1000,
-      reserveFactor: 1000,
-      usageAsCollateralEnabled: false,
-      borrowingEnabled: true,
-      interestRateStrategy: AaveV3Helpers
-        ._findReserveConfig(allConfigsAfter, 'USDT', false)
-        .interestRateStrategy,
-      stableBorrowRateEnabled: false,
-      isActive: true,
-      isFrozen: false,
-      isSiloed: false,
-      supplyCap: 10_000_000,
-      borrowCap: 0,
-      debtCeiling: 0,
-      eModeCategory: 1
-    });
-
-    AaveV3Helpers._validateReserveConfig(expectedAssetConfig, allConfigsAfter);
-
-    AaveV3Helpers._noReservesConfigsChangesApartNewListings(
-      allConfigsBefore,
-      allConfigsAfter
-    );
-
-    AaveV3Helpers._validateReserveTokensImpls(
-      vm,
-      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'miMATIC', false),
-      ReserveTokens({
-        aToken: miMaticPayload.ATOKEN_IMPL(),
-        stableDebtToken: miMaticPayload.SDTOKEN_IMPL(),
-        variableDebtToken: miMaticPayload.VDTOKEN_IMPL()
-      })
-    );
-
-    AaveV3Helpers._validateAssetSourceOnOracle(
-      MIMATIC,
-      miMaticPayload.PRICE_FEED()
-    );
-
-    // impl should be same as USDC
-    AaveV3Helpers._validateReserveTokensImpls(
-      vm,
-      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
-      ReserveTokens({
-        aToken: miMaticPayload.ATOKEN_IMPL(),
-        stableDebtToken: miMaticPayload.SDTOKEN_IMPL(),
-        variableDebtToken: miMaticPayload.VDTOKEN_IMPL()
-      })
-    );
-
-    _validatePoolActionsPostListing(allConfigsAfter);
-  }
-
-  function _validatePoolActionsPostListing(
-    ReserveConfig[] memory allReservesConfigs
-  ) internal {
-    address aMIMATIC = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
-      .aToken;
-    address vMIMATIC = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
-      .variableDebtToken;
-    address sMIMATIC = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
-      .stableDebtToken;
-    address aDAI = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'DAI', false)
-      .aToken;
-
-    AaveV3Helpers._deposit(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      MIMATIC,
-      666 ether,
-      true,
-      aMIMATIC
-    );
-
-    // We check revert when trying to borrow (not enabled as collateral, so any mode works)
-    // https://github.com/foundry-rs/foundry/issues/2549
-    // try
-    //   AaveV3Helpers._borrow(
-    //     vm,
-    //     MIMATIC_WHALE,
-    //     MIMATIC_WHALE,
-    //     MIMATIC,
-    //     10 ether,
-    //     1,
-    //     sMIMATIC
-    //   );
-    // {
-    //   revert('_testProposal() : BORROW_NOT_REVERTING');
-    // } catch Error(string memory revertReason) {
-    //   require(
-    //     keccak256(bytes(revertReason)) == keccak256(bytes('34')),
-    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-    //   );
-    //   vm.stopPrank();
-    // }
-
-    vm.startPrank(DAI_WHALE);
-    IERC20(DAI).transfer(MIMATIC_WHALE, 666 ether);
-    vm.stopPrank();
-
-    AaveV3Helpers._deposit(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      DAI,
-      666 ether,
-      true,
-      aDAI
-    );
-
-    AaveV3Helpers._borrow(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      MIMATIC,
-      222 ether,
-      2,
-      vMIMATIC
-    );
-
-    // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
-    skip(1);
-
-    AaveV3Helpers._repay(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      MIMATIC,
-      IERC20(MIMATIC).balanceOf(MIMATIC_WHALE),
-      2,
-      vMIMATIC,
-      true
-    );
-
-    AaveV3Helpers._withdraw(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      MIMATIC,
-      type(uint256).max,
-      aMIMATIC
-    );
   }
 }

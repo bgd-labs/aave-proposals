@@ -7,15 +7,15 @@ import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @author BGD Labs
- * @dev This payload lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
- * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0x751b8fd1c77677643e419d327bdf749c29ccf0a0269e58ed2af0013843376051
- * The proposal is, as agreed with the proposer, more conservative than the approved parameters:
- * - Not enabled as collateral initially and thus not be isolated / have a debt ceiling.
+ * @dev This payload lists FRAX as collateral and borrowing asset on Aave V3 Polygon
+ * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0xa464894c571fecf559fab1f1a8daf514250955d5ed2bc21eb3a153d03bbe67db
+ * Opposed to the suggested parameters this proposal will
+ * - Lowering the suggested 50M ceiling to a 2M ceiling
+ * - Adding a 50M supply cap
  * - The eMode lq treshold will be 97.5, instead of the suggested 98% as the parameters are per emode not per asset
- * - Adding a 10M supply cap.
+ * - The reserve factor will be 10% instead of 5% to be consistent with other stable coins
  */
-contract MiMaticPayload is IProposalGenericExecutor {
+contract FraxPayload is IProposalGenericExecutor {
   // **************************
   // Protocol's contracts
   // **************************
@@ -23,20 +23,20 @@ contract MiMaticPayload is IProposalGenericExecutor {
     0x929EC64c34a17401F460460D4B9390518E5B473e;
 
   // **************************
-  // New asset being listed (MIMATIC)
+  // New asset being listed (FRAX)
   // **************************
 
   address public constant UNDERLYING =
-    0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
-  string public constant ATOKEN_NAME = 'Aave Polygon MIMATIC';
-  string public constant ATOKEN_SYMBOL = 'aPolMIMATIC';
-  string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt MIMATIC';
-  string public constant VDTOKEN_SYMBOL = 'variableDebtPolMIMATIC';
-  string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt MIMATIC';
-  string public constant SDTOKEN_SYMBOL = 'stableDebtPolMIMATIC';
+    0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89;
+  string public constant ATOKEN_NAME = 'Aave Polygon FRAX';
+  string public constant ATOKEN_SYMBOL = 'aPolFRAX';
+  string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt FRAX';
+  string public constant VDTOKEN_SYMBOL = 'variableDebtPolFRAX';
+  string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt FRAX';
+  string public constant SDTOKEN_SYMBOL = 'stableDebtPolFRAX';
 
   address public constant PRICE_FEED =
-    0xd8d483d813547CfB624b8Dc33a00F2fcbCd2D428;
+    0x00DBeB1e45485d53DF7C2F0dF1Aa0b6Dc30311d3;
 
   address public constant ATOKEN_IMPL =
     0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
@@ -44,25 +44,33 @@ contract MiMaticPayload is IProposalGenericExecutor {
     0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
   address public constant SDTOKEN_IMPL =
     0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
+
   address public constant RATE_STRATEGY =
     0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
 
   uint256 public constant RESERVE_FACTOR = 1000; // 10%
 
-  uint256 public constant SUPPLY_CAP = 10_000_000; // 10m
+  uint256 public constant SUPPLY_CAP = 50_000_000; // 50m FRAX
   uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10%
 
   uint8 public constant EMODE_CATEGORY = 1; // Stablecoins
 
+  // params to set reserve as collateral
+  uint256 public constant LIQ_THRESHOLD = 8000; // 80%
+  uint256 public constant LTV = 7500; // 75%
+  uint256 public constant LIQ_BONUS = 10500; // 5%
+  uint256 public constant DEBT_CEILING = 2_000_000_00; // 2m
+
   function execute() external override {
     // -------------
-    // 0. Claim pool admin
+    // TODO: this should be removed once first proposal passes
+    // Claim pool admin
     // Only needed for the first proposal on any market
     // -------------
     AaveV3Polygon.ACL_MANAGER.addPoolAdmin(AaveV3Polygon.ACL_ADMIN);
 
     // ----------------------------
-    // 1. New price feed on oracle
+    // 0. New price feed on oracle
     // ----------------------------
     address[] memory assets = new address[](1);
     assets[0] = UNDERLYING;
@@ -72,7 +80,7 @@ contract MiMaticPayload is IProposalGenericExecutor {
     AaveV3Polygon.ORACLE.setAssetSources(assets, sources);
 
     // ------------------------------------------------
-    // 2. Listing of MIMATIC, with all its configurations
+    // 1. Listing of MIMATIC, with all its configurations
     // ------------------------------------------------
 
     ConfiguratorInputTypes.InitReserveInput[]
@@ -110,5 +118,16 @@ contract MiMaticPayload is IProposalGenericExecutor {
     configurator.setAssetEModeCategory(UNDERLYING, EMODE_CATEGORY);
 
     configurator.setLiquidationProtocolFee(UNDERLYING, LIQ_PROTOCOL_FEE);
+
+    configurator.setDebtCeiling(UNDERLYING, DEBT_CEILING);
+
+    configurator.configureReserveAsCollateral(
+      UNDERLYING,
+      LTV,
+      LIQ_THRESHOLD,
+      LIQ_BONUS
+    );
+
+    configurator.setBorrowableInIsolation(UNDERLYING, true);
   }
 }
