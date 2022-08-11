@@ -8,12 +8,13 @@ import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecuto
 
 /**
  * @author BGD Labs
- * @dev This payload lists MIMATIC (MAI) as borrowing asset on Aave V3 Polygon
+ * @dev This payload lists MIMATIC (MAI) as borrowing asset and collateral (in isolation) on Aave V3 Polygon
  * - Parameter snapshot: https://snapshot.org/#/aave.eth/proposal/0x751b8fd1c77677643e419d327bdf749c29ccf0a0269e58ed2af0013843376051
  * The proposal is, as agreed with the proposer, more conservative than the approved parameters:
- * - Not enabled as collateral initially and thus not be isolated / have a debt ceiling.
+ * - Lowering the suggested 50M ceiling to a 2M ceiling
  * - The eMode lq treshold will be 97.5, instead of the suggested 98% as the parameters are per emode not per asset
- * - Adding a 10M supply cap.
+ * - The reserve factor will be 10% instead of 5% to be consistent with other stable coins
+ * - Adding a 100M supply cap.
  */
 contract MiMaticPayload is IProposalGenericExecutor {
   // **************************
@@ -49,10 +50,16 @@ contract MiMaticPayload is IProposalGenericExecutor {
 
   uint256 public constant RESERVE_FACTOR = 1000; // 10%
 
-  uint256 public constant SUPPLY_CAP = 10_000_000; // 10m
+  uint256 public constant SUPPLY_CAP = 100_000_000; // 100m
   uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10%
 
   uint8 public constant EMODE_CATEGORY = 1; // Stablecoins
+
+  // Params to set reserve as collateral (isolation)
+  uint256 public constant LIQ_THRESHOLD = 8000; // 80%
+  uint256 public constant LTV = 7500; // 75%
+  uint256 public constant LIQ_BONUS = 10500; // 5%
+  uint256 public constant DEBT_CEILING = 2_000_000_00; // 2m
 
   function execute() external override {
     // -------------
@@ -111,5 +118,16 @@ contract MiMaticPayload is IProposalGenericExecutor {
     configurator.setAssetEModeCategory(UNDERLYING, EMODE_CATEGORY);
 
     configurator.setLiquidationProtocolFee(UNDERLYING, LIQ_PROTOCOL_FEE);
+
+    configurator.setDebtCeiling(UNDERLYING, DEBT_CEILING);
+
+    configurator.configureReserveAsCollateral(
+      UNDERLYING,
+      LTV,
+      LIQ_THRESHOLD,
+      LIQ_BONUS
+    );
+
+    configurator.setBorrowableInIsolation(UNDERLYING, true);
   }
 }
