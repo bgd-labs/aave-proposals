@@ -132,12 +132,12 @@ contract PolygonMiMaticE2ETest is Test {
       variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       decimals: 18,
-      ltv: 0,
-      liquidationThreshold: 0,
-      liquidationBonus: 0,
+      ltv: 7500,
+      liquidationThreshold: 8000,
+      liquidationBonus: 10500,
       liquidationProtocolFee: 1000,
       reserveFactor: 1000,
-      usageAsCollateralEnabled: false,
+      usageAsCollateralEnabled: true,
       borrowingEnabled: true,
       interestRateStrategy: AaveV3Helpers
         ._findReserveConfig(allConfigsAfter, 'USDT', false)
@@ -146,9 +146,9 @@ contract PolygonMiMaticE2ETest is Test {
       isActive: true,
       isFrozen: false,
       isSiloed: false,
-      supplyCap: 10_000_000,
+      supplyCap: 100_000_000,
       borrowCap: 0,
-      debtCeiling: 0,
+      debtCeiling: 2_000_000_00,
       eModeCategory: 1
     });
 
