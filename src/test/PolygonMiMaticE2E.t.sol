@@ -220,27 +220,26 @@ contract PolygonMiMaticE2ETest is Test {
       aMIMATIC
     );
 
-    // We check revert when trying to borrow (not enabled as collateral, so any mode works)
-    // https://github.com/foundry-rs/foundry/issues/2549
-    // try
-    //   AaveV3Helpers._borrow(
-    //     vm,
-    //     MIMATIC_WHALE,
-    //     MIMATIC_WHALE,
-    //     MIMATIC,
-    //     10 ether,
-    //     1,
-    //     sMIMATIC
-    //   );
-    // {
-    //   revert('_testProposal() : BORROW_NOT_REVERTING');
-    // } catch Error(string memory revertReason) {
-    //   require(
-    //     keccak256(bytes(revertReason)) == keccak256(bytes('34')),
-    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-    //   );
-    //   vm.stopPrank();
-    // }
+    // We check revert when trying to borrow at stable
+    try
+      AaveV3Helpers._borrow(
+        vm,
+        MIMATIC_WHALE,
+        MIMATIC_WHALE,
+        MIMATIC,
+        10 ether,
+        1,
+        sMIMATIC
+      )
+    {
+      revert('_testProposal() : BORROW_NOT_REVERTING');
+    } catch Error(string memory revertReason) {
+      require(
+        keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+        '_testProposal() : INVALID_STABLE_REVERT_MSG'
+      );
+      vm.stopPrank();
+    }
 
     vm.startPrank(DAI_WHALE);
     IERC20(DAI).transfer(MIMATIC_WHALE, 666 ether);
