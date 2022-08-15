@@ -12,6 +12,12 @@ To simplify the process of creating a cross chain proposal this repository conta
 
 ## Getting started
 
+### Setup environment
+
+```sh
+cp .env.example .env
+```
+
 ### Build
 
 ```sh
@@ -27,8 +33,6 @@ forge test
 ### Deploy
 
 ```sh
-# only needed for deployment
-cp .env.example .env
 sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
 ```
 
@@ -45,8 +49,14 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 ## Deployed addresses
 
 - [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
+- [MiMaticPayload](https://polygonscan.com/address/0x24bb1Df39EB811d4a7D82e9Ff4763456750f9750#code)
 
 ## References
 
 - [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge)
 - [first ever polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
+
+## Misc
+
+- the deploy script currently requires the --legacy flag due to issues with polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
+- some of the tests are currently commented out due to a bug on foundry causing public library methods to revert https://github.com/foundry-rs/foundry/issues/2549
