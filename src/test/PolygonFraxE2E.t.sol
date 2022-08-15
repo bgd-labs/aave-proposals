@@ -192,48 +192,47 @@ contract PolygonFraxE2ETest is Test {
       vFRAX
     );
 
-    // TODO: uncomment when foundry fixes bug with public methods on libs
     // We check proper revert when going over liquidation threshold
-    // try
-    //   AaveV3Helpers._borrow(
-    //     vm,
-    //     FRAX_WHALE,
-    //     FRAX_WHALE,
-    //     FRAX,
-    //     200 ether,
-    //     2,
-    //     vFRAX
-    //   )
-    // {
-    //   revert('_testProposal() : BORROW_NOT_REVERTING');
-    // } catch Error(string memory revertReason) {
-    //   require(
-    //     keccak256(bytes(revertReason)) == keccak256(bytes('36')),
-    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-    //   );
-    //   vm.stopPrank();
-    // }
+    try
+      AaveV3Helpers._borrow(
+        vm,
+        FRAX_WHALE,
+        FRAX_WHALE,
+        FRAX,
+        300 ether,
+        2,
+        vFRAX
+      )
+    {
+      revert('_testProposal() : BORROW_NOT_REVERTING');
+    } catch Error(string memory revertReason) {
+      require(
+        keccak256(bytes(revertReason)) == keccak256(bytes('36')),
+        '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
+      );
+      vm.stopPrank();
+    }
 
     // We check revert when trying to borrow at stable
-    // try
-    //   AaveV3Helpers._borrow(
-    //     vm,
-    //     FRAX_WHALE,
-    //     FRAX_WHALE,
-    //     FRAX,
-    //     10 ether,
-    //     1,
-    //     sFRAX
-    //   )
-    // {
-    //   revert('_testProposal() : BORROW_NOT_REVERTING');
-    // } catch Error(string memory revertReason) {
-    //   require(
-    //     keccak256(bytes(revertReason)) == keccak256(bytes('31')),
-    //     '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-    //   );
-    //   vm.stopPrank();
-    // }
+    try
+      AaveV3Helpers._borrow(
+        vm,
+        FRAX_WHALE,
+        FRAX_WHALE,
+        FRAX,
+        10 ether,
+        1,
+        sFRAX
+      )
+    {
+      revert('_testProposal() : BORROW_NOT_REVERTING');
+    } catch Error(string memory revertReason) {
+      require(
+        keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+        '_testProposal() : INVALID_STABLE_REVERT_MSG'
+      );
+      vm.stopPrank();
+    }
 
     vm.startPrank(DAI_WHALE);
     IERC20(DAI).transfer(FRAX_WHALE, 300 ether);
