@@ -200,15 +200,12 @@ contract PolygonMiMaticE2ETest is Test {
     address aMIMATIC = AaveV3Helpers
       ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
       .aToken;
-    address vMIMATIC = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
-      .variableDebtToken;
     address sMIMATIC = AaveV3Helpers
       ._findReserveConfig(allReservesConfigs, 'miMATIC', false)
       .stableDebtToken;
-    address aDAI = AaveV3Helpers
+    address vDAI = AaveV3Helpers
       ._findReserveConfig(allReservesConfigs, 'DAI', false)
-      .aToken;
+      .variableDebtToken;
 
     AaveV3Helpers._deposit(
       vm,
@@ -220,7 +217,7 @@ contract PolygonMiMaticE2ETest is Test {
       aMIMATIC
     );
 
-    // We check revert when trying to borrow at stable
+    // We check revert when trying to borrow (not enabled in isolation)
     try
       AaveV3Helpers._borrow(
         vm,
@@ -235,7 +232,7 @@ contract PolygonMiMaticE2ETest is Test {
       revert('_testProposal() : BORROW_NOT_REVERTING');
     } catch Error(string memory revertReason) {
       require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
         '_testProposal() : INVALID_STABLE_REVERT_MSG'
       );
       vm.stopPrank();
@@ -245,24 +242,14 @@ contract PolygonMiMaticE2ETest is Test {
     IERC20(DAI).transfer(MIMATIC_WHALE, 666 ether);
     vm.stopPrank();
 
-    AaveV3Helpers._deposit(
-      vm,
-      MIMATIC_WHALE,
-      MIMATIC_WHALE,
-      DAI,
-      666 ether,
-      true,
-      aDAI
-    );
-
     AaveV3Helpers._borrow(
       vm,
       MIMATIC_WHALE,
       MIMATIC_WHALE,
-      MIMATIC,
+      DAI,
       222 ether,
       2,
-      vMIMATIC
+      vDAI
     );
 
     // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
@@ -272,10 +259,10 @@ contract PolygonMiMaticE2ETest is Test {
       vm,
       MIMATIC_WHALE,
       MIMATIC_WHALE,
-      MIMATIC,
-      IERC20(MIMATIC).balanceOf(MIMATIC_WHALE),
+      DAI,
+      IERC20(DAI).balanceOf(MIMATIC_WHALE),
       2,
-      vMIMATIC,
+      vDAI,
       true
     );
 

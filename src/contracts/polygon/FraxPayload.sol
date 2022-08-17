@@ -127,7 +127,5 @@ contract FraxPayload is IProposalGenericExecutor {
       LIQ_THRESHOLD,
       LIQ_BONUS
     );
-
-    configurator.setBorrowableInIsolation(UNDERLYING, true);
   }
 }
