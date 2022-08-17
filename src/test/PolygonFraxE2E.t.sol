@@ -182,17 +182,7 @@ contract PolygonFraxE2ETest is Test {
 
     AaveV3Helpers._borrow(vm, FRAX_WHALE, FRAX_WHALE, DAI, 2 ether, 2, vDAI);
 
-    AaveV3Helpers._borrow(
-      vm,
-      FRAX_WHALE,
-      FRAX_WHALE,
-      FRAX,
-      200 ether,
-      2,
-      vFRAX
-    );
-
-    // We check proper revert when going over liquidation threshold
+    // We check revert when trying to borrow (not enabled in isolation)
     try
       AaveV3Helpers._borrow(
         vm,
@@ -207,13 +197,13 @@ contract PolygonFraxE2ETest is Test {
       revert('_testProposal() : BORROW_NOT_REVERTING');
     } catch Error(string memory revertReason) {
       require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('36')),
+        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
         '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
       );
       vm.stopPrank();
     }
 
-    // We check revert when trying to borrow at stable
+    // We check revert when trying to borrow (not enabled in isolation)
     try
       AaveV3Helpers._borrow(
         vm,
@@ -228,15 +218,17 @@ contract PolygonFraxE2ETest is Test {
       revert('_testProposal() : BORROW_NOT_REVERTING');
     } catch Error(string memory revertReason) {
       require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
         '_testProposal() : INVALID_STABLE_REVERT_MSG'
       );
       vm.stopPrank();
     }
 
     vm.startPrank(DAI_WHALE);
-    IERC20(DAI).transfer(FRAX_WHALE, 300 ether);
+    IERC20(DAI).transfer(FRAX_WHALE, 1000 ether);
     vm.stopPrank();
+
+    AaveV3Helpers._borrow(vm, FRAX_WHALE, FRAX_WHALE, DAI, 222 ether, 2, vDAI);
 
     // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
     skip(1);
@@ -249,17 +241,6 @@ contract PolygonFraxE2ETest is Test {
       IERC20(DAI).balanceOf(FRAX_WHALE),
       2,
       vDAI,
-      true
-    );
-
-    AaveV3Helpers._repay(
-      vm,
-      FRAX_WHALE,
-      FRAX_WHALE,
-      FRAX,
-      IERC20(FRAX).balanceOf(FRAX_WHALE),
-      2,
-      vFRAX,
       true
     );
 
