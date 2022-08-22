@@ -19,5 +19,5 @@ deploy-frax-pk :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax
 verify-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --rpc-url ${RPC_URL} --legacy --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
 
 # Deploy L1 proposal
-deploy-l1-polygon-proposal-ledger :; forge script script/DeployL1PolygonProposal.s.sol:DeployL1PolygonProposal --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
-deploy-l1-polygon-proposal-pk :; forge script script/DeployL1PolygonProposal.s.sol:DeployL1PolygonProposal --rpc-url ${RPC_URL} --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
+deploy-l1-mai-proposal-ledger :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+deploy-l1-mai-proposal-pk :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv

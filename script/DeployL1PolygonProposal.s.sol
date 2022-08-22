@@ -1,17 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import 'forge-std/console.sol';
 import {Script} from 'forge-std/Script.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
-abstract contract DeployL1PolygonProposal is Script {
+library DeployL1PolygonProposal {
   address internal constant CROSSCHAIN_FORWARDER_POLYGON =
     address(0x158a6bC04F0828318821baE797f50B0A1299d45b);
 
-  function deployL1Proposal(address payload, bytes32 ipfsHash) internal {
+  function _deployL1Proposal(address payload, bytes32 ipfsHash)
+    internal
+    returns (uint256 proposalId)
+  {
     require(payload != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
     require(ipfsHash != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
-    vm.startBroadcast();
     address[] memory targets = new address[](1);
     targets[0] = CROSSCHAIN_FORWARDER_POLYGON;
     uint256[] memory values = new uint256[](1);
@@ -22,24 +25,34 @@ abstract contract DeployL1PolygonProposal is Script {
     calldatas[0] = abi.encode(payload);
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
-    AaveGovernanceV2.GOV.create(
-      IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
-      targets,
-      values,
-      signatures,
-      calldatas,
-      withDelegatecalls,
-      ipfsHash
+    return
+      AaveGovernanceV2.GOV.create(
+        IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
+        targets,
+        values,
+        signatures,
+        calldatas,
+        withDelegatecalls,
+        ipfsHash
+      );
+  }
+}
+
+contract DeployMai is Script {
+  function run() external {
+    vm.startBroadcast();
+    DeployL1PolygonProposal._deployL1Proposal(
+      0x83Fba23163662149B33DBC05cF1312DF6dcBA72b,
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfshash
     );
     vm.stopBroadcast();
   }
 }
 
-contract DeployMiMatic is DeployL1PolygonProposal {
-  function run() external {
-    deployL1Proposal(
-      0x83Fba23163662149B33DBC05cF1312DF6dcBA72b,
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
-    );
-  }
-}
+// contract DeployFrax is DeployL1PolygonProposal {
+//   function run() external {
+//     deployL1Proposal(
+//       ...
+//     );
+//   }
+// }
