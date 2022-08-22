@@ -39,14 +39,8 @@ contract PolygonMiMaticE2ETest is Test {
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    polygonFork = vm.createFork(
-      vm.rpcUrl('polygon'),
-      vm.envUint('FORK_BLOCK_POLYGON')
-    );
-    mainnetFork = vm.createFork(
-      vm.rpcUrl('mainnet'),
-      vm.envUint('FORK_BLOCK_MAINNET')
-    );
+    polygonFork = vm.createFork(vm.rpcUrl('polygon'), 31237525);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15269562);
   }
 
   function _createProposal(address l2payload) internal returns (uint256) {

@@ -30,7 +30,7 @@ forge build
 forge test
 ```
 
-### Deploy
+### Deploy L2 proposal
 
 ```sh
 sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
