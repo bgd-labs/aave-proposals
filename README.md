@@ -33,13 +33,19 @@ forge test
 ### Deploy L2 proposal
 
 ```sh
-sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
+# Deploy proposal
+make deploy-<mai|frax>-<ledger|pk>
+# Verify proposal
+make verify-<mai|frax>
 ```
 
-### Deploy L1 polygon proposal
+### Deploy L1 proposal
+
+You need to setup your `.env` accordingly to include the proper `L2_PAYLOAD_ADDRESS` and `IPFS_HASH`.
+Make sure the IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
 
 ```sh
-sh deploy-l1-polygon.sh DeployL1PolygonProposal
+deploy-l1-polygon-proposal-<ledger|pk>
 ```
 
 ## Creating the proposal
