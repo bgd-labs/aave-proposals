@@ -9,6 +9,7 @@ import {IStateReceiver} from '../interfaces/IFx.sol';
 import {IBridgeExecutor} from '../interfaces/IBridgeExecutor.sol';
 import {CrosschainForwarderPolygon} from '../contracts/polygon/CrosschainForwarderPolygon.sol';
 import {FraxPayload} from '../contracts/polygon/FraxPayload.sol';
+import {DeployL1PolygonProposal} from '../../script/DeployL1PolygonProposal.s.sol';
 
 contract PolygonFraxE2ETest is Test {
   // the identifiers of the forks
@@ -37,8 +38,8 @@ contract PolygonFraxE2ETest is Test {
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    polygonFork = vm.createFork('https://polygon-rpc.com', 31507646);
-    mainnetFork = vm.createFork('https://rpc.flashbots.net/', 15275388);
+    polygonFork = vm.createFork(vm.rpcUrl('polygon'), 31507646);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15275388);
   }
 
   function testProposalE2E() public {
@@ -56,7 +57,10 @@ contract PolygonFraxE2ETest is Test {
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AAVE_WHALE);
-    uint256 proposalId = _createProposal(address(fraxPayload));
+    uint256 proposalId = DeployL1PolygonProposal._deployL1Proposal(
+      address(fraxPayload),
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfs-hash
+    );
     vm.stopPrank();
 
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event
@@ -252,29 +256,6 @@ contract PolygonFraxE2ETest is Test {
       type(uint256).max,
       aFRAX
     );
-  }
-
-  function _createProposal(address l2payload) internal returns (uint256) {
-    address[] memory targets = new address[](1);
-    targets[0] = CROSSCHAIN_FORWARDER_POLYGON;
-    uint256[] memory values = new uint256[](1);
-    values[0] = 0;
-    string[] memory signatures = new string[](1);
-    signatures[0] = 'execute(address)';
-    bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = abi.encode(l2payload);
-    bool[] memory withDelegatecalls = new bool[](1);
-    withDelegatecalls[0] = true;
-    return
-      AaveGovernanceV2.GOV.create(
-        IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
-        targets,
-        values,
-        signatures,
-        calldatas,
-        withDelegatecalls,
-        bytes32(0)
-      );
   }
 
   // utility to transform memory to calldata so array range access is available

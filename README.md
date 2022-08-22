@@ -30,10 +30,21 @@ forge build
 forge test
 ```
 
-### Deploy
+### Deploy L2 proposal
 
 ```sh
-sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
+# Deploy proposal
+make deploy-<mai|frax>-<ledger|pk>
+# Verify proposal
+make verify-<mai|frax>
+```
+
+### Deploy L1 proposal
+
+Make sure the referenced IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
+
+```sh
+make deploy-l1-<mai|frax>-proposal-<ledger|pk>
 ```
 
 ## Creating the proposal
