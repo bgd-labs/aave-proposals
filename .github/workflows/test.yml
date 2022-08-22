@@ -13,3 +13,4 @@ on:
 jobs:
   test:
     uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@dd2aee67ba4c799eb01eee5e9af1022952ede191
+    secrets: inherit
