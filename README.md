@@ -36,6 +36,12 @@ forge test
 sh deploy-polygon.sh <FileName> # DeployPolygonMiMatic
 ```
 
+### Deploy L1 polygon proposal
+
+```sh
+sh deploy-l1-polygon.sh DeployL1PolygonProposal
+```
+
 ## Creating the proposal
 
 To create a proposal you have to do two things:
