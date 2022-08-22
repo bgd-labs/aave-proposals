@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/console.sol';
 import {Script} from 'forge-std/Script.sol';
 import {FraxPayload} from '../src/contracts/polygon/FraxPayload.sol';
 
