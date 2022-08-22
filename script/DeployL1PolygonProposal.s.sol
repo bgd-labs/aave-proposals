@@ -4,19 +4,13 @@ pragma solidity ^0.8.0;
 import {Script} from 'forge-std/Script.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
-contract DeployL1PolygonProposal is Script {
+abstract contract DeployL1PolygonProposal is Script {
   address internal constant CROSSCHAIN_FORWARDER_POLYGON =
     address(0x158a6bC04F0828318821baE797f50B0A1299d45b);
 
-  function run() external {
-    address L2_PAYLOAD_ADDRESS = vm.envAddress('L2_PAYLOAD_ADDRESS');
-    bytes32 IPFS_HASH = vm.envBytes32('IPFS_HASH');
-    require(
-      L2_PAYLOAD_ADDRESS != address(0),
-      "ERROR: L2_PAYLOAD can't be address(0)"
-    );
-    require(IPFS_HASH != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
-
+  function deployL1Proposal(address payload, bytes32 ipfsHash) internal {
+    require(payload != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
+    require(ipfsHash != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
     vm.startBroadcast();
     address[] memory targets = new address[](1);
     targets[0] = CROSSCHAIN_FORWARDER_POLYGON;
@@ -25,7 +19,7 @@ contract DeployL1PolygonProposal is Script {
     string[] memory signatures = new string[](1);
     signatures[0] = 'execute(address)';
     bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = abi.encode(L2_PAYLOAD_ADDRESS);
+    calldatas[0] = abi.encode(payload);
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
     AaveGovernanceV2.GOV.create(
@@ -35,8 +29,17 @@ contract DeployL1PolygonProposal is Script {
       signatures,
       calldatas,
       withDelegatecalls,
-      IPFS_HASH
+      ipfsHash
     );
     vm.stopBroadcast();
+  }
+}
+
+contract DeployMiMatic is DeployL1PolygonProposal {
+  function run() external {
+    deployL1Proposal(
+      0x83Fba23163662149B33DBC05cF1312DF6dcBA72b,
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
+    );
   }
 }
