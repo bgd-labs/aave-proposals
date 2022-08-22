@@ -38,8 +38,8 @@ contract PolygonFraxE2ETest is Test {
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    polygonFork = vm.createFork('https://polygon-rpc.com', 31507646);
-    mainnetFork = vm.createFork('https://rpc.flashbots.net/', 15275388);
+    polygonFork = vm.createFork(vm.rpcUrl('polygon'), 31507646);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15275388);
   }
 
   function testProposalE2E() public {

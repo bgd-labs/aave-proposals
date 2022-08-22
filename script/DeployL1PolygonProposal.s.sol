@@ -49,10 +49,13 @@ contract DeployMai is Script {
   }
 }
 
-// contract DeployFrax is DeployL1PolygonProposal {
-//   function run() external {
-//     deployL1Proposal(
-//       ...
-//     );
-//   }
-// }
+contract DeployFrax is Script {
+  function run() external {
+    vm.startBroadcast();
+    DeployL1PolygonProposal._deployL1Proposal(
+      0xA2f3F9534E918554A9e95cfa7dC4F763d02A0859,
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfshash
+    );
+    vm.stopBroadcast();
+  }
+}
