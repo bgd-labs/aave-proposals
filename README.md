@@ -44,7 +44,7 @@ make verify-<mai|frax>
 Make sure the referenced IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
 
 ```sh
-deploy-l1-<mai>-proposal-<ledger|pk>
+make deploy-l1-<mai>-proposal-<ledger|pk>
 ```
 
 ## Creating the proposal

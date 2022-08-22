@@ -68,7 +68,7 @@ contract PolygonMiMaticE2ETest is Test {
     vm.startPrank(AAVE_WHALE);
     uint256 proposalId = DeployL1PolygonProposal._deployL1Proposal(
       address(miMaticPayload),
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfs-hash
     );
     vm.stopPrank();
 
