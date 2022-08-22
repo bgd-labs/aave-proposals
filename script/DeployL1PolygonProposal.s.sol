@@ -43,7 +43,7 @@ contract DeployMai is Script {
     vm.startBroadcast();
     DeployL1PolygonProposal._deployL1Proposal(
       0x83Fba23163662149B33DBC05cF1312DF6dcBA72b,
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfshash
+      bytes32(0) // TODO: replace with actual ipfshash
     );
     vm.stopBroadcast();
   }
@@ -54,7 +54,7 @@ contract DeployFrax is Script {
     vm.startBroadcast();
     DeployL1PolygonProposal._deployL1Proposal(
       0xA2f3F9534E918554A9e95cfa7dC4F763d02A0859,
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5 // TODO: replace with actual ipfshash
+      bytes32(0) // TODO: replace with actual ipfshash
     );
     vm.stopBroadcast();
   }
