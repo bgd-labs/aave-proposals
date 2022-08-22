@@ -41,11 +41,10 @@ make verify-<mai|frax>
 
 ### Deploy L1 proposal
 
-You need to setup your `.env` accordingly to include the proper `L2_PAYLOAD_ADDRESS` and `IPFS_HASH`.
-Make sure the IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
+Make sure the referenced IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
 
 ```sh
-deploy-l1-polygon-proposal-<ledger|pk>
+deploy-l1-<mai>-proposal-<ledger|pk>
 ```
 
 ## Creating the proposal
