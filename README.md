@@ -70,6 +70,7 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 - [PolygonBridge: FxRoot](https://etherscan.io/address/0xfe5e5d361b2ad62c541bab87c45a0b9b018389a2#code)
 - [PolygonBridge: PolygonBridgeExecutor](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code)
 
+- [OptimismBridge: L1CrossDomainMessenger](https://etherscan.io/address/0x25ace71c97b33cc4729cf772ae268934f7ab5fa1#readProxyContract)
 - [OptimismBridge: OptimismBridgeExecutor](https://optimistic.etherscan.io/address/0x7d9103572be58ffe99dc390e8246f02dcae6f611#code)
 
 - [ArbitrumBridge: Inbox](https://etherscan.io/address/0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f#code)
