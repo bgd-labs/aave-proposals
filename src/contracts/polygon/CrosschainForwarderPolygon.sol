@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IFxStateSender} from '../../interfaces/IFx.sol';
+import {IFxStateSender} from '../../interfaces/polygon/IFx.sol';
 
 /**
  * @title A generic executor for proposals targeting the polygon v3 market

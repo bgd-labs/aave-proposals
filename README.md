@@ -59,9 +59,21 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 ## Deployed addresses
 
+### This repository
+
 - [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
 - [MiMaticPayload](https://polygonscan.com/address/0x83fba23163662149b33dbc05cf1312df6dcba72b#code)
 - [FraxPayload](https://polygonscan.com/address/0xa2f3f9534e918554a9e95cfa7dc4f763d02a0859#code)
+
+### Bridges
+
+- [PolygonBridge: FxRoot](https://etherscan.io/address/0xfe5e5d361b2ad62c541bab87c45a0b9b018389a2#code)
+- [PolygonBridge: PolygonBridgeExecutor](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code)
+
+- [OptimismBridge: OptimismBridgeExecutor](https://optimistic.etherscan.io/address/0x7d9103572be58ffe99dc390e8246f02dcae6f611#code)
+
+- [ArbitrumBridge: Inbox](https://etherscan.io/address/0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f#code)
+- [ArtitrumBridge: ArbitrumBridgeExecutor](https://arbiscan.io/address/0x7d9103572be58ffe99dc390e8246f02dcae6f611#code)
 
 ## References
 
