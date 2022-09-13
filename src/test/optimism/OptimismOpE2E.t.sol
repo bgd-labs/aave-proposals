@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
 import {IL2CrossDomainMessenger, AddressAliasHelper} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
@@ -30,15 +31,25 @@ contract OptimismOpE2ETest is Test {
   address public constant OP = 0x4200000000000000000000000000000000000042;
   address public constant OP_WHALE = 0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26;
 
-  address public constant DAI = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
+  address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
   address public constant DAI_WHALE =
-    0xd7052EC0Fe1fe25b20B7D65F6f3d490fCE58804f;
+    0x82E64f49Ed5EC1bC6e43DAD4FC8Af9bb3A2312EE;
   address public constant AAVE_WHALE =
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
     optimismFork = vm.createFork(vm.rpcUrl('optimism'), 22961333);
     mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15526675);
+    vm.selectFork(optimismFork);
+    vm.startPrank(AaveV3Optimism.ACL_ADMIN);
+    // -------------
+    // Claim pool admin
+    // Only needed for the first proposal on any market. If ACL_ADMIN was previously set it will ignore
+    // https://github.com/aave/aave-v3-core/blob/master/contracts/dependencies/openzeppelin/contracts/AccessControl.sol#L207
+    // -------------
+    AaveV3Optimism.ACL_MANAGER.addPoolAdmin(OPTIMISM_BRIDGE_EXECUTOR);
+    AaveV3Optimism.ACL_MANAGER.addRiskAdmin(OPTIMISM_BRIDGE_EXECUTOR);
+    vm.stopPrank();
   }
 
   function testProposalE2E() public {
@@ -128,32 +139,32 @@ contract OptimismOpE2ETest is Test {
       debtCeiling: 0,
       eModeCategory: 0
     });
-    // AaveV3Helpers._validateReserveConfig(expectedAssetConfig, allConfigsAfter);
-    // AaveV3Helpers._noReservesConfigsChangesApartNewListings(
-    //   allConfigsBefore,
-    //   allConfigsAfter
-    // );
-    // AaveV3Helpers._validateReserveTokensImpls(
-    //   vm,
-    //   AaveV3Helpers._findReserveConfig(allConfigsAfter, 'OP', false),
-    //   ReserveTokens({
-    //     aToken: fraxPayload.ATOKEN_IMPL(),
-    //     stableDebtToken: fraxPayload.SDTOKEN_IMPL(),
-    //     variableDebtToken: fraxPayload.VDTOKEN_IMPL()
-    //   })
-    // );
-    // AaveV3Helpers._validateAssetSourceOnOracle(OP, fraxPayload.PRICE_FEED());
-    // // impl should be same as USDC
-    // AaveV3Helpers._validateReserveTokensImpls(
-    //   vm,
-    //   AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
-    //   ReserveTokens({
-    //     aToken: fraxPayload.ATOKEN_IMPL(),
-    //     stableDebtToken: fraxPayload.SDTOKEN_IMPL(),
-    //     variableDebtToken: fraxPayload.VDTOKEN_IMPL()
-    //   })
-    // );
-    // _validatePoolActionsPostListing(allConfigsAfter);
+    AaveV3Helpers._validateReserveConfig(expectedAssetConfig, allConfigsAfter);
+    AaveV3Helpers._noReservesConfigsChangesApartNewListings(
+      allConfigsBefore,
+      allConfigsAfter
+    );
+    AaveV3Helpers._validateReserveTokensImpls(
+      vm,
+      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'OP', false),
+      ReserveTokens({
+        aToken: opPayload.ATOKEN_IMPL(),
+        stableDebtToken: opPayload.SDTOKEN_IMPL(),
+        variableDebtToken: opPayload.VDTOKEN_IMPL()
+      })
+    );
+    AaveV3Helpers._validateAssetSourceOnOracle(OP, opPayload.PRICE_FEED());
+    // impl should be same as USDC
+    AaveV3Helpers._validateReserveTokensImpls(
+      vm,
+      AaveV3Helpers._findReserveConfig(allConfigsAfter, 'USDC', false),
+      ReserveTokens({
+        aToken: opPayload.ATOKEN_IMPL(),
+        stableDebtToken: opPayload.SDTOKEN_IMPL(),
+        variableDebtToken: opPayload.VDTOKEN_IMPL()
+      })
+    );
+    _validatePoolActionsPostListing(allConfigsAfter);
   }
 
   function _validatePoolActionsPostListing(
@@ -172,31 +183,7 @@ contract OptimismOpE2ETest is Test {
       ._findReserveConfig(allReservesConfigs, 'DAI', false)
       .variableDebtToken;
 
-    AaveV3Helpers._deposit(vm, OP_WHALE, OP_WHALE, OP, 666 ether, true, aOP);
-
-    AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, DAI, 2 ether, 2, vDAI);
-
-    // We check revert when trying to borrow (not enabled in isolation)
-    try AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, OP, 300 ether, 2, vOP) {
-      revert('_testProposal() : BORROW_NOT_REVERTING');
-    } catch Error(string memory revertReason) {
-      require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
-        '_testProposal() : INVALID_VARIABLE_REVERT_MSG'
-      );
-      vm.stopPrank();
-    }
-
-    // We check revert when trying to borrow (not enabled in isolation)
-    try AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, OP, 10 ether, 1, sOP) {
-      revert('_testProposal() : BORROW_NOT_REVERTING');
-    } catch Error(string memory revertReason) {
-      require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
-        '_testProposal() : INVALID_STABLE_REVERT_MSG'
-      );
-      vm.stopPrank();
-    }
+    AaveV3Helpers._deposit(vm, OP_WHALE, OP_WHALE, OP, 1000 ether, true, aOP);
 
     vm.startPrank(DAI_WHALE);
     IERC20(DAI).transfer(OP_WHALE, 1000 ether);

@@ -41,7 +41,7 @@ contract OpPayload is IProposalGenericExecutor {
     0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
 
   address public constant RATE_STRATEGY =
-    0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4; // TODO: check no info
+    0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C; // same as weth
 
   uint256 public constant RESERVE_FACTOR = 3000; // 30%
 
@@ -49,18 +49,11 @@ contract OpPayload is IProposalGenericExecutor {
   uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10% TODO: check no info
 
   // params to set reserve as collateral
-  uint256 public constant LIQ_THRESHOLD = 5000; // 80%
+  uint256 public constant LIQ_THRESHOLD = 5000; // 50%
   uint256 public constant LTV = 3000; // 30%
   uint256 public constant LIQ_BONUS = 11200; // 12%
 
   function execute() external override {
-    // -------------
-    // Claim pool admin
-    // Only needed for the first proposal on any market. If ACL_ADMIN was previously set it will ignore
-    // https://github.com/aave/aave-v3-core/blob/master/contracts/dependencies/openzeppelin/contracts/AccessControl.sol#L207
-    // -------------
-    AaveV3Optimism.ACL_MANAGER.addPoolAdmin(AaveV3Optimism.ACL_ADMIN);
-
     // ----------------------------
     // 0. New price feed on oracle
     // ----------------------------
