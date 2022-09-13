@@ -6,7 +6,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
 import {IStateReceiver} from '../../interfaces/polygon/IFx.sol';
-import {IBridgeExecutor} from '../../interfaces/IBridgeExecutor.sol';
+import {IBridgeExecutor} from '../../interfaces/polygon/IBridgeExecutor.sol';
 import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
 import {FraxPayload} from '../../contracts/polygon/FraxPayload.sol';
 import {DeployL1PolygonProposal} from '../../../script/DeployL1PolygonProposal.s.sol';

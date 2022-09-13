@@ -6,7 +6,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
 import {IL2CrossDomainMessenger, AddressAliasHelper} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
-import {IBridgeExecutor} from '../../interfaces/IBridgeExecutor.sol';
+import {IExecutorBase} from '../../interfaces/optimism/IExecutorBase.sol';
 import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 import {DeployL1OptimismProposal} from '../../../script/DeployL1OptimismProposal.s.sol';
@@ -38,12 +38,11 @@ contract OptimismOpE2ETest is Test {
     address(0x25F2226B597E8F9514B3F68F00f494cF4f286491);
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 15526675);
+    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 22961333);
     mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15526675);
   }
 
   function testProposalE2E() public {
-    //vm.makePersistent(OPTIMISM_BRIDGE_EXECUTOR);
     vm.selectFork(mainnetFork);
     address crosschainForwarderOptimism = address(
       new CrosschainForwarderOptimism()
@@ -94,11 +93,11 @@ contract OptimismOpE2ETest is Test {
     vm.stopPrank();
     // 5. execute proposal on l2
     vm.warp(
-      block.timestamp + IBridgeExecutor(OPTIMISM_BRIDGE_EXECUTOR).getDelay() + 1
+      block.timestamp + IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).getDelay() + 1
     );
     // execute the proposal
-    IBridgeExecutor(OPTIMISM_BRIDGE_EXECUTOR).execute(
-      IBridgeExecutor(OPTIMISM_BRIDGE_EXECUTOR).getActionsSetCount() - 1
+    IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).execute(
+      IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).getActionsSetCount() - 1
     );
     // // 6. verify results
     // ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(

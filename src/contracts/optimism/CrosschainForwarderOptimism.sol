@@ -34,14 +34,14 @@ contract CrosschainForwarderOptimism {
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
 
-    bytes memory action = abi.encode(
+    bytes memory queue = abi.encodeWithSelector(
+      bytes4(keccak256('queue(address[],uint256[],string[],bytes[],bool[])')),
       targets,
       values,
       signatures,
       calldatas,
       withDelegatecalls
     );
-    bytes memory queue = abi.encode('queue()', action);
     ICrossDomainMessenger(L1_CROSS_DOMAIN_MESSANGER_ADDRESS).sendMessage(
       OPTIMISM_BRIDGE_EXECUTOR,
       queue,
