@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
@@ -12,7 +13,7 @@ import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainFo
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 import {DeployL1OptimismProposal} from '../../../script/DeployL1OptimismProposal.s.sol';
 
-contract OptimismOpE2ETest is Test {
+contract OptimismOpE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 optimismFork;

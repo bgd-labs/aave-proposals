@@ -46,7 +46,7 @@ contract OpPayload is IProposalGenericExecutor {
   uint256 public constant RESERVE_FACTOR = 3000; // 30%
 
   uint256 public constant SUPPLY_CAP = 1_000_000; // 1m OP
-  uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10% TODO: check no info
+  uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10%
 
   // params to set reserve as collateral
   uint256 public constant LIQ_THRESHOLD = 5000; // 50%
