@@ -5,7 +5,9 @@ out = 'out'
 libs = ['lib']
 
 [rpc_endpoints]
+ethereum="${RPC_ETHEREUM}"
+optimism = "${RPC_OPTIMISM}"
+avalanche = "${RPC_AVALANCHE}"
 polygon = "${RPC_POLYGON}"
-mainnet = "${RPC_MAINNET}"
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config

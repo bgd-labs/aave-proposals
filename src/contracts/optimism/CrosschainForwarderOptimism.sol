@@ -4,14 +4,13 @@ pragma solidity ^0.8.0;
 import {ICrossDomainMessenger} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
 
 /**
- * @title A generic executor for proposals targeting the arbitrum v3 market
+ * @title A generic executor for proposals targeting the optimism v3 market
  * @author BGD Labs
- * @notice You can **only** use this executor when the arbitrum payload has a `execute()` signature without parameters
- * @notice You can **only** use this executor when the arbitrum payload is expected to be executed via `DELEGATECALL`
- * @dev This executor is a generic wrapper to be used with Arbitrum Inbox (https://developer.offchainlabs.com/arbos/l1-to-l2-messaging#address-aliasing)
+ * @notice You can **only** use this executor when the optimism payload has a `execute()` signature without parameters
+ * @notice You can **only** use this executor when the optimism payload is expected to be executed via `DELEGATECALL`
+ * @dev This executor is a generic wrapper to be used with Optimism CrossDomainManager (https://etherscan.io/address/0x25ace71c97b33cc4729cf772ae268934f7ab5fa1)
  * It encodes a parameterless `execute()` with delegate calls and a specified target.
- * This encoded abi is then send to the Inbox to be synced to the FX-child on the polygon network.
- * Once synced the POLYGON_BRIDGE_EXECUTOR will queue the execution of the payload.
+ * This encoded abi is then wrapped into a queue call which is send to the CrossDomainManager which is queueing the proposal on the POLYGON_BRIDGE_EXECUTOR.
  */
 contract CrosschainForwarderOptimism {
   address public constant L1_CROSS_DOMAIN_MESSANGER_ADDRESS =
@@ -46,7 +45,7 @@ contract CrosschainForwarderOptimism {
     ICrossDomainMessenger(L1_CROSS_DOMAIN_MESSANGER_ADDRESS).sendMessage(
       OPTIMISM_BRIDGE_EXECUTOR,
       queue,
-      0 //_gasLimit
+      1920000
     );
   }
 }
