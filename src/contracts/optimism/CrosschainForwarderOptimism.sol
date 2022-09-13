@@ -8,9 +8,10 @@ import {ICrossDomainMessenger} from '../../interfaces/optimism/ICrossDomainMesse
  * @author BGD Labs
  * @notice You can **only** use this executor when the optimism payload has a `execute()` signature without parameters
  * @notice You can **only** use this executor when the optimism payload is expected to be executed via `DELEGATECALL`
- * @dev This executor is a generic wrapper to be used with Optimism CrossDomainManager (https://etherscan.io/address/0x25ace71c97b33cc4729cf772ae268934f7ab5fa1)
- * It encodes a parameterless `execute()` with delegate calls and a specified target.
- * This encoded abi is then wrapped into a queue call which is send to the CrossDomainManager which is queueing the proposal on the POLYGON_BRIDGE_EXECUTOR.
+ * @notice You can **only** execute payloads on optimism with up to 1920000 gas (this is the maximum covered by the bridge without additional payment)
+ * @dev This executor is a generic wrapper to be used with Optimism CrossDomainMessenger (https://etherscan.io/address/0x25ace71c97b33cc4729cf772ae268934f7ab5fa1)
+ * It encodes a queue with a parameterless `execute()` with delegate calls and a specified target.
+ * This encoded abi is then relayed on the L2CrossDomainMessenger which is in turn queueing the proposal on the OPTIMISM_BRIDGE_EXECUTOR.
  */
 contract CrosschainForwarderOptimism {
   address public constant L1_CROSS_DOMAIN_MESSANGER_ADDRESS =
@@ -45,7 +46,7 @@ contract CrosschainForwarderOptimism {
     ICrossDomainMessenger(L1_CROSS_DOMAIN_MESSANGER_ADDRESS).sendMessage(
       OPTIMISM_BRIDGE_EXECUTOR,
       queue,
-      1920000
+      1920000 // gasLimit
     );
   }
 }

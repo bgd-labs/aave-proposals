@@ -27,9 +27,8 @@ contract OptimismOpE2ETest is Test {
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 
-  address public constant FRAX = 0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89;
-  address public constant FRAX_WHALE =
-    0x6e1A844AFff1aa2a8ba3127dB83088e196187110;
+  address public constant OP = 0x4200000000000000000000000000000000000042;
+  address public constant OP_WHALE = 0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26;
 
   address public constant DAI = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
   address public constant DAI_WHALE =
@@ -49,7 +48,7 @@ contract OptimismOpE2ETest is Test {
     );
 
     vm.selectFork(optimismFork);
-    // we get all configs to later on check that payload only changes FRAX
+    // we get all configs to later on check that payload only changes OP
     ReserveConfig[] memory allConfigsBefore = AaveV3Helpers._getReservesConfigs(
       false
     );
@@ -99,36 +98,36 @@ contract OptimismOpE2ETest is Test {
     IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).execute(
       IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).getActionsSetCount() - 1
     );
-    // // 6. verify results
-    // ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
-    //   false
-    // );
-    // ReserveConfig memory expectedAssetConfig = ReserveConfig({
-    //   symbol: 'FRAX',
-    //   underlying: FRAX,
-    //   aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-    //   variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-    //   stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-    //   decimals: 18,
-    //   ltv: 7500,
-    //   liquidationThreshold: 8000,
-    //   liquidationBonus: 10500,
-    //   liquidationProtocolFee: 1000,
-    //   reserveFactor: 1000,
-    //   usageAsCollateralEnabled: true,
-    //   borrowingEnabled: true,
-    //   interestRateStrategy: AaveV3Helpers
-    //     ._findReserveConfig(allConfigsAfter, 'USDT', false)
-    //     .interestRateStrategy,
-    //   stableBorrowRateEnabled: false,
-    //   isActive: true,
-    //   isFrozen: false,
-    //   isSiloed: false,
-    //   supplyCap: 50_000_000,
-    //   borrowCap: 0,
-    //   debtCeiling: 2_000_000_00,
-    //   eModeCategory: 1
-    // });
+    // 6. verify results
+    ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
+      false
+    );
+    ReserveConfig memory expectedAssetConfig = ReserveConfig({
+      symbol: 'OP',
+      underlying: OP,
+      aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      decimals: 18,
+      ltv: 3000,
+      liquidationThreshold: 5000,
+      liquidationBonus: 11200,
+      liquidationProtocolFee: 1000,
+      reserveFactor: 3000,
+      usageAsCollateralEnabled: true,
+      borrowingEnabled: true,
+      interestRateStrategy: AaveV3Helpers
+        ._findReserveConfig(allConfigsAfter, 'WETH', false)
+        .interestRateStrategy,
+      stableBorrowRateEnabled: false,
+      isActive: true,
+      isFrozen: false,
+      isSiloed: false,
+      supplyCap: 1_000_000,
+      borrowCap: 0,
+      debtCeiling: 0,
+      eModeCategory: 0
+    });
     // AaveV3Helpers._validateReserveConfig(expectedAssetConfig, allConfigsAfter);
     // AaveV3Helpers._noReservesConfigsChangesApartNewListings(
     //   allConfigsBefore,
@@ -136,14 +135,14 @@ contract OptimismOpE2ETest is Test {
     // );
     // AaveV3Helpers._validateReserveTokensImpls(
     //   vm,
-    //   AaveV3Helpers._findReserveConfig(allConfigsAfter, 'FRAX', false),
+    //   AaveV3Helpers._findReserveConfig(allConfigsAfter, 'OP', false),
     //   ReserveTokens({
     //     aToken: fraxPayload.ATOKEN_IMPL(),
     //     stableDebtToken: fraxPayload.SDTOKEN_IMPL(),
     //     variableDebtToken: fraxPayload.VDTOKEN_IMPL()
     //   })
     // );
-    // AaveV3Helpers._validateAssetSourceOnOracle(FRAX, fraxPayload.PRICE_FEED());
+    // AaveV3Helpers._validateAssetSourceOnOracle(OP, fraxPayload.PRICE_FEED());
     // // impl should be same as USDC
     // AaveV3Helpers._validateReserveTokensImpls(
     //   vm,
@@ -160,43 +159,25 @@ contract OptimismOpE2ETest is Test {
   function _validatePoolActionsPostListing(
     ReserveConfig[] memory allReservesConfigs
   ) internal {
-    address aFRAX = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+    address aOP = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'OP', false)
       .aToken;
-    address vFRAX = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+    address vOP = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'OP', false)
       .variableDebtToken;
-    address sFRAX = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'FRAX', false)
+    address sOP = AaveV3Helpers
+      ._findReserveConfig(allReservesConfigs, 'OP', false)
       .stableDebtToken;
     address vDAI = AaveV3Helpers
       ._findReserveConfig(allReservesConfigs, 'DAI', false)
       .variableDebtToken;
 
-    AaveV3Helpers._deposit(
-      vm,
-      FRAX_WHALE,
-      FRAX_WHALE,
-      FRAX,
-      666 ether,
-      true,
-      aFRAX
-    );
+    AaveV3Helpers._deposit(vm, OP_WHALE, OP_WHALE, OP, 666 ether, true, aOP);
 
-    AaveV3Helpers._borrow(vm, FRAX_WHALE, FRAX_WHALE, DAI, 2 ether, 2, vDAI);
+    AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, DAI, 2 ether, 2, vDAI);
 
     // We check revert when trying to borrow (not enabled in isolation)
-    try
-      AaveV3Helpers._borrow(
-        vm,
-        FRAX_WHALE,
-        FRAX_WHALE,
-        FRAX,
-        300 ether,
-        2,
-        vFRAX
-      )
-    {
+    try AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, OP, 300 ether, 2, vOP) {
       revert('_testProposal() : BORROW_NOT_REVERTING');
     } catch Error(string memory revertReason) {
       require(
@@ -207,17 +188,7 @@ contract OptimismOpE2ETest is Test {
     }
 
     // We check revert when trying to borrow (not enabled in isolation)
-    try
-      AaveV3Helpers._borrow(
-        vm,
-        FRAX_WHALE,
-        FRAX_WHALE,
-        FRAX,
-        10 ether,
-        1,
-        sFRAX
-      )
-    {
+    try AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, OP, 10 ether, 1, sOP) {
       revert('_testProposal() : BORROW_NOT_REVERTING');
     } catch Error(string memory revertReason) {
       require(
@@ -228,32 +199,25 @@ contract OptimismOpE2ETest is Test {
     }
 
     vm.startPrank(DAI_WHALE);
-    IERC20(DAI).transfer(FRAX_WHALE, 1000 ether);
+    IERC20(DAI).transfer(OP_WHALE, 1000 ether);
     vm.stopPrank();
 
-    AaveV3Helpers._borrow(vm, FRAX_WHALE, FRAX_WHALE, DAI, 222 ether, 2, vDAI);
+    AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, DAI, 222 ether, 2, vDAI);
 
     // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
     skip(1);
 
     AaveV3Helpers._repay(
       vm,
-      FRAX_WHALE,
-      FRAX_WHALE,
+      OP_WHALE,
+      OP_WHALE,
       DAI,
-      IERC20(DAI).balanceOf(FRAX_WHALE),
+      IERC20(DAI).balanceOf(OP_WHALE),
       2,
       vDAI,
       true
     );
 
-    AaveV3Helpers._withdraw(
-      vm,
-      FRAX_WHALE,
-      FRAX_WHALE,
-      FRAX,
-      type(uint256).max,
-      aFRAX
-    );
+    AaveV3Helpers._withdraw(vm, OP_WHALE, OP_WHALE, OP, type(uint256).max, aOP);
   }
 }

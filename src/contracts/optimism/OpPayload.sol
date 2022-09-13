@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/Test.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
-contract OpPayload is IProposalGenericExecutor, Test {
+/**
+ * @dev Adding OP token to aave optimism pool.
+ * https://snapshot.org/#/aave.eth/proposal/0x16d55ed730076b4f6ea09b9fcc62ea846b248a96f40fb3dbc6c1f193df013d6d
+ */
+contract OpPayload is IProposalGenericExecutor {
   // **************************
   // Protocol's contracts
   // **************************
