@@ -11,5 +11,6 @@ ethereum="${RPC_ETHEREUM}"
 optimism = "${RPC_OPTIMISM}"
 avalanche = "${RPC_AVALANCHE}"
 polygon = "${RPC_POLYGON}"
+arbitrum = "${RPC_ARBITRUM}"
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config

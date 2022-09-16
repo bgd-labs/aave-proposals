@@ -35,7 +35,8 @@ contract CrosschainForwarderArbitrum {
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
 
-    bytes memory actions = abi.encode(
+    bytes memory queue = abi.encodeWithSelector(
+      bytes4(keccak256('queue(address[],uint256[],string[],bytes[],bool[])')),
       targets,
       values,
       signatures,
@@ -50,7 +51,7 @@ contract CrosschainForwarderArbitrum {
       address(0), // callValueRefundAddress
       0, // gasLimit
       0, // maxFeePerGas
-      actions
+      queue
     );
   }
 }

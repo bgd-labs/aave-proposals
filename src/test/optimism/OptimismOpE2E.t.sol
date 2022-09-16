@@ -20,10 +20,6 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
 
   OpPayload public opPayload;
 
-  address public constant BRIDGE_ADMIN =
-    0x000000000000000000000000000000000000dEaD;
-  address public constant FX_CHILD_ADDRESS =
-    0x8397259c983751DAf40400790063935a11afa28a;
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =

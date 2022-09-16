@@ -3,6 +3,10 @@ pragma solidity ^0.8.0;
 
 import {ICrossDomainMessenger} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
 
+interface ICanonicalTransactionChain {
+  function enqueueL2GasPrepaid() external view returns (uint256);
+}
+
 /**
  * @title A generic executor for proposals targeting the optimism v3 market
  * @author BGD Labs
@@ -18,6 +22,8 @@ contract CrosschainForwarderOptimism {
     0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+  ICanonicalTransactionChain public constant CANONICAL_TRANSACTION_CHAIN =
+    ICanonicalTransactionChain(0x5E4e65926BA27467555EB562121fac00D24E9dD2);
 
   /**
    * @dev this function will be executed once the proposal passes the mainnet vote.
@@ -46,7 +52,7 @@ contract CrosschainForwarderOptimism {
     ICrossDomainMessenger(L1_CROSS_DOMAIN_MESSANGER_ADDRESS).sendMessage(
       OPTIMISM_BRIDGE_EXECUTOR,
       queue,
-      1920000 // gasLimit
+      uint32(CANONICAL_TRANSACTION_CHAIN.enqueueL2GasPrepaid())
     );
   }
 }
