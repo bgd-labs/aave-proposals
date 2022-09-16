@@ -3,15 +3,15 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV3Helpers, ReserveConfig, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
+import {AaveV3Helpers, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
 import {IL2CrossDomainMessenger, AddressAliasHelper} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
 import {IExecutorBase} from '../../interfaces/optimism/IExecutorBase.sol';
 import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
-import {DeployL1OptimismProposal} from '../../../script/DeployL1OptimismProposal.s.sol';
+import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
 
 contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
@@ -54,27 +54,26 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     address crosschainForwarderArbitrum = address(
       new CrosschainForwarderArbitrum()
     );
-
     vm.selectFork(arbitrumFork);
-    // we get all configs to later on check that payload only changes OP
-    ReserveConfig[] memory allConfigsBefore = AaveV3Helpers._getReservesConfigs(
-      false
+    // we get all configs to later on check that payload only changes stEth
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
+      AaveV3Arbitrum.POOL
     );
     // 1. deploy l2 payload
     vm.selectFork(arbitrumFork);
     stEthPayload = new StEthPayload();
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
-    vm.startPrank(AAVE_WHALE);
-    uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
-      address(stEthPayload),
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
-      address(crosschainForwarderArbitrum)
-    );
-    vm.stopPrank();
-    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
-    vm.recordLogs();
-    GovHelpers.passVoteAndExecute(vm, proposalId);
+    // vm.startPrank(AAVE_WHALE);
+    // uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
+    //   address(stEthPayload),
+    //   0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
+    //   address(crosschainForwarderArbitrum)
+    // );
+    // vm.stopPrank();
+    // // 3. execute proposal and record logs so we can extract the emitted StateSynced event
+    // vm.recordLogs();
+    // GovHelpers.passVoteAndExecute(vm, proposalId);
     // Vm.Log[] memory entries = vm.getRecordedLogs();
     // assertEq(
     //   keccak256('SentMessage(address,address,bytes,uint256,uint256)'),
@@ -164,44 +163,44 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     // _validatePoolActionsPostListing(allConfigsAfter);
   }
 
-  function _validatePoolActionsPostListing(
-    ReserveConfig[] memory allReservesConfigs
-  ) internal {
-    address aOP = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'OP', false)
-      .aToken;
-    address vOP = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'OP', false)
-      .variableDebtToken;
-    address sOP = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'OP', false)
-      .stableDebtToken;
-    address vDAI = AaveV3Helpers
-      ._findReserveConfig(allReservesConfigs, 'DAI', false)
-      .variableDebtToken;
+  // function _validatePoolActionsPostListing(
+  //   ReserveConfig[] memory allReservesConfigs
+  // ) internal {
+  //   address aOP = AaveV3Helpers
+  //     ._findReserveConfig(allReservesConfigs, 'OP', false)
+  //     .aToken;
+  //   address vOP = AaveV3Helpers
+  //     ._findReserveConfig(allReservesConfigs, 'OP', false)
+  //     .variableDebtToken;
+  //   address sOP = AaveV3Helpers
+  //     ._findReserveConfig(allReservesConfigs, 'OP', false)
+  //     .stableDebtToken;
+  //   address vDAI = AaveV3Helpers
+  //     ._findReserveConfig(allReservesConfigs, 'DAI', false)
+  //     .variableDebtToken;
 
-    AaveV3Helpers._deposit(vm, OP_WHALE, OP_WHALE, OP, 1000 ether, true, aOP);
+  //   AaveV3Helpers._deposit(vm, OP_WHALE, OP_WHALE, OP, 1000 ether, true, aOP);
 
-    vm.startPrank(DAI_WHALE);
-    IERC20(DAI).transfer(OP_WHALE, 1000 ether);
-    vm.stopPrank();
+  //   vm.startPrank(DAI_WHALE);
+  //   IERC20(DAI).transfer(OP_WHALE, 1000 ether);
+  //   vm.stopPrank();
 
-    AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, DAI, 222 ether, 2, vDAI);
+  //   AaveV3Helpers._borrow(vm, OP_WHALE, OP_WHALE, DAI, 222 ether, 2, vDAI);
 
-    // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
-    skip(1);
+  //   // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
+  //   skip(1);
 
-    AaveV3Helpers._repay(
-      vm,
-      OP_WHALE,
-      OP_WHALE,
-      DAI,
-      IERC20(DAI).balanceOf(OP_WHALE),
-      2,
-      vDAI,
-      true
-    );
+  //   AaveV3Helpers._repay(
+  //     vm,
+  //     OP_WHALE,
+  //     OP_WHALE,
+  //     DAI,
+  //     IERC20(DAI).balanceOf(OP_WHALE),
+  //     2,
+  //     vDAI,
+  //     true
+  //   );
 
-    AaveV3Helpers._withdraw(vm, OP_WHALE, OP_WHALE, OP, type(uint256).max, aOP);
-  }
+  //   AaveV3Helpers._withdraw(vm, OP_WHALE, OP_WHALE, OP, type(uint256).max, aOP);
+  // }
 }
