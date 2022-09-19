@@ -49,7 +49,7 @@ contract CrosschainForwarderArbitrum {
       0, // maxSubmissionCost
       address(0), // excessFeeRefundAddress
       address(0), // callValueRefundAddress
-      0, // gasLimit
+      600000, // gasLimit
       0, // maxFeePerGas
       queue
     );

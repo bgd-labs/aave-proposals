@@ -7,11 +7,11 @@ import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Helpers, ReserveTokens, IERC20} from '../helpers/AaveV3Helpers.sol';
-import {IL2CrossDomainMessenger, AddressAliasHelper} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
-import {IExecutorBase} from '../../interfaces/optimism/IExecutorBase.sol';
 import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
+
+import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
 
 contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
@@ -20,10 +20,11 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
   StEthPayload public stEthPayload;
 
+  address public constant INBOX_ADDRESS =
+    0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
+
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
-  IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
-    IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 
   address public constant OP = 0x4200000000000000000000000000000000000042;
   address public constant OP_WHALE = 0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26;
@@ -36,7 +37,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
   function setUp() public {
     arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 24862467);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15526675);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15547019);
     vm.selectFork(arbitrumFork);
     vm.startPrank(AaveV3Arbitrum.ACL_ADMIN);
     // -------------
@@ -49,7 +50,42 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     vm.stopPrank();
   }
 
-  function testProposalE2E() public {
+  function testBla() public {
+    vm.selectFork(mainnetFork);
+    vm.deal(address(this), 3 ether);
+
+    address[] memory targets = new address[](1);
+    targets[0] = address(0);
+    uint256[] memory values = new uint256[](1);
+    values[0] = 0;
+    string[] memory signatures = new string[](1);
+    signatures[0] = 'execute()';
+    bytes[] memory calldatas = new bytes[](1);
+    calldatas[0] = '';
+    bool[] memory withDelegatecalls = new bool[](1);
+    withDelegatecalls[0] = true;
+
+    bytes memory queue = abi.encodeWithSelector(
+      bytes4(keccak256('queue(address[],uint256[],string[],bytes[],bool[])')),
+      targets,
+      values,
+      signatures,
+      calldatas,
+      withDelegatecalls
+    );
+    IInbox(INBOX_ADDRESS).createRetryableTicket{value: 600000}(
+      ARBITRUM_BRIDGE_EXECUTOR,
+      0, // l2CallValue
+      0, // maxSubmissionCost
+      address(0), // excessFeeRefundAddress - should probably be l2 treasury
+      address(0), // callValueRefundAddress - should probably be l2 treasury
+      600000, // gasLimit
+      0, // maxFeePerGas
+      queue
+    );
+  }
+
+  function _testProposalE2E() public {
     vm.selectFork(mainnetFork);
     address crosschainForwarderArbitrum = address(
       new CrosschainForwarderArbitrum()
@@ -64,16 +100,17 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     stEthPayload = new StEthPayload();
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
-    // vm.startPrank(AAVE_WHALE);
-    // uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
-    //   address(stEthPayload),
-    //   0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
-    //   address(crosschainForwarderArbitrum)
-    // );
-    // vm.stopPrank();
-    // // 3. execute proposal and record logs so we can extract the emitted StateSynced event
-    // vm.recordLogs();
-    // GovHelpers.passVoteAndExecute(vm, proposalId);
+    vm.startPrank(AAVE_WHALE);
+    uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
+      address(stEthPayload),
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
+      address(crosschainForwarderArbitrum)
+    );
+    vm.stopPrank();
+    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
+    vm.recordLogs();
+    vm.deal(GovHelpers.SHORT_EXECUTOR, 2 ether);
+    GovHelpers.passVoteAndExecute(vm, proposalId);
     // Vm.Log[] memory entries = vm.getRecordedLogs();
     // assertEq(
     //   keccak256('SentMessage(address,address,bytes,uint256,uint256)'),
