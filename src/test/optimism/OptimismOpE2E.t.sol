@@ -90,7 +90,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     );
     // 4. mock the receive on l2 with the data emitted on StateSynced
     vm.selectFork(optimismFork);
-    vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSANGER_ADDRESS
+    vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSENGER_ADDRESS
     OVM_L2_CROSS_DOMAIN_MESSENGER.relayMessage(
       OPTIMISM_BRIDGE_EXECUTOR,
       sender,
