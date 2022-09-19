@@ -20,10 +20,26 @@ interface ICanonicalTransactionChain {
  * This encoded abi is then relayed on the L2CrossDomainMessenger which is in turn queueing the proposal on the OPTIMISM_BRIDGE_EXECUTOR.
  */
 contract CrosschainForwarderOptimism {
+  /**
+   * @dev The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages
+   * from L2 onto L1. In this contract it's used by the governance SHORT_EXECUTOR to send the encoded L2 queuing over the bridge.
+   */
   address public constant L1_CROSS_DOMAIN_MESSENGER_ADDRESS =
     0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1;
+
+  /**
+   * @dev The optimism bridge executor is a L2 governance execution contract.
+   * This contract allows queuing of proposals by allow listed addresses (in this case the L1 short executor).
+   * https://optimistic.etherscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611
+   */
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+
+  /**
+   * @dev The CTC contract is an append only log of transactions which must be applied to the rollup state.
+   * It also holds configurations like the currently prepayed amount of gas which is what this contract is utilizing.
+   * https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code
+   */
   ICanonicalTransactionChain public constant CANONICAL_TRANSACTION_CHAIN =
     ICanonicalTransactionChain(0x5E4e65926BA27467555EB562121fac00D24E9dD2);
 
