@@ -8,7 +8,7 @@ interface ICanonicalTransactionChain {
 }
 
 /**
- * @title A generic executor for proposals targeting the optimism v3 market
+ * @title A generic executor for proposals targeting the optimism v3 pool
  * @author BGD Labs
  * @notice You can **only** use this executor when the optimism payload has a `execute()` signature without parameters
  * @notice You can **only** use this executor when the optimism payload is expected to be executed via `DELEGATECALL`

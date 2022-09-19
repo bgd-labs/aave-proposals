@@ -1,6 +1,6 @@
 # Aave v3 cross-chain listing template
 
-This template contains an opinionated smart contract template for creating proposals to list assets on the aave polygon v3 market.
+This template contains an opinionated smart contract template for creating proposals to list assets on the aave polygon v3 pool.
 
 For a proposal to be executed on polygon it needs to pass mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon). Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
 
