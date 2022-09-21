@@ -5,6 +5,7 @@ import 'forge-std/Test.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IL2CrossDomainMessenger, AddressAliasHelper} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
 import {IExecutorBase} from '../../interfaces/optimism/IExecutorBase.sol';
@@ -92,14 +93,10 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       nonce
     );
     vm.stopPrank();
+
     // 5. execute proposal on l2
-    vm.warp(
-      block.timestamp + IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).getDelay() + 1
-    );
-    // execute the proposal
-    IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).execute(
-      IExecutorBase(OPTIMISM_BRIDGE_EXECUTOR).getActionsSetCount() - 1
-    );
+    BridgeExecutorHelpers.waitAndExecuteLatest(vm, OPTIMISM_BRIDGE_EXECUTOR);
+
     // 6. verify results
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
       AaveV3Optimism.POOL
