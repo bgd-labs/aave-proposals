@@ -43,10 +43,10 @@ contract CrosschainForwarderArbitrum {
       calldatas,
       withDelegatecalls
     );
-    IInbox(INBOX_ADDRESS).createRetryableTicket(
+    IInbox(INBOX_ADDRESS).createRetryableTicket{value: msg.value}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
-      0, // maxSubmissionCost
+      msg.value, // maxSubmissionCost
       address(0), // excessFeeRefundAddress
       address(0), // callValueRefundAddress
       600000, // gasLimit
