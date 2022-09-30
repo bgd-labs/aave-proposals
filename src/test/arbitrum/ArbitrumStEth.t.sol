@@ -52,6 +52,15 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     vm.stopPrank();
   }
 
+  // utility to transform memory to calldata so array range access is available
+  function _cutBytes(bytes calldata input)
+    public
+    pure
+    returns (bytes calldata)
+  {
+    return input[64:];
+  }
+
   function testProposalE2E() public {
     vm.selectFork(mainnetFork);
     address crosschainForwarderArbitrum = address(
@@ -77,11 +86,40 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
-    // Vm.Log[] memory entries = vm.getRecordedLogs();
-    // assertEq(
-    //   keccak256('SentMessage(address,address,bytes,uint256,uint256)'),
-    //   entries[3].topics[0]
-    // );
+    Vm.Log[] memory entries = vm.getRecordedLogs();
+    assertEq(
+      keccak256('InboxMessageDelivered(uint256,bytes)'),
+      entries[3].topics[0]
+    );
+    uint256 messageId = uint256(entries[3].topics[1]);
+    (
+      address to,
+      uint256 callvalue,
+      uint256 value,
+      uint256 maxSubmissionCost,
+      address excessFeeRefundAddress,
+      address callValueRefundAddress,
+      uint256 maxGas,
+      uint256 gasPriceBid,
+      bytes memory data
+    ) = abi.decode(
+        this._cutBytes(entries[3].data),
+        (
+          address,
+          uint256,
+          uint256,
+          uint256,
+          address,
+          address,
+          uint256,
+          uint256,
+          bytes
+        )
+      );
+
+    assertEq(to, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
+    assertEq(excessFeeRefundAddress, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
+    assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
     // assertEq(
     //   address(uint160(uint256(entries[3].topics[1]))),
     //   ARBITRUM_BRIDGE_EXECUTOR

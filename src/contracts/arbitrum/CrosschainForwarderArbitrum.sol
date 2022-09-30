@@ -23,6 +23,8 @@ contract CrosschainForwarderArbitrum {
     0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+  address public constant ARBITRUM_GUARDIAN =
+    0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
   uint256 public constant MESSAGE_LENGTH = 580;
 
@@ -53,12 +55,12 @@ contract CrosschainForwarderArbitrum {
     // As it's always the same encoded message (just address changing) length will always be the same
     // TODO: probably makes sense to add a margin to basefee?
     uint256 maxSubmission = (1400 + 6 * MESSAGE_LENGTH) * block.basefee;
-    IInbox(INBOX_ADDRESS).createRetryableTicket{value: maxSubmission}(
+    IInbox(INBOX_ADDRESS).unsafeCreateRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
-      address(0), // excessFeeRefundAddress
-      address(0), // callValueRefundAddress
+      address(ARBITRUM_BRIDGE_EXECUTOR), // excessFeeRefundAddress
+      address(ARBITRUM_GUARDIAN), // callValueRefundAddress
       0, // gasLimit
       0, // maxFeePerGas
       queue
