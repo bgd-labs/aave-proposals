@@ -33,55 +33,23 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
   uint256 public constant MESSAGE_LENGTH = 580;
 
+  CrosschainForwarderArbitrum public forwarder;
+
   function setUp() public {
-    arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 25932340);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15588075);
+    mainnetFork = vm.createSelectFork(vm.rpcUrl('ethereum'), 15588075);
+    forwarder = new CrosschainForwarderArbitrum();
+
+    // assumes the short exec will be funded with some eth
+    deal(address(GovHelpers.SHORT_EXECUTOR), 1 ether);
+
+    arbitrumFork = vm.createSelectFork(vm.rpcUrl('arbitrum'), 25932340);
+
+    // fake permission transfer from guardian to ARBITRUM_BRIDGE_EXECUTOR
     vm.selectFork(arbitrumFork);
     vm.startPrank(AaveV3Arbitrum.ACL_ADMIN);
-    // -------------
-    // Claim pool admin
-    // Only needed for the first proposal on any market. If ACL_ADMIN was previously set it will ignore
-    // https://github.com/aave/aave-v3-core/blob/master/contracts/dependencies/openzeppelin/contracts/AccessControl.sol#L207
-    // -------------
     AaveV3Arbitrum.ACL_MANAGER.addPoolAdmin(ARBITRUM_BRIDGE_EXECUTOR);
     AaveV3Arbitrum.ACL_MANAGER.addRiskAdmin(ARBITRUM_BRIDGE_EXECUTOR);
     vm.stopPrank();
-  }
-
-  function testBla() public {
-    vm.selectFork(mainnetFork);
-    vm.deal(address(this), 3 ether);
-
-    address[] memory targets = new address[](1);
-    targets[0] = address(0);
-    uint256[] memory values = new uint256[](1);
-    values[0] = 0;
-    string[] memory signatures = new string[](1);
-    signatures[0] = 'execute()';
-    bytes[] memory calldatas = new bytes[](1);
-    calldatas[0] = '';
-    bool[] memory withDelegatecalls = new bool[](1);
-    withDelegatecalls[0] = true;
-
-    bytes memory queue = abi.encodeWithSelector(
-      bytes4(keccak256('queue(address[],uint256[],string[],bytes[],bool[])')),
-      targets,
-      values,
-      signatures,
-      calldatas,
-      withDelegatecalls
-    );
-    console.log(queue.length);
-    IInbox(INBOX_ADDRESS).createRetryableTicket{value: 2 ether}(
-      ARBITRUM_BRIDGE_EXECUTOR,
-      0, // l2CallValue
-      (1400 + 6 * MESSAGE_LENGTH) * block.basefee, // maxSubmissionCost
-      address(0), // excessFeeRefundAddress - should probably be l2 treasury
-      address(0), // callValueRefundAddress - should probably be l2 treasury
-      0, // gasLimit
-      0, // maxFeePerGas
-      queue
-    );
   }
 
   function testProposalE2E() public {
@@ -108,7 +76,6 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     vm.stopPrank();
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
-    vm.deal(GovHelpers.SHORT_EXECUTOR, 2 ether);
     GovHelpers.passVoteAndExecute(vm, proposalId);
     // Vm.Log[] memory entries = vm.getRecordedLogs();
     // assertEq(
