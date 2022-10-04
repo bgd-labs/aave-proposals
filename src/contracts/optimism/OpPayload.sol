@@ -8,7 +8,8 @@ import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecuto
 
 /**
  * @dev Adding OP token to aave optimism pool.
- * https://snapshot.org/#/aave.eth/proposal/0x16d55ed730076b4f6ea09b9fcc62ea846b248a96f40fb3dbc6c1f193df013d6d
+ * Listing snapshot: https://snapshot.org/#/aave.eth/proposal/0x16d55ed730076b4f6ea09b9fcc62ea846b248a96f40fb3dbc6c1f193df013d6d
+ * Parameter suggestions: https://governance.aave.com/t/arc-add-op-as-collateral-to-aave-v3/9087/7
  */
 contract OpPayload is IProposalGenericExecutor {
   // **************************
@@ -43,15 +44,15 @@ contract OpPayload is IProposalGenericExecutor {
   address public constant RATE_STRATEGY =
     0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C; // same as weth
 
-  uint256 public constant RESERVE_FACTOR = 3000; // 30%
+  uint256 public constant RESERVE_FACTOR = 2000; // 20%
 
-  uint256 public constant SUPPLY_CAP = 1_000_000; // 1m OP
+  uint256 public constant SUPPLY_CAP = 40_000_000; // 40m OP
   uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10%
 
   // params to set reserve as collateral
-  uint256 public constant LIQ_THRESHOLD = 5000; // 50%
-  uint256 public constant LTV = 3000; // 30%
-  uint256 public constant LIQ_BONUS = 11200; // 12%
+  uint256 public constant LIQ_THRESHOLD = 6500; // 65%
+  uint256 public constant LTV = 5000; // 50%
+  uint256 public constant LIQ_BONUS = 11000; // 10%
 
   function execute() external override {
     // ----------------------------
@@ -95,8 +96,6 @@ contract OpPayload is IProposalGenericExecutor {
     configurator.initReserves(initReserveInputs);
 
     configurator.setSupplyCap(UNDERLYING, SUPPLY_CAP);
-
-    configurator.setReserveBorrowing(UNDERLYING, true);
 
     configurator.setReserveFactor(UNDERLYING, RESERVE_FACTOR);
 

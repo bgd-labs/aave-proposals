@@ -108,20 +108,20 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       decimals: 18,
-      ltv: 3000,
-      liquidationThreshold: 5000,
-      liquidationBonus: 11200,
+      ltv: 5000,
+      liquidationThreshold: 6500,
+      liquidationBonus: 11000,
       liquidationProtocolFee: 1000,
-      reserveFactor: 3000,
+      reserveFactor: 2000,
       usageAsCollateralEnabled: true,
-      borrowingEnabled: true,
+      borrowingEnabled: false,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigsAfter, 'WETH')
         .interestRateStrategy,
       stableBorrowRateEnabled: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
-      supplyCap: 1_000_000,
+      supplyCap: 40_000_000,
       borrowCap: 0,
       debtCeiling: 0,
       eModeCategory: 0
