@@ -120,14 +120,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     assertEq(to, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
     assertEq(excessFeeRefundAddress, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
-    // assertEq(
-    //   address(uint160(uint256(entries[3].topics[1]))),
-    //   ARBITRUM_BRIDGE_EXECUTOR
-    // );
-    // (address sender, bytes memory message, uint256 nonce) = abi.decode(
-    //   entries[3].data,
-    //   (address, bytes, uint256)
-    // );
+    
     // // 4. mock the receive on l2 with the data emitted on StateSynced
     // vm.selectFork(arbitrumFork);
     // vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSANGER_ADDRESS
