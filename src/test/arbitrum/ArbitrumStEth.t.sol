@@ -39,8 +39,8 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     mainnetFork = vm.createSelectFork(vm.rpcUrl('ethereum'), 15588075);
     forwarder = new CrosschainForwarderArbitrum();
 
-    // assumes the short exec will be funded with some eth
-    deal(address(GovHelpers.SHORT_EXECUTOR), 1 ether);
+    // assumes the short exec will be topped up with some eth to pay for l2 fee
+    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
 
     arbitrumFork = vm.createSelectFork(vm.rpcUrl('arbitrum'), 25932340);
 
@@ -120,7 +120,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     assertEq(to, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
     assertEq(excessFeeRefundAddress, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
-    
+
     // // 4. mock the receive on l2 with the data emitted on StateSynced
     // vm.selectFork(arbitrumFork);
     // vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSANGER_ADDRESS
