@@ -9,10 +9,12 @@ import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
+import {AddressAliasHelper} from '../../contracts/arbitrum/AddressAliasHelper.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
 
 import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
+import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
@@ -61,6 +63,8 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     return input[64:];
   }
 
+  function testDecode() public {}
+
   function testProposalE2E() public {
     vm.selectFork(mainnetFork);
     address crosschainForwarderArbitrum = address(
@@ -101,8 +105,9 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
       address callValueRefundAddress,
       uint256 maxGas,
       uint256 gasPriceBid,
-      bytes memory data
-    ) = abi.decode(
+      uint256 length
+    ) = // ,bytes memory data
+      abi.decode(
         this._cutBytes(entries[3].data),
         (
           address,
@@ -113,22 +118,39 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
           address,
           uint256,
           uint256,
-          bytes
+          uint256
+          // ,bytes
         )
       );
-
-    assertEq(to, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
-    assertEq(excessFeeRefundAddress, forwarder.ARBITRUM_BRIDGE_EXECUTOR());
+    assertEq(to, ARBITRUM_BRIDGE_EXECUTOR);
+    assertEq(excessFeeRefundAddress, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
+    assertEq(gasPriceBid, 0);
+    assertEq(maxGas, 0);
 
-    // // 4. mock the receive on l2 with the data emitted on StateSynced
+    // // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
     // vm.selectFork(arbitrumFork);
-    // vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSANGER_ADDRESS
-    // OVM_L2_CROSS_DOMAIN_MESSENGER.relayMessage(
-    //   ARBITRUM_BRIDGE_EXECUTOR,
-    //   sender,
-    //   message,
-    //   nonce
+    // vm.startPrank(
+    //   AddressAliasHelper.applyL1ToL2Alias(GovHelpers.SHORT_EXECUTOR)
+    // );
+    // IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(
+    //   ARBITRUM_BRIDGE_EXECUTOR
+    // );
+
+    // (
+    //   address[] memory targets,
+    //   uint256[] memory values,
+    //   string[] memory signatures,
+    //   bytes[] memory calldatas,
+    //   bool[] memory withDelegatecalls
+    // ) = abi.decode(data, (address[], uint256[], string[], bytes[], bool[]));
+
+    // bridgeExecutor.queue(
+    //   targets,
+    //   values,
+    //   signatures,
+    //   calldatas,
+    //   withDelegatecalls
     // );
     // vm.stopPrank();
     // // 5. execute proposal on l2

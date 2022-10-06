@@ -5,6 +5,7 @@ import 'forge-std/console.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
+import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 /**
  * @title A generic executor for proposals targeting the arbitrum v3 market
@@ -12,11 +13,11 @@ import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
  * @notice You can **only** use this executor when the arbitrum payload has a `execute()` signature without parameters
  * @notice You can **only** use this executor when the arbitrum payload is expected to be executed via `DELEGATECALL`
  * @notice This contract assumes to be called via AAVE Governance V2
- * @notice This contract will fund the SHORT_EXECUTOR
- * @dev This executor is a generic wrapper to be used with Arbitrum Inbox (https://developer.offchainlabs.com/arbos/l1-to-l2-messaging#address-aliasing)
+ * @notice This contract will assume the SHORT_EXECUTOR will be topped up with enough funds to fund the short executor
+ * @dev This executor is a generic wrapper to be used with Arbitrum Inbox (https://developer.offchainlabs.com/arbos/l1-to-l2-messaging)
  * It encodes a parameterless `execute()` with delegate calls and a specified target.
- * This encoded abi is then send to the Inbox to be synced to the FX-child on the polygon network.
- * Once synced the POLYGON_BRIDGE_EXECUTOR will queue the execution of the payload.
+ * This encoded abi is then send to the Inbox to be synced executed on the arbitrum network.
+ * Once synced the ARBITRUM_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
 contract CrosschainForwarderArbitrum {
   address public constant INBOX_ADDRESS =
@@ -30,7 +31,7 @@ contract CrosschainForwarderArbitrum {
 
   /**
    * @dev this function will be executed once the proposal passes the mainnet vote.
-   * @param l2PayloadContract the polygon contract containing the `execute()` signature.
+   * @param l2PayloadContract the arbitrum contract containing the `execute()` signature.
    */
   function execute(address l2PayloadContract) public {
     address[] memory targets = new address[](1);
@@ -45,7 +46,7 @@ contract CrosschainForwarderArbitrum {
     withDelegatecalls[0] = true;
 
     bytes memory queue = abi.encodeWithSelector(
-      bytes4(keccak256('queue(address[],uint256[],string[],bytes[],bool[])')),
+      IL2BridgeExecutor.queue.selector,
       targets,
       values,
       signatures,
