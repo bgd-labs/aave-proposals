@@ -8,7 +8,7 @@ import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
 import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 /**
- * @title A generic executor for proposals targeting the arbitrum v3 market
+ * @title A generic executor for proposals targeting the arbitrum v3 pool
  * @author BGD Labs
  * @notice You can **only** use this executor when the arbitrum payload has a `execute()` signature without parameters
  * @notice You can **only** use this executor when the arbitrum payload is expected to be executed via `DELEGATECALL`
