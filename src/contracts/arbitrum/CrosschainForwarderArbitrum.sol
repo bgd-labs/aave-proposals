@@ -29,11 +29,16 @@ contract CrosschainForwarderArbitrum {
 
   uint256 public constant MESSAGE_LENGTH = 580;
 
-  /**
-   * @dev this function will be executed once the proposal passes the mainnet vote.
-   * @param l2PayloadContract the arbitrum contract containing the `execute()` signature.
-   */
-  function execute(address l2PayloadContract) public {
+  // TODO: probably makes sense to add a margin to basefee?
+  function getMaxSubmission() public view returns (uint256) {
+    return (1400 + 6 * MESSAGE_LENGTH) * block.basefee;
+  }
+
+  function getEncodedPayload(address l2PayloadContract)
+    public
+    pure
+    returns (bytes memory)
+  {
     address[] memory targets = new address[](1);
     targets[0] = l2PayloadContract;
     uint256[] memory values = new uint256[](1);
@@ -44,18 +49,25 @@ contract CrosschainForwarderArbitrum {
     calldatas[0] = '';
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
+    return
+      abi.encodeWithSelector(
+        IL2BridgeExecutor.queue.selector,
+        targets,
+        values,
+        signatures,
+        calldatas,
+        withDelegatecalls
+      );
+  }
 
-    bytes memory queue = abi.encodeWithSelector(
-      IL2BridgeExecutor.queue.selector,
-      targets,
-      values,
-      signatures,
-      calldatas,
-      withDelegatecalls
-    );
+  /**
+   * @dev this function will be executed once the proposal passes the mainnet vote.
+   * @param l2PayloadContract the arbitrum contract containing the `execute()` signature.
+   */
+  function execute(address l2PayloadContract) public {
+    bytes memory queue = getEncodedPayload(l2PayloadContract);
     // As it's always the same encoded message (just address changing) length will always be the same
-    // TODO: probably makes sense to add a margin to basefee?
-    uint256 maxSubmission = (1400 + 6 * MESSAGE_LENGTH) * block.basefee;
+    uint256 maxSubmission = getMaxSubmission();
     IInbox(INBOX_ADDRESS).unsafeCreateRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue

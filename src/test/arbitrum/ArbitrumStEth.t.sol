@@ -12,7 +12,6 @@ import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainFo
 import {AddressAliasHelper} from '../../contracts/arbitrum/AddressAliasHelper.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
-
 import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
 import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
@@ -63,8 +62,6 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     return input[64:];
   }
 
-  function testDecode() public {}
-
   function testProposalE2E() public {
     vm.selectFork(mainnetFork);
     address crosschainForwarderArbitrum = address(
@@ -76,8 +73,8 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
       AaveV3Arbitrum.POOL
     );
     // 1. deploy l2 payload
-    vm.selectFork(arbitrumFork);
     stEthPayload = new StEthPayload();
+
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(GovHelpers.AAVE_WHALE);
@@ -87,15 +84,37 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
       address(crosschainForwarderArbitrum)
     );
     vm.stopPrank();
+
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
+    bytes memory payload = forwarder.getEncodedPayload(address(stEthPayload));
+
+    // check ticket is created correctly
+    vm.expectCall(
+      address(INBOX_ADDRESS),
+      abi.encodeCall(
+        IInbox.unsafeCreateRetryableTicket,
+        (
+          ARBITRUM_BRIDGE_EXECUTOR,
+          0,
+          forwarder.getMaxSubmission(),
+          forwarder.ARBITRUM_BRIDGE_EXECUTOR(),
+          forwarder.ARBITRUM_GUARDIAN(),
+          0,
+          0,
+          payload
+        )
+      )
+    );
     GovHelpers.passVoteAndExecute(vm, proposalId);
+
+    // check events are emitted correctly
     Vm.Log[] memory entries = vm.getRecordedLogs();
     assertEq(
       keccak256('InboxMessageDelivered(uint256,bytes)'),
       entries[3].topics[0]
     );
-    uint256 messageId = uint256(entries[3].topics[1]);
+    // uint256 messageId = uint256(entries[3].topics[1]);
     (
       address to,
       uint256 callvalue,
@@ -106,8 +125,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
       uint256 maxGas,
       uint256 gasPriceBid,
       uint256 length
-    ) = // ,bytes memory data
-      abi.decode(
+    ) = abi.decode(
         this._cutBytes(entries[3].data),
         (
           address,
@@ -119,48 +137,34 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
           uint256,
           uint256,
           uint256
-          // ,bytes
         )
       );
+    assertEq(callvalue, 0);
+    assertEq(value > 0, true);
+    assertEq(maxSubmissionCost > 0, true);
     assertEq(to, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(excessFeeRefundAddress, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
     assertEq(gasPriceBid, 0);
     assertEq(maxGas, 0);
+    assertEq(length, 580);
 
-    // // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
-    // vm.selectFork(arbitrumFork);
-    // vm.startPrank(
-    //   AddressAliasHelper.applyL1ToL2Alias(GovHelpers.SHORT_EXECUTOR)
-    // );
-    // IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(
-    //   ARBITRUM_BRIDGE_EXECUTOR
-    // );
+    // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
+    vm.selectFork(arbitrumFork);
+    vm.startPrank(
+      AddressAliasHelper.applyL1ToL2Alias(GovHelpers.SHORT_EXECUTOR)
+    );
+    ARBITRUM_BRIDGE_EXECUTOR.call(payload);
+    vm.stopPrank();
+    // 5. execute proposal on l2
+    IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(
+      ARBITRUM_BRIDGE_EXECUTOR
+    );
+    vm.warp(block.timestamp + bridgeExecutor.getDelay() + 1);
+    // execute the proposal
+    bridgeExecutor.execute(bridgeExecutor.getActionsSetCount() - 1);
 
-    // (
-    //   address[] memory targets,
-    //   uint256[] memory values,
-    //   string[] memory signatures,
-    //   bytes[] memory calldatas,
-    //   bool[] memory withDelegatecalls
-    // ) = abi.decode(data, (address[], uint256[], string[], bytes[], bool[]));
-
-    // bridgeExecutor.queue(
-    //   targets,
-    //   values,
-    //   signatures,
-    //   calldatas,
-    //   withDelegatecalls
-    // );
-    // vm.stopPrank();
-    // // 5. execute proposal on l2
-    // vm.warp(
-    //   block.timestamp + IExecutorBase(ARBITRUM_BRIDGE_EXECUTOR).getDelay() + 1
-    // );
-    // // execute the proposal
-    // IExecutorBase(ARBITRUM_BRIDGE_EXECUTOR).execute(
-    //   IExecutorBase(ARBITRUM_BRIDGE_EXECUTOR).getActionsSetCount() - 1
-    // );
+    // not yep applicable as we don't have any propoer payload
     // // 6. verify results
     // ReserveConfig[] memory allConfigsAfter = AaveV3Helpers._getReservesConfigs(
     //   false
