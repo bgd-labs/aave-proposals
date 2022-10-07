@@ -68,7 +68,7 @@ contract CrosschainForwarderArbitrum {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
     // As it's always the same encoded message (just address changing) length will always be the same
     uint256 maxSubmission = getMaxSubmission();
-    IInbox(INBOX_ADDRESS).unsafeCreateRetryableTicket{value: maxSubmission}(
+    IInbox(INBOX_ADDRESS).createRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
