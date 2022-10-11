@@ -45,7 +45,7 @@ contract CrosschainForwarderOptimism {
 
   /**
    * @dev this function will be executed once the proposal passes the mainnet vote.
-   * @param l2PayloadContract the polygon contract containing the `execute()` signature.
+   * @param l2PayloadContract the optimism contract containing the `execute()` signature.
    */
   function execute(address l2PayloadContract) public {
     address[] memory targets = new address[](1);
