@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {ICrossDomainMessenger} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
+import {ICrossDomainMessenger} from 'governance-crosschain-bridges/contracts/dependencies/optimism/interfaces/ICrossDomainMessenger.sol';
 import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 interface ICanonicalTransactionChain {

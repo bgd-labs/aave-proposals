@@ -8,11 +8,11 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
+import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
+import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
 import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
-import {AddressAliasHelper} from '../../contracts/arbitrum/AddressAliasHelper.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
-import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
 import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 contract ArbitrumStEthE2ETest is ProtocolV3TestBase {

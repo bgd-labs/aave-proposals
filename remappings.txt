@@ -1,0 +1,6 @@
+aave-address-book/=lib/aave-address-book/src/
+aave-helpers/=lib/aave-helpers/src/
+ds-test/=lib/forge-std/lib/ds-test/src/
+forge-std/=lib/forge-std/src/
+governance-crosschain-bridges/=lib/governance-crosschain-bridges/
+solidity-utils/=lib/solidity-utils/src/

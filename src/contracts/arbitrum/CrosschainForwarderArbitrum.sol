@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import 'forge-std/console.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {IInbox} from '../../interfaces/arbitrum/IInbox.sol';
+import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
 import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
 
 /**
