@@ -66,7 +66,7 @@ contract OpPayload is IProposalGenericExecutor {
     AaveV3Optimism.ORACLE.setAssetSources(assets, sources);
 
     // ------------------------------------------------
-    // 1. Listing of MIMATIC, with all its configurations
+    // 1. Listing of OP, with all its configurations
     // ------------------------------------------------
 
     ConfiguratorInputTypes.InitReserveInput[]
