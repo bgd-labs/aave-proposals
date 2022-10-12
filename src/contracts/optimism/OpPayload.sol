@@ -16,7 +16,7 @@ contract OpPayload is IProposalGenericExecutor {
   // Protocol's contracts
   // **************************
   address public constant INCENTIVES_CONTROLLER =
-    0x929EC64c34a17401F460460D4B9390518E5B473e;
+    AaveV3Optimism.DEFAULT_INCENTIVES_CONTROLLER;
 
   // **************************
   // New asset being listed (OP)
@@ -35,9 +35,9 @@ contract OpPayload is IProposalGenericExecutor {
     0x0D276FC14719f9292D5C1eA2198673d1f4269246;
 
   address public constant ATOKEN_IMPL =
-    0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
+    AaveV3Optimism.DEFAULT_A_TOKEN_IMPL_REV_1;
   address public constant VDTOKEN_IMPL =
-    0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
+    AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1;
   address public constant SDTOKEN_IMPL =
     0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
 
