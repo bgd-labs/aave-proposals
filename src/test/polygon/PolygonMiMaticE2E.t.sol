@@ -5,12 +5,11 @@ import 'forge-std/Test.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IStateReceiver} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxChild.sol';
-import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
-import {IBridgeExecutor} from '../../interfaces/polygon/IBridgeExecutor.sol';
 import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
-import {FraxPayload} from '../../contracts/polygon/FraxPayload.sol';
+import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
 import {DeployL1PolygonProposal} from '../../../script/DeployL1PolygonProposal.s.sol';
 
 contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
@@ -86,14 +85,8 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
     );
     vm.stopPrank();
 
-    // 5. execute proposal on l2
-    vm.warp(
-      block.timestamp + IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getDelay() + 1
-    );
-    // execute the proposal
-    IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).execute(
-      IBridgeExecutor(POLYGON_BRIDGE_EXECUTOR).getActionsSetCount() - 1
-    );
+    // 5. Forward time & execute proposal
+    BridgeExecutorHelpers.waitAndExecuteLatest(vm, POLYGON_BRIDGE_EXECUTOR);
 
     // 6. verify results
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(

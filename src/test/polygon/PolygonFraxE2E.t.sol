@@ -8,7 +8,6 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IStateReceiver} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxChild.sol';
-import {IBridgeExecutor} from '../../interfaces/polygon/IBridgeExecutor.sol';
 import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
 import {FraxPayload} from '../../contracts/polygon/FraxPayload.sol';
 import {DeployL1PolygonProposal} from '../../../script/DeployL1PolygonProposal.s.sol';
