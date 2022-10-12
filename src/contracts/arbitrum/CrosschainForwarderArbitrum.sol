@@ -30,6 +30,36 @@ contract CrosschainForwarderArbitrum {
   // amount of gwei to overpay on basefee for fast submission
   uint256 public constant BASE_FEE_MARGIN = 10 gwei;
 
+  /**
+   * @dev returns the amount of gas needed for relaying the message based on current basefee
+   * @param bytesLength the payload bytes length (usually 580)
+   */
+  function getRequiredGas(uint256 bytesLength) public view returns (uint256) {
+    return
+      INBOX.calculateRetryableSubmissionFee(
+        bytesLength,
+        block.basefee + BASE_FEE_MARGIN
+      );
+  }
+
+  /**
+   * @dev checks if the short executor is topped up with enough eth for proposal execution
+   * with current basefee
+   * @param bytesLength the payload bytes length (usually 580)
+   */
+  function hasSufficientGasForExecution(uint256 bytesLength)
+    public
+    view
+    returns (bool)
+  {
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >=
+      getRequiredGas(bytesLength));
+  }
+
+  /**
+   * @dev encodes the queue call which is forwarded to arbitrum
+   * @param l2PayloadContract the address of the arbitrum payload
+   */
   function getEncodedPayload(address l2PayloadContract)
     public
     pure
@@ -62,11 +92,7 @@ contract CrosschainForwarderArbitrum {
    */
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
-    // As it's always the same encoded message (just address changing) length will always be the same
-    uint256 maxSubmission = INBOX.calculateRetryableSubmissionFee(
-      queue.length,
-      block.basefee + BASE_FEE_MARGIN
-    );
+    uint256 maxSubmission = getRequiredGas(queue.length);
     INBOX.createRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue

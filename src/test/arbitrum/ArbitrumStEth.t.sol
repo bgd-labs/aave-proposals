@@ -40,9 +40,6 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     mainnetFork = vm.createSelectFork(vm.rpcUrl('ethereum'), 15588075);
     forwarder = new CrosschainForwarderArbitrum();
 
-    // assumes the short exec will be topped up with some eth to pay for l2 fee
-    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
-
     arbitrumFork = vm.createSelectFork(vm.rpcUrl('arbitrum'), 25932340);
 
     // fake permission transfer from guardian to ARBITRUM_BRIDGE_EXECUTOR
@@ -62,11 +59,19 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     return input[64:];
   }
 
-  function testProposalE2E() public {
+  function testHasSufficientGas() public {
     vm.selectFork(mainnetFork);
-    address crosschainForwarderArbitrum = address(
-      new CrosschainForwarderArbitrum()
-    );
+    assertEq(GovHelpers.SHORT_EXECUTOR.balance, 0);
+    assertEq(forwarder.hasSufficientGasForExecution(580), false);
+    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+    assertEq(forwarder.hasSufficientGasForExecution(580), true);
+  }
+
+  function testProposalE2E() public {
+    // assumes the short exec will be topped up with some eth to pay for l2 fee
+    vm.selectFork(mainnetFork);
+    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+
     vm.selectFork(arbitrumFork);
     // we get all configs to later on check that payload only changes stEth
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
@@ -81,7 +86,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
       address(stEthPayload),
       0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
-      address(crosschainForwarderArbitrum)
+      address(forwarder)
     );
     vm.stopPrank();
 
@@ -97,10 +102,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
         (
           ARBITRUM_BRIDGE_EXECUTOR,
           0,
-          INBOX.calculateRetryableSubmissionFee(
-            payload.length,
-            block.basefee + forwarder.BASE_FEE_MARGIN()
-          ),
+          forwarder.getRequiredGas(payload.length),
           forwarder.ARBITRUM_BRIDGE_EXECUTOR(),
           forwarder.ARBITRUM_GUARDIAN(),
           0,
