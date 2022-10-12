@@ -5,7 +5,7 @@ import 'forge-std/console.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
-import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
+import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfaces/IL2BridgeExecutor.sol';
 
 /**
  * @title A generic executor for proposals targeting the arbitrum v3 pool
