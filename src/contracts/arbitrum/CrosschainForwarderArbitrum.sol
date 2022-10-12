@@ -28,7 +28,7 @@ contract CrosschainForwarderArbitrum {
     0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
   // amount of gwei to overpay on basefee for fast submission
-  uint256 public constant BASE_FEE_MARGIN = 10;
+  uint256 public constant BASE_FEE_MARGIN = 10 gwei;
 
   function getEncodedPayload(address l2PayloadContract)
     public
