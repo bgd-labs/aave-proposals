@@ -67,6 +67,11 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     assertEq(forwarder.hasSufficientGasForExecution(580), true);
   }
 
+  function testgetRequiredGas() public {
+    vm.selectFork(mainnetFork);
+    assertGt(forwarder.getRequiredGas(580), 0);
+  }
+
   function testProposalE2E() public {
     // assumes the short exec will be topped up with some eth to pay for l2 fee
     vm.selectFork(mainnetFork);

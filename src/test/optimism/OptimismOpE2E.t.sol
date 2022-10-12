@@ -30,8 +30,8 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 22961333);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15526675);
+    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 28859703);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15732179);
     vm.selectFork(optimismFork);
     vm.startPrank(AaveV3Optimism.ACL_ADMIN);
     // -------------
