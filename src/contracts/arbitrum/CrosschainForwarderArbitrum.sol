@@ -20,19 +20,15 @@ import {IL2BridgeExecutor} from '../../interfaces/IL2BridgeExecutor.sol';
  * Once synced the ARBITRUM_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
 contract CrosschainForwarderArbitrum {
-  address public constant INBOX_ADDRESS =
-    0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
+  IInbox public constant INBOX =
+    IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
   address public constant ARBITRUM_GUARDIAN =
     0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
-  uint256 public constant MESSAGE_LENGTH = 580;
-
-  // TODO: probably makes sense to add a margin to basefee?
-  function getMaxSubmission() public view returns (uint256) {
-    return (1400 + 6 * MESSAGE_LENGTH) * block.basefee;
-  }
+  // amount of gwei to overpay on basefee for fast submission
+  uint256 public constant BASE_FEE_MARGIN = 10;
 
   function getEncodedPayload(address l2PayloadContract)
     public
@@ -67,8 +63,11 @@ contract CrosschainForwarderArbitrum {
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
     // As it's always the same encoded message (just address changing) length will always be the same
-    uint256 maxSubmission = getMaxSubmission();
-    IInbox(INBOX_ADDRESS).createRetryableTicket{value: maxSubmission}(
+    uint256 maxSubmission = INBOX.calculateRetryableSubmissionFee(
+      queue.length,
+      block.basefee + BASE_FEE_MARGIN
+    );
+    INBOX.createRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost

@@ -22,8 +22,8 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
   StEthPayload public stEthPayload;
 
-  address public constant INBOX_ADDRESS =
-    0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
+  IInbox public constant INBOX =
+    IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
@@ -91,13 +91,16 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
     // check ticket is created correctly
     vm.expectCall(
-      address(INBOX_ADDRESS),
+      address(INBOX),
       abi.encodeCall(
         IInbox.createRetryableTicket,
         (
           ARBITRUM_BRIDGE_EXECUTOR,
           0,
-          forwarder.getMaxSubmission(),
+          INBOX.calculateRetryableSubmissionFee(
+            payload.length,
+            block.basefee + forwarder.BASE_FEE_MARGIN()
+          ),
           forwarder.ARBITRUM_BRIDGE_EXECUTOR(),
           forwarder.ARBITRUM_GUARDIAN(),
           0,
