@@ -8,8 +8,7 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
-import {OptimismBridgeExecutor} from 'governance-crosschain-bridges/contracts/bridges/OptimismBridgeExecutor.sol';
-import {IL2CrossDomainMessenger} from '../../interfaces/optimism/ICrossDomainMessenger.sol';
+import {IL2CrossDomainMessenger} from '../../interfaces/optimism/IL2CrossDomainMessenger.sol';
 import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 import {DeployL1OptimismProposal} from '../../../script/DeployL1OptimismProposal.s.sol';
