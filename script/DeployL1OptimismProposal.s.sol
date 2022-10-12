@@ -39,12 +39,13 @@ library DeployL1OptimismProposal {
   }
 }
 
+// TODO: enter correct addresses
 contract DeployOp is Script {
   function run() external {
     vm.startBroadcast();
     DeployL1OptimismProposal._deployL1Proposal(
-      0x83Fba23163662149B33DBC05cF1312DF6dcBA72b,
-      0xf6e50d5a3f824f5ab4ffa15fb79f4fa1871b8bf7af9e9b32c1aaaa9ea633006d,
+      address(0),
+      bytes32(0),
       address(0)
     );
     vm.stopBroadcast();
