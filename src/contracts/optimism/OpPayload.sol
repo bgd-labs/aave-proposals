@@ -39,7 +39,7 @@ contract OpPayload is IProposalGenericExecutor {
   address public constant VDTOKEN_IMPL =
     AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1;
   address public constant SDTOKEN_IMPL =
-    0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
+    AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_1;
 
   address public constant RATE_STRATEGY =
     0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C; // same as weth
