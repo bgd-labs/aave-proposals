@@ -3,9 +3,14 @@ src = 'src'
 test = 'test'
 out = 'out'
 libs = ['lib']
+fs_permissions = [{access = "write", path = "./reports"}]
+
 
 [rpc_endpoints]
+ethereum="${RPC_ETHEREUM}"
+optimism = "${RPC_OPTIMISM}"
+avalanche = "${RPC_AVALANCHE}"
 polygon = "${RPC_POLYGON}"
-mainnet = "${RPC_MAINNET}"
+arbitrum = "${RPC_ARBITRUM}"
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config

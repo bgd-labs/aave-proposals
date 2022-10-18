@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IFxStateSender} from '../../interfaces/IFx.sol';
+import {IFxStateSender} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxRoot.sol';
 
 /**
- * @title A generic executor for proposals targeting the polygon v3 market
+ * @title A generic executor for proposals targeting the polygon v3 pool
  * @author BGD Labs
  * @notice You can **only** use this executor when the polygon payload has a `execute()` signature without parameters
  * @notice You can **only** use this executor when the polygon payload is expected to be executed via `DELEGATECALL`
