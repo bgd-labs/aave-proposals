@@ -30,18 +30,8 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 28859703);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15732179);
-    vm.selectFork(optimismFork);
-    vm.startPrank(AaveV3Optimism.ACL_ADMIN);
-    // -------------
-    // Claim pool admin
-    // Only needed for the first proposal on any pool. If ACL_ADMIN was previously set it will ignore
-    // https://github.com/aave/aave-v3-core/blob/master/contracts/dependencies/openzeppelin/contracts/AccessControl.sol#L207
-    // -------------
-    AaveV3Optimism.ACL_MANAGER.addPoolAdmin(OPTIMISM_BRIDGE_EXECUTOR);
-    AaveV3Optimism.ACL_MANAGER.addRiskAdmin(OPTIMISM_BRIDGE_EXECUTOR);
-    vm.stopPrank();
+    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 30039500);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15774000);
   }
 
   function testProposalE2E() public {
