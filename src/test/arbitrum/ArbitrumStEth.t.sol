@@ -103,7 +103,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     vm.expectCall(
       address(INBOX),
       abi.encodeCall(
-        IInbox.createRetryableTicket,
+        IInbox.unsafeCreateRetryableTicket,
         (
           ARBITRUM_BRIDGE_EXECUTOR,
           0,

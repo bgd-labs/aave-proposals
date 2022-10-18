@@ -93,7 +93,7 @@ contract CrosschainForwarderArbitrum {
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
     uint256 maxSubmission = getRequiredGas(queue.length);
-    INBOX.createRetryableTicket{value: maxSubmission}(
+    INBOX.unsafeCreateRetryableTicket{value: maxSubmission}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
