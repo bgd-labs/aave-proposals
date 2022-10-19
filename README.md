@@ -65,7 +65,7 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 - [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
 
-#### Proposals
+#### ProposalPayloads
 
 ##### Polygon
 
