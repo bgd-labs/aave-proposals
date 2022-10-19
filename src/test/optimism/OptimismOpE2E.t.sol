@@ -30,16 +30,11 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 30039500);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15774000);
+    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 30264427);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15783218);
   }
 
   function testProposalE2E() public {
-    vm.selectFork(mainnetFork);
-    address crosschainForwarderOptimism = address(
-      new CrosschainForwarderOptimism()
-    );
-
     vm.selectFork(optimismFork);
     // we get all configs to later on check that payload only changes OP
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
@@ -53,8 +48,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     vm.startPrank(GovHelpers.AAVE_WHALE);
     uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
       address(opPayload),
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
-      address(crosschainForwarderOptimism)
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
     );
     vm.stopPrank();
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event

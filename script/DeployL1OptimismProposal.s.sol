@@ -7,12 +7,12 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 
 library DeployL1OptimismProposal {
   address internal constant CROSSCHAIN_FORWARDER_OPTIMISM =
-    address(0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711);
+    0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711;
 
-  function _deployL1Proposal(
-    address payload,
-    bytes32 ipfsHash,
-  ) internal returns (uint256 proposalId) {
+  function _deployL1Proposal(address payload, bytes32 ipfsHash)
+    internal
+    returns (uint256 proposalId)
+  {
     require(payload != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
     require(ipfsHash != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
     address[] memory targets = new address[](1);
