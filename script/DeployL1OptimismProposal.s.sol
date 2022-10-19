@@ -44,7 +44,7 @@ contract DeployOp is Script {
   function run() external {
     vm.startBroadcast();
     DeployL1OptimismProposal._deployL1Proposal(
-      address(0),
+      0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711,
       bytes32(0),
       address(0)
     );
