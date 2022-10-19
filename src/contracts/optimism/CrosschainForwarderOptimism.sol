@@ -16,8 +16,7 @@ interface ICanonicalTransactionChain {
  * @notice You can **only** execute payloads on optimism with up to prepayed gas which is specified in `enqueueL2GasPrepaid` gas.
  * Prepaid gas is the maximum gas covered by the bridge without additional payment.
  * @dev This executor is a generic wrapper to be used with Optimism CrossDomainMessenger (https://etherscan.io/address/0x25ace71c97b33cc4729cf772ae268934f7ab5fa1)
- * It encodes a queue with a parameterless `execute()` with delegate calls and a specified target.
- * This encoded abi is then relayed on the L2CrossDomainMessenger which is in turn queueing the proposal on the OPTIMISM_BRIDGE_EXECUTOR.
+ * It encodes and sends via the L2CrossDomainMessenger a message to queue for execution an action on L2, in the Aave OPTIMISM_BRIDGE_EXECUTOR.
  */
 contract CrosschainForwarderOptimism {
   /**
