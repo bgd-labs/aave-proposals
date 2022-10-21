@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/console.sol';
 import {Script} from 'forge-std/Script.sol';
+import {Test} from 'forge-std/Test.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
 library DeployL1Proposal {
@@ -13,7 +14,7 @@ library DeployL1Proposal {
   address internal constant POLYGON_V3_PAYLOAD = address(0);
   bytes32 internal constant IPFS_HASH = bytes32(0);
 
-  function _deployL1Proposal() internal returns (uint256 proposalId) {
+  function _deployL1Proposal() internal returns (bytes memory) {
     require(
       POLYGON_V2_PAYLOAD != address(0),
       "ERROR: L1_PAYLOAD can't be address(0)"
@@ -44,7 +45,8 @@ library DeployL1Proposal {
     withDelegatecalls[1] = true;
 
     return
-      AaveGovernanceV2.GOV.create(
+      abi.encodeWithSelector(
+        AaveGovernanceV2.GOV.create.selector,
         IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
         targets,
         values,
@@ -53,13 +55,26 @@ library DeployL1Proposal {
         withDelegatecalls,
         IPFS_HASH
       );
+
+    // return
+    //   AaveGovernanceV2.GOV.create(
+    //     IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
+    //     targets,
+    //     values,
+    //     signatures,
+    //     calldatas,
+    //     withDelegatecalls,
+    //     IPFS_HASH
+    //   );
   }
 }
 
-contract DeployRiskParameterUpdateProposal is Script {
+contract DeployRiskParameterUpdateProposal is Script, Test {
   function run() external {
-    vm.startBroadcast();
-    DeployL1Proposal._deployL1Proposal();
-    vm.stopBroadcast();
+    bytes memory encodedPayload = DeployL1Proposal._deployL1Proposal();
+    emit log_bytes(encodedPayload);
+
+    // vm.startBroadcast();
+    // vm.stopBroadcast();
   }
 }

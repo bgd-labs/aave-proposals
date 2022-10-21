@@ -27,3 +27,6 @@ deploy-op-ledger :;  forge script script/DeployOptimismOp.s.sol:DeployOptimismOp
 # Deploy L1 proposal
 deploy-l1-mai-proposal-ledger :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 deploy-l1-mai-proposal-pk :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
+
+# Emit encoded payload
+deploy-l1-polygon-risk-parameter-adjustment :; forge script script/DeployRiskParameterUpdate.s.sol:DeployRiskParameterUpdateProposal --rpc-url ${RPC_URL} -vvvv
