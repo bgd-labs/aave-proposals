@@ -33,4 +33,4 @@ deploy-polygon-risk-v2 :: forge script script/DeployPolygonRiskParameterUpdatePa
 deploy-polygon-risk-v3 :: forge script script/DeployPolygonRiskParameterUpdatePayloads.s.sol:DeployRiskParameterUpdateV3 --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
 # Emit encoded payload
-deploy-l1-polygon-risk-parameter-adjustment :; forge script script/DeployRiskParameterUpdate.s.sol:DeployRiskParameterUpdateProposal --rpc-url ${RPC_URL} -vvvv
+emit-l1-polygon-risk-parameter-adjustment :; forge script script/DeployRiskParameterUpdate.s.sol:DeployRiskParameterUpdateProposal --rpc-url ${RPC_URL} -vvvv
