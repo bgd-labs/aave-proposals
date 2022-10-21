@@ -10,6 +10,7 @@ library DeployL1Proposal {
   address internal constant CROSSCHAIN_FORWARDER_POLYGON =
     address(0x158a6bC04F0828318821baE797f50B0A1299d45b);
 
+  // TODO: replace addresses and ipfs hash with deployed ones onces
   address internal constant POLYGON_V2_PAYLOAD = address(0);
   address internal constant POLYGON_V3_PAYLOAD = address(0);
   bytes32 internal constant IPFS_HASH = bytes32(0);
