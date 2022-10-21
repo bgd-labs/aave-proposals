@@ -29,8 +29,8 @@ deploy-l1-mai-proposal-ledger :; forge script script/DeployL1PolygonProposal.s.s
 deploy-l1-mai-proposal-pk :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
 
 # Deploy RiskParamProposals
-deploy-polygon-risk-v2 :: forge script script/DeployPolygonRiskParameterUpdatePayloads.s.sol:DeployRiskParameterUpdateV2 --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
-deploy-polygon-risk-v3 :: forge script script/DeployPolygonRiskParameterUpdatePayloads.s.sol:DeployRiskParameterUpdateV3 --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+deploy-polygon-risk-v2 :; forge script script/DeployPolygonRiskParameterUpdatePayloads.s.sol:DeployRiskParameterUpdateV2 --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+deploy-polygon-risk-v3 :; forge script script/DeployPolygonRiskParameterUpdatePayloads.s.sol:DeployRiskParameterUpdateV3 --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
 # Emit encoded payload
-emit-l1-polygon-risk-parameter-adjustment :; forge script script/DeployRiskParameterUpdate.s.sol:DeployRiskParameterUpdateProposal --rpc-url ${RPC_URL} -vvvv
+emit-l1-polygon-risk-parameter-adjustment :; forge script script/DeployRiskParameterUpdate.s.sol:DeployRiskParameterUpdateProposal -vvvv
