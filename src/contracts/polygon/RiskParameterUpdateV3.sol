@@ -6,7 +6,7 @@ import {AaveV2Polygon} from 'aave-address-book/AaveV2Polygon.sol';
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 import {ProxyHelpers} from 'aave-helpers/ProxyHelpers.sol';
 
-contract RiskParameterUpdate is IProposalGenericExecutor {
+contract RiskParameterUpdateV3 is IProposalGenericExecutor {
   address public constant GHST = 0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7;
 
   address public constant AAVE = 0xD6DF932A45C0f255f85145f286eA0b292B21C90B;
@@ -38,16 +38,6 @@ contract RiskParameterUpdate is IProposalGenericExecutor {
   address public constant WETH = 0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619;
 
   function execute() external override {
-    // polygon v2
-    AaveV2Polygon.POOL_CONFIGURATOR.disableBorrowingOnReserve(GHST);
-    AaveV2Polygon.POOL_CONFIGURATOR.configureReserveAsCollateral(
-      GHST,
-      2500,
-      4000,
-      11250
-    );
-
-    // polygon v3
     AaveV3Polygon.POOL_CONFIGURATOR.setSupplyCap(AAVE, 36_820);
 
     AaveV3Polygon.POOL_CONFIGURATOR.setBorrowCap(BAL, 96_798);
