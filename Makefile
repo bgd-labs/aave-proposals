@@ -30,3 +30,4 @@ deploy-l1-mai-proposal-pk :; forge script script/DeployL1PolygonProposal.s.sol:D
 
 # Deploy L1 proposal optimism
 deploy-l1-op-proposal-ledger :; forge script script/DeployL1OptimismProposal.s.sol:DeployOp --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+emit-l1-op-calldata :; forge script script/DeployL1OptimismProposal.s.sol:EmitOp

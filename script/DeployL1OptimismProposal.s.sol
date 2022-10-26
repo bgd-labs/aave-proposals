@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/console.sol';
 import {Script} from 'forge-std/Script.sol';
+import {Test} from 'forge-std/Test.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 
 library DeployL1OptimismProposal {
@@ -12,6 +13,27 @@ library DeployL1OptimismProposal {
   function _deployL1Proposal(address payload, bytes32 ipfsHash)
     internal
     returns (uint256 proposalId)
+  {
+    require(payload != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
+    require(ipfsHash != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
+    bytes memory callData = DeployL1OptimismProposalEmitCallData
+      ._deployL1Proposal(payload, ipfsHash);
+    (bool success, bytes memory response) = address(AaveGovernanceV2.GOV).call(
+      callData
+    );
+    require(success);
+    return abi.decode(response, (uint256));
+  }
+}
+
+library DeployL1OptimismProposalEmitCallData {
+  address internal constant CROSSCHAIN_FORWARDER_OPTIMISM =
+    0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711;
+
+  function _deployL1Proposal(address payload, bytes32 ipfsHash)
+    internal
+    pure
+    returns (bytes memory callData)
   {
     require(payload != address(0), "ERROR: L2_PAYLOAD can't be address(0)");
     require(ipfsHash != bytes32(0), "ERROR: IPFS_HASH can't be bytes32(0)");
@@ -26,7 +48,8 @@ library DeployL1OptimismProposal {
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
     return
-      AaveGovernanceV2.GOV.create(
+      abi.encodeWithSelector(
+        AaveGovernanceV2.GOV.create.selector,
         IExecutorWithTimelock(AaveGovernanceV2.SHORT_EXECUTOR),
         targets,
         values,
@@ -46,5 +69,16 @@ contract DeployOp is Script {
       0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1
     );
     vm.stopBroadcast();
+  }
+}
+
+contract EmitOp is Script, Test {
+  function run() external {
+    bytes memory callData = DeployL1OptimismProposalEmitCallData
+      ._deployL1Proposal(
+        0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711,
+        0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1
+      );
+    emit log_bytes(callData);
   }
 }
