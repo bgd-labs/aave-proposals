@@ -74,13 +74,11 @@ contract DeployOp is Script {
 
 contract EmitOp is Script, Test {
   function run() external {
-    vm.startBroadcast();
     bytes memory callData = DeployL1OptimismProposalEmitCallData
       ._deployL1Proposal(
         0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711,
         0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1
       );
     emit log_bytes(callData);
-    vm.stopBroadcast();
   }
 }
