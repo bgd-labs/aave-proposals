@@ -11,14 +11,18 @@ import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/depend
 import {IL2CrossDomainMessenger} from 'governance-crosschain-bridges/contracts/dependencies/optimism/interfaces/IL2CrossDomainMessenger.sol';
 import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
-import {DeployL1OptimismProposal} from '../../../script/DeployL1OptimismProposal.s.sol';
+import {DeployL1OptimismProposal, DeployL1OptimismProposalEmitCallData} from '../../../script/DeployL1OptimismProposal.s.sol';
 
 contract OptimismOpE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 optimismFork;
 
-  OpPayload public opPayload;
+  OpPayload public opPayload =
+    OpPayload(0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711);
+
+  bytes32 ipfs =
+    0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
 
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
@@ -34,24 +38,27 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15783218);
   }
 
+  function testEmitOnly() public {
+    bytes memory callData = DeployL1OptimismProposalEmitCallData
+      ._deployL1Proposal(address(opPayload), ipfs);
+    emit log_bytes(callData);
+  }
+
   function testProposalE2E() public {
     vm.selectFork(optimismFork);
     // we get all configs to later on check that payload only changes OP
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
       AaveV3Optimism.POOL
     );
-    // 1. deploy l2 payload
-    vm.selectFork(optimismFork);
-    opPayload = new OpPayload();
-    // 2. create l1 proposal
+    // 1. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(GovHelpers.AAVE_WHALE);
     uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
       address(opPayload),
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
+      ipfs
     );
     vm.stopPrank();
-    // 3. execute proposal and record logs so we can extract the emitted StateSynced event
+    // 2. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
     Vm.Log[] memory entries = vm.getRecordedLogs();
@@ -67,7 +74,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       entries[3].data,
       (address, bytes, uint256)
     );
-    // 4. mock the receive on l2 with the data emitted on StateSynced
+    // 3. mock the receive on l2 with the data emitted on StateSynced
     vm.selectFork(optimismFork);
     vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSENGER_ADDRESS
     OVM_L2_CROSS_DOMAIN_MESSENGER.relayMessage(
@@ -78,10 +85,10 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     );
     vm.stopPrank();
 
-    // 5. execute proposal on l2
+    // 4. execute proposal on l2
     BridgeExecutorHelpers.waitAndExecuteLatest(vm, OPTIMISM_BRIDGE_EXECUTOR);
 
-    // 6. verify results
+    // 5. verify results
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
       AaveV3Optimism.POOL
     );
