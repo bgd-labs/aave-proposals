@@ -4,28 +4,28 @@ This template contains an opinionated smart contract template for creating propo
 
 ## About
 
-To simplify the process of creating a cross-chain proposal this repository contains opinionated `CrosschainForwarder` contracts for `polygon`, `optimism` and `arbitrum` abstracting away the complexity of bridging & cross-chain gas calculations.
+To simplify the process of creating a cross-chain proposal this repository contains opinionated `CrosschainForwarder` contracts for `Polygon`, `Optimism` and `Arbitrum` abstracting away the complexity of bridging & cross-chain gas calculations.
 All the forwarders follow the same pattern. They expect a payload to be deployed on L2 and to be executed with a parameterless `execute()` signature and via `DELEGATECALL`.
 
 ![visualization](/bridge-listing.png)
 
 ### Polygon
 
-For a proposal to be executed on polygon it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon).
-Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
+For a proposal to be executed on Polygon it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(Polygon).
+Once the state is synced to `FX_CHILD` on Polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
 
 ### Optimism
 
-For a proposal to be executed on optimism it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessage(address,bytes,uint32)` on [L1_CROSS_DOMAIN_MESSENGER](https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)(mainnet) to [L2_CROSS_DOMAIN_MESSENGER](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000007#code)(optimism).
-Once the state is `L2_CROSS_DOMAIN_MESSENGER` on optimism it will queue the payload on [OPTIMISM_BRIDGE_EXECUTOR](https://optimistic.etherscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
+For a proposal to be executed on Optimism it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessage(address,bytes,uint32)` on [L1_CROSS_DOMAIN_MESSENGER](https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)(mainnet) to [L2_CROSS_DOMAIN_MESSENGER](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000007#code)(Optimism).
+Once the state is `L2_CROSS_DOMAIN_MESSENGER` on Optimism it will queue the payload on [OPTIMISM_BRIDGE_EXECUTOR](https://optimistic.etherscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
 
 ### Arbitrum
 
-For a proposal to be executed on arbitrum it needs to pass a mainnet governance proposal that sends an encoded payload via `unsafeCreateRetryableTicket{value: uint256}(address,uint256,uint256,address,address,uint256,uint256,bytes)` on [INBOX](https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)(mainnet). The arbitrum bridge will then call the bridged calldata via the L2_ALIAS of the mainnet `msg.sender` (in this case is the aliased mainnet governance executor) which will queue the payload on [ARBITRUM_BRIDGE_EXECUTOR](https://arbiscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
+For a proposal to be executed on Arbitrum it needs to pass a mainnet governance proposal that sends an encoded payload via `unsafeCreateRetryableTicket{value: uint256}(address,uint256,uint256,address,address,uint256,uint256,bytes)` on [INBOX](https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)(mainnet). The Arbitrum bridge will then call the bridged calldata via the L2_ALIAS of the mainnet `msg.sender` (in this case is the aliased mainnet governance executor) which will queue the payload on [ARBITRUM_BRIDGE_EXECUTOR](https://arbiscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
 
-Caveat: Opposed to the other bridges, arbitrum inbox bridge requires you to supply some gas.
-For simplicity the `CrosschainForwarderArbitrum` expects some eth to be available on the executor.
-You can check if you need to top-up the executor by calling `getRequiredGas(580)` on the `CrosschainForwarderArbitrum`.
+Caveat: Opposed to the other bridges, Arbitrum inbox bridge requires you to supply some gas.
+For simplicity the `CrosschainForwarderArbitrum` expects some eth to be available on the [SHORT_EXECUTOR](https://etherscan.io/address/0xEE56e2B3D491590B5b31738cC34d5232F378a8D5).
+You can check if you need to top-up the SHORT_EXECUTOR by calling `getRequiredGas(580)` on the `CrosschainForwarderArbitrum`.
 
 ## Getting started
 
@@ -109,8 +109,8 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 ## References
 
 - [crosschain-bridge repository](https://github.com/aave/governance-crosschain-bridges#polygon-governance-bridge)
-- [first ever polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
+- [first ever Polygon bridge proposal](https://github.com/pakim249CAL/Polygon-Asset-Deployment-Generic-Executor)
 
 ## Misc
 
-- the deploy script on polygon currently requires the --legacy flag due to issues with polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
+- the deploy script on Polygon currently requires the --legacy flag due to issues with Polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
