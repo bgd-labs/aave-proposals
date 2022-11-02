@@ -28,8 +28,6 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
 
-  address public constant OP = 0x4200000000000000000000000000000000000042;
-
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   uint256 public constant MESSAGE_LENGTH = 580;

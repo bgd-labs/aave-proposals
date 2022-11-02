@@ -1,14 +1,31 @@
 # Aave v3 cross-chain listing template
 
-This template contains an opinionated smart contract template for creating proposals to list assets on the aave polygon v3 pool.
-
-For a proposal to be executed on polygon it needs to pass mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon). Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
+This template contains an opinionated smart contract template for creating proposals to list assets on the aave v3 pools that are controlled by cross-chain governance.
 
 ## About
 
-To simplify the process of creating a cross chain proposal this repository contains an opinionated [CrosschainForwarderPolygon](/src/contracts/polygon/CrosschainForwarderPolygon.sol) which expects a payload address deployed on the polygon network as the only parameter. The mainnet proposal payload will then be a simple `execute()` signature with `DELEGATECALL` enabled.
+To simplify the process of creating a cross-chain proposal this repository contains opinionated `CrosschainForwarder` contracts for `polygon`, `optimism` and `arbitrum` abstracting away the complexity of bridging & cross-chain gas calculations.
+All the forwarders follow the same pattern. They expect a payload to be deployed on L2 and to be executed with a parameterless `execute()` signature and via `DELEGATECALL`.
 
 ![visualization](/bridge-listing.png)
+
+### Polygon
+
+For a proposal to be executed on polygon it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessageToChild(address,bytes)` on [FX_ROOT](https://etherscan.io/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2#code)(mainnet) to [FX_CHILD](https://polygonscan.com/address/0x8397259c983751DAf40400790063935a11afa28a#code)(polygon).
+Once the state is synced to `FX_CHILD` on polygon network it will queue the payload on [POLYGON_BRIDGE_EXECUTOR](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code).
+
+### Optimism
+
+For a proposal to be executed on optimism it needs to pass a mainnet governance proposal that sends an encoded payload via `sendMessage(address,bytes,uint32)` on [L1_CROSS_DOMAIN_MESSENGER](https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)(mainnet) to [L2_CROSS_DOMAIN_MESSENGER](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000007#code)(optimism).
+Once the state is `L2_CROSS_DOMAIN_MESSENGER` on optimism it will queue the payload on [OPTIMISM_BRIDGE_EXECUTOR](https://optimistic.etherscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
+
+### Arbitrum
+
+For a proposal to be executed on arbitrum it needs to pass a mainnet governance proposal that sends an encoded payload via `unsafeCreateRetryableTicket{value: uint256}(address,uint256,uint256,address,address,uint256,uint256,bytes)` on [INBOX](https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)(mainnet). The arbitrum bridge will then call the bridged calldata via the L2_ALIAS of the mainnet `msg.sender` (in this case is the aliased mainnet governance executor) which will queue the payload on [ARBITRUM_BRIDGE_EXECUTOR](https://arbiscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611).
+
+Caveat: Opposed to the other bridges, arbitrum inbox bridge requires you to supply some gas.
+For simplicity the `CrosschainForwarderArbitrum` expects some eth to be available on the executor.
+You can check if you need to top-up the executor by calling `getRequiredGas(580)` on the `CrosschainForwarderArbitrum`.
 
 ## Getting started
 
@@ -34,7 +51,7 @@ forge test
 
 ```sh
 # Deploy proposal
-make deploy-<mai|frax>-<ledger|pk>
+make deploy-<mai|frax|op>
 # Verify proposal
 make verify-<mai|frax>
 ```
@@ -44,7 +61,7 @@ make verify-<mai|frax>
 Make sure the referenced IPFS_HASH is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
 
 ```sh
-make deploy-l1-<mai|frax>-proposal-<ledger|pk>
+make deploy-l1-<mai|frax|op>-proposal
 ```
 
 ## Creating the proposal
@@ -65,6 +82,7 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 - [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
 - [CrosschainForwarderOptimism](https://etherscan.io/address/0x5f5c02875a8e9b5a26fbd09040abcfdeb2aa6711#code)
+- [CrosschainForwarderArbitrum](TBA)
 
 #### ProposalPayloads
 
@@ -95,5 +113,4 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 ## Misc
 
-- the deploy script currently requires the --legacy flag due to issues with polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
-- some of the tests are currently commented out due to a bug on foundry causing public library methods to revert https://github.com/foundry-rs/foundry/issues/2549
+- the deploy script on polygon currently requires the --legacy flag due to issues with polygon gas estimation https://github.com/ethers-io/ethers.js/issues/2828#issuecomment-1073423774
