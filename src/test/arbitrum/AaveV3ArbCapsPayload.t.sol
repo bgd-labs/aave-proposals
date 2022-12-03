@@ -28,7 +28,7 @@ contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase {
   AaveV3ArbCapsPayload public proposalPayload;
 
   bytes32 ipfs =
-    0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1; //TODO - change to new ipfs
+    0xf40a7b4a6ecd5325553593f0f9fdc8ba04808573fdf76fc277aee52b5396a588;
 
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
