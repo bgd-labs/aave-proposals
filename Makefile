@@ -9,7 +9,7 @@ update:; forge update
 build  :; forge build --sizes
 
 test   :; forge test -vvv
-test-taget   :; forge test -vvv --match-contract AaveV3ArbCapsPayloadTest
+test-taget   :; forge test -vvv --match-contract AaveV3OptCapsPayloadTest
 
 # Deploy L2 Polygon proposal payloads
 deploy-mai :;  forge script script/DeployPolygonMiMatic.s.sol:DeployPolygonMiMatic --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
