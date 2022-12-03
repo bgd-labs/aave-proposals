@@ -2,6 +2,7 @@
 pragma solidity ^0.8.10;
 
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
+import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
 /**

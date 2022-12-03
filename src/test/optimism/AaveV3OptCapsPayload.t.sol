@@ -13,22 +13,27 @@ import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainFo
 import {AaveV3OptCapsPayload} from '../../contracts/optimism/AaveV3OptCapsPayload.sol';
 import {DeployL1OptimismProposal, DeployL1OptimismProposalEmitCallData} from '../../../script/DeployL1OptimismProposal.s.sol';
 
-contract OptimismOpE2ETest is ProtocolV3TestBase {
+contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 optimismFork;
 
+  address public constant payloadAdress =
+    0xC9df68EdcB0c8fb7Ced82e5836b75c002c723e17;
+  AaveV3OptCapsPayload public proposalPayload =
+    AaveV3OptCapsPayload(payloadAdress);
+
   bytes32 ipfs =
-    0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
+    0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1; //TODO - change to new ipfs
 
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
     0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 
-  string public constant LinkSymbol = 'LINK';
-  string public constant WETHSymbol = 'WETH';
-  string public constant WBTCSymbol = 'WBTC';
+  address public constant WETH = 0x4200000000000000000000000000000000000006;
+  address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
+  address public constant LINK = 0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6;
 
   //35.9K WETH
   uint256 public constant WETH_CAP = 35_900;
@@ -37,19 +42,14 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   //258K LINK
   uint256 public constant LINK_CAP = 258_000;
 
-  //TODO delete?
-  address public constant OP = 0x4200000000000000000000000000000000000042;
-
-  address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
-
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 336023);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 16103164);
+    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 44920008);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 16103664);
   }
 
   function testEmitOnly() public {
     bytes memory callData = DeployL1OptimismProposalEmitCallData
-      ._deployL1Proposal(address(opPayload), ipfs);
+      ._deployL1Proposal(address(proposalPayload), ipfs);
     emit log_bytes(callData);
   }
 
@@ -59,12 +59,11 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
       AaveV3Optimism.POOL
     );
-    AaveV3OptCapsPayload opPayload = new AaveV3OptCapsPayload();
     // 1. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(GovHelpers.AAVE_WHALE);
     uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
-      address(opPayload),
+      address(proposalPayload),
       ipfs
     );
     vm.stopPrank();
@@ -99,14 +98,14 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     BridgeExecutorHelpers.waitAndExecuteLatest(vm, OPTIMISM_BRIDGE_EXECUTOR);
 
     // 5. verify results
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase
-      ._getReservesConfigs(false);
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
+      AaveV3Optimism.POOL
+    );
 
     //LINK
     ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
-      LinkSymbol,
-      false
+      LINK
     );
     LinkConfig.supplyCap = LINK_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
@@ -114,8 +113,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     //WETH
     ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
-      WETHSymbol,
-      false
+      WETH
     );
     WETHConfig.supplyCap = WETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
@@ -123,8 +121,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     //WBTC
     ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
-      WBTCSymbol,
-      false
+      WBTC
     );
     WBTCConfig.supplyCap = WBTC_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
