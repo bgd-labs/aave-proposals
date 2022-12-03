@@ -20,7 +20,6 @@ verify-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --
 # Deploy L2 optimism proposals payloads
 deploy-op :;  forge script script/DeployOptimismOp.s.sol:DeployOptimismOp --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
 
-
 # Deploy L1 proposal polygon
 deploy-l1-mai-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url ${RPC_URL} --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
