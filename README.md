@@ -82,7 +82,7 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 - [CrosschainForwarderPolygon](https://etherscan.io/address/0x158a6bc04f0828318821bae797f50b0a1299d45b#code)
 - [CrosschainForwarderOptimism](https://etherscan.io/address/0x5f5c02875a8e9b5a26fbd09040abcfdeb2aa6711#code)
-- [CrosschainForwarderArbitrum](TBA)
+- [CrosschainForwarderArbitrum](https://etherscan.io/address/0x2e2B1F112C4D79A9D22464F0D345dE9b792705f1#code)
 
 #### ProposalPayloads
 
