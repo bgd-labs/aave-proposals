@@ -24,7 +24,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
 
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+    AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 

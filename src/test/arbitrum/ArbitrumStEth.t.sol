@@ -26,19 +26,18 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+    AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
 
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   uint256 public constant MESSAGE_LENGTH = 580;
 
-  CrosschainForwarderArbitrum public forwarder;
+  CrosschainForwarderArbitrum public forwarder =
+    CrosschainForwarderArbitrum(AaveGovernanceV2.CROSSCHAIN_FORWARDER_ARBITRUM);
 
   function setUp() public {
-    mainnetFork = vm.createSelectFork(vm.rpcUrl('ethereum'), 15588075);
-    forwarder = new CrosschainForwarderArbitrum();
-
-    arbitrumFork = vm.createSelectFork(vm.rpcUrl('arbitrum'), 25932340);
+    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 16128510);
+    arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 44190513);
 
     // fake permission transfer from guardian to ARBITRUM_BRIDGE_EXECUTOR
     vm.selectFork(arbitrumFork);
@@ -88,8 +87,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     vm.startPrank(GovHelpers.AAVE_WHALE);
     uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
       address(stEthPayload),
-      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5,
-      address(forwarder)
+      0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
     );
     vm.stopPrank();
 
