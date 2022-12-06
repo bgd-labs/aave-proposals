@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/console.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
@@ -23,7 +22,7 @@ contract CrosschainForwarderArbitrum {
   IInbox public constant INBOX =
     IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
   address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+    AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
   address public constant ARBITRUM_GUARDIAN =
     0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
