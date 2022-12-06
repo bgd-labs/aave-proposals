@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveGovernanceV2, AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
@@ -10,14 +10,7 @@ import {AaveV3ArbCapsPayload} from '../../contracts/arbitrum/AaveV3ArbCapsPayloa
 import {BaseTest} from '../utils/BaseTest.sol';
 
 contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, BaseTest {
-  using stdStorage for StdStorage;
-  // the identifiers of the forks
-  uint256 arbitrumFork;
-
   AaveV3ArbCapsPayload public proposalPayload;
-
-  address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
 
   address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
   address public constant WBTC = 0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f;
@@ -34,12 +27,11 @@ contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, BaseTest {
   uint256 public constant AAVE_CAP = 2_500;
 
   function setUp() public {
-    arbitrumFork = vm.createSelectFork(vm.rpcUrl('arbitrum'), 43236349);
-    _setUp(ARBITRUM_BRIDGE_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 43236349);
+    _setUp(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testProposalE2E() public {
-    vm.selectFork(arbitrumFork);
     // we get all configs to later on check that payload only changes stEth
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
       AaveV3Arbitrum.POOL
