@@ -9,7 +9,7 @@ import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecuto
 /**
  * @dev Adding OP token to aave optimism pool.
  * Listing snapshot: https://snapshot.org/#/aave.eth/proposal/0x16d55ed730076b4f6ea09b9fcc62ea846b248a96f40fb3dbc6c1f193df013d6d
- * Parameter suggestions: https://governance.aave.com/t/arc-add-op-as-collateral-to-aave-v3/9087/7
+ * Parameter suggestions: https://governance.aave.com/t/arc-add-op-as-collateral-to-aave-v3/9087/18
  */
 contract OpPayload is IProposalGenericExecutor {
   // **************************
