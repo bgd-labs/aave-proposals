@@ -13,9 +13,6 @@ import {BaseTest} from '../utils/BaseTest.sol';
 contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
   AaveV3OptCapsPayload public proposalPayload;
 
-  address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
-
   address public constant WETH = 0x4200000000000000000000000000000000000006;
   address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
   address public constant LINK = 0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6;
