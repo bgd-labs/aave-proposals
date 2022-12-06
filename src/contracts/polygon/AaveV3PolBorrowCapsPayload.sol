@@ -6,7 +6,7 @@ import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @dev This payload sets supply caps for multiple assets on AAVE V3 Polygon
+ * @dev This payload sets borrow caps for multiple assets on AAVE V3 Polygon
  * - Snapshot: TBD //TODO
  * - Dicussion: https://governance.aave.com/t/arc-v3-borrow-cap-recommendations-fast-track-01-05-2022/10927
  */
