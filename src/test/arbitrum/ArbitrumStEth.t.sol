@@ -38,13 +38,6 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   function setUp() public {
     mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 16128510);
     arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 44190513);
-
-    // fake permission transfer from guardian to ARBITRUM_BRIDGE_EXECUTOR
-    vm.selectFork(arbitrumFork);
-    vm.startPrank(AaveV3Arbitrum.ACL_ADMIN);
-    AaveV3Arbitrum.ACL_MANAGER.addPoolAdmin(ARBITRUM_BRIDGE_EXECUTOR);
-    AaveV3Arbitrum.ACL_MANAGER.addRiskAdmin(ARBITRUM_BRIDGE_EXECUTOR);
-    vm.stopPrank();
   }
 
   // utility to transform memory to calldata so array range access is available
