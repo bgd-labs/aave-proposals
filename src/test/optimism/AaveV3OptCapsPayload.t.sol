@@ -11,15 +11,7 @@ import {AaveV3OptCapsPayload} from '../../contracts/optimism/AaveV3OptCapsPayloa
 import {BaseTest} from '../utils/BaseTest.sol';
 
 contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
-  uint256 optimismFork;
-
-  address public constant DeployedPayloadAdress =
-    0xC9df68EdcB0c8fb7Ced82e5836b75c002c723e17;
-
   AaveV3OptCapsPayload public proposalPayload;
-
-  address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
 
   address public constant WETH = 0x4200000000000000000000000000000000000006;
   address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
@@ -33,12 +25,11 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
   uint256 public constant LINK_CAP = 258_000;
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 44920020);
-    _setUp(OPTIMISM_BRIDGE_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 44920020);
+    _setUp(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testProposalE2E() public {
-    vm.selectFork(optimismFork);
     // we get all configs to later on check that payload only changes OP
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
       AaveV3Optimism.POOL
