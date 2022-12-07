@@ -35,7 +35,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   function setUp() public {
     optimismFork = vm.createSelectFork(vm.rpcUrl('optimism'), 30264427);
     opPayload = new OpPayload();
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15783218);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15783218);
   }
 
   function testEmitOnly() public {

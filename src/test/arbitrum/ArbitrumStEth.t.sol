@@ -36,7 +36,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     CrosschainForwarderArbitrum(AaveGovernanceV2.CROSSCHAIN_FORWARDER_ARBITRUM);
 
   function setUp() public {
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 16128510);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 16128510);
     arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 44190513);
   }
 
