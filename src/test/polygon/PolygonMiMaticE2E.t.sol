@@ -34,7 +34,7 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
 
   function setUp() public {
     polygonFork = vm.createFork(vm.rpcUrl('polygon'), 31507646);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15275388);
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15275388);
   }
 
   // utility to transform memory to calldata so array range access is available
