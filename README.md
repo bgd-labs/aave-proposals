@@ -93,7 +93,7 @@ The address creating the mainnet proposal requires 80k AAVE of proposition power
 
 ##### Optimism
 
-- [OpPayload](https://optimistic.etherscan.io/address/0x5f5c02875a8e9b5a26fbd09040abcfdeb2aa6711#code)
+- [OpPayload](https://optimistic.etherscan.io/address/0x6f76EeDCB386fef8FC57BEE9d3eb46147e488eEF#code)
 
 ### Bridges
 
