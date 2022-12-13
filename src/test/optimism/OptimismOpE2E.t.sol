@@ -18,14 +18,13 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   uint256 mainnetFork;
   uint256 optimismFork;
 
-  OpPayload public opPayload =
-    OpPayload(0x5f5C02875a8e9B5A26fbd09040ABCfDeb2AA6711);
+  OpPayload public opPayload;
 
   bytes32 ipfs =
     0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
 
   address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+    AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 
@@ -34,8 +33,9 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
   function setUp() public {
-    optimismFork = vm.createFork(vm.rpcUrl('optimism'), 30264427);
-    mainnetFork = vm.createFork(vm.rpcUrl('ethereum'), 15783218);
+    optimismFork = vm.createSelectFork(vm.rpcUrl('optimism'), 30264427);
+    opPayload = new OpPayload();
+    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15783218);
   }
 
   function testEmitOnly() public {
@@ -99,8 +99,8 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
       decimals: 18,
-      ltv: 5000,
-      liquidationThreshold: 6500,
+      ltv: 3000,
+      liquidationThreshold: 4000,
       liquidationBonus: 11000,
       liquidationProtocolFee: 1000,
       reserveFactor: 2000,
@@ -112,9 +112,9 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       isActive: true,
       isFrozen: false,
       isSiloed: false,
-      supplyCap: 40_000_000,
+      supplyCap: 20_000_000,
       borrowCap: 0,
-      debtCeiling: 0,
+      debtCeiling: 2_000_000_00,
       eModeCategory: 0
     });
 
@@ -169,7 +169,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     address user0 = address(1);
     _deposit(op, AaveV3Optimism.POOL, user0, 1000 ether);
 
-    this._borrow(dai, AaveV3Optimism.POOL, user0, 222 ether, false);
+    this._borrow(dai, AaveV3Optimism.POOL, user0, 100 ether, false);
 
     // Not possible to borrow and repay when vdebt index doesn't changing, so moving 1s
     skip(1);

@@ -9,7 +9,7 @@ import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecuto
 /**
  * @dev Adding OP token to aave optimism pool.
  * Listing snapshot: https://snapshot.org/#/aave.eth/proposal/0x16d55ed730076b4f6ea09b9fcc62ea846b248a96f40fb3dbc6c1f193df013d6d
- * Parameter suggestions: https://governance.aave.com/t/arc-add-op-as-collateral-to-aave-v3/9087/7
+ * Parameter suggestions: https://governance.aave.com/t/arc-add-op-as-collateral-to-aave-v3/9087/18
  */
 contract OpPayload is IProposalGenericExecutor {
   // **************************
@@ -46,13 +46,15 @@ contract OpPayload is IProposalGenericExecutor {
 
   uint256 public constant RESERVE_FACTOR = 2000; // 20%
 
-  uint256 public constant SUPPLY_CAP = 40_000_000; // 40m OP
+  uint256 public constant SUPPLY_CAP = 20_000_000; // 20m OP
   uint256 public constant LIQ_PROTOCOL_FEE = 1000; // 10%
 
   // params to set reserve as collateral
-  uint256 public constant LIQ_THRESHOLD = 6500; // 65%
-  uint256 public constant LTV = 5000; // 50%
+  uint256 public constant LIQ_THRESHOLD = 4000; // 40%
+  uint256 public constant LTV = 3000; // 30%
   uint256 public constant LIQ_BONUS = 11000; // 10%
+
+  uint256 public constant DEBT_CEILING = 2_000_000_00; // 2m (USD denominated)
 
   function execute() external override {
     // ----------------------------
@@ -96,6 +98,8 @@ contract OpPayload is IProposalGenericExecutor {
     configurator.initReserves(initReserveInputs);
 
     configurator.setSupplyCap(UNDERLYING, SUPPLY_CAP);
+
+    configurator.setDebtCeiling(UNDERLYING, DEBT_CEILING);
 
     configurator.setReserveFactor(UNDERLYING, RESERVE_FACTOR);
 
