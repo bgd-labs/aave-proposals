@@ -10,6 +10,8 @@ build  :; forge build --sizes
 
 test   :; forge test -vvv
 
+
+
 # Deploy L2 Polygon proposal payloads
 deploy-mai :;  forge script script/DeployPolygonMiMatic.s.sol:DeployPolygonMiMatic --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
@@ -18,6 +20,10 @@ deploy-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --
 deploy-op :;  forge script script/DeployOptimismOp.s.sol:DeployOptimismOp --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-op-caps :;  forge script script/DeployOptimismCaps.s.sol:DeployOptimismCaps --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
+# deploy borrow caps:
+deploy-op-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployOptimismCaps --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${OPTISCAN_API_KEY} --verify -vvvv
+deploy-pol-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployPolygonCaps --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${POLYGON_API_KEY} --verify -vvvv
+deploy-arb-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployArbitrumCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${ARBICAN_API_KEY} --verify -vvvv
 
 # Deploy L1 proposal polygon
 deploy-l1-mai-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
