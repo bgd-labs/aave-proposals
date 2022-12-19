@@ -25,6 +25,9 @@ deploy-op-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployOptim
 deploy-pol-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployPolygonCaps --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${POLYGON_API_KEY} --verify -vvvv
 deploy-arb-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployArbitrumCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${ARBICAN_API_KEY} --verify -vvvv
 
+# deploy borrow/supply caps proposal multichain:
+deploy-caps-multi-proposal :; forge script script/DeployCapsMultiChainProposal.s.s.sol:DeployAllCaps --rpc-url mainnet --broadcast --legacy  --private-key ${PRIVATE_KEY} -vvvv
+
 # Deploy L1 proposal polygon
 deploy-l1-mai-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
