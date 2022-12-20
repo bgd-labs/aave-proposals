@@ -69,7 +69,13 @@ contract DeployAllCaps is Script {
     payloads[4] = 0xC9df68EdcB0c8fb7Ced82e5836b75c002c723e17; // arb supply caps
     targets[4] = AaveGovernanceV2.CROSSCHAIN_FORWARDER_ARBITRUM;
 
-    DeployMutliChainProposals._deployL1Proposal(payloads, targets, bytes32(0)); //TODO - change to real IPFS
+    DeployMutliChainProposals._deployL1Proposal(
+      payloads,
+      targets,
+      bytes32(
+        0x366f499db7fed9b542e614e587312e417b6d8add2fc83840745781f5a70567b1
+      )
+    );
     vm.stopBroadcast();
   }
 }
