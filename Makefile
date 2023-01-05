@@ -17,6 +17,10 @@ deploy-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --
 # Deploy L2 optimism proposals payloads
 deploy-op :;  forge script script/DeployOptimismOp.s.sol:DeployOptimismOp --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-op-caps :;  forge script script/DeployOptimismCaps.s.sol:DeployOptimismCaps --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-op-caps-dry-run :;  forge script script/DeployOptimismCaps.s.sol:DeployOptimismCaps --rpc-url optimism --legacy -vvvv
+
+deploy-op-caps-010423 :;  forge script script/DeployOptimismCaps010423.s.sol:DeployOptimismCaps --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-op-caps-dry-run-010423 :;  forge script script/DeployOptimismCaps010423.s.sol:DeployOptimismCaps --rpc-url optimism --legacy -vvvv
 
 # deploy borrow caps:
 deploy-op-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployOptimismCaps --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${OPTISCAN_API_KEY} --verify -vvvv
