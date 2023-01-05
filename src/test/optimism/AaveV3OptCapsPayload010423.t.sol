@@ -19,7 +19,7 @@ contract AaveV3OptCapsPayloadTest010423 is ProtocolV3TestBase, BaseTest {
   uint256 public constant AAVE_CAP = 100_000;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 44920020);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 60744242);
     _setUp(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
