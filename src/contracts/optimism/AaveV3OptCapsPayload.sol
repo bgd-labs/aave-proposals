@@ -6,29 +6,19 @@ import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV
 import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @dev This steward sets supply caps for multiple assets on AAVE V3 Optimism
- * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xf40a7b4a6ecd5325553593f0f9fdc8ba04808573fdf76fc277aee52b5396a588
- * - Dicussion: https://governance.aave.com/t/arc-v3-supply-cap-recommendations-for-uncapped-assets-fast-track/10750/6
+ * @dev This steward sets supply caps on AAVE V3 Optimism
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xaca5b7e014d4e752ce5ff0d0a1b1d9bf86496338d1ec53bfb0132810535f6db8
+ * - Dicussion: https://governance.aave.com/t/arc-risk-parameter-updates-for-aave-v3-optimism-2022-12-29/11213
  */
 contract AaveV3OptCapsPayload is IProposalGenericExecutor {
-  address public constant WETH = 0x4200000000000000000000000000000000000006;
-  address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
-  address public constant LINK = 0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6;
+  address public constant AAVE = 0x76FB31fb4af56892A25e32cFC43De717950c9278;
 
-  //35.9K WETH
-  uint256 public constant WETH_CAP = 35_900;
-  //1.1K WBTC
-  uint256 public constant WBTC_CAP = 1_100;
-  //258K LINK
-  uint256 public constant LINK_CAP = 258_000;
+  // 100k AAVE
+  uint256 public constant AAVE_CAP = 100_000;
 
   function execute() external {
     IPoolConfigurator configurator = AaveV3Optimism.POOL_CONFIGURATOR;
 
-    configurator.setSupplyCap(WETH, WETH_CAP);
-
-    configurator.setSupplyCap(WBTC, WBTC_CAP);
-
-    configurator.setSupplyCap(LINK, LINK_CAP);
+    configurator.setSupplyCap(AAVE, AAVE_CAP);
   }
 }

@@ -13,16 +13,10 @@ import {BaseTest} from '../utils/BaseTest.sol';
 contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
   AaveV3OptCapsPayload public proposalPayload;
 
-  address public constant WETH = 0x4200000000000000000000000000000000000006;
-  address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
-  address public constant LINK = 0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6;
+  address public constant AAVE = 0x76FB31fb4af56892A25e32cFC43De717950c9278;
 
-  //35.9K WETH
-  uint256 public constant WETH_CAP = 35_900;
-  //1.1K WBTC
-  uint256 public constant WBTC_CAP = 1_100;
-  //258K LINK
-  uint256 public constant LINK_CAP = 258_000;
+  // 100k AAVE
+  uint256 public constant AAVE_CAP = 100_000;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 44920020);
@@ -46,28 +40,12 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
       AaveV3Optimism.POOL
     );
 
-    //LINK
+    // AAVE
     ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
-      LINK
+      AAVE
     );
-    LinkConfig.supplyCap = LINK_CAP;
+    LinkConfig.supplyCap = AAVE_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
-
-    //WETH
-    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WETH
-    );
-    WETHConfig.supplyCap = WETH_CAP;
-    ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
-
-    //WBTC
-    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WBTC
-    );
-    WBTCConfig.supplyCap = WBTC_CAP;
-    ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
   }
 }
