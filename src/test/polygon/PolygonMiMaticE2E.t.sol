@@ -113,6 +113,8 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
       isActive: true,
       isFrozen: false,
       isSiloed: false,
+      isBorrowableInIsolation: false,
+      isFlashloanable: false,
       supplyCap: 100_000_000,
       borrowCap: 0,
       debtCeiling: 2_000_000_00,
@@ -136,7 +138,7 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
       })
     );
 
-    this._validateAssetSourceOnOracle(
+    _validateAssetSourceOnOracle(
       AaveV3Polygon.POOL_ADDRESSES_PROVIDER,
       MIMATIC,
       miMaticPayload.PRICE_FEED()

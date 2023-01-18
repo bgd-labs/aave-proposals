@@ -112,6 +112,8 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       isActive: true,
       isFrozen: false,
       isSiloed: false,
+      isBorrowableInIsolation: false,
+      isFlashloanable: false,
       supplyCap: 20_000_000,
       borrowCap: 0,
       debtCeiling: 2_000_000_00,
@@ -135,7 +137,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
       })
     );
 
-    this._validateAssetSourceOnOracle(
+    _validateAssetSourceOnOracle(
       AaveV3Optimism.POOL_ADDRESSES_PROVIDER,
       OP,
       opPayload.PRICE_FEED()
