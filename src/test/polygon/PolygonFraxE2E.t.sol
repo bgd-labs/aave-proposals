@@ -62,6 +62,8 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, BaseTest {
       isActive: true,
       isFrozen: false,
       isSiloed: false,
+      isBorrowableInIsolation: false,
+      isFlashloanable: false,
       supplyCap: 50_000_000,
       borrowCap: 0,
       debtCeiling: 2_000_000_00,
@@ -85,7 +87,7 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, BaseTest {
       })
     );
 
-    this._validateAssetSourceOnOracle(
+    _validateAssetSourceOnOracle(
       AaveV3Polygon.POOL_ADDRESSES_PROVIDER,
       FRAX,
       fraxPayload.PRICE_FEED()

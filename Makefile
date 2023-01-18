@@ -10,6 +10,8 @@ build  :; forge build --sizes
 
 test   :; forge test -vvv
 
+test-ageur-jeur-freeze :; forge test -vvv --match-contract AaveV3PolJEURAGEURFreeze && make git-diff before=./reports/0x794a61358D6845594F94dc1DB02A252b5b4814aD_pre-agEUR-freezing.md after=./reports/0x794a61358D6845594F94dc1DB02A252b5b4814aD_post-agEUR-freezing.md out=diff-agEUR-freezing && make git-diff before=./reports/0x794a61358D6845594F94dc1DB02A252b5b4814aD_pre-jEUR-freezing.md after=./reports/0x794a61358D6845594F94dc1DB02A252b5b4814aD_post-jEUR-freezing.md out=diff-jEUR-freezing
+
 # Deploy L2 Polygon proposal payloads
 deploy-mai :;  forge script script/DeployPolygonMiMatic.s.sol:DeployPolygonMiMatic --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-frax :;  forge script script/DeployPolygonFrax.s.sol:DeployPolygonFrax --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
@@ -31,9 +33,17 @@ deploy-arb-borrow-caps :;  forge script script/DeployBorrowCaps.s.sol:DeployArbi
 deploy-caps-multi-proposal :; forge script script/DeployCapsMultiChainProposal.s.s.sol:DeployAllCaps --rpc-url mainnet --broadcast --legacy  --private-key ${PRIVATE_KEY} -vvvv
 emit-caps-multi-proposal :; forge script script/DeployCapsMultiChainProposal.s.sol:EmitDeployAllCaps
 
+# deploy jEUR/agEUR freezing payloads
+deploy-op-ageur-freezing :; forge script script/DeployPolygonAGEURJEURfreeze.s.sol:DeployAGEURPayload --rpc-url polygon -vvvv
+deploy-op-jeur-freezing :; forge script script/DeployPolygonAGEURJEURfreeze.s.sol:DeployJEURPayload --rpc-url polygon -vvvv
+
 # Deploy L1 proposal polygon
 deploy-l1-mai-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
 # Deploy L1 proposal optimism
 deploy-l1-op-proposal :; forge script script/DeployL1OptimismProposal.s.sol:DeployOp --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 emit-l1-op-calldata :; forge script script/DeployL1OptimismProposal.s.sol:EmitOp
+
+git-diff :
+	@mkdir -p diffs
+	@printf '%s\n%s\n%s\n' "\`\`\`diff" "$$(git diff --no-index --diff-algorithm=patience --ignore-space-at-eol ${before} ${after})" "\`\`\`" > diffs/${out}.md
