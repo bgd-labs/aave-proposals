@@ -56,3 +56,25 @@ contract DeployFrax is Script {
     vm.stopBroadcast();
   }
 }
+
+contract DeployAGEURFreeze is Script {
+  function run() external {
+    vm.startBroadcast();
+    DeployL1PolygonProposal._deployL1Proposal(
+      0x7b8Fa4540246554e77FCFf140f9114de00F8bB8D,
+      0xafa8d52094cc041ee20ca429e22b86ae20d6735b4067a617548ccc242bd5b264
+    );
+    vm.stopBroadcast();
+  }
+}
+
+contract DeployJEURFreeze is Script {
+  function run() external {
+    vm.startBroadcast();
+    DeployL1PolygonProposal._deployL1Proposal(
+      0x165e90Bd0a41d08fA1891CcDCEe315D7b83B3419,
+      0x0baa1d8fa1dbcd7a15276f668b234f9847ba2848f9aa6a4b79eaa6d927b92b8e
+    );
+    vm.stopBroadcast();
+  }
+}

@@ -39,6 +39,8 @@ deploy-op-jeur-freezing :; forge script script/DeployPolygonAGEURJEURfreeze.s.so
 
 # Deploy L1 proposal polygon
 deploy-l1-mai-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployMai --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+deploy-l1-ageur-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployAGEURFreeze --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+deploy-l1-jeur-proposal :; forge script script/DeployL1PolygonProposal.s.sol:DeployJEURFreeze --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 
 # Deploy L1 proposal optimism
 deploy-l1-op-proposal :; forge script script/DeployL1OptimismProposal.s.sol:DeployOp --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
