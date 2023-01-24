@@ -15,6 +15,10 @@ import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainFo
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
 
+/**
+ * This test covers testing the bridge.
+ * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ */
 contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;

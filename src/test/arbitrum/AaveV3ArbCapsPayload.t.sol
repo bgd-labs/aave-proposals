@@ -3,13 +3,11 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2, AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ArbCapsPayload} from '../../contracts/arbitrum/AaveV3ArbCapsPayload.sol';
-import {BaseTest} from '../utils/BaseTest.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, BaseTest {
+contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbCapsPayload public proposalPayload;
 
   address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
@@ -28,7 +26,7 @@ contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, BaseTest {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 43236349);
-    _setUp(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
+    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testProposalE2E() public {
@@ -41,7 +39,7 @@ contract AaveV3ArbCapsPayloadTest is ProtocolV3TestBase, BaseTest {
     proposalPayload = new AaveV3ArbCapsPayload();
 
     // 2. execute l2 payload
-    _execute(address(proposalPayload));
+    _executePayload(address(proposalPayload));
 
     //Verify payload:
     ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase

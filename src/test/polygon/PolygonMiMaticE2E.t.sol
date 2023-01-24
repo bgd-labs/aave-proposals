@@ -12,6 +12,10 @@ import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForw
 import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
 import {DeployL1PolygonProposal} from '../../../script/DeployL1PolygonProposal.s.sol';
 
+/**
+ * This test covers testing the bridge.
+ * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ */
 contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
