@@ -13,7 +13,7 @@ interface ISimpleSteward {
 
 contract AaveV3EthcbETHPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16476587);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16497432);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
