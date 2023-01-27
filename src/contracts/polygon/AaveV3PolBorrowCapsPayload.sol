@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
-import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
  * @dev This payload sets borrow caps for multiple assets on AAVE V3 Polygon
