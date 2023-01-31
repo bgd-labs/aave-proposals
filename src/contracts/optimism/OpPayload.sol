@@ -4,7 +4,7 @@ pragma solidity ^0.8.16;
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
-import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
  * @dev Adding OP token to aave optimism pool.

@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
-import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
  * @dev This steward sets supply caps for multiple assets on AAVE V3 Arbitrum

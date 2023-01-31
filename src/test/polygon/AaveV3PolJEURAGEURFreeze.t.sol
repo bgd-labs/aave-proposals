@@ -4,18 +4,18 @@ pragma solidity ^0.8.0;
 import 'forge-std/Test.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveAddressBook.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3PolFreezeAGEUR} from '../../contracts/polygon/AaveV3PolFreezeAGEUR.sol';
 import {AaveV3PolFreezeJEUR} from '../../contracts/polygon/AaveV3PolFreezeJEUR.sol';
-import {BaseTest} from '../utils/BaseTest.sol';
 
-contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, BaseTest {
+contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, TestWithExecutor {
   string public constant JEUR_SYMBOL = 'jEUR';
   string public constant AGEUR_SYMBOL = 'agEUR';
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 38225470);
-    _setUp(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
+    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
   function testJEUR() public {
@@ -31,7 +31,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, BaseTest {
 
     address jEURPayload = address(new AaveV3PolFreezeJEUR());
 
-    _execute(jEURPayload);
+    _executePayload(jEURPayload);
 
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
       AaveV3Polygon.POOL
@@ -64,7 +64,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, BaseTest {
 
     address agEURPayload = address(new AaveV3PolFreezeAGEUR());
 
-    _execute(agEURPayload);
+    _executePayload(agEURPayload);
 
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
       AaveV3Polygon.POOL

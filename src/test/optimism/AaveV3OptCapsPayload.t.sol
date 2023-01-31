@@ -3,14 +3,13 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveAddressBook.sol';
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {AaveV3OptCapsPayload} from '../../contracts/optimism/AaveV3OptCapsPayload.sol';
-import {BaseTest} from '../utils/BaseTest.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
+contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3OptCapsPayload public proposalPayload;
 
   address public constant WETH = 0x4200000000000000000000000000000000000006;
@@ -26,7 +25,7 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 44920020);
-    _setUp(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
+    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testProposalE2E() public {
@@ -39,7 +38,7 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, BaseTest {
     proposalPayload = new AaveV3OptCapsPayload();
 
     // 2. execute l2 payload
-    _execute(address(proposalPayload));
+    _executePayload(address(proposalPayload));
 
     // 5. verify results
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(

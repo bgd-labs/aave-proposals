@@ -13,6 +13,10 @@ import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainFo
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 import {DeployL1OptimismProposal, DeployL1OptimismProposalEmitCallData} from '../../../script/DeployL1OptimismProposal.s.sol';
 
+/**
+ * This test covers testing the bridge.
+ * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ */
 contract OptimismOpE2ETest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
