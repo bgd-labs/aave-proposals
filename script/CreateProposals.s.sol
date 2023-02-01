@@ -40,7 +40,7 @@ contract CreateCbETHProposal is Script {
     vm.startBroadcast();
     DeployL1Proposal._deployL1Proposal(
       0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4,
-      0x00
+      0x05097b8a0818a75c1db7d54dfd0299581cac0218a058017acb4726f7cc49657e
     );
     vm.stopBroadcast();
   }
