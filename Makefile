@@ -46,7 +46,7 @@ deploy-l1-jeur-proposal :; forge script script/DeployL1PolygonProposal.s.sol:Dep
 deploy-l1-op-proposal :; forge script script/DeployL1OptimismProposal.s.sol:DeployOp --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 emit-l1-op-calldata :; forge script script/DeployL1OptimismProposal.s.sol:EmitOp
 
-create-cbETH-proposal :; forge script script/CreateProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+create-cbETH-proposal :; forge script script/CreateProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
 
 git-diff :
 	@mkdir -p diffs
