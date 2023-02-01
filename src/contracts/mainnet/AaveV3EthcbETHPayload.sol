@@ -34,7 +34,7 @@ contract AaveV3EthcbETHPayload is AaveV3ListingEthereum {
       asset: CBETH,
       assetSymbol: 'cbETH',
       priceFeed: CBETH_USD_FEED,
-      rateStrategy: 0x24701A6368Ff6D2874d6b8cDadd461552B8A5283, // same as LINK
+      rateStrategy: 0x24701A6368Ff6D2874d6b8cDadd461552B8A5283,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
