@@ -11,7 +11,6 @@ import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/depend
 import {IL2CrossDomainMessenger} from 'governance-crosschain-bridges/contracts/dependencies/optimism/interfaces/IL2CrossDomainMessenger.sol';
 import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
-import {DeployL1OptimismProposal, DeployL1OptimismProposalEmitCallData} from '../../../script/DeployL1OptimismProposal.s.sol';
 
 /**
  * This test covers testing the bridge.
@@ -42,12 +41,6 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 15783218);
   }
 
-  function testEmitOnly() public {
-    bytes memory callData = DeployL1OptimismProposalEmitCallData
-      ._deployL1Proposal(address(opPayload), ipfs);
-    emit log_bytes(callData);
-  }
-
   function testProposalE2E() public {
     vm.selectFork(optimismFork);
     // we get all configs to later on check that payload only changes OP
@@ -57,10 +50,10 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     // 1. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
-    uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
-      address(opPayload),
-      ipfs
-    );
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    payloads[0] = GovHelpers.buildOptimism(address(opPayload));
+
+    uint256 proposalId = GovHelpers.createProposal(payloads, ipfs);
     vm.stopPrank();
     // 2. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();

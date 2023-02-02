@@ -10,7 +10,6 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {IStateReceiver} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxChild.sol';
 import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
 import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
-import {DeployL1PolygonProposal} from '../../../script/DeployL1PolygonProposal.s.sol';
 
 /**
  * This test covers testing the bridge.
@@ -63,8 +62,11 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
-    uint256 proposalId = DeployL1PolygonProposal._deployL1Proposal(
-      address(miMaticPayload),
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    payloads[0] = GovHelpers.buildPolygon(address(miMaticPayload));
+
+    uint256 proposalId = GovHelpers.createProposal(
+      payloads,
       0xf6e50d5a3f824f5ab4ffa15fb79f4fa1871b8bf7af9e9b32c1aaaa9ea633006d
     );
     vm.stopPrank();

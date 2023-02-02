@@ -13,7 +13,6 @@ import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbit
 import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfaces/IL2BridgeExecutor.sol';
 import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
-import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
 
 /**
  * This test covers testing the bridge.
@@ -82,8 +81,11 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
-    uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
-      address(stEthPayload),
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    payloads[0] = GovHelpers.buildArbitrum(address(stEthPayload));
+
+    uint256 proposalId = GovHelpers.createProposal(
+      payloads,
       0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
     );
     vm.stopPrank();
