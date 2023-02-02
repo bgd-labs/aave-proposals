@@ -4,9 +4,9 @@ pragma solidity ^0.8.0;
 import {Script} from 'forge-std/Script.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
-contract CreateCbETHProposal is Script {
+contract CbETHProposal is Script {
   function run() external {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](2);
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
       0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4
     );

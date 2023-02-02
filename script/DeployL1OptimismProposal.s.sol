@@ -54,25 +54,3 @@ library DeployL1OptimismProposalEmitCallData {
       );
   }
 }
-
-contract DeployOp is Script {
-  function run() external {
-    vm.startBroadcast();
-    DeployL1OptimismProposal._deployL1Proposal(
-      0x6f76EeDCB386fef8FC57BEE9d3eb46147e488eEF,
-      0x20f57c3ef4ee80ce54234133fe98d096adf40a60a982389bc3d3a258ed67bb44
-    );
-    vm.stopBroadcast();
-  }
-}
-
-contract EmitOp is Script, Test {
-  function run() external {
-    bytes memory callData = DeployL1OptimismProposalEmitCallData
-      ._deployL1Proposal(
-        0x6f76EeDCB386fef8FC57BEE9d3eb46147e488eEF,
-        0x20f57c3ef4ee80ce54234133fe98d096adf40a60a982389bc3d3a258ed67bb44
-      );
-    emit log_bytes(callData);
-  }
-}

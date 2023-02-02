@@ -34,12 +34,3 @@ library DeployL1ArbitrumProposal {
       );
   }
 }
-
-// TODO: enter correct addresses
-contract DeployStEth is Script {
-  function run() external {
-    vm.startBroadcast();
-    DeployL1ArbitrumProposal._deployL1Proposal(address(0), bytes32(0));
-    vm.stopBroadcast();
-  }
-}
