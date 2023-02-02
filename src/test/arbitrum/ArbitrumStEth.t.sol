@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3Arbitrum, AaveMisc} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
@@ -55,9 +55,9 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
   function testHasSufficientGas() public {
     vm.selectFork(mainnetFork);
-    assertEq(GovHelpers.SHORT_EXECUTOR.balance, 0);
+    assertEq(AaveGovernanceV2.SHORT_EXECUTOR.balance, 0);
     assertEq(forwarder.hasSufficientGasForExecution(580), false);
-    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+    deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
     assertEq(forwarder.hasSufficientGasForExecution(580), true);
   }
 
@@ -69,7 +69,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   function testProposalE2E() public {
     // assumes the short exec will be topped up with some eth to pay for l2 fee
     vm.selectFork(mainnetFork);
-    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+    deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
 
     vm.selectFork(arbitrumFork);
     // we get all configs to later on check that payload only changes stEth
@@ -81,7 +81,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
-    vm.startPrank(GovHelpers.AAVE_WHALE);
+    vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
     uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
       address(stEthPayload),
       0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
@@ -155,7 +155,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
     // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
     vm.selectFork(arbitrumFork);
     vm.startPrank(
-      AddressAliasHelper.applyL1ToL2Alias(GovHelpers.SHORT_EXECUTOR)
+      AddressAliasHelper.applyL1ToL2Alias(AaveGovernanceV2.SHORT_EXECUTOR)
     );
     ARBITRUM_BRIDGE_EXECUTOR.call(payload);
     vm.stopPrank();

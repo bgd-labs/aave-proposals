@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {AaveV3Optimism} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3Optimism, AaveMisc} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
@@ -56,7 +56,7 @@ contract OptimismOpE2ETest is ProtocolV3TestBase {
     );
     // 1. create l1 proposal
     vm.selectFork(mainnetFork);
-    vm.startPrank(GovHelpers.AAVE_WHALE);
+    vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
     uint256 proposalId = DeployL1OptimismProposal._deployL1Proposal(
       address(opPayload),
       ipfs
