@@ -30,9 +30,7 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
   function testProposalE2E() public {
     // we get all configs to later on check that payload only changes OP
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Optimism.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
 
     // 1. deploy l2 payload
     proposalPayload = new AaveV3OptCapsPayload();
@@ -41,31 +39,20 @@ contract AaveV3OptCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     _executePayload(address(proposalPayload));
 
     // 5. verify results
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Optimism.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Optimism.POOL);
 
     //LINK
-    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      LINK
-    );
+    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, LINK);
     LinkConfig.supplyCap = LINK_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
 
     //WETH
-    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WETH
-    );
+    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WETH);
     WETHConfig.supplyCap = WETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
 
     //WBTC
-    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WBTC
-    );
+    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WBTC);
     WBTCConfig.supplyCap = WBTC_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
   }

@@ -20,9 +20,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, TestWithExecutor {
 
   function testJEUR() public {
     createConfigurationSnapshot('pre-jEUR-freezing', AaveV3Polygon.POOL);
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 
     ReserveConfig memory configJEURBefore = _findReserveConfigBySymbol(
       allConfigsBefore,
@@ -33,9 +31,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, TestWithExecutor {
 
     _executePayload(jEURPayload);
 
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Polygon.POOL);
 
     configJEURBefore.isFrozen = true;
 
@@ -53,9 +49,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, TestWithExecutor {
   function testAGEUR() public {
     createConfigurationSnapshot('pre-agEUR-freezing', AaveV3Polygon.POOL);
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 
     ReserveConfig memory configAGEURBefore = _findReserveConfigBySymbol(
       allConfigsBefore,
@@ -66,9 +60,7 @@ contract AaveV3PolJEURAGEURFreeze is ProtocolV3TestBase, TestWithExecutor {
 
     _executePayload(agEURPayload);
 
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Polygon.POOL);
 
     configAGEURBefore.isFrozen = true;
 

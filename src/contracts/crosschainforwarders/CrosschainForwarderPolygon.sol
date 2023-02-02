@@ -14,10 +14,8 @@ import {IFxStateSender} from 'governance-crosschain-bridges/contracts/dependenci
  * Once synced the POLYGON_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
 contract CrosschainForwarderPolygon {
-  address public constant FX_ROOT_ADDRESS =
-    0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
-  address public constant POLYGON_BRIDGE_EXECUTOR =
-    0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
+  address public constant FX_ROOT_ADDRESS = 0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2;
+  address public constant POLYGON_BRIDGE_EXECUTOR = 0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
 
   /**
    * @dev this function will be executed once the proposal passes the mainnet vote.
@@ -35,16 +33,7 @@ contract CrosschainForwarderPolygon {
     bool[] memory withDelegatecalls = new bool[](1);
     withDelegatecalls[0] = true;
 
-    bytes memory actions = abi.encode(
-      targets,
-      values,
-      signatures,
-      calldatas,
-      withDelegatecalls
-    );
-    IFxStateSender(FX_ROOT_ADDRESS).sendMessageToChild(
-      POLYGON_BRIDGE_EXECUTOR,
-      actions
-    );
+    bytes memory actions = abi.encode(targets, values, signatures, calldatas, withDelegatecalls);
+    IFxStateSender(FX_ROOT_ADDRESS).sendMessageToChild(POLYGON_BRIDGE_EXECUTOR, actions);
   }
 }

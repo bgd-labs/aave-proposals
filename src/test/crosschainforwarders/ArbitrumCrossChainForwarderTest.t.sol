@@ -24,11 +24,9 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
   StEthPayload public stEthPayload;
 
-  IInbox public constant INBOX =
-    IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
+  IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
-  address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
+  address public constant ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
 
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
@@ -43,11 +41,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   }
 
   // utility to transform memory to calldata so array range access is available
-  function _cutBytes(bytes calldata input)
-    public
-    pure
-    returns (bytes calldata)
-  {
+  function _cutBytes(bytes calldata input) public pure returns (bytes calldata) {
     return input[64:];
   }
 
@@ -71,9 +65,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
     vm.selectFork(arbitrumFork);
     // we get all configs to later on check that payload only changes stEth
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Arbitrum.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
     // 1. deploy l2 payload
     stEthPayload = new StEthPayload();
 
@@ -114,10 +106,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
     // check events are emitted correctly
     Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(
-      keccak256('InboxMessageDelivered(uint256,bytes)'),
-      entries[3].topics[0]
-    );
+    assertEq(keccak256('InboxMessageDelivered(uint256,bytes)'), entries[3].topics[0]);
     // uint256 messageId = uint256(entries[3].topics[1]);
     (
       address to,
@@ -131,17 +120,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
       uint256 length
     ) = abi.decode(
         this._cutBytes(entries[3].data),
-        (
-          address,
-          uint256,
-          uint256,
-          uint256,
-          address,
-          address,
-          uint256,
-          uint256,
-          uint256
-        )
+        (address, uint256, uint256, uint256, address, address, uint256, uint256, uint256)
       );
     assertEq(callvalue, 0);
     assertEq(value > 0, true);
@@ -155,15 +134,11 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
     // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
     vm.selectFork(arbitrumFork);
-    vm.startPrank(
-      AddressAliasHelper.applyL1ToL2Alias(AaveGovernanceV2.SHORT_EXECUTOR)
-    );
+    vm.startPrank(AddressAliasHelper.applyL1ToL2Alias(AaveGovernanceV2.SHORT_EXECUTOR));
     ARBITRUM_BRIDGE_EXECUTOR.call(payload);
     vm.stopPrank();
     // 5. execute proposal on l2
-    IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(
-      ARBITRUM_BRIDGE_EXECUTOR
-    );
+    IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(ARBITRUM_BRIDGE_EXECUTOR);
     vm.warp(block.timestamp + bridgeExecutor.getDelay() + 1);
     // execute the proposal
     bridgeExecutor.execute(bridgeExecutor.getActionsSetCount() - 1);

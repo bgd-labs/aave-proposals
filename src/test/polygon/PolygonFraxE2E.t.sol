@@ -20,9 +20,7 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, TestWithExecutor {
 
   function testProposalE2E() public {
     // we get all configs to later on check that payload only changes FRAX
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 
     // 1. deploy l2 payload
     FraxPayload fraxPayload = new FraxPayload();
@@ -31,9 +29,7 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, TestWithExecutor {
     _executePayload(address(fraxPayload));
 
     // 3. verify results
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Polygon.POOL);
 
     ReserveConfig memory expectedAssetConfig = ReserveConfig({
       symbol: 'FRAX',
@@ -65,10 +61,7 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, TestWithExecutor {
 
     _validateReserveConfig(expectedAssetConfig, allConfigsAfter);
 
-    _noReservesConfigsChangesApartNewListings(
-      allConfigsBefore,
-      allConfigsAfter
-    );
+    _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     _validateReserveTokensImpls(
       AaveV3Polygon.POOL_ADDRESSES_PROVIDER,
@@ -100,17 +93,9 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, TestWithExecutor {
     _validatePoolActionsPostListing(allConfigsAfter);
   }
 
-  function _validatePoolActionsPostListing(
-    ReserveConfig[] memory allReservesConfigs
-  ) internal {
-    ReserveConfig memory frax = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'FRAX'
-    );
-    ReserveConfig memory dai = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'DAI'
-    );
+  function _validatePoolActionsPostListing(ReserveConfig[] memory allReservesConfigs) internal {
+    ReserveConfig memory frax = _findReserveConfigBySymbol(allReservesConfigs, 'FRAX');
+    ReserveConfig memory dai = _findReserveConfigBySymbol(allReservesConfigs, 'DAI');
 
     address user0 = address(1);
     _deposit(frax, AaveV3Polygon.POOL, user0, 666 ether);
@@ -150,11 +135,7 @@ contract PolygonFraxE2ETest is ProtocolV3TestBase, TestWithExecutor {
   }
 
   // utility to transform memory to calldata so array range access is available
-  function _cutBytes(bytes calldata input)
-    public
-    pure
-    returns (bytes calldata)
-  {
+  function _cutBytes(bytes calldata input) public pure returns (bytes calldata) {
     return input[64:];
   }
 }
