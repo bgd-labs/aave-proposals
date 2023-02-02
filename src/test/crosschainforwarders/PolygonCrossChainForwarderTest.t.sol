@@ -8,14 +8,13 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IStateReceiver} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxChild.sol';
-import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
+import {CrosschainForwarderPolygon} from '../../contracts/crosschainforwarders/CrosschainForwarderPolygon.sol';
 import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
 
 /**
- * This test covers testing the bridge.
- * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ * This test covers syncing between mainnet and polygon.
  */
-contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
+contract PolygonCrossChainForwarderTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 polygonFork;

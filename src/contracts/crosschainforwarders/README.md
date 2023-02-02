@@ -35,8 +35,6 @@ You can check if you need to top-up the SHORT_EXECUTOR by calling `getRequiredGa
 
 ## References
 
-### Bridges
-
 - [PolygonBridge: FxRoot](https://etherscan.io/address/0xfe5e5d361b2ad62c541bab87c45a0b9b018389a2#code)
 - [PolygonBridge: PolygonBridgeExecutor](https://polygonscan.com/address/0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772#code)
 

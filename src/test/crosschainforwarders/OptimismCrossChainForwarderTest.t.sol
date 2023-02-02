@@ -9,14 +9,13 @@ import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {IL2CrossDomainMessenger} from 'governance-crosschain-bridges/contracts/dependencies/optimism/interfaces/IL2CrossDomainMessenger.sol';
-import {CrosschainForwarderOptimism} from '../../contracts/optimism/CrosschainForwarderOptimism.sol';
+import {CrosschainForwarderOptimism} from '../../contracts/crosschainforwarders/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 
 /**
- * This test covers testing the bridge.
- * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ * This test covers syncing between mainnet and optimism.
  */
-contract OptimismOpE2ETest is ProtocolV3TestBase {
+contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 optimismFork;

@@ -11,14 +11,13 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
 import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfaces/IL2BridgeExecutor.sol';
-import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
+import {CrosschainForwarderArbitrum} from '../../contracts/crosschainforwarders/CrosschainForwarderArbitrum.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
 
 /**
- * This test covers testing the bridge.
- * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ * This test covers syncing between mainnet and arbitrum.
  */
-contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
+contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 arbitrumFork;
