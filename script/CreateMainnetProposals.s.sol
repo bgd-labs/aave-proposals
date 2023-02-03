@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
-import {Script} from 'forge-std/Script.sol';
+import {WithChainIdValidation} from './WithChainIdValidation.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
+contract CreateMainnetProposal is WithChainIdValidation {
+  constructor() WithChainIdValidation(1) {}
+}
+
 // Example proposal creation script for a single payload
-// contract SinglePayloadProposal is Script {
+// contract SinglePayloadProposal is CreateMainnetProposal {
 //   function run() external {
 //     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
 //     payloads[0] = GovHelpers.buildMainnet(
@@ -21,7 +24,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 // }
 
 // Example proposal creation script for a multiple payloads payload
-// contract MultiPayloadProposal is Script {
+// contract MultiPayloadProposal is WithChainIdValidation {
 //   function run() external {
 //     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](2);
 //     payloads[0] = GovHelpers.buildMainnet(

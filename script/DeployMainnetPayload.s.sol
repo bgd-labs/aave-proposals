@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import {Script} from 'forge-std/Script.sol';
+import {WithChainIdValidation} from './WithChainIdValidation.sol';
 
 // import {AaveV3EthcbETHPayload} from '../src/contracts/mainnet/AaveV3EthcbETHPayload.sol';
 
-contract DeployMainnetPayload {
-  function _nwCheck() internal {
-    require(block.chainid == 1, 'MAINNET_ONLY');
-  }
+contract DeployMainnetPayload is WithChainIdValidation {
+  constructor() WithChainIdValidation(1) {}
 }
 
 // Example mainnet contract deployment
@@ -16,8 +14,6 @@ contract DeployMainnetPayload {
 
 // contract CbETH is DeployMainnetPayload {
 //   function run() external {
-//     _nwCheck();
-
 //     vm.startBroadcast();
 //     new AaveV3EthcbETHPayload();
 //     vm.stopBroadcast();

@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import {Script} from 'forge-std/Script.sol';
+import {WithChainIdValidation} from './WithChainIdValidation.sol';
 
 // import {MiMaticPayload} from '../src/contracts/polygon/MiMaticPayload.sol';
 
-contract DeployPolygonPayload {
-  function _nwCheck() internal {
-    require(block.chainid == 137, 'POLYGON_ONLY');
-  }
+contract DeployPolygonPayload is WithChainIdValidation {
+  constructor() WithChainIdValidation(137) {}
 }
 
 // Example polygon contract deployment
