@@ -19,12 +19,9 @@ import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfa
  * Once synced the ARBITRUM_BRIDGE_EXECUTOR will queue the execution of the payload.
  */
 contract CrosschainForwarderArbitrum {
-  IInbox public constant INBOX =
-    IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
-  address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
-  address public constant ARBITRUM_GUARDIAN =
-    0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
+  IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
+  address public constant ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
+  address public constant ARBITRUM_GUARDIAN = 0xbbd9f90699c1FA0D7A65870D241DD1f1217c96Eb;
 
   // amount of gwei to overpay on basefee for fast submission
   uint256 public constant BASE_FEE_MARGIN = 10 gwei;
@@ -34,11 +31,7 @@ contract CrosschainForwarderArbitrum {
    * @param bytesLength the payload bytes length (usually 580)
    */
   function getRequiredGas(uint256 bytesLength) public view returns (uint256) {
-    return
-      INBOX.calculateRetryableSubmissionFee(
-        bytesLength,
-        block.basefee + BASE_FEE_MARGIN
-      );
+    return INBOX.calculateRetryableSubmissionFee(bytesLength, block.basefee + BASE_FEE_MARGIN);
   }
 
   /**
@@ -46,24 +39,15 @@ contract CrosschainForwarderArbitrum {
    * with current basefee
    * @param bytesLength the payload bytes length (usually 580)
    */
-  function hasSufficientGasForExecution(uint256 bytesLength)
-    public
-    view
-    returns (bool)
-  {
-    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >=
-      getRequiredGas(bytesLength));
+  function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool) {
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= getRequiredGas(bytesLength));
   }
 
   /**
    * @dev encodes the queue call which is forwarded to arbitrum
    * @param l2PayloadContract the address of the arbitrum payload
    */
-  function getEncodedPayload(address l2PayloadContract)
-    public
-    pure
-    returns (bytes memory)
-  {
+  function getEncodedPayload(address l2PayloadContract) public pure returns (bytes memory) {
     address[] memory targets = new address[](1);
     targets[0] = l2PayloadContract;
     uint256[] memory values = new uint256[](1);
