@@ -2,3 +2,6 @@ out
 lib
 cache
 node_modules
+reports
+
+yarn.lock

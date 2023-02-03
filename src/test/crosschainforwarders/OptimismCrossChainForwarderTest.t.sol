@@ -22,11 +22,9 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
 
   OpPayload public opPayload;
 
-  bytes32 ipfs =
-    0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
+  bytes32 ipfs = 0x7ecafb3b0b7e418336cccb0c82b3e25944011bf11e41f8dc541841da073fe4f1;
 
-  address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
+  address public constant OPTIMISM_BRIDGE_EXECUTOR = AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR;
   IL2CrossDomainMessenger public OVM_L2_CROSS_DOMAIN_MESSENGER =
     IL2CrossDomainMessenger(0x4200000000000000000000000000000000000007);
 
@@ -43,9 +41,7 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
   function testProposalE2E() public {
     vm.selectFork(optimismFork);
     // we get all configs to later on check that payload only changes OP
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Optimism.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
     // 1. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
@@ -58,14 +54,8 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
     vm.recordLogs();
     GovHelpers.passVoteAndExecute(vm, proposalId);
     Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(
-      keccak256('SentMessage(address,address,bytes,uint256,uint256)'),
-      entries[3].topics[0]
-    );
-    assertEq(
-      address(uint160(uint256(entries[3].topics[1]))),
-      OPTIMISM_BRIDGE_EXECUTOR
-    );
+    assertEq(keccak256('SentMessage(address,address,bytes,uint256,uint256)'), entries[3].topics[0]);
+    assertEq(address(uint160(uint256(entries[3].topics[1]))), OPTIMISM_BRIDGE_EXECUTOR);
     (address sender, bytes memory message, uint256 nonce) = abi.decode(
       entries[3].data,
       (address, bytes, uint256)
@@ -73,21 +63,14 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
     // 3. mock the receive on l2 with the data emitted on StateSynced
     vm.selectFork(optimismFork);
     vm.startPrank(0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2); // AddressAliasHelper.applyL1ToL2Alias on L1_CROSS_DOMAIN_MESSENGER_ADDRESS
-    OVM_L2_CROSS_DOMAIN_MESSENGER.relayMessage(
-      OPTIMISM_BRIDGE_EXECUTOR,
-      sender,
-      message,
-      nonce
-    );
+    OVM_L2_CROSS_DOMAIN_MESSENGER.relayMessage(OPTIMISM_BRIDGE_EXECUTOR, sender, message, nonce);
     vm.stopPrank();
 
     // 4. execute proposal on l2
     BridgeExecutorHelpers.waitAndExecuteLatest(vm, OPTIMISM_BRIDGE_EXECUTOR);
 
     // 5. verify results
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Optimism.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Optimism.POOL);
     ReserveConfig memory expectedAssetConfig = ReserveConfig({
       symbol: 'OP',
       underlying: OP,
@@ -118,10 +101,7 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
 
     _validateReserveConfig(expectedAssetConfig, allConfigsAfter);
 
-    _noReservesConfigsChangesApartNewListings(
-      allConfigsBefore,
-      allConfigsAfter
-    );
+    _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     _validateReserveTokensImpls(
       AaveV3Optimism.POOL_ADDRESSES_PROVIDER,
@@ -152,17 +132,9 @@ contract OptimismCrossChainForwarderTest is ProtocolV3TestBase {
     _validatePoolActionsPostListing(allConfigsAfter);
   }
 
-  function _validatePoolActionsPostListing(
-    ReserveConfig[] memory allReservesConfigs
-  ) internal {
-    ReserveConfig memory op = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'OP'
-    );
-    ReserveConfig memory dai = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'DAI'
-    );
+  function _validatePoolActionsPostListing(ReserveConfig[] memory allReservesConfigs) internal {
+    ReserveConfig memory op = _findReserveConfigBySymbol(allReservesConfigs, 'OP');
+    ReserveConfig memory dai = _findReserveConfigBySymbol(allReservesConfigs, 'DAI');
 
     address user0 = address(1);
     _deposit(op, AaveV3Optimism.POOL, user0, 1000 ether);

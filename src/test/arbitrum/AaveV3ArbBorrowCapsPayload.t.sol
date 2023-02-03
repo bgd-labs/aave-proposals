@@ -7,10 +7,7 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {AaveV3ArbBorrowCapsPayload} from '../../contracts/arbitrum/AaveV3ArbBorrowCapsPayload.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ArbBorrowCapsPayloadTest is
-  ProtocolV3TestBase,
-  TestWithExecutor
-{
+contract AaveV3ArbBorrowCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbBorrowCapsPayload public proposalPayload;
 
   address public constant LINK = 0xf97f4df75117a78c1A5a0DBb814Af92458539FB4;
@@ -27,9 +24,7 @@ contract AaveV3ArbBorrowCapsPayloadTest is
   }
 
   function testBorrowCapsArb() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Arbitrum.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
 
     // 1. deploy l2 payload
     proposalPayload = new AaveV3ArbBorrowCapsPayload();
@@ -38,30 +33,22 @@ contract AaveV3ArbBorrowCapsPayloadTest is
     _executePayload(address(proposalPayload));
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase
-      ._getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
+      AaveV3Arbitrum.POOL
+    );
 
     //LINK
-    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      LINK
-    );
+    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, LINK);
     LinkConfig.borrowCap = LINK_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
 
     //WBTC
-    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WBTC
-    );
+    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WBTC);
     WBTCConfig.borrowCap = WBTC_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
 
     //WETH
-    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WETH
-    );
+    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WETH);
     WETHConfig.borrowCap = WETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
   }

@@ -15,15 +15,13 @@ contract OpPayload is IProposalGenericExecutor {
   // **************************
   // Protocol's contracts
   // **************************
-  address public constant INCENTIVES_CONTROLLER =
-    AaveV3Optimism.DEFAULT_INCENTIVES_CONTROLLER;
+  address public constant INCENTIVES_CONTROLLER = AaveV3Optimism.DEFAULT_INCENTIVES_CONTROLLER;
 
   // **************************
   // New asset being listed (OP)
   // **************************
 
-  address public constant UNDERLYING =
-    0x4200000000000000000000000000000000000042;
+  address public constant UNDERLYING = 0x4200000000000000000000000000000000000042;
   string public constant ATOKEN_NAME = 'Aave Optimism OP';
   string public constant ATOKEN_SYMBOL = 'aOptOP';
   string public constant VDTOKEN_NAME = 'Aave Optimism Variable Debt OP';
@@ -31,18 +29,13 @@ contract OpPayload is IProposalGenericExecutor {
   string public constant SDTOKEN_NAME = 'Aave Optimism Stable Debt OP';
   string public constant SDTOKEN_SYMBOL = 'stableDebtOptOP';
 
-  address public constant PRICE_FEED =
-    0x0D276FC14719f9292D5C1eA2198673d1f4269246;
+  address public constant PRICE_FEED = 0x0D276FC14719f9292D5C1eA2198673d1f4269246;
 
-  address public constant ATOKEN_IMPL =
-    AaveV3Optimism.DEFAULT_A_TOKEN_IMPL_REV_1;
-  address public constant VDTOKEN_IMPL =
-    AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1;
-  address public constant SDTOKEN_IMPL =
-    AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_1;
+  address public constant ATOKEN_IMPL = AaveV3Optimism.DEFAULT_A_TOKEN_IMPL_REV_1;
+  address public constant VDTOKEN_IMPL = AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1;
+  address public constant SDTOKEN_IMPL = AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_1;
 
-  address public constant RATE_STRATEGY =
-    0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C; // same as weth
+  address public constant RATE_STRATEGY = 0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C; // same as weth
 
   uint256 public constant RESERVE_FACTOR = 2000; // 20%
 
@@ -72,9 +65,7 @@ contract OpPayload is IProposalGenericExecutor {
     // ------------------------------------------------
 
     ConfiguratorInputTypes.InitReserveInput[]
-      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](
-        1
-      );
+      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](1);
     initReserveInputs[0] = ConfiguratorInputTypes.InitReserveInput({
       aTokenImpl: ATOKEN_IMPL,
       stableDebtTokenImpl: SDTOKEN_IMPL,
@@ -105,11 +96,6 @@ contract OpPayload is IProposalGenericExecutor {
 
     configurator.setLiquidationProtocolFee(UNDERLYING, LIQ_PROTOCOL_FEE);
 
-    configurator.configureReserveAsCollateral(
-      UNDERLYING,
-      LTV,
-      LIQ_THRESHOLD,
-      LIQ_BONUS
-    );
+    configurator.configureReserveAsCollateral(UNDERLYING, LTV, LIQ_THRESHOLD, LIQ_BONUS);
   }
 }
