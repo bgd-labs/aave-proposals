@@ -8,28 +8,23 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IStateReceiver} from 'governance-crosschain-bridges/contracts/dependencies/polygon/fxportal/FxChild.sol';
-import {CrosschainForwarderPolygon} from '../../contracts/polygon/CrosschainForwarderPolygon.sol';
+import {CrosschainForwarderPolygon} from '../../contracts/crosschainforwarders/CrosschainForwarderPolygon.sol';
 import {MiMaticPayload} from '../../contracts/polygon/MiMaticPayload.sol';
 
 /**
- * This test covers testing the bridge.
- * Use one of the other tests as an example for a new listing which will assume to bridge to work correctly.
+ * This test covers syncing between mainnet and polygon.
  */
-contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
+contract PolygonCrossChainForwarderTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 polygonFork;
 
   MiMaticPayload public miMaticPayload;
 
-  address public constant CROSSCHAIN_FORWARDER_POLYGON =
-    0x158a6bC04F0828318821baE797f50B0A1299d45b;
-  address public constant BRIDGE_ADMIN =
-    0x0000000000000000000000000000000000001001;
-  address public constant FX_CHILD_ADDRESS =
-    0x8397259c983751DAf40400790063935a11afa28a;
-  address public constant POLYGON_BRIDGE_EXECUTOR =
-    0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
+  address public constant CROSSCHAIN_FORWARDER_POLYGON = 0x158a6bC04F0828318821baE797f50B0A1299d45b;
+  address public constant BRIDGE_ADMIN = 0x0000000000000000000000000000000000001001;
+  address public constant FX_CHILD_ADDRESS = 0x8397259c983751DAf40400790063935a11afa28a;
+  address public constant POLYGON_BRIDGE_EXECUTOR = 0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772;
 
   address public constant MIMATIC = 0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
 
@@ -41,20 +36,14 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
   }
 
   // utility to transform memory to calldata so array range access is available
-  function _cutBytes(bytes calldata input)
-    public
-    pure
-    returns (bytes calldata)
-  {
+  function _cutBytes(bytes calldata input) public pure returns (bytes calldata) {
     return input[64:];
   }
 
   function testProposalE2E() public {
     vm.selectFork(polygonFork);
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 
     // 1. deploy l2 payload
     miMaticPayload = new MiMaticPayload();
@@ -76,10 +65,7 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
     GovHelpers.passVoteAndExecute(vm, proposalId);
 
     Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(
-      keccak256('StateSynced(uint256,address,bytes)'),
-      entries[2].topics[0]
-    );
+    assertEq(keccak256('StateSynced(uint256,address,bytes)'), entries[2].topics[0]);
     assertEq(address(uint160(uint256(entries[2].topics[2]))), FX_CHILD_ADDRESS);
 
     // 4. mock the receive on l2 with the data emitted on StateSynced
@@ -95,9 +81,7 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
     BridgeExecutorHelpers.waitAndExecuteLatest(vm, POLYGON_BRIDGE_EXECUTOR);
 
     // 6. verify results
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
+    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Polygon.POOL);
 
     ReserveConfig memory expectedAssetConfig = ReserveConfig({
       symbol: 'miMATIC',
@@ -129,10 +113,7 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
 
     _validateReserveConfig(expectedAssetConfig, allConfigsAfter);
 
-    _noReservesConfigsChangesApartNewListings(
-      allConfigsBefore,
-      allConfigsAfter
-    );
+    _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     _validateReserveTokensImpls(
       AaveV3Polygon.POOL_ADDRESSES_PROVIDER,
@@ -164,17 +145,9 @@ contract PolygonMiMaticE2ETest is ProtocolV3TestBase {
     _validatePoolActionsPostListing(allConfigsAfter);
   }
 
-  function _validatePoolActionsPostListing(
-    ReserveConfig[] memory allReservesConfigs
-  ) internal {
-    ReserveConfig memory miMatic = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'miMATIC'
-    );
-    ReserveConfig memory dai = _findReserveConfigBySymbol(
-      allReservesConfigs,
-      'DAI'
-    );
+  function _validatePoolActionsPostListing(ReserveConfig[] memory allReservesConfigs) internal {
+    ReserveConfig memory miMatic = _findReserveConfigBySymbol(allReservesConfigs, 'miMATIC');
+    ReserveConfig memory dai = _findReserveConfigBySymbol(allReservesConfigs, 'DAI');
 
     address user0 = address(1);
     _deposit(miMatic, AaveV3Polygon.POOL, user0, 666 ether);

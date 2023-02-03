@@ -31,8 +31,7 @@ contract CrosschainForwarderOptimism {
    * This contract allows queuing of proposals by allow listed addresses (in this case the L1 short executor).
    * https://optimistic.etherscan.io/address/0x7d9103572bE58FfE99dc390E8246f02dcAe6f611
    */
-  address public constant OPTIMISM_BRIDGE_EXECUTOR =
-    0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
+  address public constant OPTIMISM_BRIDGE_EXECUTOR = 0x7d9103572bE58FfE99dc390E8246f02dcAe6f611;
 
   /**
    * @dev The CTC contract is an append only log of transactions which must be applied to the rollup state.
