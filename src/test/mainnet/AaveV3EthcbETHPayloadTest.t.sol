@@ -21,5 +21,7 @@ contract AaveV3EthcbETHPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
     _executePayload(address(cbETH));
 
     createConfigurationSnapshot('post-cbETH', AaveV3Ethereum.POOL);
+
+    // diffReports('pre-cbETH', 'post-cbETH');
   }
 }
