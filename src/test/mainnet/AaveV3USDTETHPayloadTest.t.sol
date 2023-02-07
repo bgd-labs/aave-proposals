@@ -14,11 +14,11 @@ contract AaveV3EthUSDTPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   }
 
   function testPoolActivation() public {
-    AaveV3EthUSDTPayload USDT = new AaveV3EthUSDTPayload();
+    AaveV3EthUSDTPayload usdtPayload = new AaveV3EthUSDTPayload();
 
     createConfigurationSnapshot('pre-USDT-aave-v3-ethereum', AaveV3Ethereum.POOL);
 
-    _executePayload(address(USDT));
+    _executePayload(address(usdtPayload));
 
     createConfigurationSnapshot('post-USDT-aave-v3-ethereum', AaveV3Ethereum.POOL);
 

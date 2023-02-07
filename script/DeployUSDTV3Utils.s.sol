@@ -5,11 +5,16 @@ import {Script} from 'forge-std/Script.sol';
 import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
 import {DefaultReserveInterestRateStrategy} from 'aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
+import {AaveV3EthUSDTPayload} from '../src/contracts/mainnet/AaveV3EthUSDTPayload.sol';
 
 contract DeployMainnetPayload is WithChainIdValidation {
   constructor() WithChainIdValidation(1) {}
 
-  // TODO add function to deploy payload
+  function run() external {
+    vm.startBroadcast();
+    new AaveV3EthUSDTPayload();
+    vm.stopBroadcast();
+  }
 }
 
 contract DeployUSDTStrategy is Script {
