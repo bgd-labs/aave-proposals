@@ -12,7 +12,7 @@ import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-li
  */
 contract AaveV3EthrETHPayload is AaveV3ListingEthereum {
   address constant RETH = 0xae78736Cd615f374D3085123A210448E74Fc6393;
-  address constant RETH_USD_FEED = address(0x05225Cd708bCa9253789C1374e4337a019e99D56);
+  address constant RETH_USD_FEED = 0x05225Cd708bCa9253789C1374e4337a019e99D56;
 
   constructor() AaveV3ListingEthereum(IGenericV3ListingEngine(AaveV3Ethereum.LISTING_ENGINE)) {}
 
