@@ -9,7 +9,7 @@ import {AaveV3EthrETHPayload} from '../../contracts/mainnet/AaveV3EthrETHPayload
 
 contract AaveV3EthrETHPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16571140);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16576684);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
@@ -21,5 +21,7 @@ contract AaveV3EthrETHPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
     _executePayload(address(rETH));
 
     createConfigurationSnapshot('post-rETH', AaveV3Ethereum.POOL);
+
+    // diffReports('pre-rETH', 'post-rETH');
   }
 }
