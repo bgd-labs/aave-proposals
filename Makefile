@@ -47,3 +47,5 @@ git-diff :
 # op-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 usdt-strategy :;  forge script script/DeployUSDTV3Utils.s.sol:DeployUSDTStrategy --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+usdt-payload :;  forge script script/DeployUSDTV3Utils.s.sol:DeployMainnetPayload --rpc-url mainnet --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv

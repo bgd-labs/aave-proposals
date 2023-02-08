@@ -9,16 +9,16 @@ import {AaveV3EthUSDTPayload} from '../../contracts/mainnet/AaveV3EthUSDTPayload
 
 contract AaveV3EthUSDTPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16576447);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16582764);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPoolActivation() public {
-    AaveV3EthUSDTPayload usdtPayload = new AaveV3EthUSDTPayload();
+    // AaveV3EthUSDTPayload usdtPayload = new AaveV3EthUSDTPayload();
 
     createConfigurationSnapshot('pre-USDT-aave-v3-ethereum', AaveV3Ethereum.POOL);
 
-    _executePayload(address(usdtPayload));
+    _executePayload(0x3B45bbC2b69faFAB95fD91B10f39ccb5Dd92FaCb);
 
     createConfigurationSnapshot('post-USDT-aave-v3-ethereum', AaveV3Ethereum.POOL);
 
