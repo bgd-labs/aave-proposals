@@ -48,6 +48,6 @@ git-diff :
 
 usdt-strategy :;  forge script script/DeployUSDTV3Utils.s.sol:DeployUSDTStrategy --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
-usdt-payload :;  forge script script/DeployUSDTV3Utils.s.sol:DeployMainnetPayload --rpc-url mainnet --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+usdt-payload :;  forge script script/DeployUSDTV3Utils.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
-reth-payload :;  forge script script/DeployMainnetPayload.s.sol:rETH --rpc-url mainnet --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+reth-payload :;  forge script script/DeployMainnetPayload.s.sol:rETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
