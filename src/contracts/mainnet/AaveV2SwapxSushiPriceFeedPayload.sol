@@ -3,6 +3,10 @@ pragma solidity ^0.8.0;
 
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 
+/**
+ * @title This proposal swaps the price feed for the xSushi on the v2 pool
+ * @author BGD Labs
+ */
 contract AaveV2SwapxSushiPriceFeedPayload {
   address constant XSUSHI = AaveV2EthereumAssets.xSUSHI_UNDERLYING;
   address constant PRICE_FEED = 0xF05D9B6C08757EAcb1fbec18e36A1B7566a13DEB;
