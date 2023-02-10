@@ -51,3 +51,6 @@ usdt-strategy :;  forge script script/DeployUSDTV3Utils.s.sol:DeployUSDTStrategy
 usdt-payload :;  forge script script/DeployUSDTV3Utils.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 reth-payload :;  forge script script/DeployMainnetPayload.s.sol:rETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+xsushi-feed-payload :;  forge script script/DeployMainnetPayload.s.sol:AaveV2SwapxSushiOracle --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+xsushi-feed-proposal :; forge script script/CreateMainnetProposals.s.sol:SwapXSushiPriceFeedPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
