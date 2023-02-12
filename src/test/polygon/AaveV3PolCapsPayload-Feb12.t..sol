@@ -20,7 +20,7 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   uint256 public constant BAL_SUPPLY_CAP = 361_000;
   uint256 public constant EURS_BORROW_CAP = 947_000;
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
-  uint256 public constant USDC_BORROW_CAP = 60_000_000;
+  uint256 public constant USDC_BORROW_CAP = 100_000_000;
   uint256 public constant USDT_BORROW_CAP = 30_000_000;
 
   function setUp() public {
