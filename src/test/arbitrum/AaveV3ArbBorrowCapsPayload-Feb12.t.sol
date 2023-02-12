@@ -7,7 +7,7 @@ import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-hel
 import {AaveV3ArbCapsPayload} from '../../contracts/arbitrum/AaveV3ArbCapsPayload-Feb12.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ArbBorrowCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbCapsPayload public proposalPayload;
 
   address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;

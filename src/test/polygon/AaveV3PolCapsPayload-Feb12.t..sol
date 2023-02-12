@@ -8,7 +8,7 @@ import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase
 import {AaveV3PolCapsPayload} from '../../contracts/polygon/AaveV3PolCapsPayload-Feb12.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3PolCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3PolCapsPayload public proposalPayload;
 
   address public constant BAL = 0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3;
