@@ -4,7 +4,7 @@ pragma solidity ^0.8.16;
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
-import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
  * @dev This payload lists FRAX as collateral and borrowing asset on Aave V3 Polygon
@@ -19,15 +19,13 @@ contract FraxPayload is IProposalGenericExecutor {
   // **************************
   // Protocol's contracts
   // **************************
-  address public constant INCENTIVES_CONTROLLER =
-    0x929EC64c34a17401F460460D4B9390518E5B473e;
+  address public constant INCENTIVES_CONTROLLER = 0x929EC64c34a17401F460460D4B9390518E5B473e;
 
   // **************************
   // New asset being listed (FRAX)
   // **************************
 
-  address public constant UNDERLYING =
-    0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89;
+  address public constant UNDERLYING = 0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89;
   string public constant ATOKEN_NAME = 'Aave Polygon FRAX';
   string public constant ATOKEN_SYMBOL = 'aPolFRAX';
   string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt FRAX';
@@ -35,18 +33,13 @@ contract FraxPayload is IProposalGenericExecutor {
   string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt FRAX';
   string public constant SDTOKEN_SYMBOL = 'stableDebtPolFRAX';
 
-  address public constant PRICE_FEED =
-    0x00DBeB1e45485d53DF7C2F0dF1Aa0b6Dc30311d3;
+  address public constant PRICE_FEED = 0x00DBeB1e45485d53DF7C2F0dF1Aa0b6Dc30311d3;
 
-  address public constant ATOKEN_IMPL =
-    0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
-  address public constant VDTOKEN_IMPL =
-    0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
-  address public constant SDTOKEN_IMPL =
-    0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
+  address public constant ATOKEN_IMPL = 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
+  address public constant VDTOKEN_IMPL = 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
+  address public constant SDTOKEN_IMPL = 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
 
-  address public constant RATE_STRATEGY =
-    0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
+  address public constant RATE_STRATEGY = 0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
 
   uint256 public constant RESERVE_FACTOR = 1000; // 10%
 
@@ -84,9 +77,7 @@ contract FraxPayload is IProposalGenericExecutor {
     // ------------------------------------------------
 
     ConfiguratorInputTypes.InitReserveInput[]
-      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](
-        1
-      );
+      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](1);
     initReserveInputs[0] = ConfiguratorInputTypes.InitReserveInput({
       aTokenImpl: ATOKEN_IMPL,
       stableDebtTokenImpl: SDTOKEN_IMPL,
@@ -121,11 +112,6 @@ contract FraxPayload is IProposalGenericExecutor {
 
     configurator.setDebtCeiling(UNDERLYING, DEBT_CEILING);
 
-    configurator.configureReserveAsCollateral(
-      UNDERLYING,
-      LTV,
-      LIQ_THRESHOLD,
-      LIQ_BONUS
-    );
+    configurator.configureReserveAsCollateral(UNDERLYING, LTV, LIQ_THRESHOLD, LIQ_BONUS);
   }
 }

@@ -3,13 +3,11 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2, AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ArbBorrowCapsPayload} from '../../contracts/arbitrum/AaveV3ArbBorrowCapsPayload.sol';
-import {BaseTest} from '../utils/BaseTest.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ArbBorrowCapsPayloadTest is ProtocolV3TestBase, BaseTest {
+contract AaveV3ArbBorrowCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbBorrowCapsPayload public proposalPayload;
 
   address public constant LINK = 0xf97f4df75117a78c1A5a0DBb814Af92458539FB4;
@@ -22,45 +20,35 @@ contract AaveV3ArbBorrowCapsPayloadTest is ProtocolV3TestBase, BaseTest {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 43236349);
-    _setUp(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
+    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testBorrowCapsArb() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Arbitrum.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
 
     // 1. deploy l2 payload
     proposalPayload = new AaveV3ArbBorrowCapsPayload();
 
     // 2. execute l2 payload
-    _execute(address(proposalPayload));
+    _executePayload(address(proposalPayload));
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase
-      ._getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
+      AaveV3Arbitrum.POOL
+    );
 
     //LINK
-    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      LINK
-    );
+    ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, LINK);
     LinkConfig.borrowCap = LINK_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
 
     //WBTC
-    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WBTC
-    );
+    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WBTC);
     WBTCConfig.borrowCap = WBTC_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
 
     //WETH
-    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      WETH
-    );
+    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WETH);
     WETHConfig.borrowCap = WETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
   }

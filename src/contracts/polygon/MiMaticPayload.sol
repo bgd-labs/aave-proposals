@@ -4,7 +4,7 @@ pragma solidity ^0.8.16;
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {IERC20Metadata} from 'solidity-utils/contracts/oz-common/interfaces/IERC20Metadata.sol';
-import {IProposalGenericExecutor} from '../../interfaces/IProposalGenericExecutor.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
  * @author BGD Labs
@@ -20,15 +20,13 @@ contract MiMaticPayload is IProposalGenericExecutor {
   // **************************
   // Protocol's contracts
   // **************************
-  address public constant INCENTIVES_CONTROLLER =
-    0x929EC64c34a17401F460460D4B9390518E5B473e;
+  address public constant INCENTIVES_CONTROLLER = 0x929EC64c34a17401F460460D4B9390518E5B473e;
 
   // **************************
   // New asset being listed (MIMATIC)
   // **************************
 
-  address public constant UNDERLYING =
-    0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
+  address public constant UNDERLYING = 0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
   string public constant ATOKEN_NAME = 'Aave Polygon MIMATIC';
   string public constant ATOKEN_SYMBOL = 'aPolMIMATIC';
   string public constant VDTOKEN_NAME = 'Aave Polygon Variable Debt MIMATIC';
@@ -36,17 +34,12 @@ contract MiMaticPayload is IProposalGenericExecutor {
   string public constant SDTOKEN_NAME = 'Aave Polygon Stable Debt MIMATIC';
   string public constant SDTOKEN_SYMBOL = 'stableDebtPolMIMATIC';
 
-  address public constant PRICE_FEED =
-    0xd8d483d813547CfB624b8Dc33a00F2fcbCd2D428;
+  address public constant PRICE_FEED = 0xd8d483d813547CfB624b8Dc33a00F2fcbCd2D428;
 
-  address public constant ATOKEN_IMPL =
-    0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
-  address public constant VDTOKEN_IMPL =
-    0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
-  address public constant SDTOKEN_IMPL =
-    0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
-  address public constant RATE_STRATEGY =
-    0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
+  address public constant ATOKEN_IMPL = 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B;
+  address public constant VDTOKEN_IMPL = 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3;
+  address public constant SDTOKEN_IMPL = 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e;
+  address public constant RATE_STRATEGY = 0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4;
 
   uint256 public constant RESERVE_FACTOR = 1000; // 10%
 
@@ -84,9 +77,7 @@ contract MiMaticPayload is IProposalGenericExecutor {
     // ------------------------------------------------
 
     ConfiguratorInputTypes.InitReserveInput[]
-      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](
-        1
-      );
+      memory initReserveInputs = new ConfiguratorInputTypes.InitReserveInput[](1);
     initReserveInputs[0] = ConfiguratorInputTypes.InitReserveInput({
       aTokenImpl: ATOKEN_IMPL,
       stableDebtTokenImpl: SDTOKEN_IMPL,
@@ -121,11 +112,6 @@ contract MiMaticPayload is IProposalGenericExecutor {
 
     configurator.setDebtCeiling(UNDERLYING, DEBT_CEILING);
 
-    configurator.configureReserveAsCollateral(
-      UNDERLYING,
-      LTV,
-      LIQ_THRESHOLD,
-      LIQ_BONUS
-    );
+    configurator.configureReserveAsCollateral(UNDERLYING, LTV, LIQ_THRESHOLD, LIQ_BONUS);
   }
 }

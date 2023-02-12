@@ -2,7 +2,8 @@
   "name": "aave-v3-cross-chain-listing-template",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "prettier ./",
+    "lint:fix": "npm run lint -- --write"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   },
   "homepage": "https://github.com/bgd-labs/aave-v3-crosschain-listing-template#readme",
   "devDependencies": {
-    "prettier": "^2.7.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.19"
+    "prettier": "^2.8.3",
+    "prettier-plugin-solidity": "^1.1.1"
   }
 }

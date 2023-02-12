@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3Arbitrum, AaveMisc} from 'aave-address-book/AaveAddressBook.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
@@ -11,22 +11,22 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
 import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfaces/IL2BridgeExecutor.sol';
-import {CrosschainForwarderArbitrum} from '../../contracts/arbitrum/CrosschainForwarderArbitrum.sol';
+import {CrosschainForwarderArbitrum} from '../../contracts/crosschainforwarders/CrosschainForwarderArbitrum.sol';
 import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
-import {DeployL1ArbitrumProposal} from '../../../script/DeployL1ArbitrumProposal.s.sol';
 
-contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
+/**
+ * This test covers syncing between mainnet and arbitrum.
+ */
+contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   // the identifiers of the forks
   uint256 mainnetFork;
   uint256 arbitrumFork;
 
   StEthPayload public stEthPayload;
 
-  IInbox public constant INBOX =
-    IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
+  IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
-  address public constant ARBITRUM_BRIDGE_EXECUTOR =
-    AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
+  address public constant ARBITRUM_BRIDGE_EXECUTOR = AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR;
 
   address public constant DAI = 0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1;
 
@@ -41,19 +41,15 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   }
 
   // utility to transform memory to calldata so array range access is available
-  function _cutBytes(bytes calldata input)
-    public
-    pure
-    returns (bytes calldata)
-  {
+  function _cutBytes(bytes calldata input) public pure returns (bytes calldata) {
     return input[64:];
   }
 
   function testHasSufficientGas() public {
     vm.selectFork(mainnetFork);
-    assertEq(GovHelpers.SHORT_EXECUTOR.balance, 0);
+    assertEq(AaveGovernanceV2.SHORT_EXECUTOR.balance, 0);
     assertEq(forwarder.hasSufficientGasForExecution(580), false);
-    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+    deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
     assertEq(forwarder.hasSufficientGasForExecution(580), true);
   }
 
@@ -65,21 +61,22 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
   function testProposalE2E() public {
     // assumes the short exec will be topped up with some eth to pay for l2 fee
     vm.selectFork(mainnetFork);
-    deal(address(GovHelpers.SHORT_EXECUTOR), 0.001 ether);
+    deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
 
     vm.selectFork(arbitrumFork);
     // we get all configs to later on check that payload only changes stEth
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(
-      AaveV3Arbitrum.POOL
-    );
+    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
     // 1. deploy l2 payload
     stEthPayload = new StEthPayload();
 
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
-    vm.startPrank(GovHelpers.AAVE_WHALE);
-    uint256 proposalId = DeployL1ArbitrumProposal._deployL1Proposal(
-      address(stEthPayload),
+    vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    payloads[0] = GovHelpers.buildArbitrum(address(stEthPayload));
+
+    uint256 proposalId = GovHelpers.createProposal(
+      payloads,
       0xec9d2289ab7db9bfbf2b0f2dd41ccdc0a4003e9e0d09e40dee09095145c63fb5
     );
     vm.stopPrank();
@@ -109,10 +106,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
     // check events are emitted correctly
     Vm.Log[] memory entries = vm.getRecordedLogs();
-    assertEq(
-      keccak256('InboxMessageDelivered(uint256,bytes)'),
-      entries[3].topics[0]
-    );
+    assertEq(keccak256('InboxMessageDelivered(uint256,bytes)'), entries[3].topics[0]);
     // uint256 messageId = uint256(entries[3].topics[1]);
     (
       address to,
@@ -126,17 +120,7 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
       uint256 length
     ) = abi.decode(
         this._cutBytes(entries[3].data),
-        (
-          address,
-          uint256,
-          uint256,
-          uint256,
-          address,
-          address,
-          uint256,
-          uint256,
-          uint256
-        )
+        (address, uint256, uint256, uint256, address, address, uint256, uint256, uint256)
       );
     assertEq(callvalue, 0);
     assertEq(value > 0, true);
@@ -150,15 +134,11 @@ contract ArbitrumStEthE2ETest is ProtocolV3TestBase {
 
     // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
     vm.selectFork(arbitrumFork);
-    vm.startPrank(
-      AddressAliasHelper.applyL1ToL2Alias(GovHelpers.SHORT_EXECUTOR)
-    );
+    vm.startPrank(AddressAliasHelper.applyL1ToL2Alias(AaveGovernanceV2.SHORT_EXECUTOR));
     ARBITRUM_BRIDGE_EXECUTOR.call(payload);
     vm.stopPrank();
     // 5. execute proposal on l2
-    IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(
-      ARBITRUM_BRIDGE_EXECUTOR
-    );
+    IL2BridgeExecutor bridgeExecutor = IL2BridgeExecutor(ARBITRUM_BRIDGE_EXECUTOR);
     vm.warp(block.timestamp + bridgeExecutor.getDelay() + 1);
     // execute the proposal
     bridgeExecutor.execute(bridgeExecutor.getActionsSetCount() - 1);
