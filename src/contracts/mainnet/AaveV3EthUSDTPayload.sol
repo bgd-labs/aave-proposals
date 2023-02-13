@@ -40,6 +40,6 @@ contract AaveV3EthUSDTPayload is AaveV3ListingEthereum {
       eModeCategory: 0
     });
 
-    return listings;
+    return listings; 
   }
 }
