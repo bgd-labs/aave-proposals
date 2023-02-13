@@ -36,6 +36,18 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
+  function testPoolActivation() public {
+    proposalPayload = new AaveV3PolCapsPayload();
+
+    createConfigurationSnapshot('pre-poly12', AaveV3Polygon.POOL);
+
+    _executePayload(address(proposalPayload));
+
+    createConfigurationSnapshot('post-poly12', AaveV3Polygon.POOL);
+
+    diffReports('pre-poly12', 'post-poly12');
+  }
+
   function testBorrowCapsPol() public {
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 

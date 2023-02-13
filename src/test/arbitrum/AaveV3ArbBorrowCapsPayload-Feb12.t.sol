@@ -22,6 +22,18 @@ contract AaveV3ArbFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
+  function testPoolActivation() public {
+    proposalPayload = new AaveV3ArbCapsPayload();
+
+    createConfigurationSnapshot('pre-arb12', AaveV3Arbitrum.POOL);
+
+    _executePayload(address(proposalPayload));
+
+    createConfigurationSnapshot('post-arb12', AaveV3Arbitrum.POOL);
+
+    diffReports('pre-arb12', 'post-arb12');
+  }
+
   function testBorrowCapsArb() public {
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
 
