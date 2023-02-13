@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2, AaveV3Polygon} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3PolCapsPayload} from '../../contracts/polygon/AaveV3PolCapsPayload-Feb12.sol';
@@ -11,17 +12,24 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3PolCapsPayload public proposalPayload;
 
-  address public constant BAL = 0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3;
-  address public constant EURS = 0xE111178A87A3BFf0c8d18DECBa5798827539Ae99;
-  address public constant DAI = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
-  address public constant USDC = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
-  address public constant USDT = 0xc2132D05D31c914a87C6611C10748AEb04B58e8F;
+  address public constant BAL = AaveV3PolygonAssets.BAL_UNDERLYING;
+  address public constant EURS = AaveV3PolygonAssets.EURS_UNDERLYING;
+  address public constant DAI = AaveV3PolygonAssets.DAI_UNDERLYING;
+  address public constant USDC = AaveV3PolygonAssets.USDC_UNDERLYING;
+  address public constant USDT = AaveV3PolygonAssets.USDT_UNDERLYING;
 
   uint256 public constant BAL_SUPPLY_CAP = 361_000;
+
   uint256 public constant EURS_BORROW_CAP = 947_000;
+
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
+  uint256 public constant DAI_SUPPLY_CAP = 45_000_000;
+
   uint256 public constant USDC_BORROW_CAP = 100_000_000;
+  uint256 public constant USDC_SUPPLY_CAP = 150_000_000;
+
   uint256 public constant USDT_BORROW_CAP = 30_000_000;
+  uint256 public constant USDT_SUPPLY_CAP = 45_000_000;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 39206488);
@@ -52,14 +60,17 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     ReserveConfig memory DaiConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, DAI);
     DaiConfig.borrowCap = DAI_BORROW_CAP;
+    DaiConfig.supplyCap = DAI_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(DaiConfig, allConfigsAfter);
 
     ReserveConfig memory UsdcConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, USDC);
     UsdcConfig.borrowCap = USDC_BORROW_CAP;
+    UsdcConfig.supplyCap = USDC_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(UsdcConfig, allConfigsAfter);
 
     ReserveConfig memory UsdtConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, USDT);
     UsdtConfig.borrowCap = USDT_BORROW_CAP;
+    UsdtConfig.supplyCap = USDT_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(UsdtConfig, allConfigsAfter);
   }
 }

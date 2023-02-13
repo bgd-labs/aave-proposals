@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2, AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ArbCapsPayload} from '../../contracts/arbitrum/AaveV3ArbCapsPayload-Feb12.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
@@ -10,8 +11,8 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 contract AaveV3ArbFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbCapsPayload public proposalPayload;
 
-  address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
-  address public constant LINK = 0xf97f4df75117a78c1A5a0DBb814Af92458539FB4;
+  address public constant WETH = AaveV3ArbitrumAssets.WETH_UNDERLYING;
+  address public constant LINK = AaveV3ArbitrumAssets.LINK_UNDERLYING;
 
   uint256 public constant WETH_CAP = 35_280;
   uint256 public constant LINK_CAP = 677_000;
