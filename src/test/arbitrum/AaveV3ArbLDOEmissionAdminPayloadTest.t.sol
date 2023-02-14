@@ -8,15 +8,12 @@ import {AaveV3ArbLDOEmissionAdminPayload} from '../../contracts/arbitrum/AaveV3A
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IEmissionManager} from 'aave-v3-periphery/rewards/interfaces/IEmissionManager.sol';
 
-contract AaveV3ArbLDOEmissionAdminPayloadTest is
-  ProtocolV3TestBase,
-  TestWithExecutor
-{
+contract AaveV3ArbLDOEmissionAdminPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbLDOEmissionAdminPayload public proposalPayload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'));
-    _selectPayloadExecutor(AaveV3Arbitrum.ACL_ADMIN);
+    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testLdoEmissionAdminArb() public {
@@ -24,13 +21,15 @@ contract AaveV3ArbLDOEmissionAdminPayloadTest is
     proposalPayload = new AaveV3ArbLDOEmissionAdminPayload();
 
     assertEq(manager.getEmissionAdmin(proposalPayload.LDO()), address(0));
-    
+
     _executePayload(address(proposalPayload));
-    
 
     assertEq(manager.getEmissionAdmin(proposalPayload.LDO()), proposalPayload.NEW_EMISSION_ADMIN());
-    emit log_named_address('new emission admin for LDO arbitrum rewards', manager.getEmissionAdmin(proposalPayload.LDO()));
-    
+    emit log_named_address(
+      'new emission admin for LDO arbitrum rewards',
+      manager.getEmissionAdmin(proposalPayload.LDO())
+    );
+
     /// verify admin can make changes
     vm.startPrank(proposalPayload.NEW_EMISSION_ADMIN());
     manager.setDistributionEnd(proposalPayload.LDO(), proposalPayload.LDO(), 0);

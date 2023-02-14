@@ -8,15 +8,12 @@ import {AaveV3OptLDOEmissionAdminPayload} from '../../contracts/optimism/AaveV3O
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IEmissionManager} from 'aave-v3-periphery/rewards/interfaces/IEmissionManager.sol';
 
-contract AaveV3OptLDOEmissionAdminPayloadTest is
-  ProtocolV3TestBase,
-  TestWithExecutor
-{
+contract AaveV3OptLDOEmissionAdminPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3OptLDOEmissionAdminPayload public proposalPayload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'));
-    _selectPayloadExecutor(AaveV3Optimism.ACL_ADMIN);
+    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testLdoEmissionAdminOp() public {
@@ -28,8 +25,11 @@ contract AaveV3OptLDOEmissionAdminPayloadTest is
     _executePayload(address(proposalPayload));
 
     assertEq(manager.getEmissionAdmin(proposalPayload.LDO()), proposalPayload.NEW_EMISSION_ADMIN());
-    emit log_named_address('new emission admin for LDO optimism rewards', manager.getEmissionAdmin(proposalPayload.LDO()));
-    
+    emit log_named_address(
+      'new emission admin for LDO optimism rewards',
+      manager.getEmissionAdmin(proposalPayload.LDO())
+    );
+
     /// verify admin can make changes
     vm.startPrank(proposalPayload.NEW_EMISSION_ADMIN());
     manager.setDistributionEnd(proposalPayload.LDO(), proposalPayload.LDO(), 0);
