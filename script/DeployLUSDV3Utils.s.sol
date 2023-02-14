@@ -39,17 +39,18 @@ contract DeployLUSDStrategy is Script {
   }
 
   function _rateStrategyLUSD() internal pure returns (RateStrategyConfig memory) {
-    return RateStrategyConfig({
-      optimalUsageRatio: _bpsToRay(80_00),
-      baseVariableBorrowRate: 0,
-      variableRateSlope1: _bpsToRay(4_00),
-      variableRateSlope2: _bpsToRay(87_00),
-      stableRateSlope1: _bpsToRay(4_00),
-      stableRateSlope2: _bpsToRay(87_00),
-      baseStableRateOffset: _bpsToRay(1_00),
-      stableRateExcessOffset: _bpsToRay(8_00),
-      optimalStableToTotalDebtRatio: _bpsToRay(20_00)
-    });
+    return
+      RateStrategyConfig({
+        optimalUsageRatio: _bpsToRay(80_00),
+        baseVariableBorrowRate: 0,
+        variableRateSlope1: _bpsToRay(4_00),
+        variableRateSlope2: _bpsToRay(87_00),
+        stableRateSlope1: _bpsToRay(4_00),
+        stableRateSlope2: _bpsToRay(87_00),
+        baseStableRateOffset: _bpsToRay(1_00),
+        stableRateExcessOffset: _bpsToRay(8_00),
+        optimalStableToTotalDebtRatio: _bpsToRay(20_00)
+      });
   }
 
   function run() external {
