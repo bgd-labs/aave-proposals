@@ -10,9 +10,9 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IDefaultInterestRateStrategy} from 'aave-address-book/AaveV2.sol';
 import {ProtocolV2TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
-import {AaveV2wETHIRPayload} from '../../contracts/mainnet/AaveV2wETHIRPayload.sol';
+import {AaveV2EthwETHIRPayload} from '../../contracts/mainnet/AaveV2EthwETHIRPayload.sol';
 
-contract AaveV2wETHIRPayloadE2ETest is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2EthwETHIRPayloadE2ETest is ProtocolV2TestBase, TestWithExecutor {
   uint256 internal constant RAY = 1e27;
   uint256 public proposalId;
   IDefaultInterestRateStrategy public constant OLD_INTEREST_RATE_STRATEGY_ETHEREUM =
@@ -20,12 +20,12 @@ contract AaveV2wETHIRPayloadE2ETest is ProtocolV2TestBase, TestWithExecutor {
 
   address public NEW_INTEREST_RATE_STRATEGY;
   IDefaultInterestRateStrategy public strategy;
-  AaveV2wETHIRPayload public proposalPayload;
+  AaveV2EthwETHIRPayload public proposalPayload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16620283);
 
-    proposalPayload = new AaveV2wETHIRPayload();
+    proposalPayload = new AaveV2EthwETHIRPayload();
     NEW_INTEREST_RATE_STRATEGY = proposalPayload.INTEREST_RATE_STRATEGY();
     strategy = IDefaultInterestRateStrategy(NEW_INTEREST_RATE_STRATEGY);
   }
@@ -51,7 +51,7 @@ contract AaveV2wETHIRPayloadE2ETest is ProtocolV2TestBase, TestWithExecutor {
 
     _validateInterestRateStrategy(
       configWethBefore.interestRateStrategy,
-      AaveV2wETHIRPayload(proposalPayload).INTEREST_RATE_STRATEGY(),
+      AaveV2EthwETHIRPayload(proposalPayload).INTEREST_RATE_STRATEGY(),
       InterestStrategyValues({
         addressesProvider: address(AaveV2Ethereum.POOL_ADDRESSES_PROVIDER),
         optimalUsageRatio: 80 * (RAY / 100),

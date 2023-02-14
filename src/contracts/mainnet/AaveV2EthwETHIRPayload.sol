@@ -11,7 +11,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * Governance Forum Post: https://governance.aave.com/t/arfc-weth-wsteth-interest-rate-curve-ethereum-network/11372
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x9ae28e9c82c5fc0d24cf1df788094e959d99f906d11b89e455a60ee16b071d6f
  */
-contract AaveV2wETHIRPayload is IProposalGenericExecutor {
+contract AaveV2EthwETHIRPayload is IProposalGenericExecutor {
   address public constant INTEREST_RATE_STRATEGY = 0xb8975328Aa52c00B9Ec1e11e518C4900f2e6C62a;
 
   function execute() external {
