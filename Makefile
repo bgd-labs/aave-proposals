@@ -58,3 +58,5 @@ xsushi-feed-proposal :; forge script script/CreateMainnetProposals.s.sol:SwapXSu
 lusd-strategy :;  forge script script/DeployLUSDV3Utils.s.sol:DeployLUSDStrategy --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTest
+
+lusd-payload :;  forge script script/DeployLUSDPayload.s.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
