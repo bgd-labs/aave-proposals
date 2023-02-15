@@ -23,7 +23,7 @@ contract AaveV3EthLUSDPayload is AaveV3ListingEthereum {
       asset: LUSD,
       assetSymbol: 'LUSD',
       priceFeed: LUSD_USD_FEED,
-      rateStrategy: address(0), // [Rate_Strategy_Address] to add after strategy deployement
+      rateStrategy: 0x349684Da30f8c9Affeaf21AfAB3a1Ad51f5d95A3,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
