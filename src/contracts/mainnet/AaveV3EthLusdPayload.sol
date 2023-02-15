@@ -5,14 +5,14 @@ import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-listing-engine/AaveV3ListingEthereum.sol';
 
 /**
- * @title This proposal lists USDT on Aave V3 Ethereum
- * @author @marczeller Aave-Chan Initiative
- * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x81e8a39e2c0409b5aeb82e5ac367492759a60e93da15f7b64bd4560508400987
- * - Dicussion: https://governance.aave.com/t/arfc-add-usdt-to-ethereum-v3-market/11536
+ * @title This proposal lists LUSD on Aave V3 Ethereum
+ * @author @marczeller - Aave-Chan Initiative
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xda3519f11e2308239d5f179b2579fe921b2a421eb752aba959779ee9ecea0d69
+ * - Discussion: https://governance.aave.com/t/arc-add-lusd-to-ethereum-v3-market/11522
  */
-contract AaveV3EthUSDTPayload is AaveV3ListingEthereum {
-  address constant USDT = 0xdAC17F958D2ee523a2206206994597C13D831ec7;
-  address constant USDT_USD_FEED = 0x3E7d1eAB13ad0104d2750B8863b489D65364e32D;
+contract AaveV3EthLUSDPayload is AaveV3ListingEthereum {
+  address constant LUSD = 0x5f98805A4E8be255a32880FDeC7F6728C6568bA0;
+  address constant LUSD_USD_FEED = 0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0;
 
   constructor() AaveV3ListingEthereum(IGenericV3ListingEngine(AaveV3Ethereum.LISTING_ENGINE)) {}
 
@@ -20,10 +20,10 @@ contract AaveV3EthUSDTPayload is AaveV3ListingEthereum {
     IGenericV3ListingEngine.Listing[] memory listings = new IGenericV3ListingEngine.Listing[](1);
 
     listings[0] = IGenericV3ListingEngine.Listing({
-      asset: USDT,
-      assetSymbol: 'USDT',
-      priceFeed: USDT_USD_FEED,
-      rateStrategy: 0xdd1BAC6A713c5b0EC42bA39D0c5e4582975DE6D6,
+      asset: LUSD,
+      assetSymbol: 'LUSD',
+      priceFeed: LUSD_USD_FEED,
+      rateStrategy: 0x349684Da30f8c9Affeaf21AfAB3a1Ad51f5d95A3,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
@@ -33,13 +33,13 @@ contract AaveV3EthUSDTPayload is AaveV3ListingEthereum {
       liqThreshold: 0,
       liqBonus: 0,
       reserveFactor: 10_00,
-      supplyCap: 200_000_000,
-      borrowCap: 185_000_000,
+      supplyCap: 3_000_000,
+      borrowCap: 1_210_000,
       debtCeiling: 0,
       liqProtocolFee: 10_00,
       eModeCategory: 0
     });
 
-    return listings; 
+    return listings;
   }
 }
