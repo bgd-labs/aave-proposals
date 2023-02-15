@@ -19,6 +19,7 @@ contract AaveV3PolCapsPayload is IProposalGenericExecutor {
   uint256 public constant BAL_SUPPLY_CAP = 361_000;
 
   uint256 public constant EURS_BORROW_CAP = 947_000;
+  uint256 public constant EURS_SUPPLY_CAP = 4_000_000;
 
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
   uint256 public constant DAI_SUPPLY_CAP = 45_000_000;
@@ -35,6 +36,7 @@ contract AaveV3PolCapsPayload is IProposalGenericExecutor {
     configurator.setSupplyCap(BAL, BAL_SUPPLY_CAP);
 
     configurator.setBorrowCap(EURS, EURS_BORROW_CAP);
+    configurator.setSupplyCap(EURS, EURS_SUPPLY_CAP);
 
     configurator.setBorrowCap(DAI, DAI_BORROW_CAP);
     configurator.setSupplyCap(DAI, DAI_SUPPLY_CAP);

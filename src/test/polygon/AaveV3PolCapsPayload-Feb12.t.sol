@@ -21,6 +21,7 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   uint256 public constant BAL_SUPPLY_CAP = 361_000;
 
   uint256 public constant EURS_BORROW_CAP = 947_000;
+  uint256 public constant EURS_SUPPLY_CAP = 4_000_000;
 
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
   uint256 public constant DAI_SUPPLY_CAP = 45_000_000;
@@ -68,6 +69,7 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     ReserveConfig memory EursConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, EURS);
     EursConfig.borrowCap = EURS_BORROW_CAP;
+    EursConfig.supplyCap = EURS_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(EursConfig, allConfigsAfter);
 
     ReserveConfig memory DaiConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, DAI);
