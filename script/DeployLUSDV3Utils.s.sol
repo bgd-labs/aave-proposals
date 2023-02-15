@@ -47,7 +47,7 @@ contract DeployLUSDStrategy is Script {
         variableRateSlope2: _bpsToRay(87_00),
         stableRateSlope1: _bpsToRay(4_00),
         stableRateSlope2: _bpsToRay(87_00),
-        baseStableRateOffset: _bpsToRay(1_00),
+        baseStableRateOffset: _bpsToRay(5_00),
         stableRateExcessOffset: _bpsToRay(8_00),
         optimalStableToTotalDebtRatio: _bpsToRay(20_00)
       });
