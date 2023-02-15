@@ -12,7 +12,7 @@ import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-li
  */
 contract AaveV3EthLUSDPayload is AaveV3ListingEthereum {
   address constant LUSD = 0x5f98805A4E8be255a32880FDeC7F6728C6568bA0;
-  address constant LUSD_USD_FEED = 0x3E7d1eAB13ad0104d2750B8863b489D65364e32D;
+  address constant LUSD_USD_FEED = 0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0;
 
   constructor() AaveV3ListingEthereum(IGenericV3ListingEngine(AaveV3Ethereum.LISTING_ENGINE)) {}
 
