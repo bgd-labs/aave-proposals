@@ -54,3 +54,5 @@ reth-payload :;  forge script script/DeployMainnetPayload.s.sol:rETH --rpc-url m
 
 xsushi-feed-payload :;  forge script script/DeployMainnetPayload.s.sol:AaveV2SwapxSushiOracle --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 xsushi-feed-proposal :; forge script script/CreateMainnetProposals.s.sol:SwapXSushiPriceFeedPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+
+deploy-contract :; forge script script/DeployContract.s.sol:DeployContract --rpc-url ${RPC_MAINNET_URL} --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
