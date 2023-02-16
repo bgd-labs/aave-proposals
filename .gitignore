@@ -17,4 +17,4 @@ broadcast
 
 # repo specific artifacts
 reports
-etherscan
+src/etherscan
