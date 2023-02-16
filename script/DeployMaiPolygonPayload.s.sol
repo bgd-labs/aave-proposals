@@ -7,14 +7,8 @@ contract DeployPolygonPayload is WithChainIdValidation {
   constructor() WithChainIdValidation(137) {}
 }
 
-// Example polygon contract deployment
-// copy and replace with the contract you are planning to deploy
-// we'll periodically cleanup scripts comitted here
-
 contract MAI is DeployPolygonPayload {
   function run() external {
-    // _nwCheck();
-
     vm.startBroadcast();
     new MAIV3PolCapsPayload();
     vm.stopBroadcast();
