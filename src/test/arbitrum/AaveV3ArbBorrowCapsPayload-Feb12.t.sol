@@ -50,12 +50,12 @@ contract AaveV3ArbFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     //LINK
     ReserveConfig memory LinkConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, LINK);
-    LinkConfig.borrowCap = LINK_CAP;
+    LinkConfig.supplyCap = LINK_CAP;
     ProtocolV3TestBase._validateReserveConfig(LinkConfig, allConfigsAfter);
 
     //WETH
     ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WETH);
-    WETHConfig.borrowCap = WETH_CAP;
+    WETHConfig.supplyCap = WETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
   }
 }
