@@ -22,10 +22,6 @@ contract AaveV3EthLUSDPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
 
     createConfigurationSnapshot('postLUSD', AaveV3Ethereum.POOL);
 
-<<<<<<< HEAD
-    // diffReports('preLUSD', 'postLUSD');
-=======
     diffReports('preLUSD', 'postLUSD');
->>>>>>> 7c5ba990e9fcebc6388caf28d2d602067bb5de96
   }
 }
