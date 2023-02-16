@@ -63,6 +63,6 @@ git-diff :
 
 # test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTest
 
-mai-payload :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url ${RPC_POLYGON}  --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_POLYGON} -vvvv
+mai-payload :;  forge script script/DeployMaiPolygonPayload.s.sol:MAI --rpc-url ${RPC_POLYGON}  --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_POLYGON} -vvvv
 
 test-mai-payload :; forge test -vvv --match-contract MAIV3PolCapsPayloadTest
