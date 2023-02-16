@@ -14,3 +14,7 @@ package-lock.json
 node_modules
 
 broadcast
+
+# repo specific artifacts
+reports
+etherscan
