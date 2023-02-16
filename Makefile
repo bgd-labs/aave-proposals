@@ -64,10 +64,6 @@ lusd-strategy :;  forge script script/DeployLUSDV3Utils.s.sol:DeployLUSDStrategy
 
 test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTest
 
-lusd-strategy :;  forge script script/DeployLUSDV3Utils.s.sol:DeployLUSDStrategy --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
-
-test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTest
-
 mai-payload :;  forge script script/DeployMaiPolygonPayload.s.sol:MAI --rpc-url ${RPC_POLYGON}  --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_POLYGON} -vvvv
 
 test-mai-payload :; forge test -vvv --match-contract MAIV3PolCapsPayloadTest
