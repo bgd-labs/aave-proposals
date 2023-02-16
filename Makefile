@@ -46,8 +46,16 @@ git-diff :
 # op-ledger :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 # op-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
+# deploy LDO Emission admin payloads
+deploy-arb-ldo-emission-admin :; forge script script/DeployLDOEmissionAdminProposals.s.sol:DeployArbLDOEmissionAdmin --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY_ARBITRUM} --verify -vvvv
+deploy-eth-ldo-emission-admin :;forge script script/DeployLDOEmissionAdminProposals.s.sol:DeployEthLDOEmissionAdmin --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify -vvvv
+deploy-opt-ldo-emission-admin :; forge script script/DeployLDOEmissionAdminProposals.s.sol:DeployOptLDOEmissionAdmin --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY_OPTIMISM} --verify -vvvv
+
 usdt-strategy :;  forge script script/DeployUSDTV3Utils.s.sol:DeployUSDTStrategy --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 usdt-payload :;  forge script script/DeployUSDTV3Utils.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 reth-payload :;  forge script script/DeployMainnetPayload.s.sol:rETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+xsushi-feed-payload :;  forge script script/DeployMainnetPayload.s.sol:AaveV2SwapxSushiOracle --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+xsushi-feed-proposal :; forge script script/CreateMainnetProposals.s.sol:SwapXSushiPriceFeedPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
