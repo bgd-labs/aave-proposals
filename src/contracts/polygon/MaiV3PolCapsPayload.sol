@@ -13,7 +13,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  */
 
 contract MAIV3PolCapsPayload is IProposalGenericExecutor {
-  address public constant MAI = 0xa3Fa99A148fA48D14Ed51d610c367C61876997F1;
+  address public constant MAI = AaveV3PolygonAssets.miMATIC_UNDERLYING;
 
   uint256 public constant MAI_SUPPLY_CAP = 1_100_000;
   uint256 public constant MAI_BORROW_CAP = 600_000;
