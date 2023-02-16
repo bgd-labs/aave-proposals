@@ -71,3 +71,5 @@ test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTe
 mai-payload :;  forge script script/DeployMaiPolygonPayload.s.sol:MAI --rpc-url ${RPC_POLYGON}  --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_POLYGON} -vvvv
 
 test-mai-payload :; forge test -vvv --match-contract MAIV3PolCapsPayloadTest
+
+deploy-contract :; forge script script/DeployContract.s.sol:DeployContract --rpc-url ${RPC_MAINNET_URL} --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv

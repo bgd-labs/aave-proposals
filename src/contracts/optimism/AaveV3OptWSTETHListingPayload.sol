@@ -27,7 +27,7 @@ contract AaveV3OptWSTETHListingPayload is AaveV3ListingOptimism {
       rateStrategy: address(0), // TODO!
       enabledToBorrow: true,
       stableRateModeEnabled: false,
-      borrowInIsolation: false,
+      borrowableInIsolation: false,
       withSiloedBorrowing: false,
       flashloanable: false,
       ltv: 70_00,
