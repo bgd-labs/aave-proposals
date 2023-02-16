@@ -2,8 +2,6 @@
 cache/
 out/
 
-#create proposal
-~/aips/aave-v3-crosschain-listing-template/script/CreateLUSDProposal.s.sol
 # general
 .env
 
