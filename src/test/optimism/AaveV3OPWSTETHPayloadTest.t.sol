@@ -10,8 +10,8 @@ import {AaveV3OPWSTETHPayload} from '../../contracts/optimism/AaveV3OPWSTETHPayl
 
 contract AaveV3OPWSTETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 75009080);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 75011919);
+    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testPoolActivation() public {
