@@ -12,7 +12,7 @@ contract OPWSTETHProposal is CreateMainnetProposal {
 
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(
+    payloads[0] = GovHelpers.buildOptimism(
       address(0) // TOFIX replace with actual address
     );
     vm.startBroadcast();
