@@ -29,7 +29,7 @@ contract AaveV3OPWSTETHPayload is AaveV3ListingOptimism {
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
       withSiloedBorrowing: false,
-      flashloanable: true,
+      flashloanable: false,
       ltv: 70_00,
       liqThreshold: 79_00,
       liqBonus: 7_20,
