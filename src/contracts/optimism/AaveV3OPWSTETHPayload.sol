@@ -33,7 +33,7 @@ contract AaveV3OPWSTETHPayload is AaveV3ListingOptimism {
       ltv: 70_00,
       liqThreshold: 79_00,
       liqBonus: 7_20,
-      reserveFactor: 10_00,
+      reserveFactor: 15_00,
       supplyCap: 6_000,
       borrowCap: 940,
       debtCeiling: 0,
