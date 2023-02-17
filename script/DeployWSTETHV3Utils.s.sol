@@ -7,7 +7,7 @@ import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayM
 import {DefaultReserveInterestRateStrategy} from 'aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
 import {AaveV3OPWSTETHPayload} from '../src/contracts/optimism/AaveV3OPWSTETHPayload.sol';
 
-contract DeployMainnetPayload is WithChainIdValidation {
+contract DeployOptimismPayload is WithChainIdValidation {
   constructor() WithChainIdValidation(10) {}
 
   function run() external {
