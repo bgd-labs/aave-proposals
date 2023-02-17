@@ -24,7 +24,7 @@ contract AaveV3OPWSTETHPayload is AaveV3ListingOptimism {
       asset: WSTETH,
       assetSymbol: 'wstETH',
       priceFeed: WSTETH_USD_FEED,
-      rateStrategy: address(0), // TODO: deploy rate strategy
+      rateStrategy: 0x6BA97468e2e6a3711a6DD05F0075d48E878c910e,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
