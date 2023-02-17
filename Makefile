@@ -71,3 +71,11 @@ test-lusd-v3-ethereum :; forge test -vvv --match-contract AaveV3EthLUSDPayloadTe
 mai-payload :;  forge script script/DeployMaiPolygonPayload.s.sol:MAI --rpc-url ${RPC_POLYGON}  --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_POLYGON} -vvvv
 
 test-mai-payload :; forge test -vvv --match-contract MAIV3PolCapsPayloadTest
+
+wsteth-strategy :;  forge script script/DeployWSTETHV3Utils.s.sol:DeployWSTETHStrategy --rpc-url ${RPC_OPTIMISM} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_OPTIMISM} -vvvv
+
+wsteth-payload :;  forge script script/AaveV3OPWSTETHPayload.s.sol:WSTETH --rpc-url ${RPC_OPTIMISM} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_OPTIMISM} -vvvv
+
+create-wsteth-proposal :; forge script script/CreateOPWSTETHProposal.s.sol:OPWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+test-wsteth-payload :; forge test -vvv --match-contract AaveV3OPWSTETHPayloadTest
