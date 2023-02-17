@@ -1,21 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import {WithChainIdValidation} from './WithChainIdValidation.sol';
 import {Script} from 'forge-std/Script.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
 import {DefaultReserveInterestRateStrategy} from 'aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
 import {AaveV3OPWSTETHPayload} from '../src/contracts/optimism/AaveV3OPWSTETHPayload.sol';
-
-contract DeployOptimismPayload is WithChainIdValidation {
-  constructor() WithChainIdValidation(10) {}
-
-  function run() external {
-    vm.startBroadcast();
-    new AaveV3OPWSTETHPayload();
-    vm.stopBroadcast();
-  }
-}
 
 contract DeployWSTETHStrategy is Script {
   struct RateStrategyConfig {
