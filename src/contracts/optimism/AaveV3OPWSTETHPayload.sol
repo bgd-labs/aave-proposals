@@ -6,7 +6,7 @@ import {AaveV3ListingOptimism, IGenericV3ListingEngine} from 'aave-helpers/v3-li
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @title This proposal lists wstETH on Aave V3 Ethereum
+ * @title This proposal lists wstETH on Aave V3 Optimism
  * @author @marczeller - Aave-Chan Initiative
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x0ddd9784d8ac59ffcabc8ce86d2993179e044eeb102df1644b5b58d04ff25e63
  * - Discussion: https://governance.aave.com/t/arc-add-wsteth-to-aave-v3-on-optimism/10932
