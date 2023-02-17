@@ -41,19 +41,3 @@ contract CreateMainnetProposal is WithChainIdValidation {
 //     vm.stopBroadcast();
 //   }
 // }
-
-//
-contract SwapXSushiPriceFeedPayloadProposal is CreateMainnetProposal {
-  function run() external {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(
-      address(0) // deployed swap xSushi price feed payload
-    );
-    vm.startBroadcast();
-    GovHelpers.createProposal(
-      payloads,
-      0x62eecfcd8fa8264bf4c95014fbf3e4cc7bce8d91d1e58cede18de038660ea8be
-    );
-    vm.stopBroadcast();
-  }
-}
