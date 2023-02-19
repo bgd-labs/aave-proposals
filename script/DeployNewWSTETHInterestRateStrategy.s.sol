@@ -3,10 +3,9 @@ pragma solidity 0.8.17;
 
 import {WithChainIdValidation} from './WithChainIdValidation.sol';
 import {Script} from 'forge-std/Script.sol';
-import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
+import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
 import {DefaultReserveInterestRateStrategy} from 'aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
-import {AaveV3OptWSTETHListingPayload} from '../src/contracts/optimism/AaveV3OptWSTETHListingPayload.sol';
 
 contract DeployStrategy is Script {
   struct RateStrategyConfig {
@@ -21,7 +20,7 @@ contract DeployStrategy is Script {
     uint256 optimalStableToTotalDebtRatio;
   }
 
-  constructor() WithChainIdValidation(10) {}
+  constructor() WithChainIdValidation(42161) {}
 
   /** @dev Converts basis points to RAY units
    * e.g. 10_00 (10.00%) will return 100000000000000000000000000
@@ -51,7 +50,7 @@ contract DeployStrategy is Script {
     RateStrategyConfig memory strategy = _rateStrategy();
 
     new DefaultReserveInterestRateStrategy(
-      AaveV3Optimism.POOL_ADDRESSES_PROVIDER,
+      AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
       strategy.optimalUsageRatio,
       strategy.baseVariableBorrowRate,
       strategy.variableRateSlope1,
