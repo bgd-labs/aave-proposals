@@ -49,7 +49,7 @@ contract AaveV3ArbWSTETHListingPayloadTest is ProtocolV3TestBase, TestWithExecut
       supplyCap: 1200,
       borrowCap: 190,
       debtCeiling: 0,
-      eModeCategory: 1
+      eModeCategory: payload.EMODE_CATEGORY_ID_ETH_CORRELATED()
     });
 
     _validateReserveConfig(expectedConfig, allConfigs);
