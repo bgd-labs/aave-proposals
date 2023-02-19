@@ -6,6 +6,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 /**
  * @title This proposal swaps the price feed for the xSushi on the v2 pool
  * @author BGD Labs
+ * - Dicussion: https://governance.aave.com/t/bgd-swap-of-price-feed-of-xsushi-on-aave-v2-ethereum/11901
  */
 contract AaveV2SwapxSushiPriceFeedPayload {
   address constant XSUSHI = AaveV2EthereumAssets.xSUSHI_UNDERLYING;
