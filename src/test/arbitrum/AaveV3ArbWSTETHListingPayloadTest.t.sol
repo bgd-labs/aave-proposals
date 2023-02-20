@@ -2,6 +2,7 @@
 pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
+import 'forge-std/console.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
 import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
@@ -70,8 +71,53 @@ contract AaveV3ArbWSTETHListingPayloadTest is ProtocolV3TestBase, TestWithExecut
       })
     );
 
+    _validateAssetSourceOnOracle(
+      AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
+      payload.WSTETH(),
+      payload.WST_ETH_PRICE_FEED()
+    );
+
+    _validatePoolActionsPostListing(allConfigs);
+
     createConfigurationSnapshot('post-wstETH-Aave-V3-Arbitrum', AaveV3Arbitrum.POOL);
 
     diffReports('pre-wstETH-Aave-V3-Arbitrum', 'post-wstETH-Aave-V3-Arbitrum');
+  }
+
+  function _validatePoolActionsPostListing(ReserveConfig[] memory allConfigs) internal {
+    ReserveConfig memory wsteth = _findReserveConfigBySymbol(allConfigs, 'wstETH');
+    ReserveConfig memory dai = _findReserveConfigBySymbol(allConfigs, 'DAI');
+
+    address user0 = address(1);
+    _deposit(wsteth, AaveV3Arbitrum.POOL, user0, 100 ether);
+    this._borrow(dai, AaveV3Arbitrum.POOL, user0, 2 ether, false);
+
+    // Should revert as borrowing in stable rate is not enabled
+    try this._borrow(wsteth, AaveV3Arbitrum.POOL, user0, 50 ether, true) {
+      revert('testPoolActivation() : STABLE_BORROW_NOT_REVERTING');
+    } catch Error(string memory revertReason) {
+      require(
+        keccak256(bytes(revertReason)) == keccak256(bytes('31')),
+        'testPoolActivation() : INVALID_VARIABLE_REVERT_MSG'
+      );
+      vm.stopPrank();
+    }
+
+    // Should revert as borrowing in isolation not enabled
+    try this._borrow(wsteth, AaveV3Arbitrum.POOL, user0, 50 ether, false) {
+      revert('testPoolActivation() : BORROW_NOT_REVERTING');
+    } catch Error(string memory revertReason) {
+      require(
+        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
+        'testPoolActivation() : INVALID_VARIABLE_REVERT_MSG'
+      );
+      vm.stopPrank();
+    }
+
+    skip(1);
+
+    _repay(dai, AaveV3Arbitrum.POOL, user0, 5 ether, false);
+
+    _withdraw(wsteth, AaveV3Arbitrum.POOL, user0, type(uint256).max);
   }
 }
