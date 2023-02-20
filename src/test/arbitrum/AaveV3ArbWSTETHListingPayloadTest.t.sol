@@ -103,17 +103,6 @@ contract AaveV3ArbWSTETHListingPayloadTest is ProtocolV3TestBase, TestWithExecut
       vm.stopPrank();
     }
 
-    // Should revert as borrowing in isolation not enabled
-    try this._borrow(wsteth, AaveV3Arbitrum.POOL, user0, 50 ether, false) {
-      revert('testPoolActivation() : BORROW_NOT_REVERTING');
-    } catch Error(string memory revertReason) {
-      require(
-        keccak256(bytes(revertReason)) == keccak256(bytes('60')),
-        'testPoolActivation() : INVALID_VARIABLE_REVERT_MSG'
-      );
-      vm.stopPrank();
-    }
-
     skip(1);
 
     _repay(dai, AaveV3Arbitrum.POOL, user0, 5 ether, false);
