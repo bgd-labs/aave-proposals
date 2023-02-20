@@ -7,8 +7,8 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 
 /**
  * @dev This governance payload sets risk parameters for WBTC and SUSD on AAVE V3 Optimism
- * - Snapshot: TBD
- * - Dicussion: TBD
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xfbd6cbe0ae2fa721302b9288ec46488ec7e28b7e49641f9650535ba3251bb7a6
+ * - Dicussion: https://governance.aave.com/t/arc-gauntlet-risk-parameter-updates-for-avax-v3-and-op-v3-2023-02-16/11940
  */
 contract AaveV3OptCapsPayload is IProposalGenericExecutor {
   address public constant WBTC = 0x68f180fcCe6836688e9084f035309E29Bf0A2095;
