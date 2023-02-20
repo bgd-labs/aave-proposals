@@ -13,7 +13,7 @@ contract CBETHCAPProposal is CreateMainnetProposal {
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
-      address(0) // TOFIX replace with actual address
+      0x4E3728f85818780451e1F44fA3689c85A1229801
     );
     vm.startBroadcast();
     GovHelpers.createProposal(
