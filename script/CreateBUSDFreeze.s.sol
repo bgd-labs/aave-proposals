@@ -8,7 +8,7 @@ contract CreateMainnetProposal is WithChainIdValidation {
 }
 
 contract FreezeBUSDProposal is CreateMainnetProposal {
-  bytes32 internal IPFS_HASH = 0; // TOFIX: Replace with actual hash
+  bytes32 internal IPFS_HASH = 0x1b90a1c2218867611b3d705e42b65c4a54a0e72bf5d23d20cc292d47c05a1568;
 
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
@@ -18,7 +18,7 @@ contract FreezeBUSDProposal is CreateMainnetProposal {
     vm.startBroadcast();
     GovHelpers.createProposal(
       payloads,
-      IPFS_HASH // TOFIX: Replace with actual hash
+      IPFS_HASH
     );
     vm.stopBroadcast();
   }
