@@ -13,7 +13,7 @@ contract FreezeBUSDProposal is CreateMainnetProposal {
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
-      0 // TOFIX: Replace with actual address
+      address(0) // TOFIX: Replace with actual address
     );
     vm.startBroadcast();
     GovHelpers.createProposal(
