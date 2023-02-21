@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
+import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {IGenericV3ListingEngine, AaveV3ListingArbitrum} from 'aave-helpers/v3-listing-engine/AaveV3ListingArbitrum.sol';
 
 /**
  * @title List wstETH on AaveV3Arbitrum
  * @author Llama
- * @dev This proposal lists wstETH on Aave V3 Arbitrum
+ * @dev This proposal lists wstETH on Aave V3 Arbitrum and sets wETH EMode category
  * Governance: https://governance.aave.com/t/arc-add-support-for-wsteth-on-arbitrum-aave-v3/11387/11
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x402647b83c436aecbe2fe404870f08767b5509225cbe606913e50801f87f5db8
  */
@@ -24,7 +24,7 @@ contract AaveV3ArbWSTETHListingPayload is AaveV3ListingArbitrum {
 
   constructor() AaveV3ListingArbitrum(IGenericV3ListingEngine(AaveV3Arbitrum.LISTING_ENGINE)) {}
 
-  function getAllConfigs() public override returns (IGenericV3ListingEngine.Listing[] memory) {
+  function _preExecute() internal override {
     AaveV3Arbitrum.POOL_CONFIGURATOR.setEModeCategory(
       EMODE_CATEGORY_ID_ETH_CORRELATED,
       EMODE_LTV_ETH_CORRELATED,
@@ -34,6 +34,13 @@ contract AaveV3ArbWSTETHListingPayload is AaveV3ListingArbitrum {
       EMODE_LABEL_ETH_CORRELATED
     );
 
+    AaveV3Arbitrum.POOL_CONFIGURATOR.setAssetEModeCategory(
+      AaveV3ArbitrumAssets.WETH_UNDERLYING,
+      EMODE_CATEGORY_ID_ETH_CORRELATED
+    );
+  }
+
+  function getAllConfigs() public pure override returns (IGenericV3ListingEngine.Listing[] memory) {
     IGenericV3ListingEngine.Listing[] memory listings = new IGenericV3ListingEngine.Listing[](1);
 
     listings[0] = IGenericV3ListingEngine.Listing({

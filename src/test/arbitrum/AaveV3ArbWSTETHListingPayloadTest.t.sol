@@ -3,7 +3,7 @@ pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
 import 'forge-std/console.sol';
-import {AaveV3Arbitrum} from 'aave-address-book/AaveAddressBook.sol';
+import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
@@ -23,9 +23,20 @@ contract AaveV3ArbWSTETHListingPayloadTest is ProtocolV3TestBase, TestWithExecut
   function testPoolActivation() public {
     createConfigurationSnapshot('pre-wstETH-Aave-V3-Arbitrum', AaveV3Arbitrum.POOL);
 
+    ReserveConfig[] memory allConfigsEthereumBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig memory weth = _findReserveConfig(
+      allConfigsEthereumBefore,
+      AaveV3ArbitrumAssets.WETH_UNDERLYING
+    );
+
     _executePayload(address(payload));
 
     ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Arbitrum.POOL);
+
+    weth.eModeCategory = payload.EMODE_CATEGORY_ID_ETH_CORRELATED();
+
+    _validateReserveConfig(weth, allConfigs);
+
     ReserveConfig memory expectedConfig = ReserveConfig({
       symbol: 'wstETH',
       underlying: payload.WSTETH(),
