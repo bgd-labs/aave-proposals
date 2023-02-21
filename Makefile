@@ -79,3 +79,9 @@ wsteth-payload :;  forge script script/DeployWSTETHOPV3Payload.s.sol:WSTETH --rp
 create-wsteth-proposal :; forge script script/CreateOPWSTETHProposal.s.sol:OPWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 test-wsteth-payload :; forge test -vvv --match-contract AaveV3OPWSTETHPayloadTest
+
+cbeth-cap-payload :; forge script script/DeployCbETHCapsPayload.s.sol:CBETH --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+test-cbeth-cap-payload :; forge test -vvv --match-contract AaveV3EthCbETHCapsPayloadTest
+
+create-cbeth-proposal :; forge script script/CreateCBETHCapProposal.s.sol:CBETHCAPProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
