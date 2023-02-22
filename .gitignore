@@ -18,3 +18,4 @@ broadcast
 # repo specific artifacts
 reports
 src/etherscan
+!reports/.empty

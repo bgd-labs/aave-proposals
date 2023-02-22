@@ -31,8 +31,8 @@ emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SingleP
 
 # Deploy MAINNET payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_MAINNET` for verification
-mai-ledger :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-mai-pk :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+cb-ledger :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+cb-pk :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 # Deploy POLYGON payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_POLYGON` for verification
@@ -46,8 +46,8 @@ op-pk :;  forge script script/DeployOptimismPayload.s.sol:Op --rpc-url optimism 
 
 # Deploy ARBITRUM payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_ARBITRUM` for verification
-op-ledger :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-op-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+caps-ledger :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+caps-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 # ################ EXAMPLE END #############
 
 # YOUR SCRIPT GOES BELOW HERE
