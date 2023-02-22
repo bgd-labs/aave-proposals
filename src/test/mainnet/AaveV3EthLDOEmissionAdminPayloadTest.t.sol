@@ -8,14 +8,11 @@ import {AaveV3EthLDOEmissionAdminPayload} from '../../contracts/mainnet/AaveV3Et
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IEmissionManager} from 'aave-v3-periphery/rewards/interfaces/IEmissionManager.sol';
 
-contract AaveV3EthLDOEmissionAdminPayloadTest is
-  ProtocolV3TestBase,
-  TestWithExecutor
-{
+contract AaveV3EthLDOEmissionAdminPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3EthLDOEmissionAdminPayload public proposalPayload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'));
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16633440);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
@@ -28,8 +25,11 @@ contract AaveV3EthLDOEmissionAdminPayloadTest is
     _executePayload(address(proposalPayload));
 
     assertEq(manager.getEmissionAdmin(proposalPayload.LDO()), proposalPayload.NEW_EMISSION_ADMIN());
-    emit log_named_address('new emission admin for LDO mainnet rewards', manager.getEmissionAdmin(proposalPayload.LDO()));
-    
+    emit log_named_address(
+      'new emission admin for LDO mainnet rewards',
+      manager.getEmissionAdmin(proposalPayload.LDO())
+    );
+
     /// verify admin can make changes
     vm.startPrank(proposalPayload.NEW_EMISSION_ADMIN());
     manager.setDistributionEnd(proposalPayload.LDO(), proposalPayload.LDO(), 0);
