@@ -8,8 +8,8 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3PolMaticXRiskParamsUpdatePayload} from '../../contracts/polygon/AaveV3PolMaticXRiskParamsUpdatePayload.sol';
-import {IDefaultInterestRateStrategy} from 'aave-v3/interfaces/IDefaultInterestRateStrategy.sol';
-import {DataTypes} from 'aave-v3/protocol/libraries/types/DataTypes.sol';
+import {IDefaultInterestRateStrategy} from 'aave-v3-core/contracts/interfaces/IDefaultInterestRateStrategy.sol';
+import {DataTypes} from 'aave-v3-core/contracts/protocol/libraries/types/DataTypes.sol';
 
 contract AaveV3PolMaticXRiskParamsUpdatePayloadTest is ProtocolV3TestBase, TestWithExecutor {
   uint256 internal constant RAY = 1e27;
