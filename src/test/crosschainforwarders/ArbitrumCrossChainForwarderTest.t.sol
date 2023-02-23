@@ -11,8 +11,8 @@ import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGov
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {IInbox} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/interfaces/IInbox.sol';
 import {IL2BridgeExecutor} from 'governance-crosschain-bridges/contracts/interfaces/IL2BridgeExecutor.sol';
-import {CrosschainForwarderArbitrum} from '../../contracts/crosschainforwarders/CrosschainForwarderArbitrum.sol';
-import {StEthPayload} from '../../contracts/arbitrum/StEthPayload.sol';
+import {CrosschainForwarderArbitrum} from '../../lib/crosschainforwarders/CrosschainForwarderArbitrum.sol';
+import {AaveV3ArbWSTETHListingPayload} from '../../contracts/arbitrum/AaveV3ArbWSTETHListingPayload.sol';
 
 /**
  * This test covers syncing between mainnet and arbitrum.
@@ -22,7 +22,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   uint256 mainnetFork;
   uint256 arbitrumFork;
 
-  StEthPayload public stEthPayload;
+  AaveV3ArbWSTETHListingPayload public wstEthPayload;
 
   IInbox public constant INBOX = IInbox(0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f);
 
@@ -37,7 +37,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
   function setUp() public {
     mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 16128510);
-    arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 44190513);
+    arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 62456736);
   }
 
   // utility to transform memory to calldata so array range access is available
@@ -67,13 +67,13 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     // we get all configs to later on check that payload only changes stEth
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
     // 1. deploy l2 payload
-    stEthPayload = new StEthPayload();
+    wstEthPayload = new AaveV3ArbWSTETHListingPayload();
 
     // 2. create l1 proposal
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildArbitrum(address(stEthPayload));
+    payloads[0] = GovHelpers.buildArbitrum(address(wstEthPayload));
 
     uint256 proposalId = GovHelpers.createProposal(
       payloads,
@@ -83,7 +83,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
     // 3. execute proposal and record logs so we can extract the emitted StateSynced event
     vm.recordLogs();
-    bytes memory payload = forwarder.getEncodedPayload(address(stEthPayload));
+    bytes memory payload = forwarder.getEncodedPayload(address(wstEthPayload));
 
     // check ticket is created correctly
     vm.expectCall(
