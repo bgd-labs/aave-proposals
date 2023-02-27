@@ -7,7 +7,7 @@ In addition to the actual proposals this repository also contains tooling to sta
 
 ### Cross-chain forwarders
 
-The cross-chain-forwarders are opinionated contracts for proposals targeting `polygon`, `optimism` and `arbitrum`. For detailed documentation checkout the [docs](./src/contracts/crosschainforwarders/).
+The cross-chain-forwarders are opinionated contracts for proposals targeting `polygon`, `optimism` and `arbitrum`. For detailed documentation checkout the [docs](./src/lib/crosschainforwarders/).
 
 ### Listing engine
 

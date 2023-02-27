@@ -5,4 +5,4 @@ forge-std/=lib/forge-std/src/
 governance-crosschain-bridges/=lib/governance-crosschain-bridges/
 solidity-utils/=lib/solidity-utils/src/
 aave-v3-periphery/=lib/aave-v3-periphery/contracts/
-aave-v3/=lib/aave-address-book/lib/aave-v3-core/contracts/
+aave-v3-core/=lib/aave-address-book/lib/aave-v3-core/
