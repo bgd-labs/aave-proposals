@@ -6,6 +6,13 @@ import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-listing-engine/AaveV3ListingEthereum.sol';
 
+/**
+ * @title List CRV on AaveV3Ethereum
+ * @author Llama
+ * @dev This proposal lists CRV on Aave V3 Ethereum
+ * Governance: https://governance.aave.com/t/arfc-add-crv-to-ethereum-v3/11532
+ * Snapshot: https://snapshot.org/#/aave.eth/proposal/0xa0b5336692735fb4288537646aec5819cb4cbf01fc3a8a7cb06c9e62db708055
+ */
 contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
   address public constant INTEREST_RATE_STRATEGY = 0x76884cAFeCf1f7d4146DA6C4053B18B76bf6ED14;
 
