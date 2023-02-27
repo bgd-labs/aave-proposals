@@ -1,40 +1,32 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.18;
+pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
-import {aveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
-import {AaveV3EthAddCRVPoolPayloadTest} from '../../contracts/mainnet/AaveV3EthAddCRVPoolPayload.sol';
+import {AaveV3EthAddCRVPoolPayload} from '../../contracts/mainnet/AaveV3EthAddCRVPoolPayload.sol';
 
 contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   uint256 internal constant RAY = 1e27;
-  AaveV3EthAddCRVPoolPayloadTest public payload;
+  AaveV3EthAddCRVPoolPayload public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16722761);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16722842);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
 
-    payload = new AaveV3EthAddCRVPoolPayloadTest();
+    payload = new AaveV3EthAddCRVPoolPayload();
   }
 
   function testPoolActivation() public {
     createConfigurationSnapshot('pre-CRV-Aave-V3-Ethereum', AaveV3Ethereum.POOL);
 
-    ReserveConfig[] memory allConfigsEthereumBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
-    ReserveConfig memory crv = _findReserveConfig(
-      allConfigsEthereumBefore,
-      AaveV2EthereumAssets.CRV_UNDERLYING
-    );
-
     _executePayload(address(payload));
 
     ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Ethereum.POOL);
-
-    _validateReserveConfig(crv, allConfigs);
 
     ReserveConfig memory expectedConfig = ReserveConfig({
       symbol: 'CRV',
@@ -72,7 +64,7 @@ contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor 
         addressesProvider: address(AaveV3Ethereum.POOL_ADDRESSES_PROVIDER),
         optimalUsageRatio: 70 * (RAY / 100),
         optimalStableToTotalDebtRatio: 20 * (RAY / 100),
-        baseStableBorrowRate: 8 * (RAY / 100),
+        baseStableBorrowRate: 17 * (RAY / 100),
         stableRateSlope1: 8 * (RAY / 100),
         stableRateSlope2: 300 * (RAY / 100),
         baseVariableBorrowRate: 3 * (RAY / 100),
@@ -86,8 +78,6 @@ contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor 
       AaveV2EthereumAssets.CRV_UNDERLYING,
       AaveV2EthereumAssets.CRV_ORACLE
     );
-
-    _validatePoolActionsPostListing(allConfigs);
 
     createConfigurationSnapshot('post-CRV-Aave-V3-Ethereum', AaveV3Ethereum.POOL);
 

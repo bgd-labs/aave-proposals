@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.18;
+pragma solidity 0.8.17;
 
 import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-listing-engine/AaveV3ListingEthereum.sol';
 
 contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
-  address public constant INTEREST_RATE_STRATEGY = 0xeb06d30b4bb21ca98279b74fd2325b8f2759aa50;
+  address public constant INTEREST_RATE_STRATEGY = 0x76884cAFeCf1f7d4146DA6C4053B18B76bf6ED14;
+
+  constructor() AaveV3ListingEthereum(IGenericV3ListingEngine(AaveV3Ethereum.LISTING_ENGINE)) {}
 
   function getAllConfigs() public pure override returns (IGenericV3ListingEngine.Listing[] memory) {
     IGenericV3ListingEngine.Listing[] memory listings = new IGenericV3ListingEngine.Listing[](1);
