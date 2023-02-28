@@ -15,6 +15,7 @@ contract AaveV3ArbCapsPayload is IProposalGenericExecutor {
   address public constant EURS = AaveV3ArbitrumAssets.EURS_UNDERLYING;
   address public constant USDC = AaveV3ArbitrumAssets.USDC_UNDERLYING;
   address public constant USDT = AaveV3ArbitrumAssets.USDT_UNDERLYING;
+  address public constant AAVE = AaveV3ArbitrumAssets.AAVE_UNDERLYING;
 
   uint256 public constant DAI_SUPPLY_CAP = 50_000_000;
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
@@ -27,6 +28,8 @@ contract AaveV3ArbCapsPayload is IProposalGenericExecutor {
 
   uint256 public constant USDT_SUPPLY_CAP = 50_000_000;
   uint256 public constant USDT_BORROW_CAP = 35_000_000;
+
+  uint256 public constant AAVE_SUPPLY_CAP = 1_850;
 
   function execute() external {
     AaveV3Arbitrum.POOL_CONFIGURATOR.setSupplyCap(DAI, DAI_SUPPLY_CAP);
@@ -41,6 +44,7 @@ contract AaveV3ArbCapsPayload is IProposalGenericExecutor {
     AaveV3Arbitrum.POOL_CONFIGURATOR.setSupplyCap(USDT, USDT_SUPPLY_CAP);
     AaveV3Arbitrum.POOL_CONFIGURATOR.setBorrowCap(USDT, USDT_BORROW_CAP);
 
+    AaveV3Arbitrum.POOL_CONFIGURATOR.setSupplyCap(AAVE, AAVE_SUPPLY_CAP);
 
   }
 }

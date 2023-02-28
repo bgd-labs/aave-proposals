@@ -15,6 +15,7 @@ contract AaveV3ArbFeb26CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   address public constant EURS = AaveV3ArbitrumAssets.EURS_UNDERLYING;
   address public constant USDC = AaveV3ArbitrumAssets.USDC_UNDERLYING;
   address public constant USDT = AaveV3ArbitrumAssets.USDT_UNDERLYING;
+  address public constant AAVE = AaveV3ArbitrumAssets.AAVE_UNDERLYING;
 
   uint256 public constant DAI_SUPPLY_CAP = 50_000_000;
   uint256 public constant DAI_BORROW_CAP = 30_000_000;
@@ -27,6 +28,8 @@ contract AaveV3ArbFeb26CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
   uint256 public constant USDT_SUPPLY_CAP = 50_000_000;
   uint256 public constant USDT_BORROW_CAP = 35_000_000;
+
+  uint256 public constant AAVE_SUPPLY_CAP = 1_850;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 64802596);
@@ -72,5 +75,9 @@ contract AaveV3ArbFeb26CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     USDTConfig.borrowCap = USDT_BORROW_CAP;
     ProtocolV3TestBase._validateReserveConfig(USDTConfig, allConfigsAfter);
 
+    //AAVE
+    ReserveConfig memory AAVEConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, AAVE);
+    AAVEConfig.supplyCap = AAVE_SUPPLY_CAP;
+    ProtocolV3TestBase._validateReserveConfig(AAVEConfig, allConfigsAfter);
   }
 }
