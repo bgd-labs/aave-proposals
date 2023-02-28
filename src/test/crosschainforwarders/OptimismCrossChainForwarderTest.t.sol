@@ -9,7 +9,7 @@ import {BridgeExecutorHelpers} from 'aave-helpers/BridgeExecutorHelpers.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AddressAliasHelper} from 'governance-crosschain-bridges/contracts/dependencies/arbitrum/AddressAliasHelper.sol';
 import {IL2CrossDomainMessenger} from 'governance-crosschain-bridges/contracts/dependencies/optimism/interfaces/IL2CrossDomainMessenger.sol';
-import {CrosschainForwarderOptimism} from '../../contracts/crosschainforwarders/CrosschainForwarderOptimism.sol';
+import {CrosschainForwarderOptimism} from '../../lib/crosschainforwarders/CrosschainForwarderOptimism.sol';
 import {OpPayload} from '../../contracts/optimism/OpPayload.sol';
 
 /**

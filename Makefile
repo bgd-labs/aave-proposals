@@ -51,3 +51,7 @@ caps-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url ar
 # ################ EXAMPLE END #############
 
 # YOUR SCRIPT GOES BELOW HERE
+
+# Deploy MAINNET rescue mission short and long proposals
+rescue-short-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:RescueShortProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+rescue-long-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:RescueLongProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
