@@ -32,13 +32,13 @@ contract AaveV3OptCaps_Feb26PayloadTest is ProtocolV3TestBase, TestWithExecutor 
   uint256 public constant USDT_SUPPLY_CAP = 25_000_000;
   uint256 public constant USDT_BORROW_CAP = 16_000_000;
 
-  uint256 public constant AAVE_SUPPLY_CAP = 33_000;
+  uint256 public constant AAVE_SUPPLY_CAP = 45_000;
 
-  uint256 public constant LINK_SUPPLY_CAP = 159_000;
-  uint256 public constant LINK_BORROW_CAP = 87_500;
+  uint256 public constant LINK_SUPPLY_CAP = 160_000;
+  uint256 public constant LINK_BORROW_CAP = 84_000;
 
-  uint256 public constant WBTC_SUPPLY_CAP = 650;
-  uint256 public constant WBTC_BORROW_CAP = 360;
+  uint256 public constant WBTC_SUPPLY_CAP = 620;
+  uint256 public constant WBTC_BORROW_CAP = 250;
 
 
   function setUp() public {
