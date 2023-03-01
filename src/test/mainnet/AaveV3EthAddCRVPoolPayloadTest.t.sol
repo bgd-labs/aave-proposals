@@ -47,7 +47,7 @@ contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor 
       isActive: true,
       isFrozen: false,
       isSiloed: false,
-      isBorrowableInIsolation: true,
+      isBorrowableInIsolation: false,
       isFlashloanable: false,
       supplyCap: 62_500_000,
       borrowCap: 7_700_000,

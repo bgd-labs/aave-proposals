@@ -28,7 +28,7 @@ contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
       rateStrategy: INTEREST_RATE_STRATEGY,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
-      borrowableInIsolation: true,
+      borrowableInIsolation: false,
       withSiloedBorrowing: false,
       flashloanable: false,
       ltv: 55_00,
