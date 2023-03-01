@@ -27,6 +27,7 @@ The template ships with sensible default so you can use default `foundry` comman
 ```sh
 cp .env.example .env
 forge install
+yarn
 ```
 
 ### Test
@@ -34,6 +35,21 @@ forge install
 ```sh
 forge test
 ```
+
+### Simulate
+
+While a proposal should be tested throughout, it usually is a good idea to simulate execution on a fork. Therefore this repository comes with the [aave-tenderly-cli](https://github.com/bgd-labs/aave-tenderly-cli) node package which can be used to streamline fork creation.
+
+Follow the [setup instructions](https://github.com/bgd-labs/aave-tenderly-cli#setup-env) and run
+
+```sh
+yarn simulate:<mainnet|polygon|...> -- <artifactPath>
+
+# example:
+# yarn simulate:polygon -- ./out/AaveV3EthAddCRVPoolPayload.sol/AaveV3EthAddCRVPoolPayload.json
+```
+
+to generate a tenderly fork you can share with your team.
 
 ## Proposal creation
 
