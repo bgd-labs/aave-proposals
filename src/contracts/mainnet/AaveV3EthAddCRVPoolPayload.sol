@@ -15,6 +15,7 @@ import {IGenericV3ListingEngine, AaveV3ListingEthereum} from 'aave-helpers/v3-li
  */
 contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
   address public constant INTEREST_RATE_STRATEGY = 0x76884cAFeCf1f7d4146DA6C4053B18B76bf6ED14;
+  address public constant CRV_USD_FEED = 0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f;
 
   constructor() AaveV3ListingEthereum(IGenericV3ListingEngine(AaveV3Ethereum.LISTING_ENGINE)) {}
 
@@ -24,7 +25,7 @@ contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
     listings[0] = IGenericV3ListingEngine.Listing({
       asset: AaveV2EthereumAssets.CRV_UNDERLYING,
       assetSymbol: 'CRV',
-      priceFeed: AaveV2EthereumAssets.CRV_ORACLE,
+      priceFeed: CRV_USD_FEED,
       rateStrategy: INTEREST_RATE_STRATEGY,
       enabledToBorrow: true,
       stableRateModeEnabled: false,

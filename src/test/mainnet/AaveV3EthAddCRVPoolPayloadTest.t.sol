@@ -76,7 +76,7 @@ contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor 
     _validateAssetSourceOnOracle(
       AaveV3Ethereum.POOL_ADDRESSES_PROVIDER,
       AaveV2EthereumAssets.CRV_UNDERLYING,
-      AaveV2EthereumAssets.CRV_ORACLE
+      payload.CRV_USD_FEED()
     );
 
     createConfigurationSnapshot('post-CRV-Aave-V3-Ethereum', AaveV3Ethereum.POOL);
