@@ -85,7 +85,7 @@ contract AaveV3OptCaps_Feb26PayloadTest is ProtocolV3TestBase, TestWithExecutor 
     //AAVE
     ReserveConfig memory AAVEConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, AAVE);
     AAVEConfig.supplyCap = AAVE_SUPPLY_CAP;
-    ProtocolV3TestBase._validateReserveConfig(USDTConfig, allConfigsAfter);
+    ProtocolV3TestBase._validateReserveConfig(AAVEConfig, allConfigsAfter);
 
     //LINK
     ReserveConfig memory LINKConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, LINK);

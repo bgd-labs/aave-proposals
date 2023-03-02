@@ -51,7 +51,7 @@ contract AaveV3OptCapsPayload is IProposalGenericExecutor {
     AaveV3Optimism.POOL_CONFIGURATOR.setSupplyCap(USDT, USDT_SUPPLY_CAP);
     AaveV3Optimism.POOL_CONFIGURATOR.setBorrowCap(USDT, USDT_BORROW_CAP);
 
-    AaveV3Optimism.POOL_CONFIGURATOR.setSupplyCap(AAVE, USDT_SUPPLY_CAP);
+    AaveV3Optimism.POOL_CONFIGURATOR.setSupplyCap(AAVE, AAVE_SUPPLY_CAP);
 
     AaveV3Optimism.POOL_CONFIGURATOR.setSupplyCap(LINK, LINK_SUPPLY_CAP);
     AaveV3Optimism.POOL_CONFIGURATOR.setBorrowCap(LINK, LINK_BORROW_CAP);
