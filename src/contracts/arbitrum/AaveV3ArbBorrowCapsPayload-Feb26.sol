@@ -7,7 +7,6 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 
 /**
  * @dev This payload sets borrow caps for multiple assets on AAVE V3 Arbitrum
- * - Snapshot: TBD //TODO
  * - Dicussion: https://governance.aave.com/t/arc-chaos-labs-supply-and-borrow-cap-updates-aave-v3-2023-02-24/12048
  */
 contract AaveV3ArbCapsPayload is IProposalGenericExecutor {
