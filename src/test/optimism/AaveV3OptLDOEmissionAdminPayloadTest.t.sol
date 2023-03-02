@@ -12,7 +12,7 @@ contract AaveV3OptLDOEmissionAdminPayloadTest is ProtocolV3TestBase, TestWithExe
   AaveV3OptLDOEmissionAdminPayload public proposalPayload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'));
+    vm.createSelectFork(vm.rpcUrl('optimism'), 75442850);
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
