@@ -31,14 +31,14 @@ contract AaveV3EthAddCRVPoolPayload is AaveV3ListingEthereum {
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
       withSiloedBorrowing: false,
-      flashloanable: false,
+      flashloanable: true,
       ltv: 55_00,
       liqThreshold: 61_00,
       liqBonus: 8_30,
       reserveFactor: 20_00,
       supplyCap: 62_500_000,
       borrowCap: 7_700_000,
-      debtCeiling: 20_900_000,
+      debtCeiling: 20_900_000_00,
       liqProtocolFee: 10_00,
       eModeCategory: 0
     });

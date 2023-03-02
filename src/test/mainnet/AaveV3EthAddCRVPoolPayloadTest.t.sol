@@ -5,12 +5,12 @@ pragma solidity 0.8.17;
 import 'forge-std/Test.sol';
 import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3EthAddCRVPoolPayload} from '../../contracts/mainnet/AaveV3EthAddCRVPoolPayload.sol';
 
-contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   uint256 internal constant RAY = 1e27;
   AaveV3EthAddCRVPoolPayload public payload;
 
@@ -48,10 +48,10 @@ contract AaveV3EthAddCRVPoolPayloadTest is ProtocolV3TestBase, TestWithExecutor 
       isFrozen: false,
       isSiloed: false,
       isBorrowableInIsolation: false,
-      isFlashloanable: false,
+      isFlashloanable: true,
       supplyCap: 62_500_000,
       borrowCap: 7_700_000,
-      debtCeiling: 20_900_000,
+      debtCeiling: 20_900_000_00,
       eModeCategory: 0
     });
 
