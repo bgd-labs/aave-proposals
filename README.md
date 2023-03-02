@@ -40,7 +40,7 @@ forge test
 
 While a proposal should be tested throughout, it usually is a good idea to simulate execution on a fork. Therefore this repository comes with the [aave-tenderly-cli](https://github.com/bgd-labs/aave-tenderly-cli) node package which can be used to streamline fork creation.
 
-Follow the [setup instructions](https://github.com/bgd-labs/aave-tenderly-cli#setup-env) and run
+Setup your `.env` accordingly or follow the [setup instructions](https://github.com/bgd-labs/aave-tenderly-cli#setup-env) for global configuration. Now you can
 
 ```sh
 yarn simulate:<mainnet|polygon|...> -- <artifactPath>
