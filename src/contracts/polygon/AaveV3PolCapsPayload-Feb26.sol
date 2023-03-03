@@ -8,6 +8,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 /**
  * @dev This payload sets supply caps for multiple assets on AAVE V3 Polygon
  * - Dicussion: https://governance.aave.com/t/arc-chaos-labs-supply-and-borrow-cap-updates-aave-v3-2023-02-24/12048
+ * - Discussion stMatic: https://governance.aave.com/t/arfc-increase-stmatic-supply-cap/12038
  */
 contract AaveV3PolCapsPayload is IProposalGenericExecutor {
   address public constant WETH = AaveV3PolygonAssets.WETH_UNDERLYING;
