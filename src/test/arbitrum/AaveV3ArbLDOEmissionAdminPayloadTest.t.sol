@@ -12,7 +12,7 @@ contract AaveV3ArbLDOEmissionAdminPayloadTest is ProtocolV3TestBase, TestWithExe
   AaveV3ArbLDOEmissionAdminPayload public proposalPayload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'));
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 62456736);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
