@@ -9,7 +9,7 @@ import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase
 import {AaveV3PolCapsPayload} from '../../contracts/polygon/AaveV3PolCapsPayload-Feb26.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3PolFeb26CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3PolCapsPayload public proposalPayload;
 
   address public constant WETH = AaveV3PolygonAssets.WETH_UNDERLYING;
@@ -46,5 +46,13 @@ contract AaveV3PolFeb12CapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     ReserveConfig memory AAVEConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, AAVE);
     AAVEConfig.supplyCap = AAVE_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(AAVEConfig, allConfigsAfter);
+
+    //stMATIC
+    ReserveConfig memory STMATICConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      proposalPayload.STMATIC()
+    );
+    STMATICConfig.supplyCap = proposalPayload.STMATIC_SUPPLY_CAP();
+    ProtocolV3TestBase._validateReserveConfig(STMATICConfig, allConfigsAfter);
   }
 }
