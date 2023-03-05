@@ -13,7 +13,7 @@ contract ARBWSTETHProposal is CreateMainnetProposal {
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildArbitrum(
-      address(0) // TOFIX replace with actual address
+      0xCDB9ea7F9443fA9e8ba6EBC9Ef41C3ed75939663
     );
     vm.startBroadcast();
     GovHelpers.createProposal(
