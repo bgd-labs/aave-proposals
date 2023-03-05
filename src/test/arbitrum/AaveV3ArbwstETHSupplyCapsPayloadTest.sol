@@ -47,9 +47,11 @@ contract AaveV3ArbwstETHCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor 
     );
 
     //WSTETH
-    ReserveConfig memory wtsethConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, WSTETH);
+    ReserveConfig memory wtsethConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      WSTETH
+    );
     wtsethConfig.supplyCap = WSTETH_CAP;
     ProtocolV3TestBase._validateReserveConfig(wtsethConfig, allConfigsAfter);
-
   }
 }
