@@ -60,3 +60,7 @@ rescue-long-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:Re
 deploy-wsteth-cap-payload :;  forge script script/DeployArbwstethCapPayload.s.sol:ArbwtstethSupplyCap --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPayloadTest
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# Deploy BUSD IR update
+test-busd-ir-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
+create-busd-ir-proposal :; forge script script/CreateBUSDProposal.s.sol:CreateBUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
