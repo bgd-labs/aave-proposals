@@ -11,7 +11,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Discussion: https://governance.aave.com/t/arfc-busd-offboarding-plan/12170
  */
 contract AaveV2BUSDPayload is IProposalGenericExecutor {
-  address public constant INTEREST_RATE_STRATEGY = 0x55858ad98b33a47AFa3AFAebB8410c6D0b688bbe;
+  address public constant INTEREST_RATE_STRATEGY = 0x67a81df2b7FAf4a324D94De9Cc778704F4500478;
   uint256 public constant RESERVE_FACTOR = 99_90; 
   function execute() external {
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
