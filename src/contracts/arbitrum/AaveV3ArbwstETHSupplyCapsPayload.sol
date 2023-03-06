@@ -13,13 +13,12 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  */
 
 contract AaveV3ArbwstETHCapsPayload is IProposalGenericExecutor {
-  address public constant WSTETH = AaveV3ArbitrumAssets.WSTETH_UNDERLYING;
-
   uint256 public constant WSTETH_CAP = 2_400;
 
   function execute() external {
-    IPoolConfigurator configurator = AaveV3Arbitrum.POOL_CONFIGURATOR;
-
-    configurator.setSupplyCap(WSTETH, WSTETH_CAP);
+    AaveV3Arbitrum.POOL_CONFIGURATOR.setSupplyCap(
+      AaveV3ArbitrumAssets.wstETH_UNDERLYING,
+      WSTETH_CAP
+    );
   }
 }
