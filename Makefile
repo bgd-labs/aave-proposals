@@ -27,7 +27,7 @@ git-diff :
 create-proposal-ledger :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 create-proposal-pk :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
 # notice: mocking sender to be the ecosystem reserve so proposition power is enough in simulation
-emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SafeSinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # Deploy MAINNET payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_MAINNET` for verification

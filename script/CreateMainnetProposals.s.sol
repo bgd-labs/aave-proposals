@@ -27,6 +27,23 @@ contract SinglePayloadProposal is CreateMainnetProposal {
   }
 }
 
+// Example proposal creation script for a single payload emitting the creation calldata
+contract SafeSinglePayloadProposal is CreateMainnetProposal {
+  function run() external {
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    payloads[0] = GovHelpers.buildMainnet(
+      0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4 // deployed cbETH payload
+    );
+    vm.startBroadcast();
+    GovHelpers.createProposal(
+      payloads,
+      0x05097b8a0818a75c1db7d54dfd0299581cac0218a058017acb4726f7cc49657e, // TODO: Replace with actual hash
+      true
+    );
+    vm.stopBroadcast();
+  }
+}
+
 // Example proposal creation script for a multiple payloads payload
 contract MultiPayloadProposal is CreateMainnetProposal {
   function run() external {

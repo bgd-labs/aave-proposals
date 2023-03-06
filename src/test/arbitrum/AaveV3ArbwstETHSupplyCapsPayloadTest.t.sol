@@ -11,7 +11,7 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 contract AaveV3ArbwstETHCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbwstETHCapsPayload public proposalPayload;
 
-  address public constant WSTETH = AaveV3ArbitrumAssets.WSTETH_UNDERLYING;
+  address public constant WSTETH = AaveV3ArbitrumAssets.wstETH_UNDERLYING;
 
   uint256 public constant WSTETH_CAP = 2_400;
 
