@@ -13,7 +13,7 @@ contract AaveV3EthBUSDPayloadTest is ProtocolV2TestBase, TestWithExecutor {
   string public constant BUSD_SYMBOL = 'BUSD';
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16770375);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16771983);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
