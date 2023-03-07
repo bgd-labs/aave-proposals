@@ -17,7 +17,7 @@ contract AaveV3EthCbETHSupplyCapsPayloadTest is ProtocolV3TestBase, TestWithExec
   uint256 public constant CBETH_SUPPLY_CAP = 30_000;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16776317);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16777040);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
