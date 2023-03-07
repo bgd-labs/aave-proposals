@@ -6,7 +6,7 @@ import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @title This proposal change cbETH supply caps on Aave V3 Ethereum
+ * @title This proposal changes cbETH supply cap on Aave V3 Ethereum
  * @author @marczeller - Aave-Chan Initiative
  * - Snapshot: Direct-to-AIP process
  * - Discussion: https://governance.aave.com/t/arfc-cbeth-aave-ethereum-v3-supply-cap-increase/12186
