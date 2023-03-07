@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.16;
 
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveAddressBook.sol';
