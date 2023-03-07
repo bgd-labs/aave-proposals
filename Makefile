@@ -61,14 +61,12 @@ deploy-wsteth-cap-payload :;  forge script script/DeployArbwstethCapPayload.s.so
 test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPayloadTest
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
-<<<<<<< HEAD
-# Deploy BUSD IR update
-test-busd-ir-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
-create-busd-ir-proposal :; forge script script/CreateBUSDProposal.s.sol:CreateBUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
-=======
 # cbETH cap Update
 
 deploy-cbeth-cap-payload :;  forge script script/DeployEthCbETHPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-payload :; forge test -vvv --match-contract AaveV3EthCbETHSupplyCapsPayloadTest
 create-cbeth-proposal :; forge script script/CreateCbETHProposals.s.sol:CBETHSupplyCapProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
->>>>>>> bf3c782e27829c66c159cb7eef043ac1cd7c8186
+
+# Deploy BUSD IR update
+test-busd-ir-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
+create-busd-ir-proposal :; forge script script/CreateBUSDProposal.s.sol:CreateBUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
