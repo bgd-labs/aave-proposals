@@ -68,5 +68,6 @@ test-cbeth-payload :; forge test -vvv --match-contract AaveV3EthCbETHSupplyCapsP
 create-cbeth-proposal :; forge script script/CreateCbETHProposals.s.sol:CBETHSupplyCapProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # Deploy BUSD IR update
+deploy-busd-ir-payload :;  forge script script/DeployBUSDIRPayload.s.sol:BUSD --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-busd-ir-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
 create-busd-ir-proposal :; forge script script/CreateBUSDProposal.s.sol:CreateBUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
