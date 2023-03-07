@@ -66,3 +66,9 @@ create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBW
 deploy-cbeth-cap-payload :;  forge script script/DeployEthCbETHPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-payload :; forge test -vvv --match-contract AaveV3EthCbETHSupplyCapsPayloadTest
 create-cbeth-proposal :; forge script script/CreateCbETHProposals.s.sol:CBETHSupplyCapProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# Deploy POLYGON Ghst cap update payload
+
+deploy-ghst-cap-payload :;  forge script script/DeployGHSTPolygonPayload.s.sol:GHST --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+test-ghst-payload :; forge test -vvv --match-contract GHSTV3RiskParamPayloadTest
+create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
