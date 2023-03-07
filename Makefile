@@ -60,3 +60,9 @@ rescue-long-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:Re
 deploy-wsteth-cap-payload :;  forge script script/DeployArbwstethCapPayload.s.sol:ArbwtstethSupplyCap --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPayloadTest
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# cbETH cap Update
+
+deploy-cbeth-cap-payload :;  forge script script/DeployEthCbETHPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+test-cbeth-payload :; forge test -vvv --match-contract AaveV3EthCbETHSupplyCapsPayloadTest
+create-cbeth-proposal :; forge script script/CreateCbETHProposals.s.sol:CBETHSupplyCapProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
