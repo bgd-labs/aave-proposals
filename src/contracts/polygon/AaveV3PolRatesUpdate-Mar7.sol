@@ -8,7 +8,7 @@ import 'aave-helpers/v3-config-engine/AaveV3PayloadPolygon.sol';
  * https://snapshot.org/#/aave.eth/proposal/0xbda28d65ca4d64005e6019948ed52d9d62c9e73e356ab1013aa2d4829f40c735
  * @author BGD Labs (risk recommendations by Gauntlet)
  */
-contract AaveV3PolRatesUpdate is AaveV3PayloadPolygon {
+contract AaveV3PolRatesUpdateMar7 is AaveV3PayloadPolygon {
   function rateStrategiesUpdates()
     public
     view
