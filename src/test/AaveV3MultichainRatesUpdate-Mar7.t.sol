@@ -12,6 +12,8 @@ import {AaveV3PolRatesUpdateMar7} from '../contracts/polygon/AaveV3PolRatesUpdat
 import {AaveV3OptRatesUpdateMar7} from '../contracts/optimism/AaveV3OptRatesUpdate-Mar7.sol';
 import {AaveV3ArbRatesUpdateMar7} from '../contracts/arbitrum/AaveV3ArbRatesUpdate-Mar7.sol';
 
+/// @dev Assuming that rates, as they use the RATES_FACTORY have correct code, so verification via
+/// diff reports is enough
 contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 40098990);
@@ -110,28 +112,20 @@ contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
     assetsChanged[6] = AaveV3PolygonAssets.DPI_UNDERLYING;
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    // TODO validate
     usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
-
-    // TODO validate
     eursBefore.interestRateStrategy = eursAfter.interestRateStrategy;
 
-    // TODO validate
     maiBefore.interestRateStrategy = maiAfter.interestRateStrategy;
     maiBefore.reserveFactor = 20_00;
 
-    // TODO validate
     ageurBefore.interestRateStrategy = ageurAfter.interestRateStrategy;
 
-    // TODO validate
     wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
     wethBefore.reserveFactor = 15_00;
 
-    // TODO validate
     ghstBefore.interestRateStrategy = ghstAfter.interestRateStrategy;
     ghstBefore.reserveFactor = 35_00;
 
-    // TODO validate
     dpiBefore.interestRateStrategy = dpiAfter.interestRateStrategy;
     dpiBefore.reserveFactor = 35_00;
 
@@ -142,6 +136,12 @@ contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
     _validateReserveConfig(wethBefore, allConfigsAfter);
     _validateReserveConfig(ghstBefore, allConfigsAfter);
     _validateReserveConfig(dpiBefore, allConfigsAfter);
+
+    _logStrategyPreviewUrlParams(usdtAfter);
+    _logStrategyPreviewUrlParams(eursAfter);
+    _logStrategyPreviewUrlParams(maiAfter);
+    _logStrategyPreviewUrlParams(ageurAfter);
+    _logStrategyPreviewUrlParams(wethAfter);
   }
 }
 
@@ -192,15 +192,16 @@ contract AaveV3OptRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
     assetsChanged[1] = AaveV3OptimismAssets.WETH_UNDERLYING;
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    // TODO validate
     usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
 
-    // TODO validate
     wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
     wethBefore.reserveFactor = 15_00;
 
     _validateReserveConfig(usdtBefore, allConfigsAfter);
     _validateReserveConfig(wethBefore, allConfigsAfter);
+
+    _logStrategyPreviewUrlParams(usdtAfter);
+    _logStrategyPreviewUrlParams(wethAfter);
   }
 }
 
@@ -262,18 +263,19 @@ contract AaveV3ArbRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
     assetsChanged[2] = AaveV3ArbitrumAssets.WETH_UNDERLYING;
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    // TODO validate
     usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
 
-    // TODO validate
     eursBefore.interestRateStrategy = eursAfter.interestRateStrategy;
 
-    // TODO validate
     wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
     wethBefore.reserveFactor = 15_00;
 
     _validateReserveConfig(usdtBefore, allConfigsAfter);
     _validateReserveConfig(eursBefore, allConfigsAfter);
     _validateReserveConfig(wethBefore, allConfigsAfter);
+
+    _logStrategyPreviewUrlParams(usdtAfter);
+    _logStrategyPreviewUrlParams(eursAfter);
+    _logStrategyPreviewUrlParams(wethAfter);
   }
 }
