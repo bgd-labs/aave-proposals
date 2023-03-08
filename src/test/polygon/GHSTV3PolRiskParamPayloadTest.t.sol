@@ -51,7 +51,6 @@ contract GHSTV3RiskParamPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     GHSTConfig.supplyCap = GHST_SUPPLY_CAP;
     GHSTConfig.borrowingEnabled = GHST_BORROWING_ENABLED;
     GHSTConfig.liquidationThreshold = GHST_LIQ_THRESHOLD;
-    GHSTConfig.ltv = GHST_LTV;
     GHSTConfig.liquidationBonus = GHST_LIQ_BONUS;
 
     ProtocolV3TestBase._validateReserveConfig(GHSTConfig, allConfigsAfter);
