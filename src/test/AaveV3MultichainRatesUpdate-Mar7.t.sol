@@ -8,9 +8,9 @@ import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygo
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {AaveV3PolRatesUpdate} from '../../contracts/polygon/AaveV3PolRatesUpdate-Mar7.sol';
-import {AaveV3OptRatesUpdate} from '../../contracts/optimism/AaveV3OptRatesUpdate-Mar7.sol';
-import {AaveV3ArbRatesUpdate} from '../../contracts/arbitrum/AaveV3ArbRatesUpdate-Mar7.sol';
+import {AaveV3PolRatesUpdate} from '../contracts/polygon/AaveV3PolRatesUpdate-Mar7.sol';
+import {AaveV3OptRatesUpdate} from '../contracts/optimism/AaveV3OptRatesUpdate-Mar7.sol';
+import {AaveV3ArbRatesUpdate} from '../contracts/arbitrum/AaveV3ArbRatesUpdate-Mar7.sol';
 
 contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
