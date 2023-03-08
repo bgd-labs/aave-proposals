@@ -15,7 +15,6 @@ contract GHSTV3RiskParamPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   uint256 public constant GHST_SUPPLY_CAP = 4_650_000;
   uint256 public constant GHST_BORROW_CAP = 220_000;
   uint256 public constant GHST_LTV = 0;
-  uint256 public constant GHST_LIQ_THRESHOLD = 4500;
   bool public constant GHST_BORROWING_ENABLED = false;
 
   function setUp() public {
