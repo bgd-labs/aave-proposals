@@ -62,4 +62,5 @@ test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPaylo
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # Gauntlet rates updates
+deploy-pol-payload-rates-mar7 :; forge script script/MultichainRatesUpdateMar7.s.sol:DeployPayloadPolygon --via-ir  --rpc-url polygon --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 emit-create-proposal-rates-mar7 :; forge script script/MultichainRatesUpdateMar7.s.sol:CreateProposal --via-ir --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
