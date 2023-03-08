@@ -8,7 +8,7 @@ import 'aave-helpers/../script/Utils.s.sol';
 
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](3);
     payloads[0] = GovHelpers.buildPolygon(
       address(0) // TODO add payload address
     );
@@ -20,7 +20,8 @@ contract CreateProposal is EthereumScript {
     );
     GovHelpers.createProposal(
       payloads,
-      bytes32('') // TODO add IPFS hash
+      0x3b66ed0fa57bec842608cb1be68f97ca0c241cd3744a860086762f76cc0ae933,
+      true
     );
   }
 }

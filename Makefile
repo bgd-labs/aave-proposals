@@ -6,9 +6,9 @@
 update:; forge update
 
 # Build & test
-build  :; forge build --sizes
+build  :; forge build --via-ir
 
-test   :; forge test -vvv
+test   :; forge test --via-ir -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -60,3 +60,6 @@ rescue-long-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:Re
 deploy-wsteth-cap-payload :;  forge script script/DeployArbwstethCapPayload.s.sol:ArbwtstethSupplyCap --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPayloadTest
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# Gauntlet rates updates
+emit-create-proposal-rates-mar7 :; forge script script/MultichainRatesUpdateMar7.s.sol:CreateProposal --via-ir --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
