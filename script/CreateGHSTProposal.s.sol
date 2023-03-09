@@ -12,7 +12,7 @@ contract GHSTPolProposal is CreateMainnetProposal {
 
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(
+    payloads[0] = GovHelpers.buildPolygon(
       0xA0A864D3B0837e4806A91647C6aD382A7F73E1a8
     );
     vm.startBroadcast();
