@@ -18,7 +18,7 @@ contract GHSTV3RiskParamPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   bool public constant GHST_BORROWING_ENABLED = false;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 40083492);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 40159255);
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
@@ -47,6 +47,7 @@ contract GHSTV3RiskParamPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     ReserveConfig memory GHSTConfig = ProtocolV3TestBase._findReserveConfig(allConfigsBefore, GHST);
     GHSTConfig.borrowCap = GHST_BORROW_CAP;
     GHSTConfig.supplyCap = GHST_SUPPLY_CAP;
+    GHSTConfig.ltv = GHST_LTV;
     GHSTConfig.borrowingEnabled = GHST_BORROWING_ENABLED;
 
     ProtocolV3TestBase._validateReserveConfig(GHSTConfig, allConfigsAfter);
