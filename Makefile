@@ -11,6 +11,7 @@ build  :; forge build --sizes
 test   :; forge test -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
+test-usdc-v3-avalanche :; forge test -vvv --match-contract USDCDepegRiskProtectionTest
 
 # Utilities
 download :; cast etherscan-source --chain ${chain} -d src/etherscan/${chain}_${address} ${address}
