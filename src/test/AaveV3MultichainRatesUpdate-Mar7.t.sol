@@ -67,39 +67,6 @@ contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
       AaveV3Polygon.POOL
     );
 
-    ReserveConfig memory usdtAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.USDT_UNDERLYING
-    );
-
-    ReserveConfig memory eursAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.EURS_UNDERLYING
-    );
-
-    ReserveConfig memory maiAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.miMATIC_UNDERLYING
-    );
-
-    ReserveConfig memory ageurAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.agEUR_UNDERLYING
-    );
-
-    ReserveConfig memory wethAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.WETH_UNDERLYING
-    );
-    ReserveConfig memory ghstAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.GHST_UNDERLYING
-    );
-    ReserveConfig memory dpiAfter = _findReserveConfig(
-      allConfigsAfter,
-      AaveV3PolygonAssets.DPI_UNDERLYING
-    );
-
     diffReports('preTestPolRatesUpdateMar7', 'postTestPolRatesUpdateMar7');
 
     address[] memory assetsChanged = new address[](7);
@@ -112,36 +79,75 @@ contract AaveV3PolRatesUpdateTest is ProtocolV3TestBase, TestWithExecutor {
     assetsChanged[6] = AaveV3PolygonAssets.DPI_UNDERLYING;
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
-    eursBefore.interestRateStrategy = eursAfter.interestRateStrategy;
+    {
+      ReserveConfig memory usdtAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.USDT_UNDERLYING
+      );
+      usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
+      _validateReserveConfig(usdtBefore, allConfigsAfter);
+      _logStrategyPreviewUrlParams(usdtAfter);
+    }
 
-    maiBefore.interestRateStrategy = maiAfter.interestRateStrategy;
-    maiBefore.reserveFactor = 20_00;
+    {
+      ReserveConfig memory eursAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.EURS_UNDERLYING
+      );
+      eursBefore.interestRateStrategy = eursAfter.interestRateStrategy;
+      _validateReserveConfig(eursBefore, allConfigsAfter);
+      _logStrategyPreviewUrlParams(eursAfter);
+    }
 
-    ageurBefore.interestRateStrategy = ageurAfter.interestRateStrategy;
+    {
+      ReserveConfig memory maiAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.miMATIC_UNDERLYING
+      );
+      maiBefore.interestRateStrategy = maiAfter.interestRateStrategy;
+      maiBefore.reserveFactor = 20_00;
+      _validateReserveConfig(maiBefore, allConfigsAfter);
+      _logStrategyPreviewUrlParams(maiAfter);
+    }
 
-    wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
-    wethBefore.reserveFactor = 15_00;
+    {
+      ReserveConfig memory ageurAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.agEUR_UNDERLYING
+      );
+      ageurBefore.interestRateStrategy = ageurAfter.interestRateStrategy;
+      _validateReserveConfig(ageurBefore, allConfigsAfter);
+      _logStrategyPreviewUrlParams(ageurAfter);
+    }
+    {
+      ReserveConfig memory wethAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.WETH_UNDERLYING
+      );
+      wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
+      wethBefore.reserveFactor = 15_00;
+      _validateReserveConfig(wethBefore, allConfigsAfter);
+      _logStrategyPreviewUrlParams(wethAfter);
+    }
 
-    ghstBefore.interestRateStrategy = ghstAfter.interestRateStrategy;
-    ghstBefore.reserveFactor = 35_00;
-
-    dpiBefore.interestRateStrategy = dpiAfter.interestRateStrategy;
-    dpiBefore.reserveFactor = 35_00;
-
-    _validateReserveConfig(usdtBefore, allConfigsAfter);
-    _validateReserveConfig(eursBefore, allConfigsAfter);
-    _validateReserveConfig(maiBefore, allConfigsAfter);
-    _validateReserveConfig(ageurBefore, allConfigsAfter);
-    _validateReserveConfig(wethBefore, allConfigsAfter);
-    _validateReserveConfig(ghstBefore, allConfigsAfter);
-    _validateReserveConfig(dpiBefore, allConfigsAfter);
-
-    _logStrategyPreviewUrlParams(usdtAfter);
-    _logStrategyPreviewUrlParams(eursAfter);
-    _logStrategyPreviewUrlParams(maiAfter);
-    _logStrategyPreviewUrlParams(ageurAfter);
-    _logStrategyPreviewUrlParams(wethAfter);
+    {
+      ReserveConfig memory ghstAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.GHST_UNDERLYING
+      );
+      ghstBefore.interestRateStrategy = ghstAfter.interestRateStrategy;
+      ghstBefore.reserveFactor = 35_00;
+      _validateReserveConfig(ghstBefore, allConfigsAfter);
+    }
+    {
+      ReserveConfig memory dpiAfter = _findReserveConfig(
+        allConfigsAfter,
+        AaveV3PolygonAssets.DPI_UNDERLYING
+      );
+      dpiBefore.interestRateStrategy = dpiAfter.interestRateStrategy;
+      dpiBefore.reserveFactor = 35_00;
+      _validateReserveConfig(dpiBefore, allConfigsAfter);
+    }
   }
 }
 
