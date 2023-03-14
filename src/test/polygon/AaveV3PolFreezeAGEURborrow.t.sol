@@ -20,22 +20,22 @@ contract AaveV3PolFreezeAGEURBorrowTest is ProtocolV3TestBase, TestWithExecutor 
   function testCapsPol() public {
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
 
+    ReserveConfig memory agEURConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      AaveV3PolygonAssets.agEUR_UNDERLYING
+    );
+    agEURConfig.borrowingEnabled = false;
+
     // 1. deploy l2 payload
     proposalPayload = new AaveV3PolFreezeAGEURBorrow();
 
     // 2. execute l2 payload
     _executePayload(address(proposalPayload));
 
-    //Verify payload:
     ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
       AaveV3Polygon.POOL
     );
 
-    ReserveConfig memory agEURConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      AaveV3PolygonAssets.agEUR_UNDERLYING
-    );
-    agEURConfig.borrowingEnabled = false;
     ProtocolV3TestBase._validateReserveConfig(agEURConfig, allConfigsAfter);
   }
 }
