@@ -7,7 +7,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 /**
  * @title Update Supply Cap for MaticX on Aave V3 Polygon
  * @author Llama
- * @dev This proposal updates multiple risk parameters for the MaticX pool on Aave V3 Polygon
+ * @dev This proposal updates supply cap parameter for the MaticX pool on Aave V3 Polygon
  * Governance: https://governance.aave.com/t/arfc-maticx-supplycap-increase-polygon-v3/12217
  */
 contract AaveV3PolMaticXSupplyCap03132023Payload is IProposalGenericExecutor {
