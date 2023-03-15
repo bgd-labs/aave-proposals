@@ -27,11 +27,14 @@ contract CrosschainForwarderArbitrum {
   uint256 public constant BASE_FEE_MARGIN = 10 gwei;
 
   /**
-   * This estimation is based on calculateRetryableSubmissionFee which will yield a constant gasLimit of `429478`(rounded up to 450000)
-   * As there is currently no oracle on L1 exposing gasPrice of arbitrum, we multiply with a constant 1 gwei.
+   * @dev calculateRetryableSubmissionFee on `0x00000000000000000000000000000000000000C8` for a queue call with 1 slot will yield a constant gasLimit of `429478`
+   * To account for some margin we rounded up to 450000
    */
   uint256 public constant L2_GAS_LIMIT = 450000;
 
+  /**
+   * @dev There is currently no oracle on L1 exposing gasPrice of arbitrum. Therefore we overpay by assuming 1 gwei (10x of current price).
+   */
   uint256 public constant L2_MAX_FEE_PER_GAS = 1 gwei;
 
   /**
@@ -48,7 +51,8 @@ contract CrosschainForwarderArbitrum {
    * @param bytesLength the payload bytes length (usually 580)
    */
   function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool) {
-    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= getMaxSubmissionCost(bytesLength) + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS);
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >=
+      getMaxSubmissionCost(bytesLength) + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS);
   }
 
   /**
