@@ -22,6 +22,14 @@ contract AaveV3EthLusdCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function testLUSDCapsEth() public {
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
 
+    ReserveConfig memory LUSDConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      AaveV3EthereumAssets.LUSD_UNDERLYING
+    );
+
+    LUSDConfig.supplyCap = LUSD_SUPPLY_CAP;
+    LUSDConfig.borrowCap = LUSD_BORROW_CAP;
+
     // 1. create snapshot before payload execution
     createConfigurationSnapshot('preLUSDCapsChange', AaveV3Ethereum.POOL);
 
@@ -39,13 +47,6 @@ contract AaveV3EthLusdCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor {
       AaveV3Ethereum.POOL
     );
 
-    //LUSD
-    ReserveConfig memory LUSDConfig = ProtocolV3TestBase._findReserveConfig(
-      allConfigsBefore,
-      AaveV3EthereumAssets.LUSD_UNDERLYING
-    );
-    LUSDConfig.supplyCap = LUSD_SUPPLY_CAP;
-    LUSDConfig.borrowCap = LUSD_BORROW_CAP;
     ProtocolV3TestBase._validateReserveConfig(LUSDConfig, allConfigsAfter);
 
     // 5. compare snapshots
