@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity 0.8.17;
 
-import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
+import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {IEmissionManager} from 'aave-v3-periphery/rewards/interfaces/IEmissionManager.sol';
 
@@ -13,7 +12,7 @@ import {IEmissionManager} from 'aave-v3-periphery/rewards/interfaces/IEmissionMa
  * Governance Forum Post: https://governance.aave.com/t/arfc-grant-op-emission-admin-for-optimism-v3-liquidity-pool-to-lido-dao/11905
  */
 contract AaveV3OptOPEmissionAdminPayload is IProposalGenericExecutor {
-  address public constant OP = 0x4200000000000000000000000000000000000042;
+  address public constant OP = AaveV3OptimismAssets.OP_UNDERLYING;
   address public constant NEW_EMISSION_ADMIN = 0x5033823F27c5f977707B58F0351adcD732C955Dd;
 
   function execute() external {
