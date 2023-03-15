@@ -49,9 +49,11 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   function testHasSufficientGas() public {
     vm.selectFork(mainnetFork);
     assertEq(AaveGovernanceV2.SHORT_EXECUTOR.balance, 0);
-    assertEq(forwarder.hasSufficientGasForExecution(580), false);
+    (bool hasEnoughGasBefore, ) = forwarder.hasSufficientGasForExecution(580);
+    assertEq(hasEnoughGasBefore, false);
     deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
-    assertEq(forwarder.hasSufficientGasForExecution(580), true);
+    (bool hasEnoughGasAfter, ) = forwarder.hasSufficientGasForExecution(580);
+    assertEq(hasEnoughGasAfter, true);
   }
 
   function testgetGetMaxSubmissionCost() public {

@@ -49,10 +49,12 @@ contract CrosschainForwarderArbitrum {
    * @dev checks if the short executor is topped up with enough eth for proposal execution
    * with current basefee
    * @param bytesLength the payload bytes length (usually 580)
+   * @return bool indicating if the SHORT_EXECUTOR has sufficient funds
+   * @return uint256 the gas required for ticket creation and redemption
    */
-  function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool) {
-    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >=
-      getMaxSubmissionCost(bytesLength) + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS);
+  function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool, uint256) {
+    uint256 requiredGas = getMaxSubmissionCost(bytesLength) + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS;
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= requiredGas, requiredGas);
   }
 
   /**
@@ -88,7 +90,7 @@ contract CrosschainForwarderArbitrum {
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
     uint256 maxSubmission = getMaxSubmissionCost(queue.length);
-    INBOX.unsafeCreateRetryableTicket{value: maxSubmission + L2_GAS_LIMIT}(
+    INBOX.unsafeCreateRetryableTicket{value: maxSubmission + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
