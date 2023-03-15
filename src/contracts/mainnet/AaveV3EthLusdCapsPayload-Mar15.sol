@@ -6,7 +6,7 @@ import {IPoolConfigurator} from 'aave-address-book/AaveV3.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 /**
- * @title This proposal changes Lusd supply and borrow caps on Aave V3 Ethereum
+ * @title This proposal changes LUSD supply and borrow caps on Aave V3 Ethereum
  * @author @yonikesel - ChaosLabs
  * - Snapshot: Direct-to-AIP process
  * - Discussion: https://governance.aave.com/t/arfc-supply-and-borrow-caps-update-lusd-v3-ethereum/12289
