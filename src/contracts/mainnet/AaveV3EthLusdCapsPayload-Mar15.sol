@@ -11,7 +11,6 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Snapshot: Direct-to-AIP process
  * - Discussion: https://governance.aave.com/t/arfc-supply-and-borrow-caps-update-lusd-v3-ethereum/12289
  */
-
 contract AaveV3EthLusdCapsPayload is IProposalGenericExecutor {
   uint256 public constant LUSD_SUPPLY_CAP = 6_000_000;
   uint256 public constant LUSD_BORROW_CAP = 2_400_000;
