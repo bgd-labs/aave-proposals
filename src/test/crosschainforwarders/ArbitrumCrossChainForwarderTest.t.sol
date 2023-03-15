@@ -74,7 +74,11 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildArbitrum(address(wstEthPayload));
+    payloads[0] = GovHelpers.Payload({
+      target: address(forwarder),
+      signature: 'execute(address)',
+      callData: abi.encode(address(wstEthPayload))
+    });
 
     uint256 proposalId = GovHelpers.createProposal(
       payloads,
@@ -129,8 +133,8 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     assertEq(to, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(excessFeeRefundAddress, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
-    assertEq(gasPriceBid, 0);
-    assertEq(maxGas, 0);
+    assertEq(maxGas, forwarder.L2_GAS_LIMIT());
+    assertEq(gasPriceBid, forwarder.L2_MAX_FEE_PER_GAS());
     assertEq(length, 580);
 
     // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
