@@ -27,10 +27,18 @@ contract CrosschainForwarderArbitrum {
   uint256 public constant BASE_FEE_MARGIN = 10 gwei;
 
   /**
-   * @dev returns the amount of gas needed for relaying the message based on current basefee
+   * This estimation is based on calculateRetryableSubmissionFee which will yield a constant gasLimit of `429478`(rounded up to 450000)
+   * As there is currently no oracle on L1 exposing gasPrice of arbitrum, we multiply with a constant 1 gwei.
+   */
+  uint256 public constant L2_GAS_LIMIT = 450000;
+
+  uint256 public constant L2_MAX_FEE_PER_GAS = 1 gwei;
+
+  /**
+   * @dev returns the amount of gas needed for submitting the ticket
    * @param bytesLength the payload bytes length (usually 580)
    */
-  function getRequiredGas(uint256 bytesLength) public view returns (uint256) {
+  function getMaxSubmissionCost(uint256 bytesLength) public view returns (uint256) {
     return INBOX.calculateRetryableSubmissionFee(bytesLength, block.basefee + BASE_FEE_MARGIN);
   }
 
@@ -40,7 +48,7 @@ contract CrosschainForwarderArbitrum {
    * @param bytesLength the payload bytes length (usually 580)
    */
   function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool) {
-    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= getRequiredGas(bytesLength));
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= getMaxSubmissionCost(bytesLength) + L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS);
   }
 
   /**
@@ -75,15 +83,15 @@ contract CrosschainForwarderArbitrum {
    */
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
-    uint256 maxSubmission = getRequiredGas(queue.length);
-    INBOX.unsafeCreateRetryableTicket{value: maxSubmission}(
+    uint256 maxSubmission = getMaxSubmissionCost(queue.length);
+    INBOX.unsafeCreateRetryableTicket{value: maxSubmission + L2_GAS_LIMIT}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
       address(ARBITRUM_BRIDGE_EXECUTOR), // excessFeeRefundAddress
       address(ARBITRUM_GUARDIAN), // callValueRefundAddress
-      0, // gasLimit
-      0, // maxFeePerGas
+      L2_GAS_LIMIT, // gasLimit
+      L2_MAX_FEE_PER_GAS, // maxFeePerGas
       queue
     );
   }
