@@ -26,18 +26,31 @@ contract USDCDepegRiskProtectionTest is ProtocolV3TestBase, TestWithExecutor {
 }
 
 contract USDCDepegRiskProtectionUnfreezeTest is ProtocolV3TestBase, TestWithExecutor {
+  uint256 preFreezingFork = 27294340;
+  uint256 postFreezingFork = 27502524;
+
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('avalanche'), 27502524);
+    preFreezingFork = vm.createFork(vm.rpcUrl('avalanche'), preFreezingFork);
+    postFreezingFork = vm.createFork(vm.rpcUrl('avalanche'), postFreezingFork);
+
     _selectPayloadExecutor(0xa35b76E4935449E33C56aB24b23fcd3246f13470); // guardian
   }
 
   function testChanges() public {
-    createConfigurationSnapshot('pre-USDCUnfreeze-Payload', AaveV3Avalanche.POOL);
+    // First we fork pre-freezing to generate a configuration report then
+    vm.selectFork(preFreezingFork);
+
+    createConfigurationSnapshot('pre-USDCProtection-Payload', AaveV3Avalanche.POOL);
+
+    // // Second, we fork at "current" block to execute the un-freeze payload
+    vm.selectFork(postFreezingFork);
+
+    _selectPayloadExecutor(0xa35b76E4935449E33C56aB24b23fcd3246f13470); // guardian
 
     _executePayload(address(new USDCDepegRiskUnfreeze()));
 
     createConfigurationSnapshot('post-USDCUnfreeze-Payload', AaveV3Avalanche.POOL);
 
-    diffReports('pre-USDCUnfreeze-Payload', 'post-USDCUnfreeze-Payload');
+    diffReports('pre-USDCProtection-Payload', 'post-USDCUnfreeze-Payload');
   }
 }
