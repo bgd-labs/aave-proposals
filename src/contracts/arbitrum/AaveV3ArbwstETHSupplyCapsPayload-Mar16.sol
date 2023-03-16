@@ -8,7 +8,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 /**
  * @title Increase supply and borrow caps for wstETH Aave arbitrum V3
  * @author @yonikesel - ChaosLabs
- * - Snapshot: N/A Direct-to-AIP ARFC framework
+ * - Snapshot: Direct-to-AIP ARFC framework
  * - Dicussion: https://governance.aave.com/t/arfc-supply-and-borrow-caps-update-wsteth-v3-arbitrum/12309
  */
 
