@@ -11,8 +11,6 @@ build  :; forge build --sizes
 test   :; forge test -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
-test-usdc-v3-avalanche :; forge test -vvv --match-contract USDCDepegRiskProtectionTest
-
 # Utilities
 download :; cast etherscan-source --chain ${chain} -d src/etherscan/${chain}_${address} ${address}
 git-diff :
@@ -81,4 +79,7 @@ test-ghst-payload :; forge test -vvv --match-contract GHSTV3RiskParamPayloadTest
 create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # USDC protection
+test-usdc-v3-avalanche :; forge test -vvv --match-contract USDCDepegRiskProtectionTest
+test-usdc-v3-avalanche-unfreeze :; forge test -vvv --match-contract USDCDepegRiskProtectionUnfreezeTest
 deploy-usdc-protection-ava-payload:;  forge script script/USDCProtection.s.sol:USDCProtection --rpc-url avalanche --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-usdc-unfreeze-ava-payload:;  forge script script/USDCProtection.s.sol:USDCUnfreeze --rpc-url avalanche --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
