@@ -14,6 +14,7 @@ contract AaveV3ArbwstETHCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor 
   address public constant WSTETH = AaveV3ArbitrumAssets.wstETH_UNDERLYING;
 
   uint256 public constant WSTETH_SUPPLY_CAP = 4_650;
+  uint256 public constant WSTETH_BORROW_CAP = 400;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 70484586);
@@ -29,6 +30,7 @@ contract AaveV3ArbwstETHCapsPayloadTest is ProtocolV3TestBase, TestWithExecutor 
       WSTETH
     );
     wtsethConfig.supplyCap = WSTETH_SUPPLY_CAP;
+    wtsethConfig.borrowCap = WSTETH_BORROW_CAP;
 
     // 1. deploy l2 payload
     proposalPayload = new AaveV3ArbwstETHCapsPayload();
