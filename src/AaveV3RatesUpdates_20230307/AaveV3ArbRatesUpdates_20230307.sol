@@ -8,7 +8,7 @@ import 'aave-helpers/v3-config-engine/AaveV3PayloadArbitrum.sol';
  * https://snapshot.org/#/aave.eth/proposal/0xbda28d65ca4d64005e6019948ed52d9d62c9e73e356ab1013aa2d4829f40c735
  * @author BGD Labs (risk recommendations by Gauntlet)
  */
-contract AaveV3ArbRatesUpdateMar7 is AaveV3PayloadArbitrum {
+contract AaveV3ArbRatesUpdates_20230307 is AaveV3PayloadArbitrum {
   function rateStrategiesUpdates()
     public
     view
