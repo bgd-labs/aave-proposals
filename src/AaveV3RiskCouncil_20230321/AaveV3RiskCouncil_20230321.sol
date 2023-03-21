@@ -63,6 +63,7 @@ contract AaveV3RiskCouncil {
         capUpdates[i].asset
       );
       if (capUpdates[i].supplyCap != KEEP_CURRENT) {
+        require(capUpdates[i].supplyCap != 0, 'REMOVING_CAPS_NOT_ALLOWED');
         require(
           capUpdates[i].supplyCap < supplyCap ||
             ((block.timestamp - timelocks[capUpdates[i].asset].supplyCapLastUpdated >
@@ -73,6 +74,7 @@ contract AaveV3RiskCouncil {
         timelocks[capUpdates[i].asset].supplyCapLastUpdated = uint40(block.timestamp);
       }
       if (capUpdates[i].borrowCap != KEEP_CURRENT) {
+        require(capUpdates[i].borrowCap != 0, 'REMOVING_CAPS_NOT_ALLOWED');
         require(
           capUpdates[i].borrowCap < borrowCap ||
             ((block.timestamp - timelocks[capUpdates[i].asset].borrowCapLastUpdated >
