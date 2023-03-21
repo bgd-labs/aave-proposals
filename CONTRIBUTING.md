@@ -6,6 +6,7 @@ Generator: TBA
 
 Your proposal should follow the following naming Convention:
 
+- `src/Aave[V2|V3][Topic]_[YYYY][MM][DD]/src/Aave[V2|V3][Topic]_[YYYY][MM][DD].s.sol`
 - `src/Aave[V2|V3][Topic]_[YYYY][MM][DD]/Aave[V2|V3][Network|Multi][Topic]_[YYYY][MM][DD].sol`
 - `src/Aave[V2|V3][Topic]_[YYYY][MM][DD]/Aave[V2|V3][Network|Multi][Topic]_[YYYY][MM][DD]_Test.t.sol`
 

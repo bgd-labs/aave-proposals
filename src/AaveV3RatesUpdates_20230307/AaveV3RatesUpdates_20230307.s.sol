@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import {GovHelpers, AaveGovernanceV2} from 'aave-helpers/GovHelpers.sol';
-import {AaveV3ArbRatesUpdates_20230307} from '../src/AaveV3RatesUpdates_20230307/AaveV3ArbRatesUpdates_20230307.sol';
-import {AaveV3PolRatesUpdates_20230307} from '../src/AaveV3RatesUpdates_20230307/AaveV3PolRatesUpdates_20230307.sol';
-import {AaveV3OptRatesUpdates_20230307} from '../src/AaveV3RatesUpdates_20230307/AaveV3OptRatesUpdates_20230307.sol';
+import {AaveV3ArbRatesUpdates_20230307} from './AaveV3ArbRatesUpdates_20230307.sol';
+import {AaveV3PolRatesUpdates_20230307} from './AaveV3PolRatesUpdates_20230307.sol';
+import {AaveV3OptRatesUpdates_20230307} from './AaveV3OptRatesUpdates_20230307.sol';
 import 'aave-helpers/../script/Utils.s.sol';
 
 contract CreateProposal is EthereumScript {
