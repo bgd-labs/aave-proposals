@@ -9,13 +9,9 @@ In addition to the actual proposals this repository also contains tooling to sta
 
 The cross-chain-forwarders are opinionated contracts for proposals targeting `polygon`, `optimism` and `arbitrum`. For detailed documentation checkout the [docs](./src/lib/crosschainforwarders/).
 
-### Listing engine
+### Config engine
 
-TBA
-
-### Stewards
-
-TBA
+The AaveV3ConfigEngine ([Docs](https://github.com/bgd-labs/aave-helpers/tree/master/src/v3-config-engine#how-to-use-the-engine)) is a helper smart contract to abstract good practices when doing "admin" interactions with the Aave v3 protocol, but built on top, without touching the core contracts.
 
 ## Development
 

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import {GovHelpers, AaveGovernanceV2} from 'aave-helpers/GovHelpers.sol';
-import {AaveV3PolRatesUpdateMar7} from '../src/contracts/polygon/AaveV3PolRatesUpdate-Mar7.sol';
-import {AaveV3OptRatesUpdateMar7} from '../src/contracts/optimism/AaveV3OptRatesUpdate-Mar7.sol';
-import {AaveV3ArbRatesUpdateMar7} from '../src/contracts/arbitrum/AaveV3ArbRatesUpdate-Mar7.sol';
+import {AaveV3ArbRatesUpdates_20230307} from './AaveV3ArbRatesUpdates_20230307.sol';
+import {AaveV3PolRatesUpdates_20230307} from './AaveV3PolRatesUpdates_20230307.sol';
+import {AaveV3OptRatesUpdates_20230307} from './AaveV3OptRatesUpdates_20230307.sol';
 import 'aave-helpers/../script/Utils.s.sol';
 
 contract CreateProposal is EthereumScript {
@@ -22,18 +22,18 @@ contract CreateProposal is EthereumScript {
 
 contract DeployPayloadPolygon is PolygonScript {
   function run() external broadcast {
-    new AaveV3PolRatesUpdateMar7();
+    new AaveV3PolRatesUpdates_20230307();
   }
 }
 
 contract DeployPayloadOptimism is OptimismScript {
   function run() external broadcast {
-    new AaveV3OptRatesUpdateMar7();
+    new AaveV3OptRatesUpdates_20230307();
   }
 }
 
 contract DeployPayloadArbitrum is ArbitrumScript {
   function run() external broadcast {
-    new AaveV3ArbRatesUpdateMar7();
+    new AaveV3ArbRatesUpdates_20230307();
   }
 }
