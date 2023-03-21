@@ -7,9 +7,9 @@ import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 
 /**
- * @title List CRV on AaveV3Ethereum
+ * @title List UNI, MKR, SNX and BAL on AaveV3Ethereum
  * @author Llama
- * @dev This proposal lists CRV on Aave V3 Ethereum
+ * @dev This proposal lists UNI, MKR, SNX and BAL on Aave V3 Ethereum
  * Governance: https://governance.aave.com/t/arfc-add-uni-to-ethereum-v3/11953
  * Snapshot UNI: https://snapshot.org/#/aave.eth/proposal/0x51d67ef69e901b34f1d111f2cd5d582c59cffa8d70b7939023febd20f7613b88
  * Snapshot BAL: https://snapshot.org/#/aave.eth/proposal/0xe394799e4d006c15e0cb13155701de495888b7e7dad8f917a6b5dd1c8106cea5
@@ -80,8 +80,8 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
       liqThreshold: 70_00,
       liqBonus: 8_50,
       reserveFactor: 20_00,
-      supplyCap: 1_500,
-      borrowCap: 6_000,
+      supplyCap: 6_000,
+      borrowCap: 1_500,
       debtCeiling: 2_500_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
