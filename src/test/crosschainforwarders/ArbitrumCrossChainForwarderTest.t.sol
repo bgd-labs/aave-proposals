@@ -58,7 +58,8 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
 
   function testgetGetMaxSubmissionCost() public {
     vm.selectFork(mainnetFork);
-    assertGt(forwarder.getMaxSubmissionCost(580), 0);
+    (uint256 maxSubmission, ) = forwarder.getRequiredGas(580);
+    assertGt(maxSubmission, 0);
   }
 
   function testProposalE2E() public {
@@ -92,6 +93,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     vm.recordLogs();
     bytes memory payload = forwarder.getEncodedPayload(address(wstEthPayload));
 
+    (uint256 maxSubmission, ) = forwarder.getRequiredGas(580);
     // check ticket is created correctly
     vm.expectCall(
       address(INBOX),
@@ -100,7 +102,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
         (
           ARBITRUM_BRIDGE_EXECUTOR,
           0,
-          forwarder.getMaxSubmissionCost(payload.length),
+          maxSubmission,
           forwarder.ARBITRUM_BRIDGE_EXECUTOR(),
           forwarder.ARBITRUM_GUARDIAN(),
           forwarder.L2_GAS_LIMIT(),
