@@ -36,7 +36,8 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     CrosschainForwarderArbitrum(AaveGovernanceV2.CROSSCHAIN_FORWARDER_ARBITRUM);
 
   function setUp() public {
-    mainnetFork = vm.createFork(vm.rpcUrl('mainnet'), 16128510);
+    mainnetFork = vm.createSelectFork(vm.rpcUrl('mainnet'), 16128510);
+    forwarder = new CrosschainForwarderArbitrum();
     arbitrumFork = vm.createFork(vm.rpcUrl('arbitrum'), 62456736);
   }
 
@@ -48,14 +49,17 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
   function testHasSufficientGas() public {
     vm.selectFork(mainnetFork);
     assertEq(AaveGovernanceV2.SHORT_EXECUTOR.balance, 0);
-    assertEq(forwarder.hasSufficientGasForExecution(580), false);
+    (bool hasEnoughGasBefore, ) = forwarder.hasSufficientGasForExecution(580);
+    assertEq(hasEnoughGasBefore, false);
     deal(address(AaveGovernanceV2.SHORT_EXECUTOR), 0.001 ether);
-    assertEq(forwarder.hasSufficientGasForExecution(580), true);
+    (bool hasEnoughGasAfter, ) = forwarder.hasSufficientGasForExecution(580);
+    assertEq(hasEnoughGasAfter, true);
   }
 
-  function testgetRequiredGas() public {
+  function testgetGetMaxSubmissionCost() public {
     vm.selectFork(mainnetFork);
-    assertGt(forwarder.getRequiredGas(580), 0);
+    (uint256 maxSubmission, ) = forwarder.getRequiredGas(580);
+    assertGt(maxSubmission, 0);
   }
 
   function testProposalE2E() public {
@@ -73,7 +77,11 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     vm.selectFork(mainnetFork);
     vm.startPrank(AaveMisc.ECOSYSTEM_RESERVE);
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildArbitrum(address(wstEthPayload));
+    payloads[0] = GovHelpers.Payload({
+      target: address(forwarder),
+      signature: 'execute(address)',
+      callData: abi.encode(address(wstEthPayload))
+    });
 
     uint256 proposalId = GovHelpers.createProposal(
       payloads,
@@ -85,6 +93,7 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     vm.recordLogs();
     bytes memory payload = forwarder.getEncodedPayload(address(wstEthPayload));
 
+    (uint256 maxSubmission, ) = forwarder.getRequiredGas(580);
     // check ticket is created correctly
     vm.expectCall(
       address(INBOX),
@@ -93,11 +102,11 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
         (
           ARBITRUM_BRIDGE_EXECUTOR,
           0,
-          forwarder.getRequiredGas(payload.length),
+          maxSubmission,
           forwarder.ARBITRUM_BRIDGE_EXECUTOR(),
           forwarder.ARBITRUM_GUARDIAN(),
-          0,
-          0,
+          forwarder.L2_GAS_LIMIT(),
+          forwarder.L2_MAX_FEE_PER_GAS(),
           payload
         )
       )
@@ -128,8 +137,8 @@ contract ArbitrumCrossChainForwarderTest is ProtocolV3TestBase {
     assertEq(to, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(excessFeeRefundAddress, ARBITRUM_BRIDGE_EXECUTOR);
     assertEq(callValueRefundAddress, forwarder.ARBITRUM_GUARDIAN());
-    assertEq(gasPriceBid, 0);
-    assertEq(maxGas, 0);
+    assertEq(maxGas, forwarder.L2_GAS_LIMIT());
+    assertEq(gasPriceBid, forwarder.L2_MAX_FEE_PER_GAS());
     assertEq(length, 580);
 
     // 4. mock the queuing on l2 with the data emitted on InboxMessageDelivered
