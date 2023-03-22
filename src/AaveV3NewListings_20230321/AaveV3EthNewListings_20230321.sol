@@ -23,40 +23,9 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
   address public constant BAL_PRICE_FEED = 0xdF2917806E30300537aEB49A7663062F4d1F2b5F;
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
-    IEngine.Listing[] memory listings = new IEngine.Listing[](4);
+    IEngine.Listing[] memory listings = new IEngine.Listing[](3);
 
     listings[0] = IEngine.Listing({
-      asset: AaveV2EthereumAssets.UNI_UNDERLYING,
-      assetSymbol: 'UNI',
-      priceFeed: UNI_PRICE_FEED,
-      rateStrategyParams: Rates.RateStrategyParams({
-        optimalUsageRatio: _bpsToRay(45_00),
-        baseVariableBorrowRate: 0,
-        variableRateSlope1: _bpsToRay(7_00),
-        variableRateSlope2: _bpsToRay(300_00),
-        stableRateSlope1: _bpsToRay(13_00),
-        stableRateSlope2: _bpsToRay(300_00),
-        baseStableRateOffset: _bpsToRay(3_00),
-        stableRateExcessOffset: _bpsToRay(5_00),
-        optimalStableToTotalDebtRatio: _bpsToRay(20_00)
-      }),
-      enabledToBorrow: EngineFlags.ENABLED,
-      stableRateModeEnabled: EngineFlags.DISABLED,
-      borrowableInIsolation: EngineFlags.DISABLED,
-      withSiloedBorrowing: EngineFlags.DISABLED,
-      flashloanable: EngineFlags.ENABLED,
-      ltv: 65_00,
-      liqThreshold: 77_00,
-      liqBonus: 10_00,
-      reserveFactor: 20_00,
-      supplyCap: 2_000_000,
-      borrowCap: 500_000,
-      debtCeiling: 17_000_000,
-      liqProtocolFee: 10_00,
-      eModeCategory: 0
-    });
-
-    listings[1] = IEngine.Listing({
       asset: AaveV2EthereumAssets.MKR_UNDERLYING,
       assetSymbol: 'MKR',
       priceFeed: MKR_PRICE_FEED,
@@ -87,7 +56,7 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
       eModeCategory: 0
     });
 
-    listings[2] = IEngine.Listing({
+    listings[1] = IEngine.Listing({
       asset: AaveV2EthereumAssets.SNX_UNDERLYING,
       assetSymbol: 'SNX',
       priceFeed: SNX_PRICE_FEED,
@@ -118,7 +87,7 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
       eModeCategory: 0
     });
 
-    listings[3] = IEngine.Listing({
+    listings[2] = IEngine.Listing({
       asset: AaveV2EthereumAssets.BAL_UNDERLYING,
       assetSymbol: 'BAL',
       priceFeed: BAL_PRICE_FEED,
@@ -150,5 +119,54 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
     });
 
     return listings;
+  }
+
+  function newListingsCustom()
+    public
+    pure
+    override
+    returns (IEngine.ListingWithCustomImpl[] memory)
+  {
+    IEngine.ListingWithCustomImpl[] memory listingsCustom = new IEngine.ListingWithCustomImpl[](1);
+
+    listingsCustom[0] = IEngine.ListingWithCustomImpl(
+      IEngine.Listing({
+        asset: AaveV2EthereumAssets.UNI_UNDERLYING,
+        assetSymbol: 'UNI',
+        priceFeed: UNI_PRICE_FEED,
+        rateStrategyParams: Rates.RateStrategyParams({
+          optimalUsageRatio: _bpsToRay(45_00),
+          baseVariableBorrowRate: 0,
+          variableRateSlope1: _bpsToRay(7_00),
+          variableRateSlope2: _bpsToRay(300_00),
+          stableRateSlope1: _bpsToRay(13_00),
+          stableRateSlope2: _bpsToRay(300_00),
+          baseStableRateOffset: _bpsToRay(3_00),
+          stableRateExcessOffset: _bpsToRay(5_00),
+          optimalStableToTotalDebtRatio: _bpsToRay(20_00)
+        }),
+        enabledToBorrow: EngineFlags.ENABLED,
+        stableRateModeEnabled: EngineFlags.DISABLED,
+        borrowableInIsolation: EngineFlags.DISABLED,
+        withSiloedBorrowing: EngineFlags.DISABLED,
+        flashloanable: EngineFlags.ENABLED,
+        ltv: 65_00,
+        liqThreshold: 77_00,
+        liqBonus: 10_00,
+        reserveFactor: 20_00,
+        supplyCap: 2_000_000,
+        borrowCap: 500_000,
+        debtCeiling: 17_000_000,
+        liqProtocolFee: 10_00,
+        eModeCategory: 0
+      }),
+      IEngine.TokenImplementations({
+        aToken: address(0),
+        vToken: AaveV3Ethereum.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1,
+        sToken: AaveV3Ethereum.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_1
+      })
+    );
+
+    return listingsCustom;
   }
 }
