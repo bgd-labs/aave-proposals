@@ -30,7 +30,7 @@ contract AaveV3AvaRatesUpdates_20230322 is AaveV3PayloadAvalanche {
         variableRateSlope2: _bpsToRay(144_28),
         stableRateSlope1: _bpsToRay(4_72),
         stableRateSlope2: _bpsToRay(144_28),
-        baseStableRateOffset: _bpsToRay(3_00),
+        baseStableRateOffset: _bpsToRay(4_00),
         stableRateExcessOffset: EngineFlags.KEEP_CURRENT,
         optimalStableToTotalDebtRatio: EngineFlags.KEEP_CURRENT
       })
