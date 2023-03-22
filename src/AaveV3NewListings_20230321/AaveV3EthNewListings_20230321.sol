@@ -161,7 +161,7 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
         eModeCategory: 0
       }),
       IEngine.TokenImplementations({
-        aToken: address(0),
+        aToken: AaveV3Ethereum.DELEGATE_AWARE_A_TOKEN_IMPL_REV_1,
         vToken: AaveV3Ethereum.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_1,
         sToken: AaveV3Ethereum.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_1
       })
