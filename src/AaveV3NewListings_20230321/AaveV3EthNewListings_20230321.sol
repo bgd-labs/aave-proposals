@@ -10,7 +10,10 @@ import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  * @title List UNI, MKR, SNX and BAL on AaveV3Ethereum
  * @author Llama
  * @dev This proposal lists UNI, MKR, SNX and BAL on Aave V3 Ethereum
- * Governance: https://governance.aave.com/t/arfc-add-uni-to-ethereum-v3/11953
+ * Governance UNI: https://governance.aave.com/t/arfc-add-uni-to-ethereum-v3/11953
+ * Governance MKR: https://governance.aave.com/t/arfc-add-mkr-to-ethereum-v3/11954
+ * Governance SNX: https://governance.aave.com/t/arfc-add-snx-to-ethereum-v3/11956
+ * Governance BAL: https://governance.aave.com/t/arfc-add-bal-ethereum-v3/11523
  * Snapshot UNI: https://snapshot.org/#/aave.eth/proposal/0x51d67ef69e901b34f1d111f2cd5d582c59cffa8d70b7939023febd20f7613b88
  * Snapshot BAL: https://snapshot.org/#/aave.eth/proposal/0xe394799e4d006c15e0cb13155701de495888b7e7dad8f917a6b5dd1c8106cea5
  * Snapshot MKR: https://snapshot.org/#/aave.eth/proposal/0xf4aec3fbab5096752be96f0e5b522f37318c1902cf8b897b049b7a94d478de73
