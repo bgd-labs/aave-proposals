@@ -81,7 +81,7 @@ contract AaveV3EthNewListings_20230321 is AaveV3PayloadEthereum {
       liqBonus: 8_50,
       reserveFactor: 35_00,
       supplyCap: 2_000_000,
-      borrowCap: 1_000_000,
+      borrowCap: 1_100_000,
       debtCeiling: 2_500_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
