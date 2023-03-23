@@ -79,3 +79,8 @@ create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProp
 # Deploy AVALANCHE rescue exploited payload
 deploy-avax-rescue-payload :;  forge script script/DeployAvalanchePayload.s.sol:AvaxRescue --rpc-url avalanche --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-avax-rescue :; forge test -vvv --match-contract AaveV3AvaxRescueExploitedPayloadTest
+
+# Deploy MAINNET CbETH Emode Activation
+deploy-cbeth-emode-payload :;  forge script script/DeployEthCbETHEmodePayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+test-cbeth-emode-payload :; forge test -vvv --match-contract AaveV3EthCBETHEmodeActivationTest
+create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.sol:CBETHEmodeProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
