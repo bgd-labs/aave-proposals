@@ -161,7 +161,7 @@ contract AaveV3EthNewListings_20230321Test is ProtocolV3_0_1TestBase, TestWithEx
       isBorrowableInIsolation: false,
       isFlashloanable: true,
       supplyCap: 2_000_000,
-      borrowCap: 1_000_000,
+      borrowCap: 1_100_000,
       debtCeiling: 2_500_000_00,
       eModeCategory: 0
     });
