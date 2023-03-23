@@ -15,7 +15,7 @@ contract AaveV3EthNewListings_20230321Test is ProtocolV3_0_1TestBase, TestWithEx
   AaveV3EthNewListings_20230321 public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16877284);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16890867);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
 
     payload = new AaveV3EthNewListings_20230321();
