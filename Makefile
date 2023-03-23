@@ -84,3 +84,7 @@ create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProp
 deploy-cbeth-emode-payload :;  forge script script/DeployEthCbETHEmodePayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-emode-payload :; forge test -vvv --match-contract AaveV3EthCBETHEmodeActivationTest
 create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.sol:CBETHEmodeProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# Deploy LUSD OP Onboarding
+
+deploy-lusd-op-IR-payload :;  forge script script/DeployLUSDOptUtils.s.sol:DeployOptLUSDStrategy --rpc-url optimism --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
