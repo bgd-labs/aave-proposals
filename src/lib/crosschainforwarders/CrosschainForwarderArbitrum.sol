@@ -27,20 +27,40 @@ contract CrosschainForwarderArbitrum {
   uint256 public constant BASE_FEE_MARGIN = 10 gwei;
 
   /**
-   * @dev returns the amount of gas needed for relaying the message based on current basefee
-   * @param bytesLength the payload bytes length (usually 580)
+   * @dev calculateRetryableSubmissionFee on `0x00000000000000000000000000000000000000C8` for a queue call with 1 slot will yield a constant gasLimit of `429478`
+   * To account for some margin we rounded up to 450000
    */
-  function getRequiredGas(uint256 bytesLength) public view returns (uint256) {
-    return INBOX.calculateRetryableSubmissionFee(bytesLength, block.basefee + BASE_FEE_MARGIN);
+  uint256 public constant L2_GAS_LIMIT = 450000;
+
+  /**
+   * @dev There is currently no oracle on L1 exposing gasPrice of arbitrum. Therefore we overpay by assuming 1 gwei (10x of current price).
+   */
+  uint256 public constant L2_MAX_FEE_PER_GAS = 1 gwei;
+
+  /**
+   * @dev returns the amount of gas needed for submitting the ticket
+   * @param bytesLength the payload bytes length (usually 580)
+   * @return uint256 maxSubmissionFee needed on L2 with BASE_FEE_MARGIN
+   * @return uint256 estimated L2 redepmption fee
+   */
+  function getRequiredGas(uint256 bytesLength) public view returns (uint256, uint256) {
+    return (
+      INBOX.calculateRetryableSubmissionFee(bytesLength, block.basefee + BASE_FEE_MARGIN),
+      L2_GAS_LIMIT * L2_MAX_FEE_PER_GAS
+    );
   }
 
   /**
    * @dev checks if the short executor is topped up with enough eth for proposal execution
    * with current basefee
    * @param bytesLength the payload bytes length (usually 580)
+   * @return bool indicating if the SHORT_EXECUTOR has sufficient funds
+   * @return uint256 the gas required for ticket creation and redemption
    */
-  function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool) {
-    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= getRequiredGas(bytesLength));
+  function hasSufficientGasForExecution(uint256 bytesLength) public view returns (bool, uint256) {
+    (uint256 maxSubmission, uint256 maxRedemption) = getRequiredGas(bytesLength);
+    uint256 requiredGas = maxSubmission + maxRedemption;
+    return (AaveGovernanceV2.SHORT_EXECUTOR.balance >= requiredGas, requiredGas);
   }
 
   /**
@@ -75,15 +95,15 @@ contract CrosschainForwarderArbitrum {
    */
   function execute(address l2PayloadContract) public {
     bytes memory queue = getEncodedPayload(l2PayloadContract);
-    uint256 maxSubmission = getRequiredGas(queue.length);
-    INBOX.unsafeCreateRetryableTicket{value: maxSubmission}(
+    (uint256 maxSubmission, uint256 maxRedemption) = getRequiredGas(queue.length);
+    INBOX.unsafeCreateRetryableTicket{value: maxSubmission + maxRedemption}(
       ARBITRUM_BRIDGE_EXECUTOR,
       0, // l2CallValue
       maxSubmission, // maxSubmissionCost
       address(ARBITRUM_BRIDGE_EXECUTOR), // excessFeeRefundAddress
       address(ARBITRUM_GUARDIAN), // callValueRefundAddress
-      0, // gasLimit
-      0, // maxFeePerGas
+      L2_GAS_LIMIT, // gasLimit
+      L2_MAX_FEE_PER_GAS, // maxFeePerGas
       queue
     );
   }
