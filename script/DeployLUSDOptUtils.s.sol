@@ -4,7 +4,7 @@ import {Script} from 'forge-std/Script.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
 import {DefaultReserveInterestRateStrategy} from 'aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
-import {AaveV3OptLUSDPayload} from '../src/contracts/optimism/AaveV3OptLusdPayload.sol';
+import {AaveV3OptLUSDPayload} from '../src/contracts/optimism/AaveV3OptLUSDPayload.sol';
 
 contract DeployOptLUSDStrategy is Script {
   struct RateStrategyConfig {

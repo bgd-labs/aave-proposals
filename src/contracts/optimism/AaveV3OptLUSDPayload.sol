@@ -28,7 +28,7 @@ contract AaveV3OptLUSDPayload is AaveV3ListingOptimism {
       stableRateModeEnabled: false,
       borrowableInIsolation: false,
       withSiloedBorrowing: false,
-      flashloanable: true,
+      flashloanable: false,
       ltv: 0,
       liqThreshold: 0,
       liqBonus: 0,
