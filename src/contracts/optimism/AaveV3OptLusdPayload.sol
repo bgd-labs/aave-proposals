@@ -6,7 +6,7 @@ import {IGenericV3ListingEngine, AaveV3ListingOptimism} from 'aave-helpers/v3-li
 
 /**
  * @title This proposal lists LUSD on Aave V3 Ethereum
- * @author @marczeller - Aave-Chan Initiative, @alyra - Alyra The Blockchain School
+ * @author @marczeller - Aave-Chan Initiative, @alyra - Alyra Promo satoshi
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x4b91ed7efdedf61ff6e263007b6810e745bc5609e489de2190ed13ff841bc8c2
  * - Discussion: https://governance.aave.com/t/arfc-add-lusd-to-optimism-v3-market/12113
  */

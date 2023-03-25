@@ -87,4 +87,4 @@ create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.s
 
 # Deploy LUSD OP Onboarding
 
-deploy-lusd-op-IR-payload :;  forge script script/DeployLUSDOptUtils.s.sol:DeployOptLUSDStrategy --rpc-url optimism --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-lusd-op-IR :;  forge script script/DeployLUSDOptUtils.s.sol:DeployOptLUSDStrategy --rpc-url optimism --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
