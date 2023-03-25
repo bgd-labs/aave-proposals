@@ -7,7 +7,6 @@ contract CreateMainnetProposal is WithChainIdValidation {
   constructor() WithChainIdValidation(1) {}
 }
 
-// Example proposal creation script for a single payload
 contract CBETHSupplyCapProposal is CreateMainnetProposal {
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
@@ -17,7 +16,7 @@ contract CBETHSupplyCapProposal is CreateMainnetProposal {
     vm.startBroadcast();
     GovHelpers.createProposal(
       payloads,
-      0x4f14b29139a93f1169afd329f5f7b9f5e8d8e55a252747c18ad50b23e9d1e249
+      0x2426029bb07fa6f4c7c60d427f63abbca45cf592822b01c3f7910f3735560c2b
     );
     vm.stopBroadcast();
   }

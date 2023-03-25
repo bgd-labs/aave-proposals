@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.16;
 
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 import {IGenericV3ListingEngine, AaveV3ListingOptimism} from 'aave-helpers/v3-listing-engine/AaveV3ListingOptimism.sol';
@@ -23,7 +23,7 @@ contract AaveV3OptLUSDPayload is AaveV3ListingOptimism {
       asset: LUSD,
       assetSymbol: 'LUSD',
       priceFeed: LUSD_USD_FEED,
-      rateStrategy: address(0), // TO-DO: Add rate strategy
+      rateStrategy: 0x15C1638A1e674Af9957F3de2E7bF140278Ee51B7,
       enabledToBorrow: true,
       stableRateModeEnabled: false,
       borrowableInIsolation: false,

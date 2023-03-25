@@ -11,12 +11,12 @@ contract CBETHEmodeProposal is CreateMainnetProposal {
   function run() external {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
-      address(0) // TODO: Fill in the address of the payload contract
+      0x2B6dE4f5a2a78F35D65d0D03BF4f12FFb2A26CBc
     );
     vm.startBroadcast();
     GovHelpers.createProposal(
       payloads,
-      0 // TODO: Fill in the hash of the proposal
+      0x8c43863eb45efe9d794f07cf717a3f71d8fc315f693d42dff0f681e839d1419d
     );
     vm.stopBroadcast();
   }
