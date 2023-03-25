@@ -89,3 +89,5 @@ create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.s
 
 deploy-lusd-op-IR :;  forge script script/DeployLUSDOptUtils.s.sol:DeployOptLUSDStrategy --rpc-url optimism --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-lusd-op-payload :; forge test -vvv --match-contract AaveV3OptLUSDPayloadTest
+deploy-lusd-op-payload :;  forge script script/DeployOptLUSDPayload.s.sol:Op --rpc-url optimism --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-lusd-op-proposal :; forge script script/CreateLUSDOptProposal.s.sol:LUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
