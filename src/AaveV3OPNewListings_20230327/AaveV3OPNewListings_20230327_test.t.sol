@@ -15,26 +15,21 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
   address public constant LUSD_USD_FEED = 0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052;
   address constant LUSD = 0xc40F949F8a4e094D1b49a23ea9241D289B7b2819;
 
-
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 84062326);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 84098323);
+    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
 
     payload = new AaveV3OPNewListings_20230327();
   }
 
   function testPoolActivation() public {
-    createConfigurationSnapshot(
-      'pre-Aave-V3-OP-LUSD-Listing',
-      AaveV3Optimism.POOL
-    );
+    createConfigurationSnapshot('pre-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
     _executePayload(address(payload));
 
     ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Optimism.POOL);
 
     // LUSD
-
     ReserveConfig memory lusd = ReserveConfig({
       symbol: 'LUSD',
       underlying: LUSD,
@@ -45,8 +40,8 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
       ltv: 0,
       liquidationThreshold: 0,
       liquidationBonus: 0,
-      liquidationProtocolFee: 1000,
-      reserveFactor: 1000,
+      liquidationProtocolFee: 10_00,
+      reserveFactor: 10_00,
       usageAsCollateralEnabled: false,
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'LUSD').interestRateStrategy,
@@ -80,14 +75,8 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
       })
     );
 
-    createConfigurationSnapshot(
-      'post-Aave-V3-OP-LUSD-Listing',
-      AaveV3Optimism.POOL
-    );
+    createConfigurationSnapshot('post-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
-    diffReports(
-      'pre-Aave-V3-OP-LUSD-Listing',
-      'post-Aave-V3-OP-LUSD-Listing'
-    );
+    diffReports('pre-Aave-V3-OP-LUSD-Listing', 'post-Aave-V3-OP-LUSD-Listing');
   }
 }
