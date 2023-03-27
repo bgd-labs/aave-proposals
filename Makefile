@@ -59,3 +59,7 @@ deploy-opt-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/Aa
 deploy-arb-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ACI LUSD OP listing
+
+test-aci-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327
