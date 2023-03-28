@@ -64,4 +64,5 @@ emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/
 
 test-aci-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327
 test-function-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327 --match-test testLUSD
-deploy-lusd-op :; forge script src/AaveV3OPNewListings_20230327/DeployOptLUSDPayload.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
