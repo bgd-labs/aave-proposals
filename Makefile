@@ -24,30 +24,35 @@ git-diff :
 # The commented out section suits as an example for contributors and should not be altered
 
 # Create proposal (always mainnet on Governance v2)
-create-proposal-ledger :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
-create-proposal-pk :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
+create-proposal-ledger :; forge script script/CreateProposals.s.sol:MultiPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
+create-proposal-pk :; forge script script/CreateProposals.s.sol:SinglePayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
 # notice: mocking sender to be the ecosystem reserve so proposition power is enough in simulation
-emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SafeSinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+emit-create-proposal :; forge script script/CreateProposals.s.sol:SafeSinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # Deploy MAINNET payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_MAINNET` for verification
-cb-ledger :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-cb-pk :;  forge script script/DeployMainnetPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+cb-ledger :;  forge script script/DeployMainnetPayload.s.sol:ExampleMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+cb-pk :;  forge script script/DeployMainnetPayload.s.sol:ExampleMainnetPayload --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 # Deploy POLYGON payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_POLYGON` for verification
-mai-ledger :;  forge script script/DeployPolygonPayload.s.sol:MiMatic --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-mai-pk :;  forge script script/DeployPolygonPayload.s.sol:MiMatic --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+mai-ledger :;  forge script script/DeployPolygonPayload.s.sol:ExamplePolygonPayload --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+mai-pk :;  forge script script/DeployPolygonPayload.s.sol:ExamplePolygonPayload --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 # Deploy OPTIMISM payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_OPTIMISM` for verification
-op-ledger :;  forge script script/DeployOptimismPayload.s.sol:Op --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-op-pk :;  forge script script/DeployOptimismPayload.s.sol:Op --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+op-ledger :;  forge script script/DeployOptimismPayload.s.sol:ExampleOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+op-pk :;  forge script script/DeployOptimismPayload.s.sol:ExampleOptimismPayload --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 # Deploy ARBITRUM payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_ARBITRUM` for verification
-caps-ledger :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-caps-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+caps-ledger :;  forge script script/DeployArbitrumPayload.s.sol:ExampleArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+caps-pk :;  forge script script/DeployArbitrumPayload.s.sol:ExampleArbitrumPayload --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# Deploy AVALANCHE payload
+# Make sure you properly setup `ETHERSCAN_API_KEY_ARBITRUM` for verification
+caps-ledger :;  forge script script/DeployAvalanchePayload.s.sol:ExampleAvalanchePayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+caps-pk :;  forge script script/DeployAvalanchePayload.s.sol:ExampleAvalanchePayload --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 # ################ EXAMPLE END #############
 
 # YOUR SCRIPT GOES BELOW HERE
