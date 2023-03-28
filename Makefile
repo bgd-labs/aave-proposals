@@ -63,3 +63,4 @@ emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/
 # ACI LUSD OP listing
 
 test-aci-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327
+test-function-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327 --match-test testLUSD

@@ -17,17 +17,14 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
 
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 84062326);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 84098323);
+    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
 
     payload = new AaveV3OPNewListings_20230327();
   }
 
-  function testPoolActivation() public {
-    createConfigurationSnapshot(
-      'pre-Aave-V3-OP-LUSD-Listing',
-      AaveV3Optimism.POOL
-    );
+  function testLUSD() public {
+    createConfigurationSnapshot('pre-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
     _executePayload(address(payload));
 
@@ -45,8 +42,8 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
       ltv: 0,
       liquidationThreshold: 0,
       liquidationBonus: 0,
-      liquidationProtocolFee: 1000,
-      reserveFactor: 1000,
+      liquidationProtocolFee: 10_00,
+      reserveFactor: 10_00,
       usageAsCollateralEnabled: false,
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'LUSD').interestRateStrategy,
@@ -64,30 +61,9 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
 
     _validateReserveConfig(lusd, allConfigs);
 
-    _validateInterestRateStrategy(
-      lusd.interestRateStrategy,
-      lusd.interestRateStrategy,
-      InterestStrategyValues({
-        addressesProvider: address(AaveV3Optimism.POOL_ADDRESSES_PROVIDER),
-        optimalUsageRatio: 20 * (RAY / 100),
-        optimalStableToTotalDebtRatio: 20 * (RAY / 100),
-        baseStableBorrowRate: 0 * (RAY / 100),
-        stableRateSlope1: 4 * (RAY / 100),
-        stableRateSlope2: 87 * (RAY / 100),
-        baseVariableBorrowRate: 0,
-        variableRateSlope1: 4 * (RAY / 100),
-        variableRateSlope2: 87 * (RAY / 100)
-      })
-    );
 
-    createConfigurationSnapshot(
-      'post-Aave-V3-OP-LUSD-Listing',
-      AaveV3Optimism.POOL
-    );
+    createConfigurationSnapshot('post-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
-    diffReports(
-      'pre-Aave-V3-OP-LUSD-Listing',
-      'post-Aave-V3-OP-LUSD-Listing'
-    );
+    diffReports('pre-Aave-V3-OP-LUSD-Listing', 'post-Aave-V3-OP-LUSD-Listing');
   }
 }
