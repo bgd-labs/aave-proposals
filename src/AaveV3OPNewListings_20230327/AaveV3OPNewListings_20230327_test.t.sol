@@ -42,7 +42,7 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
       ltv: 0,
       liquidationThreshold: 0,
       liquidationBonus: 0,
-      liquidationProtocolFee: 10_00,
+      liquidationProtocolFee: 0,
       reserveFactor: 10_00,
       usageAsCollateralEnabled: false,
       borrowingEnabled: true,
