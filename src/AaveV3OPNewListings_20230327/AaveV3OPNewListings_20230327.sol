@@ -13,7 +13,7 @@ import {AaveV3PayloadOptimism, IEngine, Rates, EngineFlags} from 'aave-helpers/v
 
 contract AaveV3OPNewListings_20230327 is AaveV3PayloadOptimism {
   address public constant LUSD_USD_FEED = 0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052;
-  address constant LUSD = 0xc40F949F8a4e094D1b49a23ea9241D289B7b2819;
+  address public constant LUSD = 0xc40F949F8a4e094D1b49a23ea9241D289B7b2819;
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
     IEngine.Listing[] memory listings = new IEngine.Listing[](1);
