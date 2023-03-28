@@ -15,7 +15,6 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
   address public constant LUSD_USD_FEED = 0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052;
   address constant LUSD = 0xc40F949F8a4e094D1b49a23ea9241D289B7b2819;
 
-
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 84098323);
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
@@ -60,7 +59,6 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
     });
 
     _validateReserveConfig(lusd, allConfigs);
-
 
     createConfigurationSnapshot('post-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
