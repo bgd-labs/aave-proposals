@@ -213,7 +213,7 @@ contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
 
 contract AaveV3ArbRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 67855095);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 74573291);
 
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
