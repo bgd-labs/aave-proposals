@@ -37,7 +37,6 @@ contract AaveV3EthIsoModeMar28Test is ProtocolV3TestBase, TestWithExecutor {
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Ethereum.POOL);
 
     
-
     ReserveConfig memory USDC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.USDC_UNDERLYING

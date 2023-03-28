@@ -11,21 +11,21 @@
     contract AaveV3EthIsoModeMar28 is IProposalGenericExecutor {
         bool public constant USDC_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-    bool public constant USDT_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+        bool public constant USDT_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-    bool public constant DAI_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+        bool public constant DAI_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-    bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+        bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
 
     function execute() external {
-    AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDC_UNDERLYING, USDC_UNDERLYING_BORROWABLE_IN_ISOLATION);
+        AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDC_UNDERLYING, USDC_UNDERLYING_BORROWABLE_IN_ISOLATION);
 
-    AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDT_UNDERLYING, USDT_UNDERLYING_BORROWABLE_IN_ISOLATION);
+        AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDT_UNDERLYING, USDT_UNDERLYING_BORROWABLE_IN_ISOLATION);
 
-    AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.DAI_UNDERLYING, DAI_UNDERLYING_BORROWABLE_IN_ISOLATION);
+        AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.DAI_UNDERLYING, DAI_UNDERLYING_BORROWABLE_IN_ISOLATION);
 
-    AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.LUSD_UNDERLYING, LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION);
+        AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.LUSD_UNDERLYING, LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION);
 
 
    } 
