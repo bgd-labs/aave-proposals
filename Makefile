@@ -6,9 +6,9 @@
 update:; forge update
 
 # Build & test
-build  :; forge build --sizes
+build  :; forge build --via-ir
 
-test   :; forge test -vvv
+test   :; forge test --via-ir -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -27,7 +27,7 @@ git-diff :
 create-proposal-ledger :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} -vvvv
 create-proposal-pk :; forge script script/CreateMainnetProposals.s.sol:CreateCbETHProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} -vvvv
 # notice: mocking sender to be the ecosystem reserve so proposition power is enough in simulation
-emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+emit-create-proposal :; forge script script/CreateMainnetProposals.s.sol:SafeSinglePayloadProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # Deploy MAINNET payload
 # Make sure you properly setup `ETHERSCAN_API_KEY_MAINNET` for verification
@@ -52,6 +52,10 @@ caps-pk :;  forge script script/DeployArbitrumPayload.s.sol:ArbCaps --rpc-url ar
 
 # YOUR SCRIPT GOES BELOW HERE
 
-# Deploy MAINNET rescue mission short and long proposals
-rescue-short-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:RescueShortProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-rescue-long-ledger :;  forge script script/CreateRescueMainnetProposals.s.sol:RescueLongProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+# Gauntlet rates updates
+# the content of AaveV3MultichainRatesUpdate-Mar7.t.sol needs to be commented
+deploy-pol-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-opt-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-arb-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491

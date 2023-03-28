@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "lint": "prettier ./",
-    "lint:fix": "npm run lint -- --write"
+    "lint:fix": "npm run lint -- --write",
+    "simulate:mainnet": "env-cmd aave-tenderly-cli --networkId 1 --keepAlive --artifactPath",
+    "simulate:optimism": "env-cmd aave-tenderly-cli --networkId 10 --keepAlive --artifactPath",
+    "simulate:polygon": "env-cmd aave-tenderly-cli --networkId 137 --keepAlive --artifactPath",
+    "simulate:arbitrum": "env-cmd aave-tenderly-cli --networkId 42161 --keepAlive --artifactPath",
+    "simulate:avalanche": "env-cmd aave-tenderly-cli --networkId 43114 --keepAlive --artifactPath",
+    "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath"
   },
   "repository": {
     "type": "git",
@@ -17,7 +23,10 @@
   },
   "homepage": "https://github.com/bgd-labs/aave-v3-crosschain-listing-template#readme",
   "devDependencies": {
+    "@bgd-labs/aave-tenderly-cli": "^0.0.13",
+    "env-cmd": "^10.1.0",
     "prettier": "^2.8.3",
     "prettier-plugin-solidity": "^1.1.1"
-  }
+  },
+  "dependencies": {}
 }

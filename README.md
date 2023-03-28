@@ -9,13 +9,9 @@ In addition to the actual proposals this repository also contains tooling to sta
 
 The cross-chain-forwarders are opinionated contracts for proposals targeting `polygon`, `optimism` and `arbitrum`. For detailed documentation checkout the [docs](./src/lib/crosschainforwarders/).
 
-### Listing engine
+### Config engine
 
-TBA
-
-### Stewards
-
-TBA
+The AaveV3ConfigEngine ([Docs](https://github.com/bgd-labs/aave-helpers/tree/master/src/v3-config-engine#how-to-use-the-engine)) is a helper smart contract to abstract good practices when doing "admin" interactions with the Aave v3 protocol, but built on top, without touching the core contracts.
 
 ## Development
 
@@ -27,6 +23,7 @@ The template ships with sensible default so you can use default `foundry` comman
 ```sh
 cp .env.example .env
 forge install
+yarn
 ```
 
 ### Test
@@ -34,6 +31,21 @@ forge install
 ```sh
 forge test
 ```
+
+### Simulate
+
+While a proposal should be tested throughout, it usually is a good idea to simulate execution on a fork. Therefore this repository comes with the [aave-tenderly-cli](https://github.com/bgd-labs/aave-tenderly-cli) node package which can be used to streamline fork creation.
+
+Setup your `.env` accordingly or follow the [setup instructions](https://github.com/bgd-labs/aave-tenderly-cli#setup-env) for global configuration. Now you can
+
+```sh
+yarn simulate:<mainnet|polygon|...> -- <artifactPath>
+
+# example:
+# yarn simulate:polygon -- ./out/AaveV3EthAddCRVPoolPayload.sol/AaveV3EthAddCRVPoolPayload.json
+```
+
+to generate a tenderly fork you can share with your team.
 
 ## Proposal creation
 
