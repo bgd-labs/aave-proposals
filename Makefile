@@ -71,3 +71,9 @@ test-aci-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_2023032
 test-function-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327 --match-test testLUSD
 deploy-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# ACI cbETH Supply cap
+
+test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3ETHCapUpdate_20230328
+deploy-cbeth-eth-payload :; forge script script/DeployETHcbETHPayload.s.sol:DeployETHcbETHPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-cbeth-eth-payload :; forge script script/DeployETHcbETHPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
