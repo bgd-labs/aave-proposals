@@ -6,9 +6,9 @@
 update:; forge update
 
 # Build & test
-build  :; forge build --via-ir
+build  :; forge build
 
-test   :; forge test --via-ir -vvv
+test   :; forge test -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -65,9 +65,7 @@ deploy-arb-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/Aa
 
 emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
-# ACI LUSD OP listing
-
-test-aci-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327
-test-function-lusd-op :; forge test -vvv --match-contract AaveV3OPNewListings_20230327 --match-test testLUSD
-deploy-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-create-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+# ACI cbETH Supply cap
+test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3EthCBETHSupplyCapsPayload_20230328Test
+deploy-cbeth-eth-payload :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
