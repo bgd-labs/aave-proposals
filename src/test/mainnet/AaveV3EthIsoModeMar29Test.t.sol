@@ -10,14 +10,13 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
 contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
-     bool public constant USDC_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+    bool public constant USDC_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-     bool public constant USDT_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+    bool public constant USDT_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-     bool public constant DAI_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
+    bool public constant DAI_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
-     bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
-
+    bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
 
     function setUp() public {
