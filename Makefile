@@ -6,9 +6,9 @@
 update:; forge update
 
 # Build & test
-build  :; forge build --via-ir
+build  :; forge build
 
-test   :; forge test --via-ir -vvv
+test   :; forge test -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -74,6 +74,6 @@ create-lusd-op :; forge script script/DeployOptLUSDPayload.s.sol:CreateProposal 
 
 # ACI cbETH Supply cap
 
-test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3ETHCapUpdate_20230328
+test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3EthCBETHSupplyCapsPayload_20230328Test
 deploy-cbeth-eth-payload :; forge script script/DeployETHcbETHPayload.s.sol:DeployETHcbETHPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-cbeth-eth-payload :; forge script script/DeployETHcbETHPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv

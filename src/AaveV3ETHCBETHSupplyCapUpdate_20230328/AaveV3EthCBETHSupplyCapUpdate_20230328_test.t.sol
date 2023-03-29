@@ -6,11 +6,11 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveAddressBook.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {ProtocolV3TestBase, ReserveConfig, ReserveTokens, IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {AaveV3ETHCBETHSupplyCapUpdate_20230328} from './AaveV3ETHCBETHSupplyCapUpdate_20230328.sol';
+import {AaveV3EthCBETHSupplyCapUpdate_20230328} from './AaveV3EthCBETHSupplyCapUpdate_20230328.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3EthCBETHSupplyCapsPayload_29032023Test is ProtocolV3TestBase, TestWithExecutor {
-  AaveV3EthCBETHSupplyCapsPayload_29032023 public proposalPayload;
+contract AaveV3EthCBETHSupplyCapsPayload_20230328Test is ProtocolV3TestBase, TestWithExecutor {
+  AaveV3EthCBETHSupplyCapUpdate_20230328 public proposalPayload;
 
   address public constant CBETH = AaveV3EthereumAssets.cbETH_UNDERLYING;
 
@@ -31,7 +31,7 @@ contract AaveV3EthCBETHSupplyCapsPayload_29032023Test is ProtocolV3TestBase, Tes
     );
 
     // 2. create payload
-    proposalPayload = new AaveV3EthCBETHSupplyCapsPayload_29032023();
+    proposalPayload = new AaveV3EthCBETHSupplyCapUpdate_20230328();
 
     // 3. execute payload
 
