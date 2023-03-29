@@ -12,7 +12,6 @@ import {AaveV3PayloadBase} from 'aave-helpers/v3-config-engine/AaveV3PayloadBase
  * - Snapshot: Direct-to-AIP framework
  * - Discussion: https://governance.aave.com/t/arfc-increase-cbeth-supply-cap-03-26/12480
  */
-
 contract AaveV3EthCBETHSupplyCapUpdate_20230328 is AaveV3PayloadEthereum {
   function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
     IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
