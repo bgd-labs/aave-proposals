@@ -2,7 +2,7 @@ pragma solidity ^0.8.16;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {EthereumScript} from 'aave-helpers/../script/Utils.s.sol';
-import {AaveV3ETHCapUpdate_20230328} from 'src/AaveV3ETHCapUpdate_20230328/AaveV3ETHCapUpdate_20230328.sol';
+import {AaveV3ETHCBETHSupplyCapUpdate_20230328} from './AaveV3ETHCBETHSupplyCapUpdate_20230328.sol';
 
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
@@ -14,6 +14,6 @@ contract CreateProposal is EthereumScript {
 
 contract DeployPayloadEthereum is EthereumScript {
   function run() external broadcast {
-    new AaveV3ETHCapUpdate_20230328();
+    new AaveV3ETHCBETHSupplyCapUpdate_20230328();
   }
 }
