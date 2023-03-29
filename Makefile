@@ -84,3 +84,9 @@ create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProp
 deploy-cbeth-emode-payload :;  forge script script/DeployEthCbETHEmodePayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-emode-payload :; forge test -vvv --match-contract AaveV3EthCBETHEmodeActivationTest
 create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.sol:CBETHEmodeProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
+
+# Deploy MAINNET cbETH cap update payload
+
+test-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3EthCBETHSupplyCapsPayload_29032023Test
+deploy-cbeth-eth-payload :; forge script script/AaveV3EthCBETHSupplyCapsPayload_29032023.s.sol:cbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-cbeth-eth-payload :; forge script script/DeployETHcbETHPayload.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
