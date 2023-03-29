@@ -17,7 +17,6 @@ contract AaveV3EthIsoModeMar29 is IProposalGenericExecutor {
     bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
 
 
-
     function execute() external {
         AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDC_UNDERLYING, USDC_UNDERLYING_BORROWABLE_IN_ISOLATION);
         AaveV3Ethereum.POOL_CONFIGURATOR.setBorrowableInIsolation(AaveV3EthereumAssets.USDT_UNDERLYING, USDT_UNDERLYING_BORROWABLE_IN_ISOLATION);
