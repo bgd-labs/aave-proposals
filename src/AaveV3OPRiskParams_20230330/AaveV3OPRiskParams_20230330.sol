@@ -3,10 +3,11 @@ pragma solidity ^0.8.16;
 import 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
 
 /**
-* @title This proposal changes WBTC and DAI risk params
- * @author @Maltmark chaos labs
-* - Discussion: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-optimism-2023-03-22/12421
-*/
+ * @title This proposal changes WBTC and DAI risk params
+ * @author chaos Labs
+ *  Snapshot: https://snapshot.org/#/aave.eth/proposal/0x774c478f3adf4b238c73180b5adad589e008c6857b5e514ae5213ecf67c5c81f
+ * - Discussion: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-optimism-2023-03-22/12421
+ */
 contract AaveV3OPRiskParams_20230330 is AaveV3PayloadOptimism {
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](2);
@@ -33,6 +34,4 @@ contract AaveV3OPRiskParams_20230330 is AaveV3PayloadOptimism {
 
     return collateralUpdate;
   }
-
-
 }
