@@ -4,21 +4,12 @@ pragma solidity ^0.8.16;
 import 'forge-std/Test.sol';
 
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {AaveV3EthIsoModeMar29} from '../../../src/contracts/mainnet/AaveV3EthIsoModeMar29.sol';
+import {AaveV3ETHIsoMode_20230330} from './AaveV3ETHIsoMode_20230330.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
-    bool public constant USDC_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
-
-    bool public constant USDT_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
-
-    bool public constant DAI_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
-
-    bool public constant LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION = true;
-
-
+contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3TestBase, TestWithExecutor {
     function setUp() public {
         vm.createSelectFork(vm.rpcUrl('mainnet'), 16925078);
         _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
@@ -26,14 +17,26 @@ contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
     }
 
     function testPayload() public {
-        AaveV3EthIsoModeMar29 proposalPayload = new AaveV3EthIsoModeMar29();
+        AaveV3ETHIsoMode_20230330 proposalPayload = new AaveV3ETHIsoMode_20230330();
 
         ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
 
-        // execute payload
+        // 1. create snapshot before payload execution
+        createConfigurationSnapshot(
+        'preAaveV3ETHIsoMode_20230330_Change',
+        AaveV3Ethereum.POOL
+        );
+
+        // 2. execute payload
         _executePayload(address(proposalPayload));
 
-        //Verify payload:
+        // 3. create snapshot before payload execution
+        createConfigurationSnapshot(
+        'postAaveV3ETHIsoMode_20230330_Change',
+        AaveV3Ethereum.POOL
+        );
+
+        // 4. Verify payload:
         ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Ethereum.POOL);
         
 
@@ -41,8 +44,8 @@ contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
         allConfigsBefore,
         AaveV3EthereumAssets.USDC_UNDERLYING
         );
-        
-        USDC_UNDERLYING_CONFIG.isBorrowableInIsolation = USDC_UNDERLYING_BORROWABLE_IN_ISOLATION;
+    
+        USDC_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
         ProtocolV3TestBase._validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
 
         ReserveConfig memory USDT_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
@@ -50,7 +53,7 @@ contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
         AaveV3EthereumAssets.USDT_UNDERLYING
         );
         
-        USDT_UNDERLYING_CONFIG.isBorrowableInIsolation = USDT_UNDERLYING_BORROWABLE_IN_ISOLATION;
+        USDT_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
         ProtocolV3TestBase._validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
 
         ReserveConfig memory DAI_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
@@ -58,7 +61,7 @@ contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
         AaveV3EthereumAssets.DAI_UNDERLYING
         );
         
-        DAI_UNDERLYING_CONFIG.isBorrowableInIsolation = DAI_UNDERLYING_BORROWABLE_IN_ISOLATION;
+        DAI_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
         ProtocolV3TestBase._validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
 
         ReserveConfig memory LUSD_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
@@ -66,7 +69,13 @@ contract AaveV3EthIsoModeMar29Test is ProtocolV3TestBase, TestWithExecutor {
         AaveV3EthereumAssets.LUSD_UNDERLYING
         );
         
-        LUSD_UNDERLYING_CONFIG.isBorrowableInIsolation = LUSD_UNDERLYING_BORROWABLE_IN_ISOLATION;
+        LUSD_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
         ProtocolV3TestBase._validateReserveConfig(LUSD_UNDERLYING_CONFIG, allConfigsAfter);
+
+        // 5. compare snapshots
+        diffReports(
+            'preAaveV3ETHIsoMode_20230330_Change',
+            'postAaveV3ETHIsoMode_20230330_Change'
+        );
     }
 }
