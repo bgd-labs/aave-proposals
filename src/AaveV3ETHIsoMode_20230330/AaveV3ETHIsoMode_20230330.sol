@@ -5,6 +5,7 @@ import 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 /**
  * @dev change 4 stable asset to be in borrowable isolation mode - usdc, usdt, dai and lusd
  * @author Chaos Labs
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xef5eed1bdda3a7d6ea2b37b09c7de1960530bb54f24ddc6c7b002447251b6bb4
  * - Discussion: https://governance.aave.com/t/arfc-configure-isolation-mode-borrowable-assets-v3-ethereum/12420
  */
 contract AaveV3ETHIsoMode_20230330 is AaveV3PayloadEthereum {
