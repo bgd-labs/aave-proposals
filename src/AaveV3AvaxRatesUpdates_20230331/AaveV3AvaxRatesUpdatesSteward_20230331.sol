@@ -4,8 +4,10 @@ pragma solidity ^0.8.0;
 import 'aave-helpers/v3-config-engine/AaveV3PayloadAvalanche.sol';
 import {IACLManager} from 'aave-address-book/AaveV3.sol';
 /**
- * @dev Guardian steward that updates rates and reserve factors on aave v3
- * https://snapshot.org/#/aave.eth/proposal/0xbda28d65ca4d64005e6019948ed52d9d62c9e73e356ab1013aa2d4829f40c735
+ * @dev Guardian steward that updates rates, reserve factors, and caps on aave v3 avalanche
+ * Covers changes from the following two snapshot votes:
+ *   - https://snapshot.org/#/aave.eth/proposal/0xbda28d65ca4d64005e6019948ed52d9d62c9e73e356ab1013aa2d4829f40c735
+ *   - https://snapshot.org/#/aave.eth/proposal/0x833eca942053ffcaecbedd6c3b0d5f2392f1ad868e57f1babe9b40a2afedaaa3
  * @author Gauntlet Networks
  */
 contract AaveV3AvaRatesUpdatesSteward_20230331 is AaveV3PayloadAvalanche {
@@ -16,11 +18,36 @@ contract AaveV3AvaRatesUpdatesSteward_20230331 is AaveV3PayloadAvalanche {
       aclManager.RISK_ADMIN_ROLE(),
       address(this)
     );
+  }
 
-    aclManager.renounceRole(
-      aclManager.POOL_ADMIN_ROLE(),
-      address(this)
-    );
+  function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
+    IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](4);
+
+    capsUpdate[0] = IEngine.CapsUpdate({
+      asset: AaveV3AvalancheAssets.BTCb_UNDERLYING,
+      supplyCap: 3_000,
+      borrowCap: 900
+    });
+
+    capsUpdate[1] = IEngine.CapsUpdate({
+      asset: AaveV3AvalancheAssets.USDC_UNDERLYING,
+      supplyCap: 170_000_000,
+      borrowCap: 90_000_000
+    });
+
+    capsUpdate[2] = IEngine.CapsUpdate({
+      asset: AaveV3AvalancheAssets.WAVAX_UNDERLYING,
+      supplyCap: EngineFlags.KEEP_CURRENT,
+      borrowCap: 3_000_000
+    });
+
+    capsUpdate[3] = IEngine.CapsUpdate({
+      asset: AaveV3AvalancheAssets.DAIe_UNDERLYING,
+      supplyCap: 17_000_000,
+      borrowCap: 17_000_000
+    });
+
+    return capsUpdate;
   }
 
   function rateStrategiesUpdates()

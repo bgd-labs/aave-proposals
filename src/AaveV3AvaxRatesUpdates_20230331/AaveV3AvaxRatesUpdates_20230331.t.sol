@@ -45,6 +45,26 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
         AaveV3AvalancheAssets.FRAX_UNDERLYING
       );
 
+      ReserveConfig memory btcBefore = _findReserveConfig(
+        allConfigsBefore,
+        AaveV3AvalancheAssets.BTCb_UNDERLYING
+      );
+
+      ReserveConfig memory usdcBefore = _findReserveConfig(
+        allConfigsBefore,
+        AaveV3AvalancheAssets.USDC_UNDERLYING
+      );
+
+      ReserveConfig memory wavaxBefore = _findReserveConfig(
+        allConfigsBefore,
+        AaveV3AvalancheAssets.WAVAX_UNDERLYING
+      );
+
+      ReserveConfig memory daiBefore = _findReserveConfig(
+        allConfigsBefore,
+        AaveV3AvalancheAssets.DAIe_UNDERLYING
+      );
+
       vm.startPrank(GUARDIAN_AVALANCHE);
 
       AaveV3AvaRatesUpdatesSteward_20230331 rateSteward = new AaveV3AvaRatesUpdatesSteward_20230331();
@@ -67,11 +87,18 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
 
       diffReports('preTestAvaRatesUpdateMar31', 'postTestAvaRatesUpdateMar31');
 
-      address[] memory assetsChanged = new address[](4);
+      address[] memory assetsChanged = new address[](8);
+      // rate updates
       assetsChanged[0] = AaveV3AvalancheAssets.USDt_UNDERLYING;
       assetsChanged[1] = AaveV3AvalancheAssets.MAI_UNDERLYING;
       assetsChanged[2] = AaveV3AvalancheAssets.WETHe_UNDERLYING;
       assetsChanged[3] = AaveV3AvalancheAssets.FRAX_UNDERLYING;
+
+      // cap changes
+      assetsChanged[4] = AaveV3AvalancheAssets.BTCb_UNDERLYING;
+      assetsChanged[5] = AaveV3AvalancheAssets.USDC_UNDERLYING;
+      assetsChanged[6] = AaveV3AvalancheAssets.WAVAX_UNDERLYING;
+      assetsChanged[7] = AaveV3AvalancheAssets.DAIe_UNDERLYING;
       _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
       {
@@ -114,6 +141,29 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
         wethBefore.reserveFactor = 15_00;
         _validateReserveConfig(wethBefore, allConfigsAfter);
         _logStrategyPreviewUrlParams(wethAfter);
+      }
+
+      {
+        btcBefore.supplyCap = 3_000;
+        btcBefore.borrowCap = 900;
+        _validateReserveConfig(btcBefore, allConfigsAfter);
+      }
+
+      {
+        usdcBefore.supplyCap = 170_000_000;
+        usdcBefore.borrowCap = 90_000_000;
+        _validateReserveConfig(usdcBefore, allConfigsAfter);
+      }
+
+      {
+        wavaxBefore.borrowCap = 3_000_000;
+        _validateReserveConfig(wavaxBefore, allConfigsAfter);
+      }
+
+      {
+        daiBefore.supplyCap = 17_000_000;
+        daiBefore.borrowCap = 17_000_000;
+        _validateReserveConfig(daiBefore, allConfigsAfter);
       }
     }
 }
