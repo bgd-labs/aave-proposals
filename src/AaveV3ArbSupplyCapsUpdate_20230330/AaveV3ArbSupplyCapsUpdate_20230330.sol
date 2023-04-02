@@ -14,7 +14,7 @@ contract AaveV3ArbSupplyCapsUpdate_20230330 is AaveV3PayloadArbitrum {
 
     capsUpdate[0] = IEngine.CapsUpdate({
       asset: AaveV3ArbitrumAssets.WBTC_UNDERLYING,
-      supplyCap: 3_200,
+      supplyCap: 4_200,
       borrowCap: EngineFlags.KEEP_CURRENT
     });
 

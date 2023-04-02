@@ -12,7 +12,7 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 contract AaveV3ArbSupplyCapsUpdate_20230330_Test is ProtocolV3TestBase, TestWithExecutor {
   AaveV3ArbSupplyCapsUpdate_20230330 public proposalPayload;
 
-  uint256 public constant WBTC_SUPPLY_CAP = 3_200;
+  uint256 public constant WBTC_SUPPLY_CAP = 4_200;
   uint256 public constant WETH_SUPPLY_CAP = 70_000;
   uint256 public constant WETH_BORROW_CAP = 22_000;
 
