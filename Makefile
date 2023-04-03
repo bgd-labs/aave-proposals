@@ -74,3 +74,10 @@ create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20
 test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+deploy-debt-ceiling-apr4-pol-payload :; forge script src/AaveV3DebtCeilingUpdate_20230404/DeployAaveV3DebtCeiling_20230404.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-debt-ceiling-apr4-pol-payload-dry :; forge script src/AaveV3DebtCeilingUpdate_20230404/DeployAaveV3DebtCeiling_20230404.s.sol:DeployPayloadPolygon --rpc-url polygon -vvvv
+deploy-debt-ceiling-apr4-arb-payload :; forge script src/AaveV3DebtCeilingUpdate_20230404/DeployAaveV3DebtCeiling_20230404.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-debt-ceiling-apr4-arb-payload-dry :; forge script src/AaveV3DebtCeilingUpdate_20230404/DeployAaveV3DebtCeiling_20230404.s.sol:DeployPayloadArbitrum --rpc-url arbitrum -vvvv
+
+emit-debt-ceiling-apr4-proposal :; forge script src/AaveV3DebtCeilingUpdate_20230404/DeployAaveV3DebtCeiling_20230404.s.sol:CreateProposal --rpc-url mainnet -vvvv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
