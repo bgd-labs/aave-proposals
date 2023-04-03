@@ -18,6 +18,7 @@
   "keywords": [],
   "author": "BGD labs",
   "license": "MIT",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/bgd-labs/aave-v3-crosschain-listing-template/issues"
   },
@@ -28,5 +29,7 @@
     "prettier": "^2.8.3",
     "prettier-plugin-solidity": "^1.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "inquirer": "^9.1.5"
+  }
 }
