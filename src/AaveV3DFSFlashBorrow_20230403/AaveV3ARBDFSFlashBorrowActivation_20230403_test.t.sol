@@ -8,6 +8,12 @@ import {IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3EthDFSFlashBorrowActivation} from './AaveV3ETHDFSFlashBorrowActivation_20230403.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
+/**
+ * Simple flashloan receiver.
+ * Receives the flashloan
+ * 1. emits a test event
+ * 2. approves all tokens so the pool can pull them after execution
+ */
 contract MockReceiver {
   event TestEvent();
 
@@ -35,6 +41,10 @@ contract AaveV3EthDFSFlashBorrowActivationTest is TestWithExecutor, MockReceiver
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
+  /**
+   * Takes a flashloan without having funds to pay the premium.
+   * In nromal conditions this would revent, with the proposal executed, it doesn't though.
+   */
   function testZeroFee() public {
     // 1. create payload
     AaveV3EthDFSFlashBorrowActivation proposalPayload = new AaveV3EthDFSFlashBorrowActivation();
@@ -51,6 +61,7 @@ contract AaveV3EthDFSFlashBorrowActivationTest is TestWithExecutor, MockReceiver
     amountsToFlash[0] = 1_000_000 ether;
     uint256[] memory interestRatesToFlash = new uint256[](1);
     interestRatesToFlash[0] = 0;
+    // checks if the event is emitted
     vm.expectEmit(true, true, true, true);
     emit TestEvent();
 
