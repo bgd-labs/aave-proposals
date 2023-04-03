@@ -12,11 +12,11 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  */
 
 contract AaveV3EthDFSFlashBorrowActivation is IProposalGenericExecutor {
-  address public constant FLAaveV3 = 0xd9D8e68717Ce24CCbf162868aaad7E38d81b05d1;
-  address public constant FLAction = 0x72915D41982DfCAf30b871290618E59C45Edba7F;
+  address public constant FL_AAVE_V3 = 0xd9D8e68717Ce24CCbf162868aaad7E38d81b05d1;
+  address public constant FL_ACTION = 0x72915D41982DfCAf30b871290618E59C45Edba7F;
 
   function execute() external {
-    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(FLAaveV3);
-    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(FLAction);
+    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(FL_AAVE_V3);
+    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(FL_ACTION);
   }
 }
