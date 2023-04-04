@@ -15,9 +15,10 @@ contract AaveV3ArbSupplyCapsUpdate_20230330_Test is ProtocolV3TestBase, TestWith
   uint256 public constant WBTC_SUPPLY_CAP = 4_200;
   uint256 public constant WETH_SUPPLY_CAP = 70_000;
   uint256 public constant WETH_BORROW_CAP = 22_000;
+  uint256 public constant WSTETH_SUPPLY_CAP = 9_300;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 76220649);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 77067619);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
@@ -64,6 +65,14 @@ contract AaveV3ArbSupplyCapsUpdate_20230330_Test is ProtocolV3TestBase, TestWith
     WETHConfig.supplyCap = WETH_SUPPLY_CAP;
     WETHConfig.borrowCap = WETH_BORROW_CAP;
     ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
+
+    //WSTETH
+    ReserveConfig memory WSTETHConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      AaveV3ArbitrumAssets.wstETH_UNDERLYING
+    );
+    WSTETHConfig.supplyCap = WSTETH_SUPPLY_CAP;
+    ProtocolV3TestBase._validateReserveConfig(WSTETHConfig, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports(
