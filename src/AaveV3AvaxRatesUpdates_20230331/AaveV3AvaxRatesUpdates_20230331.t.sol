@@ -3,13 +3,14 @@ pragma solidity ^0.8.13;
 
 import 'forge-std/Test.sol';
 
-import {IPoolConfigurator, ConfiguratorInputTypes, IACLManager} from 'aave-address-book/AaveV3.sol';
+import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {AaveV3Avalanche} from 'aave-address-book/AaveAddressBook.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase,ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
 import {AaveV3AvaRatesUpdatesSteward_20230331} from './AaveV3AvaxRatesUpdatesSteward_20230331.sol';
 
-contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
+contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase, TestWithExecutor {
     using stdStorage for StdStorage;
 
     address public constant GUARDIAN_AVALANCHE =
@@ -17,6 +18,7 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
 
     function setUp() public {
       vm.createSelectFork(vm.rpcUrl('avalanche'), 28120569);
+      _selectPayloadExecutor(GUARDIAN_AVALANCHE);
     }
 
     function testUpdatesRatesAndReserveFactors() public {
@@ -45,20 +47,8 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase {
         AaveV3AvalancheAssets.FRAX_UNDERLYING
       );
 
-      vm.startPrank(GUARDIAN_AVALANCHE);
-
       AaveV3AvaRatesUpdatesSteward_20230331 rateSteward = new AaveV3AvaRatesUpdatesSteward_20230331();
-
-      IACLManager aclManager = AaveV3Avalanche.ACL_MANAGER;
-
-      aclManager.addRiskAdmin(address(rateSteward));
-
-      rateSteward.execute();
-
-      vm.stopPrank();
-
-      // check we no longer have any admin roles
-      assertFalse(aclManager.isRiskAdmin(address(rateSteward)));
+      _executePayload(address(rateSteward));
 
       ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
         'postTestAvaRatesUpdateMar31',

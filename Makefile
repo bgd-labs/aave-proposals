@@ -74,3 +74,6 @@ create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20
 test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+deploy-ava-payload-rates-mar7:; forge script src/AaveV3AvaxRatesUpdates_20230331/DeployAaveV3AvaxRatesUpdatesSteward_20230331.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-ava-payload-rates-mar7-dry :; forge script src/AaveV3AvaxRatesUpdates_20230331/DeployAaveV3AvaxRatesUpdatesSteward_20230331.s.sol --rpc-url avalanche -vvvv

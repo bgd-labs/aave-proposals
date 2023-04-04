@@ -2,27 +2,13 @@
 pragma solidity ^0.8.0;
 
 import 'aave-helpers/v3-config-engine/AaveV3PayloadAvalanche.sol';
-import {IACLManager} from 'aave-address-book/AaveV3.sol';
+
 /**
  * @dev Guardian steward that updates rates and reserve factors on aave v3
  * https://snapshot.org/#/aave.eth/proposal/0xbda28d65ca4d64005e6019948ed52d9d62c9e73e356ab1013aa2d4829f40c735
  * @author Gauntlet Networks
  */
 contract AaveV3AvaRatesUpdatesSteward_20230331 is AaveV3PayloadAvalanche {
-  function _postExecute() internal override {
-    IACLManager aclManager = AaveV3Avalanche.ACL_MANAGER;
-
-    aclManager.renounceRole(
-      aclManager.RISK_ADMIN_ROLE(),
-      address(this)
-    );
-
-    aclManager.renounceRole(
-      aclManager.POOL_ADMIN_ROLE(),
-      address(this)
-    );
-  }
-
   function rateStrategiesUpdates()
     public
     view
