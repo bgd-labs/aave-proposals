@@ -6,9 +6,9 @@
 update:; forge update
 
 # Build & test
-build  :; forge build --via-ir
+build  :; forge build
 
-test   :; forge test --via-ir -vvv
+test   :; forge test -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -64,3 +64,13 @@ deploy-opt-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/Aa
 deploy-arb-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ACI cbETH Supply cap
+test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3EthCBETHSupplyCapsPayload_20230328Test
+deploy-cbeth-eth-payload :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# ChaosLabs borrowable isolation update
+test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test
+deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
