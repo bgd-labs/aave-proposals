@@ -79,3 +79,9 @@ create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/
 test-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3ArbSupplyCapsUpdate_20230330_Test
 deploy-supply-borrow-caps-mar30-payload :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-supply-borrow-caps-mar30-proposal :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:CreateProposal --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# ACI DFS flashborrowers whitelist
+deploy-eth-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-arb-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
