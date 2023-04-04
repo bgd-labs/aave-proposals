@@ -62,25 +62,25 @@ test-wsteth-payload :; forge test -vvv --match-contract AaveV3ArbwstETHCapsPaylo
 create-wsteth-proposal :; forge script script/CreateARBWSTETHProposal.s.sol:ARBWSTETHProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # cbETH cap Update
-
 deploy-cbeth-cap-payload :;  forge script script/DeployEthCbETHPayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-payload :; forge test -vvv --match-contract AaveV3EthCbETHSupplyCapsPayloadTest
 create-cbeth-proposal :; forge script script/CreateCbETHProposals.s.sol:CBETHSupplyCapProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # Deploy BUSD IR update
-
 deploy-busd-ir-payload :;  forge script script/DeployBUSDIRPayload.s.sol:BUSD --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-busd-ir-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
 create-busd-ir-proposal :; forge script script/CreateBUSDProposal.s.sol:CreateBUSD --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
 # Deploy POLYGON Ghst cap update payload
-
 deploy-ghst-cap-payload:;  forge script script/DeployGHSTPolygonPayload.s.sol:GHST --rpc-url polygon --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-ghst-payload :; forge test -vvv --match-contract GHSTV3RiskParamPayloadTest
 create-ghst-proposal :; forge script script/CreateGHSTProposal.s.sol:GHSTPolProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
 
-# Deploy MAINNET CbETH Emode Activation
+# Deploy AVALANCHE rescue exploited payload
+deploy-avax-rescue-payload :;  forge script script/DeployAvalanchePayload.s.sol:AvaxRescue --rpc-url avalanche --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+test-avax-rescue :; forge test -vvv --match-contract AaveV3AvaxRescueExploitedPayloadTest
 
+# Deploy MAINNET CbETH Emode Activation
 deploy-cbeth-emode-payload :;  forge script script/DeployEthCbETHEmodePayload.s.sol:CbETH --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 test-cbeth-emode-payload :; forge test -vvv --match-contract AaveV3EthCBETHEmodeActivationTest
 create-cbeth-emode-proposal :; forge script script/CreateCbETHEmodeProposals.s.sol:CBETHEmodeProposal --rpc-url ${RPC_MAINNET} --legacy --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify --etherscan-api-key ${ETHERSCAN_API_KEY_MAINNET} -vvvv
