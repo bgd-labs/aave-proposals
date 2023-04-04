@@ -75,10 +75,12 @@ test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
-# ChaosLabs arbitrum supply and borrow caps update
-test-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3ArbSupplyCapsUpdate_20230330_Test
-deploy-supply-borrow-caps-mar30-payload :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
-create-supply-borrow-caps-mar30-proposal :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:CreateProposal --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+# ChaosLabs supply and borrow caps update
+test-arb-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3ArbSupplyCapsUpdate_20230330_Test
+test-opt-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3OptSupplyCapsUpdate_20230330_Test
+deploy-arb-supply-borrow-caps-mar30-payload :; forge script src/AaveV3SupplyCapsUpdate_20230330/DeployAaveV3SupplyCapsUpdate_20230330.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-opt-supply-borrow-caps-mar30-payload :; forge script src/AaveV3SupplyCapsUpdate_20230330/DeployAaveV3SupplyCapsUpdate_20230330.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+emit-create-supply-borrow-caps-mar30-proposal :; forge script src/AaveV3SupplyCapsUpdate_20230330/DeployAaveV3SupplyCapsUpdate_20230330.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # ACI DFS flashborrowers whitelist
 deploy-eth-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
