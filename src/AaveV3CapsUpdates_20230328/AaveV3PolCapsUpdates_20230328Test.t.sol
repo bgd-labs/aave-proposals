@@ -32,19 +32,27 @@ contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecut
       AaveV3PolygonAssets.WMATIC_UNDERLYING
     );
 
+    ReserveConfig memory bal = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3PolygonAssets.BAL_UNDERLYING
+    );
+
     wMATIC.supplyCap = payload.NEW_SUPPLY_CAP();
+    bal.borrowCap = payload.NEW_BORROW_CAP();
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post-Aave-V3-Polygon-Caps-Updates-20230328',
       AaveV3Polygon.POOL
     );
 
-    address[] memory assetsChanged = new address[](1);
+    address[] memory assetsChanged = new address[](2);
     assetsChanged[0] = AaveV3PolygonAssets.WMATIC_UNDERLYING;
+    assetsChanged[1] = AaveV3PolygonAssets.BAL_UNDERLYING;
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
     _validateReserveConfig(wMATIC, allConfigsAfter);
+    _validateReserveConfig(bal, allConfigsAfter);
 
     diffReports(
       'pre-Aave-V3-Polygon-Caps-Updates-20230328',
