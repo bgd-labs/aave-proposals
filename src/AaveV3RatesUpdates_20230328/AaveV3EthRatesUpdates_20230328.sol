@@ -2,7 +2,7 @@
 
 pragma solidity 0.8.17;
 
-import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3PayloadEthereum, IEngine, EngineFlags, Rates} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 
 /**
@@ -21,7 +21,7 @@ contract AaveV3EthRatesUpdates_20230328 is AaveV3PayloadEthereum {
     IEngine.RateStrategyUpdate[] memory ratesUpdate = new IEngine.RateStrategyUpdate[](1);
 
     ratesUpdate[0] = IEngine.RateStrategyUpdate({
-      asset: AaveV3EthereumAssets.BAL_UNDERLYING,
+      asset: AaveV2EthereumAssets.BAL_UNDERLYING,
       params: Rates.RateStrategyParams({
         optimalUsageRatio: EngineFlags.KEEP_CURRENT,
         baseVariableBorrowRate: _bpsToRay(5_00),
