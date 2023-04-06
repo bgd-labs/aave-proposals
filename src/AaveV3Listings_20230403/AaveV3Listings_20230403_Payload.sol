@@ -14,7 +14,7 @@ import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  */
 contract AaveV3Listings_20230403_Payload is AaveV3PayloadEthereum {
   address public constant LDO = 0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32;
-  address public constant LDO_PRICE_FEED = 0x4e844125952D32AcdF339BE976c98E22F6F318dB;
+  address public constant LDO_PRICE_FEED = 0xb01e6C9af83879B8e06a092f0DD94309c0D497E4;
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
     IEngine.Listing[] memory listings = new IEngine.Listing[](1);

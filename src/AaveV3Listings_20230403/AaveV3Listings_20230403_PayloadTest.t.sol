@@ -15,7 +15,7 @@ contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWith
   AaveV3Listings_20230403_Payload public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16977307);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 16991341);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
 
     payload = new AaveV3Listings_20230403_Payload();
