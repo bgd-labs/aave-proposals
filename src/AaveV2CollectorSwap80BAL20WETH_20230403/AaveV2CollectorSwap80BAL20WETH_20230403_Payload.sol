@@ -10,19 +10,20 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   error AlreadyExecuted();
 
-  uint256 public executed = 1;
-  uint256 public constant WETH_AMOUNT = 300_000e18;
+  bool public executed;
+  uint256 public constant WETH_AMOUNT = 326_31e16; //326.31 aWETH
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
+  address public constant PRICE_CHECKER = 0xf447Bf3CF8582E4DaB9c34C5b261A7b6AD4D6bDD;
 
   function execute() external {
-    if (executed != 1) revert AlreadyExecuted();
-    executed = 2;
+    if (executed) revert AlreadyExecuted();
+    executed = true;
 
     AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.transfer(
       AaveV2Ethereum.COLLECTOR,
       AaveV2EthereumAssets.WETH_A_TOKEN,
       address(this),
-      IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(AaveV2Ethereum.COLLECTOR)
+      WETH_AMOUNT
     );
 
     AaveV2Ethereum.POOL.withdraw(
@@ -38,7 +39,7 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
       AaveV2EthereumAssets.WETH_UNDERLYING,
       AaveV2EthereumAssets.BAL_UNDERLYING,
       AaveV2Ethereum.COLLECTOR,
-      priceChecker,
+      PRICE_CHECKER,
       priceCheckerData
     );
   }
