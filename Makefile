@@ -85,3 +85,7 @@ deploy-eth-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployD
 deploy-arb-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+deploy-caps-apr10-payload-dry :; forge script src/AaveV3ArbBorrowCapsUpdate_20230410/DeployAaveV3ArbBorrowCapsUpdate_20230410.s.sol:DeployPayloadArbitrum --rpc-url arbitrum -vvvv
+deploy-caps-apr10-payload :; forge script src/AaveV3ArbBorrowCapsUpdate_20230410/DeployAaveV3ArbBorrowCapsUpdate_20230410.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+emit-create-caps-apr10-proposal :; forge script src/AaveV3ArbBorrowCapsUpdate_20230410/DeployAaveV3ArbBorrowCapsUpdate_20230410.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
