@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {IERC20} from 'solidity-utils/lib/forge-std/src/interfaces/IERC20.sol';
+import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
@@ -36,11 +36,24 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       WETH_AMOUNT,
-      AaveV2EthereumAssets.WETH_UNDERLYING,
-      AaveV2EthereumAssets.BAL_UNDERLYING,
+      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING),
       AaveV2Ethereum.COLLECTOR,
       PRICE_CHECKER,
-      priceCheckerData
+      checkerData()
     );
+  }
+
+  function checkerData() internal pure returns (bytes memory) {
+    uint24[] memory fees = new uint24[](1);
+    fees[0] = 5;
+
+    address[] memory path = new address[](2);
+    path[0] = AaveV2EthereumAssets.WETH_UNDERLYING;
+    path[1] = AaveV2EthereumAssets.BAL_UNDERLYING;
+
+    bytes memory data = abi.encode(path, fees);
+
+    return abi.encode(200, data);
   }
 }
