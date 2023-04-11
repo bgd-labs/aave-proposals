@@ -85,3 +85,6 @@ deploy-eth-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployD
 deploy-arb-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# ACI Proposal 
+test-aci-proposal :; forge test -vvv --match-contract AaveV3ACIProposal_20230411Test

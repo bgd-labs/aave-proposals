@@ -12,7 +12,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * - Discussion: https://governance.aave.com/t/arfc-aci-service-provider-6-month-proposal/12513
  */
 
-contract ACIStreamPayload is IProposalGenericExecutor {
+contract ProposalPayload is IProposalGenericExecutor {
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
   address public constant AUSDT = AaveV2EthereumAssets.USDT_A_TOKEN;
   address public constant RESERVE_CONTROLLER = AaveV2Ethereum.COLLECTOR_CONTROLLER;
