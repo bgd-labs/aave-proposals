@@ -18,20 +18,17 @@ contract ACIStreamPayload is IProposalGenericExecutor {
   address public constant RESERVE_CONTROLLER = AaveV2Ethereum.COLLECTOR_CONTROLLER;
   uint256 public constant STREAM_AMOUNT = 250000e6;
   uint256 public constant STREAM_DURATION = 180 days;
-  uint256 public constant STREAM_START = 1 days;
-  uint256 public constant STREAM_END = STREAM_START + STREAM_DURATION;
-
-  // Add a small amount to satisfy deposit % vars.duration == 0 contract condition.
-  uint256 public constant ACTUAL_STEAM_AMOUNT = STREAM_AMOUNT + 15552000;
 
   function execute() external {
+    uint256 ACTUAL_STREAM_AMOUNT_AUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
+
     IAaveEcosystemReserveController(RESERVE_CONTROLLER).createStream(
       RESERVE_CONTROLLER,
       ACI_TREASURY,
-      ACTUAL_STEAM_AMOUNT,
+      ACTUAL_STREAM_AMOUNT_AUSDT,
       AUSDT,
-      block.timestamp + STREAM_START,
-      STREAM_START + STREAM_END
+      block.timestamp,
+      block.timestamp + STREAM_DURATION
     );
   }
 }
