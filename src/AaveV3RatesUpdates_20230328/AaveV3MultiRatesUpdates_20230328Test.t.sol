@@ -12,7 +12,7 @@ import {ProtocolV3_0_1TestBase, ProtocolV3TestBase, ReserveConfig} from 'aave-he
 
 contract AaveV3PolRatesUpdates_20230328Test is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 40866290);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 41383971);
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
@@ -55,7 +55,7 @@ contract AaveV3PolRatesUpdates_20230328Test is ProtocolV3TestBase, TestWithExecu
 
 contract AaveV3EthRatesUpdates_20230328Test is ProtocolV3_0_1TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 16983235);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17020741);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
@@ -70,7 +70,7 @@ contract AaveV3EthRatesUpdates_20230328Test is ProtocolV3_0_1TestBase, TestWithE
       AaveV2EthereumAssets.BAL_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3PolRatesUpdates_20230328()));
+    _executePayload(address(new AaveV3EthRatesUpdates_20230328()));
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
       'post-AaveV3Ethereum-interestRateUpdate-20230328',
