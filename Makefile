@@ -85,3 +85,6 @@ deploy-eth-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployD
 deploy-arb-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+deploy-caps-apr11-steward-dry :; forge script src/AaveV3AvaCapsUpdate_20230411/DeployAaveV3AvaCapsUpdate_20230411.s.sol:DeployPayloadAvalanche --rpc-url avalanche -vvvv
+deploy-caps-apr11-steward :; forge script src/AaveV3AvaCapsUpdate_20230411/DeployAaveV3AvaCapsUpdate_20230411.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
