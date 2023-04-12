@@ -88,3 +88,5 @@ create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSP
 
 # ACI Proposal 
 test-aci-proposal :; forge test -vvv --match-contract AaveV3ACIProposal_20230411Test
+deploy-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
