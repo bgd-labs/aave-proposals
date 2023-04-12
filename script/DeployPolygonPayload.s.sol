@@ -4,7 +4,7 @@
 //    WE WILL REMOVE SCRIPTS PERIODICALLY
 // #########################################
 pragma solidity ^0.8.0;
-import {PolygonScript} from 'aave-helpers/../script/Utils.s.sol';
+import {PolygonScript} from 'aave-helpers/../scripts/Utils.s.sol';
 
 contract ExamplePolygonPayload is PolygonScript {
   function run() external broadcast {

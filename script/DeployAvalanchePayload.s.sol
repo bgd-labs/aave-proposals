@@ -4,7 +4,7 @@
 //    WE WILL REMOVE SCRIPTS PERIODICALLY
 // #########################################
 pragma solidity ^0.8.0;
-import {AvalancheScript} from 'aave-helpers/../script/Utils.s.sol';
+import {AvalancheScript} from 'aave-helpers/../scripts/Utils.s.sol';
 
 contract ExampleAvalanchePayload is AvalancheScript {
   function run() external broadcast {

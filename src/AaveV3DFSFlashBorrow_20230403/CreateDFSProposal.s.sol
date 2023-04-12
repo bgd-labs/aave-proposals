@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {EthereumScript} from 'aave-helpers/../script/Utils.s.sol';
+import {EthereumScript} from 'aave-helpers/../scripts/Utils.s.sol';
 
 contract DFSProposal is EthereumScript {
   function run() external broadcast {

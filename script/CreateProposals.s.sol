@@ -5,7 +5,7 @@
 // #########################################
 pragma solidity ^0.8.0;
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {EthereumScript} from 'aave-helpers/../script/Utils.s.sol';
+import {EthereumScript} from 'aave-helpers/../scripts/Utils.s.sol';
 
 // Example proposal creation script for a single payload
 contract SinglePayloadProposal is EthereumScript {
