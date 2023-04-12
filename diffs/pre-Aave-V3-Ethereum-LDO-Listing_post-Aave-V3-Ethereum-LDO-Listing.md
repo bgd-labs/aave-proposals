@@ -1,21 +1,107 @@
-```diff
-diff --git a/./reports/pre-Aave-V3-Ethereum-LDO-Listing.md b/./reports/post-Aave-V3-Ethereum-LDO-Listing.md
-index 982789f..a09f181 100644
---- a/./reports/pre-Aave-V3-Ethereum-LDO-Listing.md
-+++ b/./reports/post-Aave-V3-Ethereum-LDO-Listing.md
-@@ -16,6 +16,7 @@
- | rETH | 0xae78736Cd615f374D3085123A210448E74Fc6393 | 0xCc9EE9483f662091a1de4795249E24aC0aC2630f | 0x1d1906f909CAe494c7441604DAfDDDbD0485A925 | 0xae8593DD575FE29A9745056aA91C4b746eee62C8 | 18 | 6700 | 7400 | 10750 | 1000 | 1500 | true | true | false | 20000 | 2400 | 0 | 0 | 0x24701A6368Ff6D2874d6b8cDadd461552B8A5283 | true | false | false | false | true | 0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d | 0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57 | 0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6 |
- | LUSD | 0x5f98805A4E8be255a32880FDeC7F6728C6568bA0 | 0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9 | 0x37A6B708FDB1483C231961b9a7F145261E815fc3 | 0x33652e48e4B74D18520f11BfE58Edd2ED2cEc5A2 | 18 | 0 | 0 | 0 | 0 | 1000 | false | true | false | 6000000 | 2400000 | 0 | 0 | 0x349684Da30f8c9Affeaf21AfAB3a1Ad51f5d95A3 | true | false | false | true | true | 0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d | 0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57 | 0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6 |
- | CRV | 0xD533a949740bb3306d119CC777fa900bA034cd52 | 0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65 | 0x90D9CD005E553111EB8C9c31Abe9706a186b6048 | 0x1b7D3F4b3c032a5AE656e30eeA4e8E1Ba376068F | 18 | 5500 | 6100 | 10830 | 1000 | 2000 | true | true | false | 51000000 | 7700000 | 2090000000 | 0 | 0x76884cAFeCf1f7d4146DA6C4053B18B76bf6ED14 | true | false | false | false | true | 0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d | 0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57 | 0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6 |
-+| LDO | 0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32 | 0x8A458A9dc9048e005d22849F470891b840296619 | 0x0496372BE7e426D28E89DEBF01f19F014d5938bE | 0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1 | 18 | 4000 | 5000 | 10900 | 1000 | 2000 | true | true | false | 6000000 | 3000000 | 750000000 | 0 | 0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F | true | false | false | false | true | 0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d | 0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57 | 0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6 |
- 
- 
- ## InterestRateStrategies
-@@ -30,6 +31,7 @@
- | 0xdd1BAC6A713c5b0EC42bA39D0c5e4582975DE6D6 | 50000000000000000000000000 | 40000000000000000000000000 | 720000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 40000000000000000000000000 | 720000000000000000000000000 | 900000000000000000000000000 | 100000000000000000000000000 |
- | 0x349684Da30f8c9Affeaf21AfAB3a1Ad51f5d95A3 | 50000000000000000000000000 | 40000000000000000000000000 | 870000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 40000000000000000000000000 | 870000000000000000000000000 | 800000000000000000000000000 | 200000000000000000000000000 |
- | 0x76884cAFeCf1f7d4146DA6C4053B18B76bf6ED14 | 170000000000000000000000000 | 80000000000000000000000000 | 3000000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 30000000000000000000000000 | 140000000000000000000000000 | 3000000000000000000000000000 | 700000000000000000000000000 | 300000000000000000000000000 |
-+| 0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F | 100000000000000000000000000 | 130000000000000000000000000 | 3000000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 70000000000000000000000000 | 3000000000000000000000000000 | 450000000000000000000000000 | 550000000000000000000000000 |
- 
- 
- ## EMode categories```
+## Reserve changes
+
+### Reserves added
+
+#### LDO ([0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32](https://etherscan.io/address/0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32))
+
+| description | value |
+| --- | --- |
+| supplyCap | 6,000,000 LDO |
+| borrowCap | 3,000,000 LDO |
+| aToken | [0x8A458A9dc9048e005d22849F470891b840296619](https://etherscan.io/address/0x8A458A9dc9048e005d22849F470891b840296619) |
+| aTokenImpl | [0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d](https://etherscan.io/address/0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d) |
+| borrowingEnabled | true |
+| debtCeiling | 750,000,000 |
+| decimals | 18 |
+| eModeCategory | 0 |
+| interestRateStrategy | ![[0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F)](/.assets/1_0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F.svg) |
+| isActive | true |
+| isBorrowableInIsolation | false |
+| isFlashloanable | true |
+| isFrozen | false |
+| isSiloed | false |
+| liquidationBonus | 9 % |
+| liquidationProtocolFee | 10 % |
+| liquidationThreshold | 50 % |
+| ltv | 40 % |
+| oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
+| oracleLatestAnswer | 252,715,331 |
+| reserveFactor | 20 % |
+| stableBorrowRateEnabled | false |
+| stableDebtToken | [0x0496372BE7e426D28E89DEBF01f19F014d5938bE](https://etherscan.io/address/0x0496372BE7e426D28E89DEBF01f19F014d5938bE) |
+| stableDebtTokenImpl | [0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57](https://etherscan.io/address/0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57) |
+| usageAsCollateralEnabled | true |
+| variableDebtToken | [0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1](https://etherscan.io/address/0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1) |
+| variableDebtTokenImpl | [0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6](https://etherscan.io/address/0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6) |
+| optimalUsageRatio | 45 % |
+| maxExcessUsageRatio | 55 % |
+| baseVariableBorrowRate | 0 % |
+| variableRateSlope1 | 7 % |
+| variableRateSlope2 | 300 % |
+| baseStableBorrowRate | 10 % |
+| stableRateSlope1 | 13 % |
+| stableRateSlope2 | 300 % |
+| optimalStableToTotalDebtRatio | 20 % |
+| maxExcessStableToTotalDebtRatio | 80 % |
+
+
+## Raw diff
+
+```json
+{
+  "reserves": {
+    "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": {
+      "from": null,
+      "to": {
+        "aToken": "0x8A458A9dc9048e005d22849F470891b840296619",
+        "aTokenImpl": "0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d",
+        "borrowCap": 3000000,
+        "borrowingEnabled": true,
+        "debtCeiling": 750000000,
+        "decimals": 18,
+        "eModeCategory": 0,
+        "interestRateStrategy": "0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F",
+        "isActive": true,
+        "isBorrowableInIsolation": false,
+        "isFlashloanable": true,
+        "isFrozen": false,
+        "isSiloed": false,
+        "liquidationBonus": 10900,
+        "liquidationProtocolFee": 1000,
+        "liquidationThreshold": 5000,
+        "ltv": 4000,
+        "oracle": "0xb01e6C9af83879B8e06a092f0DD94309c0D497E4",
+        "oracleLatestAnswer": 252715331,
+        "reserveFactor": 2000,
+        "stableBorrowRateEnabled": false,
+        "stableDebtToken": "0x0496372BE7e426D28E89DEBF01f19F014d5938bE",
+        "stableDebtTokenImpl": "0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57",
+        "supplyCap": 6000000,
+        "symbol": "LDO",
+        "underlying": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+        "usageAsCollateralEnabled": true,
+        "variableDebtToken": "0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1",
+        "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6"
+      }
+    }
+  },
+  "strategies": {
+    "0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F": {
+      "from": null,
+      "to": {
+        "address": "0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F",
+        "baseStableBorrowRate": "100000000000000000000000000",
+        "baseVariableBorrowRate": 0,
+        "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
+        "maxExcessUsageRatio": "550000000000000000000000000",
+        "optimalStableToTotalDebtRatio": "200000000000000000000000000",
+        "optimalUsageRatio": "450000000000000000000000000",
+        "stableRateSlope1": "130000000000000000000000000",
+        "stableRateSlope2": "3000000000000000000000000000",
+        "variableRateSlope1": "70000000000000000000000000",
+        "variableRateSlope2": "3000000000000000000000000000"
+      }
+    }
+  }
+}
+```
