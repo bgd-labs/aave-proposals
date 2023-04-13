@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
-import {AaveMisc, IAaveEcosystemReserveController} from 'aave-address-book/AaveMisc.sol';
+import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 
 /**
@@ -18,14 +18,14 @@ contract ProposalPayload is IProposalGenericExecutor {
   address public constant RESERVE_CONTROLLER = AaveV2Ethereum.COLLECTOR_CONTROLLER;
   uint256 public constant STREAM_AMOUNT = 250000e6;
   uint256 public constant STREAM_DURATION = 180 days;
+  uint256 public constant ACTUAL_STREAM_AMOUNT_A_USDT =
+    (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
   function execute() external {
-    uint256 actualStreamAmountAUsdt = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
-
-    IAaveEcosystemReserveController(RESERVE_CONTROLLER).createStream(
+    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.createStream(
       COLLECTOR,
       ACI_TREASURY,
-      actualStreamAmountAUsdt,
+      ACTUAL_STREAM_AMOUNT_A_USDT,
       AUSDT,
       block.timestamp,
       block.timestamp + STREAM_DURATION
