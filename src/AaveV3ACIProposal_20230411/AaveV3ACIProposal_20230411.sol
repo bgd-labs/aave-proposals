@@ -20,7 +20,7 @@ contract ProposalPayload is IProposalGenericExecutor {
   uint256 public constant STREAM_DURATION = 180 days;
 
   function execute() external {
-    uint256 ACTUAL_STREAM_AMOUNT_AUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
+    uint256 actualStreamAmountAUsdt = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
     IAaveEcosystemReserveController(RESERVE_CONTROLLER).createStream(
       COLLECTOR,
