@@ -25,7 +25,7 @@ contract ProposalPayload is IProposalGenericExecutor {
     IAaveEcosystemReserveController(RESERVE_CONTROLLER).createStream(
       COLLECTOR,
       ACI_TREASURY,
-      ACTUAL_STREAM_AMOUNT_AUSDT,
+      actualStreamAmountAUsdt,
       AUSDT,
       block.timestamp,
       block.timestamp + STREAM_DURATION
