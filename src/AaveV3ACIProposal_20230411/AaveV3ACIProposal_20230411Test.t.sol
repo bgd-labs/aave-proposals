@@ -10,7 +10,7 @@ import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
 import {ProposalPayload} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
 import {IStreamable} from 'src/external/IStreamable.sol';
-import {IERC20} from "src/external/IERC20.sol";
+import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
 
 contract AaveV3ACIProposal_20230411Test is Test {
   address internal constant ECOSYSTEM_RESERVE = 0x25F2226B597E8F9514B3F68F00f494cF4f286491;
