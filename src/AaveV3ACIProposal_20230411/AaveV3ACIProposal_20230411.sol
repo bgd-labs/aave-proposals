@@ -11,7 +11,6 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xbff353c13861818ed952874dd76a04e4b97570edc0513bfc2eed64cd5277b404
  * - Discussion: https://governance.aave.com/t/arfc-aci-service-provider-6-month-proposal/12513
  */
-
 contract ProposalPayload is IProposalGenericExecutor {
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
   address public constant AUSDT = AaveV2EthereumAssets.USDT_A_TOKEN;
