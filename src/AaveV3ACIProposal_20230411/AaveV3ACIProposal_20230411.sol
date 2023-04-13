@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
-import {IAaveEcosystemReserveController, AaveMisc} from 'aave-address-book/AaveMisc.sol';
+import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 
 /**
