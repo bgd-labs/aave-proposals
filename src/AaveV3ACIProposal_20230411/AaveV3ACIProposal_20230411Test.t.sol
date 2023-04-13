@@ -8,7 +8,7 @@ import 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
-import {ProposalPayload} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
+import {AaveV3ACIProposal_20230411} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
 import {IStreamable} from 'src/external/IStreamable.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
@@ -42,7 +42,7 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
     uint256 initialACIUSDTBalance = AUSDT.balanceOf(ACI_TREASURY);
 
     // execute proposal
-    _executePayload(address(new ProposalPayload()));
+    _executePayload(address(new AaveV3ACIProposal_20230411()));
 
     // Checking if the streams have been created properly
     // scoping to avoid the "stack too deep" error
