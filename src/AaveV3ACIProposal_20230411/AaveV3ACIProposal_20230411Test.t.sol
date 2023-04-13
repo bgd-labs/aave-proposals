@@ -5,18 +5,17 @@ pragma solidity ^0.8.16;
 import 'forge-std/Test.sol';
 
 // contract dependencies
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {ProposalPayload} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
 import {IStreamable} from 'src/external/IStreamable.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
+import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ACIProposal_20230411Test is Test {
-  address internal constant ECOSYSTEM_RESERVE = 0x25F2226B597E8F9514B3F68F00f494cF4f286491;
-  address public constant AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
-
-  uint256 public proposalId;
+contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
+  address internal constant ECOSYSTEM_RESERVE = AaveMisc.ECOSYSTEM_RESERVE;
 
   IERC20 public constant AUSDT = IERC20(0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811);
 
@@ -25,24 +24,15 @@ contract AaveV3ACIProposal_20230411Test is Test {
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
 
   IStreamable public immutable STREAMABLE_AAVE_COLLECTOR = IStreamable(AaveV2Ethereum.COLLECTOR);
-  IStreamable public immutable STREAMABLE_RESERVE = IStreamable(ECOSYSTEM_RESERVE);
 
   uint256 public constant STREAM_AMOUNT = 250_000 * 1e6;
   uint256 public constant STREAM_DURATION = 180 days;
 
   uint256 public constant actualAmountUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
-  ProposalPayload proposalPayload = new ProposalPayload();
-
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17026907);
-    proposalPayload = new ProposalPayload();
-
-    vm.prank(AAVE_WHALE);
-    proposalId = DeployMainnetProposal._deployMainnetProposal(
-      address(proposalPayload), // TODO: replace with actual address
-      bytes32(0x5d0543d0e66abc240eceeae5ada6240d4d6402c2ccfe5ad521824dc36be71c45) // TODO: replace with actual ipfshash
-    );
+    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   // Full Vesting Test
@@ -51,8 +41,8 @@ contract AaveV3ACIProposal_20230411Test is Test {
     uint256 nextCollectorStreamID = STREAMABLE_AAVE_COLLECTOR.getNextStreamId();
     uint256 initialACIUSDTBalance = AUSDT.balanceOf(ACI_TREASURY);
 
-    // Pass vote and execute proposal
-    GovHelpers.passVoteAndExecute(vm, proposalId);
+    // execute proposal
+    _executePayload(address(new ProposalPayload()));
 
     // Checking if the streams have been created properly
     // scoping to avoid the "stack too deep" error
