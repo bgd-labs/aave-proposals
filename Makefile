@@ -75,4 +75,4 @@ test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
-deploy-swap :; forge script src/AaveV2CollectorSwap80BAL20WETH_20230403/DeployMainnetPayload.s.sol:ExampleMainnetPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
+deploy-swap :; forge script src/AaveV2CollectorSwap80BAL20WETH_20230403/DeployMainnetPayload.s.sol:ExampleMainnetPayload --rpc-url mainnet --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
