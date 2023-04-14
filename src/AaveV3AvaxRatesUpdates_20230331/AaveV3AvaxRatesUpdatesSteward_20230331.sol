@@ -36,7 +36,7 @@ contract AaveV3AvaRatesUpdatesSteward_20230331 is AaveV3PayloadAvalanche {
     mai.stableRateSlope2 = _bpsToRay(75_00);
     ratesUpdate[1] = IEngine.RateStrategyUpdate({
       asset: AaveV3AvalancheAssets.MAI_UNDERLYING,
-      params: usdt
+      params: mai
     });
 
     ratesUpdate[2] = IEngine.RateStrategyUpdate({
