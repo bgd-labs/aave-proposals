@@ -1,7 +1,7 @@
 pragma solidity ^0.8.16;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {EthereumScript} from 'aave-helpers/../script/Utils.s.sol';
+import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {AaveV3EthCBETHSupplyCapUpdate_20230328} from './AaveV3EthCBETHSupplyCapUpdate_20230328.sol';
 
 contract CreateProposal is EthereumScript {
