@@ -72,9 +72,10 @@ create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20
 
 
 # ChaosLabs Risk Params Optimism
-test-risk-params-mar30 :; forge test -vvv --match-contract AaveV3OPRiskParams_20230330_Test
+test-risk-params-mar30 :; python3 lib/chaos-labs-utils/scripts/fetch-borrowers.py optimism 84619167 && forge test -vvv --match-contract AaveV3OPRiskParams_20230330_Test
 deploy-risk-params-mar30-payload :; forge script src/AaveV3OPRiskParams_20230330/DeployAaveV3OPRiskParams_20230330.s.sol:DeployPayloadOptimism --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-risk-params-mar30-proposal :; forge script src/AaveV3OPRiskParams_20230330/DeployAaveV3OPRiskParams_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
 
 # ChaosLabs borrowable isolation update
 test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test

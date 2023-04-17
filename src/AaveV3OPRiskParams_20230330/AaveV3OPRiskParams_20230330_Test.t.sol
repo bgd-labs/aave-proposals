@@ -8,8 +8,9 @@ import {AaveV3OPRiskParams_20230330} from '../../../src/AaveV3OPRiskParams_20230
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {SanityChecks} from 'chaos-labs-utils/SanityChecks.sol';
 
-contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecutor, SanityChecks {
   uint256 public constant WBTC_UNDERLYING_LIQ_THRESHOLD = 78_00; // 78.0%
   uint256 public constant WBTC_UNDERLYING_LTV = 73_00; // 73.0%
   uint256 public constant WBTC_UNDERLYING_LIQ_BONUS = 10850; // 8.5%
@@ -24,6 +25,9 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
 
   function testPayload() public {
     AaveV3OPRiskParams_20230330 proposalPayload = new AaveV3OPRiskParams_20230330();
+
+    // Snapshot Borrowers health before payload execution
+    uint256[] memory healthsBefore = _testBorrowrsHealth(AaveV3Optimism.POOL);
 
     ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
 
@@ -62,6 +66,10 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
     DAI_UNDERLYING_CONFIG.ltv = DAI_UNDERLYING_LTV;
 
     ProtocolV3TestBase._validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
+
+    // Verify Borrowers Health
+    uint256[] memory healthsAfter = _testBorrowrsHealth(AaveV3Optimism.POOL);
+    validateBorrowersHealth(healthsBefore, healthsAfter, 10_00);
 
     // 5. compare snapshots
     diffReports('preAaveV3OPRiskParams_20230330Change', 'postAaveV3OPRiskParams_20230330Change');

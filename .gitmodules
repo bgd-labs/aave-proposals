@@ -7,12 +7,16 @@
 [submodule "lib/aave-address-book"]
 	path = lib/aave-address-book
 	url = https://github.com/bgd-labs/aave-address-book
-[submodule "lib/aave-helpers"]
-	path = lib/aave-helpers
-	url = https://github.com/bgd-labs/aave-helpers
 [submodule "lib/solidity-utils"]
 	path = lib/solidity-utils
 	url = https://github.com/bgd-labs/solidity-utils
 [submodule "lib/aave-v3-periphery"]
 	path = lib/aave-v3-periphery
 	url = https://github.com/aave/aave-v3-periphery
+[submodule "lib/aave-helpers"]
+	path = lib/aave-helpers
+	url = https://github.com/bgd-labs/aave-helpers
+	branch = v2.2.0
+[submodule "lib/chaos-labs-utils"]
+	path = lib/chaos-labs-utils
+	url = https://github.com/ChaosLabsInc/chaos-labs-utils
