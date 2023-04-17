@@ -7,10 +7,9 @@ import 'forge-std/Test.sol';
 // contract dependencies
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
-import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
+import {AaveMisc, IStreamable} from 'aave-address-book/AaveMisc.sol';
 import {AaveV3ACIProposal_20230411} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
-import {IStreamable} from 'src/external/IStreamable.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 

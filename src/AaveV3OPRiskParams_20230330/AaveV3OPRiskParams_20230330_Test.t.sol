@@ -4,7 +4,7 @@ pragma solidity ^0.8.16;
 import 'forge-std/Test.sol';
 
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
-import {AaveV3OPRiskParams_20230330} from '../../../src/AaveV3OPRiskParams_20230330/AaveV3OPRiskParams_20230330.sol';
+import {AaveV3OPRiskParams_20230330} from './AaveV3OPRiskParams_20230330.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
