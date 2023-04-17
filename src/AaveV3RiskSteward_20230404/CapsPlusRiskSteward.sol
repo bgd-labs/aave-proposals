@@ -18,6 +18,11 @@ library RiskStewardLibrary {
   string public constant UPDATE_BIGGER_MAX = '4';
 }
 
+/**
+ * @title CapsPlusRiskSteward
+ * @author BGD labs
+ * @notice Contract managing caps on an aave v3 pool
+ */
 contract CapsPlusRiskSteward {
   struct Debounce {
     uint40 supplyCapLastUpdated;
@@ -26,9 +31,9 @@ contract CapsPlusRiskSteward {
 
   uint256 public constant MINIMUM_DELAY = 5 days;
 
-  IPoolConfigurator immutable POOL_CONFIGURATOR;
-  IPoolDataProvider immutable POOL_DATA_PROVIDER;
-  address immutable RISK_COUNCIL;
+  IPoolConfigurator public immutable POOL_CONFIGURATOR;
+  IPoolDataProvider public immutable POOL_DATA_PROVIDER;
+  address public immutable RISK_COUNCIL;
 
   mapping(address => Debounce) public timelocks;
 
