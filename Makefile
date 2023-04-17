@@ -81,6 +81,9 @@ test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
+deploy-ava-payload-rates-mar7:; forge script src/AaveV3AvaxRatesUpdates_20230331/DeployAaveV3AvaxRatesUpdatesSteward_20230331.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-ava-payload-rates-mar7-dry :; forge script src/AaveV3AvaxRatesUpdates_20230331/DeployAaveV3AvaxRatesUpdatesSteward_20230331.s.sol --rpc-url avalanche -vvvv
+
 # ChaosLabs arbitrum supply and borrow caps update
 test-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3ArbSupplyCapsUpdate_20230330_Test
 deploy-supply-borrow-caps-mar30-payload :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
@@ -92,7 +95,13 @@ deploy-arb-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployD
 deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployDFSPayloads.s.sol:DFSOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
-# ACI Proposal 
+# ACI Proposal
 test-aci-proposal :; forge test -vvv --match-contract AaveV3ACIProposal_20230411Test
 deploy-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# AAVE risk params  
+
+test-aave-risk-params :; forge test -vvv --match-contract AaveV3RiskParams_20230516_Test
+deploy-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv

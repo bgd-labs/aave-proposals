@@ -1,7 +1,7 @@
 pragma solidity ^0.8.16;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {ArbitrumScript} from 'aave-helpers/../script/Utils.s.sol';
+import {ArbitrumScript} from 'aave-helpers/ScriptUtils.sol';
 import {AaveV3ArbSupplyCapsUpdate_20230330} from './AaveV3ArbSupplyCapsUpdate_20230330.sol';
 
 contract CreateProposal is ArbitrumScript {

@@ -49,7 +49,5 @@ contract AaveV3AvaRatesUpdates_20230322_Test is ProtocolV3TestBase, TestWithExec
       'pre-AaveV3Avalanche-interestRateUpdate-wAVAX',
       'post-AaveV3Avalanche-interestRateUpdate-wAVAX'
     );
-
-    _logStrategyPreviewUrlParams(wavaxAfter);
   }
 }

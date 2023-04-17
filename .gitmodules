@@ -1,6 +1,3 @@
-[submodule "lib/governance-crosschain-bridges"]
-	path = lib/governance-crosschain-bridges
-	url = https://github.com/aave/governance-crosschain-bridges
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
