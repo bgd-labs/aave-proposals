@@ -53,7 +53,7 @@ contract AaveV3Listings_20230413_Payload is AaveV3PayloadPolygon {
         stableRateSlope1: _bpsToRay(4_50),
         stableRateSlope2: _bpsToRay(80_00),
         baseStableRateOffset: _bpsToRay(1_00),
-        stableRateExcessOffset: _bpsToRay(5_00),
+        stableRateExcessOffset: _bpsToRay(8_00),
         optimalStableToTotalDebtRatio: _bpsToRay(20_00)
       }),
       enabledToBorrow: EngineFlags.ENABLED,
