@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {IACLManager, IPoolConfigurator, IPoolDataProvider} from 'aave-address-book/AaveV3.sol';
 
 library RiskStewardLibrary {
@@ -25,13 +24,13 @@ contract CapsPlusRiskSteward {
     uint40 borrowCapLastUpdated;
   }
 
-  uint256 constant MINIMUM_DELAY = 5 days;
+  uint256 public constant MINIMUM_DELAY = 5 days;
 
   IPoolConfigurator immutable POOL_CONFIGURATOR;
   IPoolDataProvider immutable POOL_DATA_PROVIDER;
   address immutable RISK_COUNCIL;
 
-  mapping(address => Debounce) timelocks;
+  mapping(address => Debounce) public timelocks;
 
   modifier onlyRiskCouncil() {
     require(RISK_COUNCIL == msg.sender, RiskStewardLibrary.INVALID_CALLER);
@@ -93,9 +92,9 @@ contract CapsPlusRiskSteward {
    * Ensures the cap increase is within the allowed range.
    * @param from current cap
    * @param to new cap
-   * @return bool true, if difference is within the max 50% increase window
+   * @return bool true, if difference is within the max 100% increase window
    */
   function increaseWithinAllowedRange(uint256 from, uint256 to) public pure returns (bool) {
-    return to - from <= (from / 2);
+    return to - from <= from;
   }
 }
