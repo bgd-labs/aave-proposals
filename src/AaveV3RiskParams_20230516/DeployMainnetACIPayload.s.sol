@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import {EthereumScript} from 'aave-helpers/../script/Utils.s.sol';
+import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3RiskParams_20230516} from 'src/AaveV3RiskParams_20230516/AaveV3RiskParams_20230516.sol';
 

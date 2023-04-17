@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {AaveV3PayloadEthereum, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
+import {AaveV3PayloadEthereum, IEngine, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 
 /**
  * @title This proposal update AAVE risk params on eth V3 Pool.
