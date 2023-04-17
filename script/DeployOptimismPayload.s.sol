@@ -4,7 +4,7 @@
 //    WE WILL REMOVE SCRIPTS PERIODICALLY
 // #########################################
 pragma solidity ^0.8.0;
-import {OptimismScript} from 'aave-helpers/../scripts/Utils.s.sol';
+import {OptimismScript} from 'aave-helpers/ScriptUtils.sol';
 
 contract ExampleOptimismPayload is OptimismScript {
   function run() external broadcast {

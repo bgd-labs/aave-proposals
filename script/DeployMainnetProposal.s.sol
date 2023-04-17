@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'lib/aave-address-book/lib/forge-std/src/console.sol';
-import {EthereumScript} from 'aave-helpers/../scripts/Utils.s.sol';
+import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {AaveGovernanceV2, IExecutorWithTimelock} from 'lib/aave-address-book/src/AaveGovernanceV2.sol';
 
 library DeployMainnetProposal {
