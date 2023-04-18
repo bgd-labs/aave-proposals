@@ -4,7 +4,7 @@ import {GovHelpers, AaveGovernanceV2} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbRatesUpdates_20230307} from './AaveV3ArbRatesUpdates_20230307.sol';
 import {AaveV3PolRatesUpdates_20230307} from './AaveV3PolRatesUpdates_20230307.sol';
 import {AaveV3OptRatesUpdates_20230307} from './AaveV3OptRatesUpdates_20230307.sol';
-import 'aave-helpers/../script/Utils.s.sol';
+import 'aave-helpers/ScriptUtils.sol';
 
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
