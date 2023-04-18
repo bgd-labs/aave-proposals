@@ -8,13 +8,17 @@
 | --- | --- |
 | supplyCap | 3,000,000 LUSD |
 | borrowCap | 1,210,000 LUSD |
+| oracle | [0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052](https://optimistic.etherscan.io/address/0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052) |
+| oracleDecimals | 8 |
+| oracleDescription | LUSD / USD |
+| oracleLatestAnswer | 1.01240131 |
 | aToken | [0x8Eb270e296023E9D92081fdF967dDd7878724424](https://optimistic.etherscan.io/address/0x8Eb270e296023E9D92081fdF967dDd7878724424) |
 | aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://optimistic.etherscan.io/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
 | borrowingEnabled | true |
 | debtCeiling | 0 |
 | decimals | 18 |
 | eModeCategory | 0 |
-| interestRateStrategy | ![[0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://optimistic.etherscan.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD)](/.assets/10_0xc76EF342898f1AE7E6C4632627Df683FAD8563DD.svg) |
+| interestRateStrategy | [0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://optimistic.etherscan.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD) |
 | isActive | true |
 | isBorrowableInIsolation | false |
 | isFlashloanable | false |
@@ -24,8 +28,6 @@
 | liquidationProtocolFee | 0 % |
 | liquidationThreshold | 0 % |
 | ltv | 0 % |
-| oracle | [0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052](https://optimistic.etherscan.io/address/0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052) |
-| oracleLatestAnswer | 101,240,131 |
 | reserveFactor | 10 % |
 | stableBorrowRateEnabled | false |
 | stableDebtToken | [0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc](https://optimistic.etherscan.io/address/0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc) |
@@ -43,7 +45,7 @@
 | stableRateSlope2 | 87 % |
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
-
+| interestRate | ![ir](/.assets/43ce89e3d7fc2289843c17d09906ba45f0b42148.svg) |
 
 ## Raw diff
 
@@ -71,6 +73,8 @@
         "liquidationThreshold": 0,
         "ltv": 0,
         "oracle": "0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052",
+        "oracleDecimals": 8,
+        "oracleDescription": "LUSD / USD",
         "oracleLatestAnswer": 101240131,
         "reserveFactor": 1000,
         "stableBorrowRateEnabled": false,
@@ -89,7 +93,6 @@
     "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD": {
       "from": null,
       "to": {
-        "address": "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD",
         "baseStableBorrowRate": "50000000000000000000000000",
         "baseVariableBorrowRate": 0,
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",

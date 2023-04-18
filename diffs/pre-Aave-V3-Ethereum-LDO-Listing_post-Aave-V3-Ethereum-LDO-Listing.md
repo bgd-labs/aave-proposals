@@ -8,13 +8,16 @@
 | --- | --- |
 | supplyCap | 6,000,000 LDO |
 | borrowCap | 3,000,000 LDO |
+| oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
+| oracleName | LDO/ETH/USD |
+| oracleLatestAnswer | 252,715,331 |
 | aToken | [0x8A458A9dc9048e005d22849F470891b840296619](https://etherscan.io/address/0x8A458A9dc9048e005d22849F470891b840296619) |
 | aTokenImpl | [0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d](https://etherscan.io/address/0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d) |
 | borrowingEnabled | true |
 | debtCeiling | 750,000,000 |
 | decimals | 18 |
 | eModeCategory | 0 |
-| interestRateStrategy | ![[0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F)](/.assets/1_0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F.svg) |
+| interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
 | isActive | true |
 | isBorrowableInIsolation | false |
 | isFlashloanable | true |
@@ -24,8 +27,6 @@
 | liquidationProtocolFee | 10 % |
 | liquidationThreshold | 50 % |
 | ltv | 40 % |
-| oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
-| oracleLatestAnswer | 252,715,331 |
 | reserveFactor | 20 % |
 | stableBorrowRateEnabled | false |
 | stableDebtToken | [0x0496372BE7e426D28E89DEBF01f19F014d5938bE](https://etherscan.io/address/0x0496372BE7e426D28E89DEBF01f19F014d5938bE) |
@@ -43,7 +44,7 @@
 | stableRateSlope2 | 300 % |
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
-
+| interestRate | ![ir](/.assets/eda3aded0333ece535adb2c0df7f1b16add284a2.svg) |
 
 ## Raw diff
 
@@ -72,6 +73,7 @@
         "ltv": 4000,
         "oracle": "0xb01e6C9af83879B8e06a092f0DD94309c0D497E4",
         "oracleLatestAnswer": 252715331,
+        "oracleName": "LDO/ETH/USD",
         "reserveFactor": 2000,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x0496372BE7e426D28E89DEBF01f19F014d5938bE",
@@ -89,7 +91,6 @@
     "0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F": {
       "from": null,
       "to": {
-        "address": "0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F",
         "baseStableBorrowRate": "100000000000000000000000000",
         "baseVariableBorrowRate": 0,
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",

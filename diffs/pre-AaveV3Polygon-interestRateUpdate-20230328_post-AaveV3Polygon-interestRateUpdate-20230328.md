@@ -6,13 +6,13 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| interestRateStrategy | ![[0x4b8D3277d49E114C8F2D6E0B2eD310e29226fe16](https://polygonscan.com/address/0x4b8D3277d49E114C8F2D6E0B2eD310e29226fe16)](/.assets/137_0x4b8D3277d49E114C8F2D6E0B2eD310e29226fe16.svg) | ![[0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E)](/.assets/137_0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E.svg) |
+| interestRateStrategy | [0x4b8D3277d49E114C8F2D6E0B2eD310e29226fe16](https://polygonscan.com/address/0x4b8D3277d49E114C8F2D6E0B2eD310e29226fe16) | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
 | baseVariableBorrowRate | 3 % | 5 % |
 | variableRateSlope1 | 14 % | 22 % |
 | baseStableBorrowRate | 16 % | 27 % |
 | stableRateSlope1 | 0 % | 22 % |
 | stableRateSlope2 | 0 % | 150 % |
-
+| interestRate | ![before](/.assets/d3533b46a606ea3ecf5d2c9d4131c8d9d3d7fcfe.svg) | ![after](/.assets/f3726ff23cc2fccdef4119f3fe7a7c6fe9fcd827.svg) |
 
 ## Raw diff
 
@@ -30,7 +30,6 @@
     "0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E": {
       "from": null,
       "to": {
-        "address": "0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E",
         "baseStableBorrowRate": "270000000000000000000000000",
         "baseVariableBorrowRate": "50000000000000000000000000",
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
