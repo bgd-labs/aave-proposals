@@ -12,13 +12,14 @@
   resolved "https://registry.yarnpkg.com/@bgd-labs/aave-tenderly-cli/-/aave-tenderly-cli-0.0.13.tgz#c44aa6d448abf43af45b58bfb6c5e5a41d39ffa3"
   integrity sha512-zRgZhsXmkdjPC3mrsWxB5sSN/8ex4cYM3tTu+ezRPB0hR1KwdnudmMZ4+tfGwDrmefZE/OipqySqy92F6YEL6w==
 
-"@bgd-labs/report-engine@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.7.tgz#69ebd27a2afbbbd66eefa8c948c8d643e2970a00"
-  integrity sha512-Do2MFNXCpN4hv7wUI5GHNlg/z/4zsyLhhqVY/FcXgHW1yMsVRzHtANq1pe6PDhp62BmQ+3SROWbFAu4Bmf5uNQ==
+"@bgd-labs/report-engine@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.8.tgz#bfbf3455717ded9b3d1412b1e7bc9720e9861830"
+  integrity sha512-Ctzi09ppp4RX9+RN59HNB67CyRHIoHJpQcRAQK3zH38IjsdKKJg7Po0+EZ3E9OIaL30tGRY9H/b+pnGMaUdq2w==
   dependencies:
     json-bigint "^1.0.0"
     node-fetch "^2.6.9"
+    object-hash "^3.0.0"
     viem "^0.3.0"
     yargs "^17.7.1"
     zod "^3.21.4"
@@ -196,6 +197,11 @@ node-fetch@^2.6.9:
   integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
   dependencies:
     whatwg-url "^5.0.0"
+
+object-hash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
+  integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
 path-key@^3.1.0:
   version "3.1.1"

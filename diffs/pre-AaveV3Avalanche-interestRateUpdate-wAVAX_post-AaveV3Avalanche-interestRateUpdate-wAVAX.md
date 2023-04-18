@@ -6,7 +6,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| interestRateStrategy | ![[0x79a906e8c998d2fb5C5D66d23c4c5416Fe0168D6](https://snowtrace.io/address/0x79a906e8c998d2fb5C5D66d23c4c5416Fe0168D6)](/.assets/43114_0x79a906e8c998d2fb5C5D66d23c4c5416Fe0168D6.svg) | ![[0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://snowtrace.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD)](/.assets/43114_0xc76EF342898f1AE7E6C4632627Df683FAD8563DD.svg) |
+| interestRateStrategy | [0x79a906e8c998d2fb5C5D66d23c4c5416Fe0168D6](https://snowtrace.io/address/0x79a906e8c998d2fb5C5D66d23c4c5416Fe0168D6) | [0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://snowtrace.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD) |
 | optimalUsageRatio | 45 % | 65 % |
 | maxExcessUsageRatio | 55 % | 35 % |
 | baseVariableBorrowRate | 0 % | 1 % |
@@ -15,7 +15,7 @@
 | baseStableBorrowRate | 9 % | 8.72 % |
 | stableRateSlope1 | 0 % | 4.72 % |
 | stableRateSlope2 | 0 % | 144.28 % |
-
+| interestRate | ![before](/.assets/19b2f23d55d76d891e7d30c29aa97741efed9d17.svg) | ![after](/.assets/961b616d9b34e324e6abaa20faffc7f7a6dc9b31.svg) |
 
 ## Raw diff
 
@@ -33,7 +33,6 @@
     "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD": {
       "from": null,
       "to": {
-        "address": "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD",
         "baseStableBorrowRate": "87200000000000000000000000",
         "baseVariableBorrowRate": "10000000000000000000000000",
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
