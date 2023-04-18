@@ -6,26 +6,27 @@
 
 | description | value |
 | --- | --- |
-| supplyCap | 5,600 wstETH |
+| supplyCap | 1,800 wstETH |
 | borrowCap | 285 wstETH |
+| oracle | [0xA2508729b1282Cc70dd33Ed311d4A9A37383035b](https://polygonscan.com/address/0xA2508729b1282Cc70dd33Ed311d4A9A37383035b) |
+| oracleName | wstETH/ETH/USD |
+| oracleLatestAnswer | 224,341,679,900 |
 | aToken | [0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40](https://polygonscan.com/address/0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40) |
 | aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://polygonscan.com/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
 | borrowingEnabled | true |
 | debtCeiling | 0 |
 | decimals | 18 |
 | eModeCategory | 3 |
-| interestRateStrategy | ![[0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E)](/.assets/137_0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E.svg) |
+| interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
 | isActive | true |
 | isBorrowableInIsolation | false |
 | isFlashloanable | false |
 | isFrozen | false |
 | isSiloed | false |
-| liquidationBonus | 5 % |
+| liquidationBonus | 7.2 % |
 | liquidationProtocolFee | 10 % |
 | liquidationThreshold | 79 % |
 | ltv | 70 % |
-| oracle | [0xA2508729b1282Cc70dd33Ed311d4A9A37383035b](https://polygonscan.com/address/0xA2508729b1282Cc70dd33Ed311d4A9A37383035b) |
-| oracleLatestAnswer | 224,341,679,900 |
 | reserveFactor | 15 % |
 | stableBorrowRateEnabled | false |
 | stableDebtToken | [0x173e54325AE58B072985DbF232436961981EA000](https://polygonscan.com/address/0x173e54325AE58B072985DbF232436961981EA000) |
@@ -43,7 +44,7 @@
 | stableRateSlope2 | 80 % |
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
-
+| interestRate | ![ir](/.assets/6c6aa53c31467fe6d6e1e00491cf89ca125ee373.svg) |
 
 ### Reserves altered
 
@@ -94,17 +95,18 @@
         "isFlashloanable": false,
         "isFrozen": false,
         "isSiloed": false,
-        "liquidationBonus": 10500,
+        "liquidationBonus": 10720,
         "liquidationProtocolFee": 1000,
         "liquidationThreshold": 7900,
         "ltv": 7000,
         "oracle": "0xA2508729b1282Cc70dd33Ed311d4A9A37383035b",
         "oracleLatestAnswer": 224341679900,
+        "oracleName": "wstETH/ETH/USD",
         "reserveFactor": 1500,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x173e54325AE58B072985DbF232436961981EA000",
         "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
-        "supplyCap": 5600,
+        "supplyCap": 1800,
         "symbol": "wstETH",
         "underlying": "0x03b54A6e9a984069379fae1a4fC4dBAE93B3bCCD",
         "usageAsCollateralEnabled": true,
@@ -117,7 +119,6 @@
     "0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E": {
       "from": null,
       "to": {
-        "address": "0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E",
         "baseStableBorrowRate": "55000000000000000000000000",
         "baseVariableBorrowRate": "2500000000000000000000000",
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",

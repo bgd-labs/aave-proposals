@@ -36,7 +36,7 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
       decimals: 18,
       ltv: 70_00,
       liquidationThreshold: 79_00,
-      liquidationBonus: 10500,
+      liquidationBonus: 10720,
       liquidationProtocolFee: 1000,
       reserveFactor: 1500,
       usageAsCollateralEnabled: true,
@@ -48,7 +48,7 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
       isSiloed: false,
       isBorrowableInIsolation: false,
       isFlashloanable: false,
-      supplyCap: 5_600,
+      supplyCap: 1_800,
       borrowCap: 285,
       debtCeiling: 0,
       eModeCategory: payload.EMODE_CATEGORY_ID_ETH_CORRELATED()
