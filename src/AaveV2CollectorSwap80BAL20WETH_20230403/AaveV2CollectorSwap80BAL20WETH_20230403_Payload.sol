@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
+import {console2} from 'forge-std/Test.sol';
+
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
@@ -10,7 +12,6 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   error AlreadyExecuted();
 
-  bool public executed;
   uint256 public constant WETH_AMOUNT = 338_10e16; //326.31 aWETH
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0xFcd1726Cf48614E40E1f8EC636aC73bA05A52cF2;
@@ -21,9 +22,6 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   uint256 public constant AMOUNT_AUSDT = 812_944_900000; // $812,944.90
 
   function execute() external {
-    if (executed) revert AlreadyExecuted();
-    executed = true;
-
     /*******************************************************************************
     ********************************* AGD Approval *********************************
     *******************************************************************************/
@@ -42,74 +40,74 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
       AMOUNT_AUSDT
     );
 
-    /*******************************************************************************
-    ******************************* Withdraw aTokens *******************************
-    *******************************************************************************/
+    // /*******************************************************************************
+    // ******************************* Withdraw aTokens *******************************
+    // *******************************************************************************/
 
-    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.transfer(
-      AaveV2Ethereum.COLLECTOR,
-      AaveV2EthereumAssets.WETH_A_TOKEN,
-      address(this),
-      WETH_AMOUNT
-    );
+    // AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.transfer(
+    //   AaveV2Ethereum.COLLECTOR,
+    //   AaveV2EthereumAssets.WETH_A_TOKEN,
+    //   address(this),
+    //   WETH_AMOUNT
+    // );
 
-    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.transfer(
-      AaveV2Ethereum.COLLECTOR,
-      AaveV2EthereumAssets.BAL_A_TOKEN,
-      address(this),
-      IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(AaveV2Ethereum.COLLECTOR)
-    );
+    // AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.transfer(
+    //   AaveV2Ethereum.COLLECTOR,
+    //   AaveV2EthereumAssets.BAL_A_TOKEN,
+    //   address(this),
+    //   IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(AaveV2Ethereum.COLLECTOR)
+    // );
 
-    AaveV2Ethereum.POOL.withdraw(
-      AaveV2EthereumAssets.WETH_UNDERLYING,
-      type(uint256).max,
-      AaveV2Ethereum.COLLECTOR
-    );
+    // AaveV2Ethereum.POOL.withdraw(
+    //   AaveV2EthereumAssets.WETH_UNDERLYING,
+    //   type(uint256).max,
+    //   AaveV2Ethereum.COLLECTOR
+    // );
 
-    AaveV2Ethereum.POOL.withdraw(
-      AaveV2EthereumAssets.BAL_UNDERLYING,
-      type(uint256).max,
-      AaveV2Ethereum.COLLECTOR
-    );
+    // AaveV2Ethereum.POOL.withdraw(
+    //   AaveV2EthereumAssets.BAL_UNDERLYING,
+    //   type(uint256).max,
+    //   AaveV2Ethereum.COLLECTOR
+    // );
 
-    /*******************************************************************************
-    *********************************** Approve ************************************
-    *******************************************************************************/
+    // /*******************************************************************************
+    // *********************************** Approve ************************************
+    // *******************************************************************************/
 
-    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.approve(
-      AaveV2Ethereum.COLLECTOR,
-      AaveV2EthereumAssets.WETH_UNDERLYING,
-      MILKMAN,
-      WETH_AMOUNT
-    );
+    // AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.approve(
+    //   AaveV2Ethereum.COLLECTOR,
+    //   AaveV2EthereumAssets.WETH_UNDERLYING,
+    //   MILKMAN,
+    //   WETH_AMOUNT
+    // );
 
-    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.approve(
-      AaveV2Ethereum.COLLECTOR,
-      AaveV2EthereumAssets.BAL_UNDERLYING,
-      MILKMAN,
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(AaveV2Ethereum.COLLECTOR)
-    );
+    // AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.approve(
+    //   AaveV2Ethereum.COLLECTOR,
+    //   AaveV2EthereumAssets.BAL_UNDERLYING,
+    //   MILKMAN,
+    //   IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(AaveV2Ethereum.COLLECTOR)
+    // );
 
-    /*******************************************************************************
-    ************************************ Trade *************************************
-    *******************************************************************************/
+    // /*******************************************************************************
+    // ************************************ Trade *************************************
+    // *******************************************************************************/
 
-    IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      WETH_AMOUNT,
-      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-      IERC20(BAL80WETH20),
-      AaveV2Ethereum.COLLECTOR,
-      PRICE_CHECKER,
-      abi.encode(200) // 2% slippage
-    );
+    // IMilkman(MILKMAN).requestSwapExactTokensForTokens(
+    //   WETH_AMOUNT,
+    //   IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
+    //   IERC20(BAL80WETH20),
+    //   AaveV2Ethereum.COLLECTOR,
+    //   PRICE_CHECKER,
+    //   abi.encode(200) // 2% slippage
+    // );
 
-    IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-      IERC20(BAL80WETH20),
-      AaveV2Ethereum.COLLECTOR,
-      PRICE_CHECKER,
-      abi.encode(200) // 2% slippage
-    );
+    // IMilkman(MILKMAN).requestSwapExactTokensForTokens(
+    //   IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(AaveV2Ethereum.COLLECTOR),
+    //   IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
+    //   IERC20(BAL80WETH20),
+    //   AaveV2Ethereum.COLLECTOR,
+    //   PRICE_CHECKER,
+    //   abi.encode(200) // 2% slippage
+    // );
   }
 }
