@@ -22,27 +22,20 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     }
 
     function test_AGDApproval() public {
-        assertEq(IERC20(payload.aUSDTV1()).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
-        assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), 0);
+        assertEq(IERC20(payload.aUSDTV1()).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
+        assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), 0);
 
-        vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
         _executePayload(address(payload));
+
+        assertEq(IERC20(payload.aUSDTV1()).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), 0);
+        assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
+
+        vm.startPrank(payload.AGD_MULTISIG());
+        IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transferFrom(address(AaveV2Ethereum.COLLECTOR), makeAddr("new-addy"), payload.AMOUNT_AUSDT());
         vm.stopPrank();
-
-        assertEq(IERC20(payload.aUSDTV1()).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), 0);
-        assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
-
-        vm.prank(payload.AGD_MULTISIG());
-        IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transfer(makeAddr("new-addy"), payload.AMOUNT_AUSDT());
     }
 
-    // function test_swap() public {
+    function test_swap() public {
 
-    // }
-
-    // function test_RevertIf_alreadyExecuted() public {
-    //     _executePayload(address(payload));
-    //     vm.expectRevert(SwapFor80BAL20WETHPayload.AlreadyExecuted.selector);
-    //     _executePayload(address(payload));
-    // }
+    }
 }
