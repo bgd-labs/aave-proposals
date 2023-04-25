@@ -25,7 +25,6 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
         assertEq(IERC20(payload.aUSDTV1()).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
         assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(AaveV2Ethereum.COLLECTOR, payload.AGD_MULTISIG()), 0);
 
-
         vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
         _executePayload(address(payload));
         vm.stopPrank();
