@@ -35,7 +35,7 @@ contract AaveV3OPMAIListing_20230425 is AaveV3PayloadOptimism {
       }),
       enabledToBorrow: EngineFlags.ENABLED,
       stableRateModeEnabled: EngineFlags.DISABLED,
-      borrowableInIsolation: EngineFlags.ENABLED,
+      borrowableInIsolation: EngineFlags.DISABLED,
       withSiloedBorrowing: EngineFlags.DISABLED,
       flashloanable: EngineFlags.DISABLED,
       ltv: 75_00,
@@ -44,7 +44,7 @@ contract AaveV3OPMAIListing_20230425 is AaveV3PayloadOptimism {
       reserveFactor: 20_00,
       supplyCap: 2_200_000,
       borrowCap: 1_200_000,
-      debtCeiling: 2_200_000,
+      debtCeiling: 2_000_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
     });

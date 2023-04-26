@@ -109,3 +109,7 @@ create-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetAC
 deploy-caps-apr21-payload-dry :; forge script src/AaveV3PolCapsUpdate_20230421/DeployAaveV3PolCapsUpdate_20230421.s.sol:DeployPayloadPolygon --rpc-url polygon -vvvv
 deploy-caps-apr21-payload :; forge script src/AaveV3PolCapsUpdate_20230421/DeployAaveV3PolCapsUpdate_20230421.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 emit-create-caps-apr21-proposal :; forge script src/AaveV3PolCapsUpdate_20230421/DeployAaveV3PolCapsUpdate_20230421.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# MAI ARB & OP Onboarding
+
+test-mai-op-payload :; forge test -vvv --match-contract AaveV3OPMAIListing_20230425Test
