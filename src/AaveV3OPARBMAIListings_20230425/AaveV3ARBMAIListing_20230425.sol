@@ -5,13 +5,13 @@ pragma solidity ^0.8.16;
 import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadArbitrum.sol';
 
 /**
- * @title LIST MAI on Aave V3 Arbitrum
+ * @title Add MAI on Aave V3 Arbitrum
  * @author @MarcZeller - Aave-Chan Initiative
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xef9654757a0d1aaec6f970f444ce54cfb2d6c2af0ccbfeb9a182acd51919453c
  * - Discussion: https://governance.aave.com/t/arfc-add-mai-to-arbitrum-aave-v3-market/12759
  */
 
-contract AaveV3OPMAIListing_20230425 is AaveV3PayloadArbitrum {
+contract AaveV3ARBMAIListing_20230425 is AaveV3PayloadArbitrum {
   address public constant MAI_USD_FEED = 0x59644ec622243878d1464A9504F9e9a31294128a;
   address public constant MAI = 0x3F56e0c36d275367b8C502090EDF38289b3dEa0d;
 
@@ -35,7 +35,7 @@ contract AaveV3OPMAIListing_20230425 is AaveV3PayloadArbitrum {
       }),
       enabledToBorrow: EngineFlags.ENABLED,
       stableRateModeEnabled: EngineFlags.DISABLED,
-      borrowableInIsolation: EngineFlags.ENABLED,
+      borrowableInIsolation: EngineFlags.DISABLED,
       withSiloedBorrowing: EngineFlags.DISABLED,
       flashloanable: EngineFlags.DISABLED,
       ltv: 75_00,

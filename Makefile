@@ -113,3 +113,8 @@ emit-create-caps-apr21-proposal :; forge script src/AaveV3PolCapsUpdate_20230421
 # MAI ARB & OP Onboarding
 
 test-mai-op-payload :; forge test -vvv --match-contract AaveV3OPMAIListing_20230425Test
+test-mai-arb-payload :; forge test -vvv --match-contract AaveV3ARBMAIListing_20230425Test
+deploy-mai-op-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-mai-arb-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv

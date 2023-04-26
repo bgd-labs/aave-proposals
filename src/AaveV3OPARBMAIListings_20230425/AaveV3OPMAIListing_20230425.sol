@@ -5,7 +5,7 @@ pragma solidity ^0.8.16;
 import {AaveV3PayloadOptimism, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
 
 /**
- * @title LIST MAI on Aave V3 Optimism
+ * @title Add MAI on Aave V3 Optimism
  * @author @MarcZeller - Aave-Chan Initiative
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x5c5de0a7cb87170f6b0f28da20c079f9c89350125fffa9f80e0f60cc3c9d43ea
  * - Discussion: https://governance.aave.com/t/arfc-add-mai-to-optimism-aave-v3-pool/12765
