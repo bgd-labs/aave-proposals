@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.16;
 
 import 'forge-std/Test.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
-import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3OPMAIListing_20230425} from './AaveV3OPMAIListing_20230425.sol';
 
-contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor {
-  uint256 internal constant RAY = 1e27;
+contract AaveV3OPMAIListing_20230425Test is ProtocolV3_0_1TestBase, TestWithExecutor {
   AaveV3OPMAIListing_20230425 public payload;
 
   function setUp() public {
@@ -21,6 +19,9 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
   }
 
   function testMAI() public {
+    // woraround for pending https://app.aave.com/governance/proposal/?proposalId=208
+    // https://optimistic.etherscan.io/address/0x7748d38a160eeef9559e2b043eaec5cfffce3e4c
+    _executePayload(0x7748d38A160EEeF9559e2b043eAec5CfFFCE3E4c);
     createConfigurationSnapshot('pre-Aave-V3-OP-MAI-Listing', AaveV3Optimism.POOL);
 
     _executePayload(address(payload));
@@ -28,7 +29,6 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
     ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Optimism.POOL);
 
     // MAI
-
     ReserveConfig memory MAI = ReserveConfig({
       symbol: 'MAI',
       underlying: payload.MAI(),
@@ -49,7 +49,7 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
       isFrozen: false,
       isSiloed: false,
       isBorrowableInIsolation: false,
-      isFlashloanable: false,
+      isFlashloanable: true,
       supplyCap: 2_200_000,
       borrowCap: 1_200_000,
       debtCeiling: 2_000_000_00,

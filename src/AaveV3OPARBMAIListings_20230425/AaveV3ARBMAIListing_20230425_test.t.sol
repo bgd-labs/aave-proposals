@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.16;
 
 import 'forge-std/Test.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ARBMAIListing_20230425} from './AaveV3ARBMAIListing_20230425.sol';
 
-contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor {
-  uint256 internal constant RAY = 1e27;
+contract AaveV3ARBMAIListing_20230425Test is ProtocolV3_0_1TestBase, TestWithExecutor {
   AaveV3ARBMAIListing_20230425 public payload;
 
   function setUp() public {
@@ -21,6 +19,10 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
   }
 
   function testMAI() public {
+    // woraround for pending https://app.aave.com/governance/proposal/?proposalId=208
+    // https://arbiscan.io/address/0x209ad99bd808221293d03827b86cc544bca0023b
+    _executePayload(0x209Ad99bd808221293d03827B86cC544bcA0023b);
+
     createConfigurationSnapshot('pre-Aave-V3-ARB-MAI-Listing', AaveV3Arbitrum.POOL);
 
     _executePayload(address(payload));
@@ -28,7 +30,6 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
     ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Arbitrum.POOL);
 
     // MAI
-
     ReserveConfig memory MAI = ReserveConfig({
       symbol: 'MAI',
       underlying: payload.MAI(),
@@ -49,7 +50,7 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
       isFrozen: false,
       isSiloed: false,
       isBorrowableInIsolation: false,
-      isFlashloanable: false,
+      isFlashloanable: true,
       supplyCap: 1_200_000,
       borrowCap: 1_000_000,
       debtCeiling: 2_000_000_00,
