@@ -12,10 +12,10 @@
   resolved "https://registry.yarnpkg.com/@bgd-labs/aave-tenderly-cli/-/aave-tenderly-cli-0.0.13.tgz#c44aa6d448abf43af45b58bfb6c5e5a41d39ffa3"
   integrity sha512-zRgZhsXmkdjPC3mrsWxB5sSN/8ex4cYM3tTu+ezRPB0hR1KwdnudmMZ4+tfGwDrmefZE/OipqySqy92F6YEL6w==
 
-"@bgd-labs/report-engine@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.10.tgz#17015e7feb6a526e035aa1777d12b768d58c95a3"
-  integrity sha512-/Hvt1xsMelg34H8cWEp4sfewSydSBokrdL8INYjYkteh0X8sZgmk5szANlfsp0Uuzlp+ZLmKKHQw7wu2ujyPLw==
+"@bgd-labs/report-engine@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.11.tgz#03209a5924c8499febe75b93208f196fd6673535"
+  integrity sha512-6NiP8gwi3GV5gISsfnd7PZcLd2tOLU1okjGJACtb8iJuLcdRlbASJPDmR/aTtaGpItmjoQJNVWpPkFQgoy5W6A==
   dependencies:
     json-bigint "^1.0.0"
     node-fetch "^2.6.9"

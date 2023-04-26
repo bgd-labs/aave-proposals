@@ -11,7 +11,7 @@
 | isFrozen | false |
 | supplyCap | 2,000,000 UNI |
 | borrowCap | 500,000 UNI |
-| debtCeiling | 17000000 $ |
+| debtCeiling | 17,000,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
@@ -56,7 +56,7 @@
 | isFrozen | false |
 | supplyCap | 6,000 MKR |
 | borrowCap | 1,500 MKR |
-| debtCeiling | 2500000 $ |
+| debtCeiling | 2,500,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
@@ -101,7 +101,7 @@
 | isFrozen | false |
 | supplyCap | 2,000,000 SNX |
 | borrowCap | 1,100,000 SNX |
-| debtCeiling | 2500000 $ |
+| debtCeiling | 2,500,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
@@ -146,7 +146,7 @@
 | isFrozen | false |
 | supplyCap | 700,000 BAL |
 | borrowCap | 185,000 BAL |
-| debtCeiling | 2900000 $ |
+| debtCeiling | 2,900,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |

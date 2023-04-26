@@ -11,7 +11,7 @@
 | isFrozen | false |
 | supplyCap | 6,000,000 LDO |
 | borrowCap | 3,000,000 LDO |
-| debtCeiling | 7500000 $ |
+| debtCeiling | 7,500,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
