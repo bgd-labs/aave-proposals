@@ -6,34 +6,34 @@
 
 | description | value |
 | --- | --- |
+| decimals | 18 |
+| isActive | true |
+| isFrozen | false |
 | supplyCap | 1,800 wstETH |
 | borrowCap | 285 wstETH |
+| debtCeiling | 0 $ |
+| isSiloed | false |
+| isFlashloanable | false |
+| eModeCategory | 3 |
 | oracle | [0xA2508729b1282Cc70dd33Ed311d4A9A37383035b](https://polygonscan.com/address/0xA2508729b1282Cc70dd33Ed311d4A9A37383035b) |
 | oracleName | wstETH/ETH/USD |
 | oracleLatestAnswer | 224,341,679,900 |
-| aToken | [0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40](https://polygonscan.com/address/0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40) |
-| aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://polygonscan.com/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
-| borrowingEnabled | true |
-| debtCeiling | 0 |
-| decimals | 18 |
-| eModeCategory | 3 |
-| interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
-| isActive | true |
-| isBorrowableInIsolation | false |
-| isFlashloanable | false |
-| isFrozen | false |
-| isSiloed | false |
+| usageAsCollateralEnabled | true |
+| ltv | 70 % |
+| liquidationThreshold | 79 % |
 | liquidationBonus | 7.2 % |
 | liquidationProtocolFee | 10 % |
-| liquidationThreshold | 79 % |
-| ltv | 70 % |
 | reserveFactor | 15 % |
-| stableBorrowRateEnabled | false |
-| stableDebtToken | [0x173e54325AE58B072985DbF232436961981EA000](https://polygonscan.com/address/0x173e54325AE58B072985DbF232436961981EA000) |
-| stableDebtTokenImpl | [0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e](https://polygonscan.com/address/0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e) |
-| usageAsCollateralEnabled | true |
+| aToken | [0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40](https://polygonscan.com/address/0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40) |
+| aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://polygonscan.com/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
 | variableDebtToken | [0x77fA66882a8854d883101Fb8501BD3CaD347Fc32](https://polygonscan.com/address/0x77fA66882a8854d883101Fb8501BD3CaD347Fc32) |
 | variableDebtTokenImpl | [0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3](https://polygonscan.com/address/0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3) |
+| stableDebtToken | [0x173e54325AE58B072985DbF232436961981EA000](https://polygonscan.com/address/0x173e54325AE58B072985DbF232436961981EA000) |
+| stableDebtTokenImpl | [0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e](https://polygonscan.com/address/0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e) |
+| borrowingEnabled | true |
+| stableBorrowRateEnabled | false |
+| isBorrowableInIsolation | false |
+| interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0.25 % |
