@@ -21,21 +21,21 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
         payload = new SwapFor80BAL20WETHPayload();
     }
 
-    function test_AGDApproval() public {
+    function test_execute() public {
+        // AGD Approvals Pre-Execution
         assertEq(IERC20(payload.aUSDTV1()).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
         assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), 0);
+        // End AGD Approvals Pre-Execution
 
         _executePayload(address(payload));
 
+        // AGD Approvals Post-Execution
         assertEq(IERC20(payload.aUSDTV1()).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), 0);
         assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).allowance(address(AaveV2Ethereum.COLLECTOR), payload.AGD_MULTISIG()), payload.AMOUNT_AUSDT());
 
         vm.startPrank(payload.AGD_MULTISIG());
         IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transferFrom(address(AaveV2Ethereum.COLLECTOR), makeAddr("new-addy"), payload.AMOUNT_AUSDT());
         vm.stopPrank();
-    }
-
-    function test_swap() public {
-
+        // End AGD Approvals Post-Execution
     }
 }

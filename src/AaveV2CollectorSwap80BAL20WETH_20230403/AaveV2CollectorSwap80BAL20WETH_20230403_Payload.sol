@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {console2} from 'forge-std/Test.sol';
-
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
@@ -12,7 +10,7 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   error AlreadyExecuted();
 
-  uint256 public constant WETH_AMOUNT = 338_10e16; //326.31 aWETH
+  uint256 public constant WETH_AMOUNT = 338_10e16; //338.10 aWETH
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0xFcd1726Cf48614E40E1f8EC636aC73bA05A52cF2;
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
@@ -70,17 +68,23 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
     *********************************** Approve ************************************
     *******************************************************************************/
 
-    AaveV2Ethereum.COLLECTOR.approve(
+    AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.WETH_UNDERLYING,
-      MILKMAN,
+      address(this),
       WETH_AMOUNT
     );
 
-    AaveV2Ethereum.COLLECTOR.approve(
+    uint256 balBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+
+    AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.BAL_UNDERLYING,
-      MILKMAN,
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR))
+      address(this),
+      balBalance
     );
+
+    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, WETH_AMOUNT);
+
+    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).approve(MILKMAN, balBalance);
 
     /*******************************************************************************
     ************************************ Trade *************************************
@@ -92,7 +96,7 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(200) // 2% slippage
+      abi.encode(50) // 0.5% slippage
     );
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
@@ -101,7 +105,7 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(200) // 2% slippage
+      abi.encode(50) // 0.5% slippage
     );
   }
 }
