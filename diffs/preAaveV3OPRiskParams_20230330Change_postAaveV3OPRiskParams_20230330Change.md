@@ -6,17 +6,17 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| liquidationBonus | 9.4 % | 8.5 % |
-| liquidationThreshold | 75 % | 78 % |
 | ltv | 70 % | 73 % |
+| liquidationThreshold | 75 % | 78 % |
+| liquidationBonus | 9.4 % | 8.5 % |
 
 
 #### DAI ([0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1](https://optimistic.etherscan.io/address/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1))
 
 | description | value before | value after |
 | --- | --- | --- |
-| liquidationThreshold | 80 % | 83 % |
 | ltv | 75 % | 78 % |
+| liquidationThreshold | 80 % | 83 % |
 
 
 ## Raw diff
