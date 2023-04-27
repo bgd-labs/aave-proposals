@@ -74,3 +74,15 @@ create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20
 test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# ChaosLabs Caps Update
+test-eth-caps-update-april27 :; forge test -vvv --match-contract AaveV3ETHSupplyBorrowUpdate_20230427Test
+test-arb-caps-update-april27 :; forge test -vvv --match-contract AaveV3ARBSupplyBorrowUpdate_20230427Test
+test-op-caps-update-april27 :; forge test -vvv --match-contract AaveV3OPSupplyBorrowUpdate_20230427Test
+test-pol-caps-update-april27 :; forge test -vvv --match-contract AaveV3POLSupplyBorrowUpdate_20230427Test
+test-ava-caps-update-april27 :; forge test -vvv --match-contract AaveV3AVASupplyBorrowUpdate_20230427Test
+deploy-pol-caps-update-april27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3POLSupplyBorrowUpdate_20230427 --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-op-caps-update-april27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3OPSupplyBorrowUpdate_20230427 --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-eth-caps-update-april27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3ETHSupplyBorrowUpdate_20230427 --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-ava-caps-update-april27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3AVASupplyBorrowUpdate_20230427 --rpc-url avalanche --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+deploy-arb-caps-update-april27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3ARBSupplyBorrowUpdate_20230427 --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
