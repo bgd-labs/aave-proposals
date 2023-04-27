@@ -1,21 +1,110 @@
-```diff
-diff --git a/./reports/pre-Aave-V3-OP-LUSD-Listing.md b/./reports/post-Aave-V3-OP-LUSD-Listing.md
-index 6ccaa41..3d8acf5 100644
---- a/./reports/pre-Aave-V3-OP-LUSD-Listing.md
-+++ b/./reports/post-Aave-V3-OP-LUSD-Listing.md
-@@ -14,6 +14,7 @@
- | sUSD | 0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9 | 0x6d80113e533a2C0fe82EaBD35f1875DcEA89Ea97 | 0xF15F26710c827DDe8ACBA678682F3Ce24f2Fb56E | 0x4a1c3aD6Ed28a636ee1751C69071f6be75DEb8B8 | 18 | 6000 | 7500 | 10540 | 1000 | 1000 | true | true | false | 20000000 | 13000000 | 0 | 1 | 0xA9F3C3caE095527061e6d270DBE163693e6fda9D | true | false | false | false | false | 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B | 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e | 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3 |
- | OP | 0x4200000000000000000000000000000000000042 | 0x513c7E3a9c69cA3e22550eF58AC1C0088e918FFf | 0x08Cb71192985E936C7Cd166A8b268035e400c3c3 | 0x77CA01483f379E58174739308945f044e1a764dc | 18 | 3000 | 4000 | 11000 | 1000 | 2000 | true | false | false | 20000000 | 0 | 200000000 | 0 | 0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C | true | false | false | false | false | 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B | 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e | 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3 |
- | wstETH | 0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb | 0xc45A479877e1e9Dfe9FcD4056c699575a1045dAA | 0x78246294a4c6fBf614Ed73CcC9F8b875ca8eE841 | 0x34e2eD44EF7466D5f9E0b782B5c08b57475e7907 | 18 | 7000 | 7900 | 10720 | 1000 | 1500 | true | true | false | 6000 | 940 | 0 | 0 | 0x6BA97468e2e6a3711a6DD05F0075d48E878c910e | true | false | false | false | false | 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B | 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e | 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3 |
-+| LUSD | 0xc40F949F8a4e094D1b49a23ea9241D289B7b2819 | 0x8Eb270e296023E9D92081fdF967dDd7878724424 | 0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc | 0xCE186F6Cccb0c955445bb9d10C59caE488Fea559 | 18 | 0 | 0 | 0 | 0 | 1000 | false | true | false | 3000000 | 1210000 | 0 | 0 | 0xc76EF342898f1AE7E6C4632627Df683FAD8563DD | true | false | false | false | false | 0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B | 0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e | 0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3 |
- 
- 
- ## InterestRateStrategies
-@@ -24,6 +25,7 @@
- | 0xeE1BAc9355EaAfCD1B68d272d640d870bC9b4b5C | 90000000000000000000000000 | 0 | 0 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 70000000000000000000000000 | 3000000000000000000000000000 | 450000000000000000000000000 | 550000000000000000000000000 |
- | 0x41B66b4b6b4c9dab039d96528D1b88f7BAF8C5A4 | 50000000000000000000000000 | 5000000000000000000000000 | 600000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 40000000000000000000000000 | 600000000000000000000000000 | 900000000000000000000000000 | 100000000000000000000000000 |
- | 0x6BA97468e2e6a3711a6DD05F0075d48E878c910e | 55000000000000000000000000 | 45000000000000000000000000 | 800000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 2500000000000000000000000 | 45000000000000000000000000 | 800000000000000000000000000 | 450000000000000000000000000 | 550000000000000000000000000 |
-+| 0xc76EF342898f1AE7E6C4632627Df683FAD8563DD | 50000000000000000000000000 | 40000000000000000000000000 | 870000000000000000000000000 | 200000000000000000000000000 | 800000000000000000000000000 | 0 | 40000000000000000000000000 | 870000000000000000000000000 | 800000000000000000000000000 | 200000000000000000000000000 |
- 
- 
- ## EMode categories```
+## Reserve changes
+
+### Reserves added
+
+#### LUSD ([0xc40F949F8a4e094D1b49a23ea9241D289B7b2819](https://optimistic.etherscan.io/address/0xc40F949F8a4e094D1b49a23ea9241D289B7b2819))
+
+| description | value |
+| --- | --- |
+| decimals | 18 |
+| isActive | true |
+| isFrozen | false |
+| supplyCap | 3,000,000 LUSD |
+| borrowCap | 1,210,000 LUSD |
+| debtCeiling | 0 $ |
+| isSiloed | false |
+| isFlashloanable | false |
+| eModeCategory | 0 |
+| oracle | [0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052](https://optimistic.etherscan.io/address/0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052) |
+| oracleDecimals | 8 |
+| oracleDescription | LUSD / USD |
+| oracleLatestAnswer | 1.01240131 |
+| usageAsCollateralEnabled | false |
+| ltv | 0 % |
+| liquidationThreshold | 0 % |
+| liquidationBonus | 0 % |
+| liquidationProtocolFee | 0 % |
+| reserveFactor | 10 % |
+| aToken | [0x8Eb270e296023E9D92081fdF967dDd7878724424](https://optimistic.etherscan.io/address/0x8Eb270e296023E9D92081fdF967dDd7878724424) |
+| aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://optimistic.etherscan.io/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
+| variableDebtToken | [0xCE186F6Cccb0c955445bb9d10C59caE488Fea559](https://optimistic.etherscan.io/address/0xCE186F6Cccb0c955445bb9d10C59caE488Fea559) |
+| variableDebtTokenImpl | [0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3](https://optimistic.etherscan.io/address/0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3) |
+| stableDebtToken | [0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc](https://optimistic.etherscan.io/address/0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc) |
+| stableDebtTokenImpl | [0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e](https://optimistic.etherscan.io/address/0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e) |
+| borrowingEnabled | true |
+| stableBorrowRateEnabled | false |
+| isBorrowableInIsolation | false |
+| interestRateStrategy | [0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://optimistic.etherscan.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD) |
+| optimalUsageRatio | 80 % |
+| maxExcessUsageRatio | 20 % |
+| baseVariableBorrowRate | 0 % |
+| variableRateSlope1 | 4 % |
+| variableRateSlope2 | 87 % |
+| baseStableBorrowRate | 5 % |
+| stableRateSlope1 | 4 % |
+| stableRateSlope2 | 87 % |
+| optimalStableToTotalDebtRatio | 20 % |
+| maxExcessStableToTotalDebtRatio | 80 % |
+| interestRate | ![ir](/.assets/43ce89e3d7fc2289843c17d09906ba45f0b42148.svg) |
+
+## Raw diff
+
+```json
+{
+  "reserves": {
+    "0xc40F949F8a4e094D1b49a23ea9241D289B7b2819": {
+      "from": null,
+      "to": {
+        "aToken": "0x8Eb270e296023E9D92081fdF967dDd7878724424",
+        "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
+        "borrowCap": 1210000,
+        "borrowingEnabled": true,
+        "debtCeiling": 0,
+        "decimals": 18,
+        "eModeCategory": 0,
+        "interestRateStrategy": "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD",
+        "isActive": true,
+        "isBorrowableInIsolation": false,
+        "isFlashloanable": false,
+        "isFrozen": false,
+        "isSiloed": false,
+        "liquidationBonus": 0,
+        "liquidationProtocolFee": 0,
+        "liquidationThreshold": 0,
+        "ltv": 0,
+        "oracle": "0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052",
+        "oracleDecimals": 8,
+        "oracleDescription": "LUSD / USD",
+        "oracleLatestAnswer": 101240131,
+        "reserveFactor": 1000,
+        "stableBorrowRateEnabled": false,
+        "stableDebtToken": "0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc",
+        "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
+        "supplyCap": 3000000,
+        "symbol": "LUSD",
+        "underlying": "0xc40F949F8a4e094D1b49a23ea9241D289B7b2819",
+        "usageAsCollateralEnabled": false,
+        "variableDebtToken": "0xCE186F6Cccb0c955445bb9d10C59caE488Fea559",
+        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3"
+      }
+    }
+  },
+  "strategies": {
+    "0xc76EF342898f1AE7E6C4632627Df683FAD8563DD": {
+      "from": null,
+      "to": {
+        "baseStableBorrowRate": "50000000000000000000000000",
+        "baseVariableBorrowRate": 0,
+        "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
+        "maxExcessUsageRatio": "200000000000000000000000000",
+        "optimalStableToTotalDebtRatio": "200000000000000000000000000",
+        "optimalUsageRatio": "800000000000000000000000000",
+        "stableRateSlope1": "40000000000000000000000000",
+        "stableRateSlope2": "870000000000000000000000000",
+        "variableRateSlope1": "40000000000000000000000000",
+        "variableRateSlope2": "870000000000000000000000000"
+      }
+    }
+  }
+}
+```

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import {ArbitrumScript, OptimismScript, PolygonScript, EthereumScript, AvalancheScript} from 'aave-helpers/../script/Utils.s.sol';
+import {ArbitrumScript, OptimismScript, PolygonScript, EthereumScript, AvalancheScript} from 'aave-helpers/ScriptUtils.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3POLSupplyBorrowUpdate_20230427} from './AaveV3POLSupplyBorrowUpdate_20230427.sol';
 import {AaveV3OPSupplyBorrowUpdate_20230427} from './AaveV3OPSupplyBorrowUpdate_20230427.sol';

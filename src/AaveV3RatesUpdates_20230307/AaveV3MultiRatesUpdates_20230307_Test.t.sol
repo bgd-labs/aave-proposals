@@ -86,7 +86,6 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       );
       usdtBefore.interestRateStrategy = usdtAfter.interestRateStrategy;
       _validateReserveConfig(usdtBefore, allConfigsAfter);
-      _logStrategyPreviewUrlParams(usdtAfter);
     }
 
     {
@@ -96,7 +95,6 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       );
       eursBefore.interestRateStrategy = eursAfter.interestRateStrategy;
       _validateReserveConfig(eursBefore, allConfigsAfter);
-      _logStrategyPreviewUrlParams(eursAfter);
     }
 
     {
@@ -107,7 +105,6 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       maiBefore.interestRateStrategy = maiAfter.interestRateStrategy;
       maiBefore.reserveFactor = 20_00;
       _validateReserveConfig(maiBefore, allConfigsAfter);
-      _logStrategyPreviewUrlParams(maiAfter);
     }
 
     {
@@ -117,7 +114,6 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       );
       ageurBefore.interestRateStrategy = ageurAfter.interestRateStrategy;
       _validateReserveConfig(ageurBefore, allConfigsAfter);
-      _logStrategyPreviewUrlParams(ageurAfter);
     }
     {
       ReserveConfig memory wethAfter = _findReserveConfig(
@@ -127,7 +123,6 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       wethBefore.interestRateStrategy = wethAfter.interestRateStrategy;
       wethBefore.reserveFactor = 15_00;
       _validateReserveConfig(wethBefore, allConfigsAfter);
-      _logStrategyPreviewUrlParams(wethAfter);
     }
 
     {
@@ -205,9 +200,6 @@ contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
 
     _validateReserveConfig(usdtBefore, allConfigsAfter);
     _validateReserveConfig(wethBefore, allConfigsAfter);
-
-    _logStrategyPreviewUrlParams(usdtAfter);
-    _logStrategyPreviewUrlParams(wethAfter);
   }
 }
 
@@ -279,9 +271,5 @@ contract AaveV3ArbRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
     _validateReserveConfig(usdtBefore, allConfigsAfter);
     _validateReserveConfig(eursBefore, allConfigsAfter);
     _validateReserveConfig(wethBefore, allConfigsAfter);
-
-    _logStrategyPreviewUrlParams(usdtAfter);
-    _logStrategyPreviewUrlParams(eursAfter);
-    _logStrategyPreviewUrlParams(wethAfter);
   }
 }
