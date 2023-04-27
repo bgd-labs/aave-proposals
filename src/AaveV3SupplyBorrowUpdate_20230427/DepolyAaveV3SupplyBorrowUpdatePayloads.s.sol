@@ -39,18 +39,17 @@ contract DeployAaveV3ARBSupplyBorrowUpdate_20230427 is ArbitrumScript {
   }
 }
 
-// contract CreateProposal is EthereumScript {
-//   function run() external broadcast {
-//     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](5);
-//     payloads[0] = GovHelpers.buildPolygon(address(0)); // deployed payload
-//     payloads[1] = GovHelpers.buildOptimism(address(0));
-//     payloads[2] = GovHelpers.buildArbitrum(address(0));
-//     payloads[3] = GovHelpers.buildMainnet(address(0));
-//     payloads[4] =  GovHelpers.buildAvalanch(address(0)); // TODO: how we create avalanch proposal
-//     GovHelpers.createProposal(
-//       payloads,
-//       0, // TODO: Replace with actual hash
-//       true
-//     );
-//   }
-// }
+contract CreateProposal is EthereumScript {
+  function run() external broadcast {
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](5);
+    payloads[0] = GovHelpers.buildPolygon(address(0)); // deployed payload
+    payloads[1] = GovHelpers.buildOptimism(address(0)); // deployed payload
+    payloads[2] = GovHelpers.buildArbitrum(address(0)); // deployed payload
+    payloads[3] = GovHelpers.buildMainnet(address(0)); // deployed payload
+    GovHelpers.createProposal(
+      payloads,
+      0, // TODO: Replace with actual hash
+      true
+    );
+  }
+}
