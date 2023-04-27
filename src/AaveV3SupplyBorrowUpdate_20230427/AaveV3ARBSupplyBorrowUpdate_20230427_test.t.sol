@@ -17,7 +17,7 @@ contract AaveV3ARBSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
   uint256 public constant WETH_BORROW_CAP = 20_000;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 76220649);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 76210049);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
@@ -48,23 +48,23 @@ contract AaveV3ARBSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
       AaveV3Arbitrum.POOL
     );
 
-    // //WBTC
-    // ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
-    //   allConfigsBefore,
-    //   AaveV3ArbitrumAssets.WBTC_UNDERLYING
-    // );
-    // WBTCConfig.supplyCap = WBTC_SUPPLY_CAP;
-    // ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
+    //WBTC
+    ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      AaveV3ArbitrumAssets.WBTC_UNDERLYING
+    );
+    WBTCConfig.supplyCap = WBTC_SUPPLY_CAP;
+    ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
 
 
-    // //WETH
-    // ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
-    //   allConfigsBefore,
-    //   AaveV3ArbitrumAssets.WETH_UNDERLYING
-    // );
-    // WETHConfig.supplyCap = WETH_SUPPLY_CAP;
-    // WETHConfig.borrowCap = WETH_BORROW_CAP;
-    // ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
+    //WETH
+    ReserveConfig memory WETHConfig = ProtocolV3TestBase._findReserveConfig(
+      allConfigsBefore,
+      AaveV3ArbitrumAssets.WETH_UNDERLYING
+    );
+    WETHConfig.supplyCap = WETH_SUPPLY_CAP;
+    WETHConfig.borrowCap = WETH_BORROW_CAP;
+    ProtocolV3TestBase._validateReserveConfig(WETHConfig, allConfigsAfter);
 
 
     // 5. compare snapshots
