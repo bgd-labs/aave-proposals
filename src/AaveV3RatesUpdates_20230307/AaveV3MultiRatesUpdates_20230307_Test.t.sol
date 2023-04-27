@@ -16,7 +16,7 @@ import {AaveV3OptRatesUpdates_20230307} from './AaveV3OptRatesUpdates_20230307.s
 /// diff reports is enough
 contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 40098990);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 41383971);
 
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
