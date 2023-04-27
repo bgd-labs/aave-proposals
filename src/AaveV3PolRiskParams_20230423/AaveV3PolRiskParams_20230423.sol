@@ -44,7 +44,7 @@ contract AaveV3PolRiskParams_20230423 is AaveV3PayloadPolygon {
     });
 
 
-    collateralUpdate[1] = IEngine.CollateralUpdate({
+    collateralUpdate[3] = IEngine.CollateralUpdate({
       asset: AaveV3PolygonAssets.WMATIC_UNDERLYING,
       ltv: 68_00,
       liqThreshold: 73_00,

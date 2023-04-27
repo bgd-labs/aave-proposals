@@ -7,8 +7,8 @@ import {AaveV3PolRiskParams_20230423} from './AaveV3PolRiskParams_20230423.sol';
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildPolygon(address(0)); // contract address
-    GovHelpers.createProposal(payloads, 0); // AIP hash
+    payloads[0] = GovHelpers.buildPolygon(address(0)); // TODO: contract address
+    GovHelpers.createProposal(payloads, 0); // TODO: AIP hash
   }
 }
 

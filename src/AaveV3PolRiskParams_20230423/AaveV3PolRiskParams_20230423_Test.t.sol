@@ -21,12 +21,12 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
   
   uint256 public constant WMATIC_UNDERLYING_LIQ_THRESHOLD = 73_00;
   uint256 public constant WMATIC_UNDERLYING_LTV = 68_00;
-  uint256 public constant WMATIC_UNDERLYING_BONUS = 68_00;
+  uint256 public constant WMATIC_UNDERLYING_BONUS = 10700;
 
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 40037250);
-    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 42021187);
+    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
   function testPayload() public {
@@ -87,7 +87,7 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
 
     WMATIC_UNDERLYING_CONFIG.liquidationThreshold = WMATIC_UNDERLYING_LIQ_THRESHOLD;
     WMATIC_UNDERLYING_CONFIG.ltv = WMATIC_UNDERLYING_LTV;
-    WMATIC_UNDERLYING_CONFIG.liquidationBonus = WMATIC_UNDERLYING_LTV;
+    WMATIC_UNDERLYING_CONFIG.liquidationBonus = WMATIC_UNDERLYING_BONUS;
 
     ProtocolV3TestBase._validateReserveConfig(WMATIC_UNDERLYING_CONFIG, allConfigsAfter);
 
