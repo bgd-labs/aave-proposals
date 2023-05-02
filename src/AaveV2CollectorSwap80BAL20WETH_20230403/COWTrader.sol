@@ -13,16 +13,17 @@ contract COWTrader {
   event TradeRequested();
 
   error InvalidCaller();
+  error NoPendingTrade();
   error PendingTrade();
 
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0xFcd1726Cf48614E40E1f8EC636aC73bA05A52cF2;
   address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262;
-  bool trading;
 
   uint256 balBalance;
   uint256 wethBalance;
+  bool trading;
 
   function trade() external {
     if (trading) revert PendingTrade();
@@ -30,6 +31,8 @@ contract COWTrader {
 
     balBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(this));
     wethBalance = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(this));
+
+    if (balBalance == 0 && wethBalance == 0) return;
 
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, wethBalance);
     IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).approve(MILKMAN, balBalance);
@@ -44,7 +47,7 @@ contract COWTrader {
     );
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      balBalance,
       IERC20(AaveV2EthereumAssets.BAL_UNDERLYING),
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
@@ -55,10 +58,11 @@ contract COWTrader {
     emit TradeRequested();
   }
 
-  function cancelTrades() external {
+  function cancelTrades(address wethMilkman, address balMilkman) external {
+    if (!trading) revert NoPendingTrade();
     if (msg.sender != ALLOWED_CALLER) revert InvalidCaller();
 
-    IMilkman(MILKMAN).cancelSwap(
+    IMilkman(wethMilkman).cancelSwap(
       wethBalance,
       IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
       IERC20(BAL80WETH20),
@@ -67,7 +71,7 @@ contract COWTrader {
       abi.encode(50) // 0.5% slippage
     );
 
-    IMilkman(MILKMAN).cancelSwap(
+    IMilkman(balMilkman).cancelSwap(
       balBalance,
       IERC20(AaveV2EthereumAssets.BAL_UNDERLYING),
       IERC20(BAL80WETH20),

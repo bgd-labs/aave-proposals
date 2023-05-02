@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
+import {console2} from 'forge-std/Test.sol';
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
@@ -10,24 +11,9 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 import {COWTrader} from './COWTrader.sol';
 
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
-  error AlreadyExecuted();
-
   uint256 public constant WETH_AMOUNT = 338_10e16; //338.10 aWETH
 
-  address public constant AGD_MULTISIG = 0x89C51828427F70D77875C6747759fB17Ba10Ceb0;
-  address public constant aUSDTV1 = 0x71fc860F7D3A592A4a98740e39dB31d25db65ae8;
-  uint256 public constant AMOUNT_AUSDT = 812_944_900000; // $812,944.90
-
-  COWTrader internal trader;
-
   function execute() external {
-    /*******************************************************************************
-     ********************************* AGD Approval *********************************
-     *******************************************************************************/
-
-    AaveV2Ethereum.COLLECTOR.approve(aUSDTV1, AGD_MULTISIG, 0);
-    AaveV2Ethereum.COLLECTOR.approve(AaveV2EthereumAssets.USDT_A_TOKEN, AGD_MULTISIG, AMOUNT_AUSDT);
-
     /*******************************************************************************
      ******************************* Withdraw aTokens *******************************
      *******************************************************************************/
@@ -60,7 +46,7 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
      ********************************** Transfer ***********************************
      *******************************************************************************/
 
-    trader = new COWTrader();
+    COWTrader trader = new COWTrader();
 
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.WETH_UNDERLYING,
