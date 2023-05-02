@@ -7,38 +7,30 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 
+import {COWTrader} from './COWTrader.sol';
+
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   error AlreadyExecuted();
 
   uint256 public constant WETH_AMOUNT = 338_10e16; //338.10 aWETH
-  address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-  address public constant PRICE_CHECKER = 0xFcd1726Cf48614E40E1f8EC636aC73bA05A52cF2;
-  address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
 
   address public constant AGD_MULTISIG = 0x89C51828427F70D77875C6747759fB17Ba10Ceb0;
   address public constant aUSDTV1 = 0x71fc860F7D3A592A4a98740e39dB31d25db65ae8;
   uint256 public constant AMOUNT_AUSDT = 812_944_900000; // $812,944.90
 
+  COWTrader internal trader;
+
   function execute() external {
     /*******************************************************************************
-    ********************************* AGD Approval *********************************
-    *******************************************************************************/
+     ********************************* AGD Approval *********************************
+     *******************************************************************************/
 
-    AaveV2Ethereum.COLLECTOR.approve(
-      aUSDTV1,
-      AGD_MULTISIG,
-      0
-    );
-
-    AaveV2Ethereum.COLLECTOR.approve(
-      AaveV2EthereumAssets.USDT_A_TOKEN,
-      AGD_MULTISIG,
-      AMOUNT_AUSDT
-    );
+    AaveV2Ethereum.COLLECTOR.approve(aUSDTV1, AGD_MULTISIG, 0);
+    AaveV2Ethereum.COLLECTOR.approve(AaveV2EthereumAssets.USDT_A_TOKEN, AGD_MULTISIG, AMOUNT_AUSDT);
 
     /*******************************************************************************
-    ******************************* Withdraw aTokens *******************************
-    *******************************************************************************/
+     ******************************* Withdraw aTokens *******************************
+     *******************************************************************************/
 
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.WETH_A_TOKEN,
@@ -65,47 +57,25 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
     );
 
     /*******************************************************************************
-    *********************************** Approve ************************************
-    *******************************************************************************/
+     ********************************** Transfer ***********************************
+     *******************************************************************************/
+
+    trader = new COWTrader();
 
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.WETH_UNDERLYING,
-      address(this),
+      address(trader),
       WETH_AMOUNT
     );
 
-    uint256 balBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.BAL_UNDERLYING,
-      address(this),
-      balBalance
+      address(trader),
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)
+      )
     );
 
-    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, WETH_AMOUNT);
-
-    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).approve(MILKMAN, balBalance);
-
-    /*******************************************************************************
-    ************************************ Trade *************************************
-    *******************************************************************************/
-
-    IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      WETH_AMOUNT,
-      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-      IERC20(BAL80WETH20),
-      address(AaveV2Ethereum.COLLECTOR),
-      PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
-    );
-
-    IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-      IERC20(BAL80WETH20),
-      address(AaveV2Ethereum.COLLECTOR),
-      PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
-    );
+    trader.trade();
   }
 }

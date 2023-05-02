@@ -20,4 +20,15 @@ interface IMilkman {
     address priceChecker,
     bytes calldata priceCheckerData
   ) external;
+
+  /// @notice Cancel a requested swap, sending the tokens back to the order creator.
+  /// @dev `msg.sender` must be the original order creator. The other parameters are required to verify that this is the case (kind of like a merkle proof).
+  function cancelSwap(
+    uint256 amountIn,
+    IERC20 fromToken,
+    IERC20 toToken,
+    address to,
+    address priceChecker,
+    bytes calldata priceCheckerData
+  ) external;
 }
