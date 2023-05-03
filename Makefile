@@ -122,3 +122,8 @@ deploy-eth-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdat
 deploy-ava-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3AVASupplyBorrowUpdate_20230427 --rpc-url avalanche --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 deploy-arb-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3ARBSupplyBorrowUpdate_20230427 --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ChaosLabs risk params for Polygon
+test-risk-params-poly-apr27 :; forge test -vvv --match-contract AaveV3PolRiskParams_20230423_Test
+deploy-risk-params-poly-apr27 :; forge script src/AaveV3PolRiskParams_20230423/DeployAaveV3PolRiskParams_20230423.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-poly-apr27 :; forge script src/AaveV3PolRiskParams_20230423/DeployAaveV3PolRiskParams_20230423.s.sol:CreateProposal --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
