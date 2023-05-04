@@ -9,7 +9,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * @notice Change WBTC price feed on the Aave Ethereum v2 pool.
  * Governance Forum Post: https://governance.aave.com/t/bgd-generalised-price-sync-adapters/11416
  */
-contract AaveV2PriceFeedsUpdate_20230425_Payload {
+contract AaveV2PriceFeedsUpdate_20230504_Payload {
   // WBTC / BTC / ETH price adapter
   address public constant WBTC_ADAPTER = address(0);
 

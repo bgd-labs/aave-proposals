@@ -105,3 +105,9 @@ create-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetA
 test-aave-risk-params :; forge test -vvv --match-contract AaveV3RiskParams_20230516_Test
 deploy-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Price feeds update
+src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol
+deploy-eth-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-arb-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-opt-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
