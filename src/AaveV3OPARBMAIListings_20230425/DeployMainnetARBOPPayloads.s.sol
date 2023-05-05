@@ -17,7 +17,7 @@ contract DeployAaveV3ARBMAIListing_20230425 is ArbitrumScript {
   }
 }
 
-contract CreateAaveV3OPMAIListing_20230425 is OptimismScript {
+contract CreateAaveV3OPMAIListing_20230425 is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildOptimism(
