@@ -38,7 +38,7 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
       decimals: 18,
       ltv: 75_00,
       liquidationThreshold: 80_00,
-      liquidationBonus: 10750,
+      liquidationBonus: 10500,
       liquidationProtocolFee: 1000,
       reserveFactor: 2000,
       usageAsCollateralEnabled: true,
@@ -50,9 +50,9 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
       isSiloed: false,
       isBorrowableInIsolation: false,
       isFlashloanable: false,
-      supplyCap: 1_200_000,
-      borrowCap: 1_000_000,
-      debtCeiling: 2_000_000_00,
+      supplyCap: 4_800_000,
+      borrowCap: 2_400_000,
+      debtCeiling: 1_200_000_00,
       eModeCategory: 0
     });
 

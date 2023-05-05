@@ -40,11 +40,11 @@ contract AaveV3ARBMAIListing_20230425 is AaveV3PayloadArbitrum {
       flashloanable: EngineFlags.DISABLED,
       ltv: 75_00,
       liqThreshold: 80_00,
-      liqBonus: 7_50,
+      liqBonus: 5_00,
       reserveFactor: 20_00,
-      supplyCap: 1_200_000,
-      borrowCap: 1_000_000,
-      debtCeiling: 2_000_000,
+      supplyCap: 4_800_000,
+      borrowCap: 2_400_000,
+      debtCeiling: 1_200_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
     });

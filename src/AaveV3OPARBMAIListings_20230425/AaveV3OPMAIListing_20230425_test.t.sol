@@ -50,9 +50,9 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
       isSiloed: false,
       isBorrowableInIsolation: false,
       isFlashloanable: false,
-      supplyCap: 2_200_000,
-      borrowCap: 1_200_000,
-      debtCeiling: 2_000_000_00,
+      supplyCap: 7_600_000,
+      borrowCap: 2_500_000,
+      debtCeiling: 1_900_000_00,
       eModeCategory: 0
     });
 

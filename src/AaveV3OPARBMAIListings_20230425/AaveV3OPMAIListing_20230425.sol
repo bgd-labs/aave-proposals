@@ -42,9 +42,9 @@ contract AaveV3OPMAIListing_20230425 is AaveV3PayloadOptimism {
       liqThreshold: 80_00,
       liqBonus: 5_00,
       reserveFactor: 20_00,
-      supplyCap: 2_200_000,
-      borrowCap: 1_200_000,
-      debtCeiling: 2_000_000,
+      supplyCap: 7_600_000,
+      borrowCap: 2_500_000,
+      debtCeiling: 1_900_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
     });
