@@ -21,7 +21,7 @@ contract CreateAaveV3OPMAIListing_20230425 is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildOptimism(
-      address(0) // deployed MAI payload
+      0x1720d605289A189c5fbD360Ca2307DB5C6D3fDfd
     );
     GovHelpers.createProposal(
       payloads,
@@ -34,7 +34,7 @@ contract CreateAaveV3ARBMAIListing_20230425 is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildArbitrum(
-      address(0) // deployed MAI payload
+      0x89F1e458b51749ed887c382F06459Fc8D7Ff7846
     );
     GovHelpers.createProposal(
       payloads,
