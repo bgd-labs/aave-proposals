@@ -24,16 +24,14 @@ contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecut
   function testExecute() public {
     // Pre-execution balances of CRV and aCRV
     assertEq(
-      IERC20(AaveV2Ethereum.CRV_UNDERLYING).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR),
-        0
-      )
+      IERC20(AaveV2EthereumAssets.CRV_UNDERLYING).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)),
+        19714118888439666456840
     );
     assertEq(
-      IERC20(AaveV2Ethereum.CRV_A_TOKEN).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR),
-        0
-      )
+      IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)),
+        754275831989801164278616
     );
     // End Pre-execution balances of CRV and aCRV
 
@@ -41,30 +39,27 @@ contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecut
 
     // Post-execution balances of CRV and aCRV
     assertEq(
-      IERC20(AaveV2Ethereum.CRV_UNDERLYING).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR),
+      IERC20(AaveV2EthereumAssets.CRV_UNDERLYING).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)),
         0
-      )
     );
     assertEq(
-      IERC20(AaveV2Ethereum.CRV_A_TOKEN).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR),
+      IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)),
         0
-      )
     );
 
     assertEq(
       IERC20(SD_CRV).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR),
+        address(AaveV2Ethereum.COLLECTOR)),
         0
-      )
     );
 
-    vm.startPrank(payload.AGD_MULTISIG());
-    IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transferFrom(
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(SD_CRV).transferFrom(
       address(AaveV2Ethereum.COLLECTOR),
       makeAddr('new-addy'),
-      payload.AMOUNT_AUSDT()
+      100_000e18
     );
     vm.stopPrank();
     // End Post-execution balances of CRV and aCRV
