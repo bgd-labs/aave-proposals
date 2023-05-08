@@ -22,14 +22,14 @@ contract DeployProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](2);
     payloads[0] = GovHelpers.buildMainnet(
-      address(0) // deployed AGD payload
+      0x7BE4FA90565d6fd6F7091d0af9E5a7F9CD7918A6
     );
     payloads[1] = GovHelpers.buildPolygon(
-      address(0) // deployed MaticX payload
+      0x22C669EEDf6e58De81777692B070CDB7432A4F84
     );
     GovHelpers.createProposal(
       payloads,
-      0 // TODO: Replace with actual hash
+      0xa3267468b4d12df2ded6b48eea658134acfb9e512b2b34ca9299fde49062531f
     );
   }
 }
