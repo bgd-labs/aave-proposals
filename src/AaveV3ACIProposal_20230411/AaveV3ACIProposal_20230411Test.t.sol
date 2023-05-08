@@ -19,10 +19,10 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
   IERC20 public constant AUSDT = IERC20(0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811);
 
   // 0x464
-  address public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
+  address public immutable AAVE_COLLECTOR = address(AaveV2Ethereum.COLLECTOR);
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
 
-  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR = IStreamable(AaveV2Ethereum.COLLECTOR);
+  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR = IStreamable(address(AaveV2Ethereum.COLLECTOR));
 
   uint256 public constant STREAM_AMOUNT = 250_000 * 1e6;
   uint256 public constant STREAM_DURATION = 180 days;

@@ -7,16 +7,16 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
-import {AGDProposal} from './AaveV2EthAGDGrantsPayload.sol';
+import {AaveV2EthAGDGrantsPayload} from './AaveV2EthAGDGrantsPayload.sol';
 
-contract AGDProposalTest is ProtocolV2TestBase, TestWithExecutor {
-  AGDProposal payload;
+contract AaveV2EthAGDGrantsPayloadTest is ProtocolV2TestBase, TestWithExecutor {
+  AaveV2EthAGDGrantsPayload payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17180572);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
 
-    payload = new AGDProposal();
+    payload = new AaveV2EthAGDGrantsPayload();
   }
 
   function test_execute() public {
