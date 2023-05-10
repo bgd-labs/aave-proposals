@@ -6,7 +6,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| supplyCap | 4,650 wstETH | 17,350 wstETH |
+| supplyCap | 4,650 wstETH | 9,300 wstETH |
 
 
 ## Raw diff
@@ -17,7 +17,7 @@
     "0x5979D7b546E38E414F7E9822514be443A4800529": {
       "supplyCap": {
         "from": 4650,
-        "to": 17350
+        "to": 9300
       }
     }
   }
