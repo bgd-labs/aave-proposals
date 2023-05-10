@@ -10,7 +10,15 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
 import {AaveV3EthsdCRV_20230503_Payload} from './AaveV3EthsdCRV_20230503_Payload.sol';
 
+interface ILiquidityGauge {
+  function balanceOf(address user) external returns (uint256);
+  function withdraw(uint256 value, bool claimRewards) external;
+}
+
+/// @notice sdCRV addresses: https://stakedao.gitbook.io/stakedaohq/platform/liquid-lockers/sdtokens/crv-liquid-locker
+/// @notice Deposit and Stake: https://stakedao.gitbook.io/stakedaohq/tutorials/liquid-lockers/deposit-and-stake-in-liquid-lockers
 contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecutor {
+  address public constant SD_CRV_GAUGE = 0x7f50786A0b15723D741727882ee99a0BF34e3466;
   address public constant SD_CRV = 0xD1b5651E55D4CeeD36251c61c50C889B36F6abB5;
   AaveV3EthsdCRV_20230503_Payload payload;
 
@@ -33,9 +41,13 @@ contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecut
     );
     // End Pre-execution balances of CRV and aCRV
 
+    ILiquidityGauge gauge = ILiquidityGauge(SD_CRV_GAUGE);
+    uint256 gaugeBalanceBefore = IERC20(SD_CRV).balanceOf(SD_CRV_GAUGE);
+
     _executePayload(address(payload));
 
     // Post-execution balances of CRV and aCRV
+    // Collector contract will have no CRV and only a limited amount of aCRV left
     assertEq(
       IERC20(AaveV2EthereumAssets.CRV_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       0
@@ -45,14 +57,22 @@ contract AaveV3PolCapsUpdates_20230328Test is ProtocolV3TestBase, TestWithExecut
       21842224941228746535 // Normal to have some left over when withdrawing aTokens
     );
 
-    assertEq(IERC20(SD_CRV).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 773_992_146461042847280147);
+    // Because we are staking the sdCRV, the Collector will receive 0 sdCRV, but will have a balance of
+    // the minted amount in the sdCRV Gauge controller: 
 
+    assertEq(IERC20(SD_CRV).balanceOf(SD_CRV_GAUGE), gaugeBalanceBefore + 773_992_146461042847280147);
+    assertEq(IERC20(SD_CRV).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
+    assertEq(gauge.balanceOf(address(AaveV2Ethereum.COLLECTOR)), 773_992_146461042847280147);
+
+    // Pretend to be Collector and try to withdraw sdCRV from gauge
     vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
-    IERC20(SD_CRV).transfer(
-      makeAddr('new-addy'),
-      100_000e18
-    );
+    gauge.withdraw(100_000e18, false);
     vm.stopPrank();
+
+    assertEq(IERC20(SD_CRV).balanceOf(SD_CRV_GAUGE), gaugeBalanceBefore + 773_992_146461042847280147 - 100_000e18);
+    assertEq(IERC20(SD_CRV).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 100_000e18);
+    assertEq(gauge.balanceOf(address(AaveV2Ethereum.COLLECTOR)), 773_992_146461042847280147 - 100_000e18);
+
     // End Post-execution balances of CRV and aCRV
   }
 }

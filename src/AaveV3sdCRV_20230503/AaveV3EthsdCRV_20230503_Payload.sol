@@ -49,6 +49,6 @@ contract AaveV3EthsdCRV_20230503_Payload is IProposalGenericExecutor {
 
     IERC20(AaveV2EthereumAssets.CRV_UNDERLYING).approve(CRV_DEPOSITOR, balance);
 
-    ICRVDepositor(CRV_DEPOSITOR).deposit(balance, true, false, address(AaveV2Ethereum.COLLECTOR));
+    ICRVDepositor(CRV_DEPOSITOR).deposit(balance, true, true, address(AaveV2Ethereum.COLLECTOR));
   }
 }
