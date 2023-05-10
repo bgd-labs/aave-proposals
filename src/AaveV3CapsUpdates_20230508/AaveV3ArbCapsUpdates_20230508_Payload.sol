@@ -12,7 +12,7 @@ import {AaveV3PayloadArbitrum, IEngine, EngineFlags} from 'aave-helpers/v3-confi
  * Forum: https://governance.aave.com/t/arfc-wsteth-supply-cap-increase-arbitrum-v3/13016
  */
 contract AaveV3ArbCapsUpdates_20230508_Payload is AaveV3PayloadArbitrum {
-  uint256 public constant NEW_SUPPLY_CAP = 17_350;
+  uint256 public constant NEW_SUPPLY_CAP = 9_300;
 
   function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
     IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
