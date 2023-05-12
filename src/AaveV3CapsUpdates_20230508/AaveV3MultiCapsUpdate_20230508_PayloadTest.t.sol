@@ -75,7 +75,7 @@ contract AaveV3ArbCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWi
   function testCapsUpdates() public {
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'pre-Aave-V3-Arbitrum-Caps-Updates-20230508',
-      AaveV3Polygon.POOL
+      AaveV3Arbitrum.POOL
     );
 
     _executePayload(address(payload));
