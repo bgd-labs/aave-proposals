@@ -6,6 +6,7 @@ import {console2} from 'forge-std/Test.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 interface ICRVDepositor {
   /// @notice Deposit & Lock Token
@@ -31,6 +32,12 @@ contract AaveV3EthsdCRV_20230503_Payload is IProposalGenericExecutor {
     );
 
     AaveV2Ethereum.COLLECTOR.transfer(
+      AaveV3EthereumAssets.CRV_A_TOKEN,
+      address(this),
+      IERC20(AaveV3EthereumAssets.CRV_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR))
+    );
+
+    AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.CRV_UNDERLYING,
       address(this),
       IERC20(AaveV2EthereumAssets.CRV_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR))
@@ -38,6 +45,12 @@ contract AaveV3EthsdCRV_20230503_Payload is IProposalGenericExecutor {
 
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.CRV_UNDERLYING,
+      type(uint256).max,
+      address(this)
+    );
+
+    AaveV3Ethereum.POOL.withdraw(
+      AaveV3EthereumAssets.CRV_UNDERLYING,
       type(uint256).max,
       address(this)
     );
