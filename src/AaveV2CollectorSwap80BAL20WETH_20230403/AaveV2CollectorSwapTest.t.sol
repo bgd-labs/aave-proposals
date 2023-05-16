@@ -6,6 +6,7 @@ import {console2} from 'forge-std/Test.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
@@ -25,11 +26,15 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     payload = new SwapFor80BAL20WETHPayload();
   }
 
-  function test_execute() public {
+  function test_execute_tradeSuccessful() public {
+    uint256 balanceABalBefore = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 balanceAEthBalBefore = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceBalBefore = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceWethBefore = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceAWethBefore = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
 
+    assertEq(balanceABalBefore, 9644860562923757165584);
+    assertEq(balanceAEthBalBefore, 24678874950526891803);
     assertEq(balanceBalBefore, 300_000e18);
     assertEq(balanceWethBefore, 10312312833722949345);
     assertEq(balanceAWethBefore, 1516828016650101081302);
@@ -39,10 +44,14 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     _executePayload(address(payload));
     
+    uint256 balanceABalAfter = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 balanceAEthBalAfter = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceBalAfter = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceWethAfter = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 balanceAWethAfter = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
 
+    assertEq(balanceABalAfter, 19081042984225183256);
+    assertEq(balanceAEthBalAfter, 0);
     assertEq(balanceBalAfter, 0);
     assertEq(balanceWethAfter, balanceWethBefore);
 
