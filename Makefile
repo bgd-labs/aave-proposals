@@ -178,3 +178,10 @@ test-mai-fix-op-payload :; forge test -vvv --match-contract AaveV3OpUpdate_20230
 deploy-mai-fix-op-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3OPMAIFixes_20230606 --rpc-url optimism --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-mai-fix-arb-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3ARBMAIFixes_20230606 --rpc-url arbitrum --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-mai-proposal :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:CreateMaiFixesProposal --rpc-url mainnet --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+
+# 1INCH Onboarding on Ethereum V3
+
+test-1inch-eth-payload :; forge test -vvv --match-contract AaveV3Eth1INCHListing_20230517_Payload_Test
+deploy-1inch-eth-payload :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-1inch-eth-payload :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
