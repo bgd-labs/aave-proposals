@@ -7,8 +7,8 @@ import {AaveV3Eth1INCHListing_20230517_Payload} from './AaveV3Eth1INCHListing_20
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
-    GovHelpers.createProposal(payloads, '');
+    payloads[0] = GovHelpers.buildMainnet(address(0)); // TODO: change to actual payload address after deployment
+    GovHelpers.createProposal(payloads, ''); // TODO: change to IPFS hash after AIP merged
   }
 }
 
