@@ -14,8 +14,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 contract AaveV3ACIProposal_20230411 is IProposalGenericExecutor {
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
   address public constant AUSDT = AaveV2EthereumAssets.USDT_A_TOKEN;
-  address public constant COLLECTOR = AaveV2Ethereum.COLLECTOR;
-  address public constant RESERVE_CONTROLLER = AaveV2Ethereum.COLLECTOR_CONTROLLER;
+  address public constant COLLECTOR = address(AaveV2Ethereum.COLLECTOR);
   uint256 public constant STREAM_AMOUNT = 250000e6;
   uint256 public constant STREAM_DURATION = 180 days;
   uint256 public constant ACTUAL_STREAM_AMOUNT_A_USDT =

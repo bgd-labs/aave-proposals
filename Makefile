@@ -132,3 +132,11 @@ create-risk-params-poly-apr27 :; forge script src/AaveV3PolRiskParams_20230423/D
 deploy-eth-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-arb-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# MAI ARB & OP Onboarding
+test-mai-op-payload :; forge test -vvv --match-contract AaveV3OPMAIListing_20230425Test
+test-mai-arb-payload :; forge test -vvv --match-contract AaveV3ARBMAIListing_20230425Test
+deploy-mai-op-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-mai-arb-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
