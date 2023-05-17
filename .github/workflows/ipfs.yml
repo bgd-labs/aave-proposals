@@ -4,11 +4,13 @@ name: Ipfs uploader
 
 concurrency:
   group: ${{ github.workflow }}
-#  cancel-in-progress: true
+# cancel-in-progress: true
 
 on:
   pull_request:
   push:
+    branches:
+      - main
 
 jobs:
   ipfs-upload:
@@ -27,7 +29,7 @@ jobs:
           files: |
             **/*.md
 
-      - name: Run step if any *.md file(s) cahnge
+      - name: Run step if any *.md file(s) change
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
