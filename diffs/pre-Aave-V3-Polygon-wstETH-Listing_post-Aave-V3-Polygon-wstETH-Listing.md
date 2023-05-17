@@ -16,8 +16,9 @@
 | isFlashloanable | false |
 | eModeCategory | 3 |
 | oracle | [0xA2508729b1282Cc70dd33Ed311d4A9A37383035b](https://polygonscan.com/address/0xA2508729b1282Cc70dd33Ed311d4A9A37383035b) |
+| oracleDecimals | 8 |
 | oracleName | wstETH/ETH/USD |
-| oracleLatestAnswer | 224,341,679,900 |
+| oracleLatestAnswer | 2243.416799 |
 | usageAsCollateralEnabled | true |
 | ltv | 70 % |
 | liquidationThreshold | 79 % |
@@ -100,6 +101,7 @@
         "liquidationThreshold": 7900,
         "ltv": 7000,
         "oracle": "0xA2508729b1282Cc70dd33Ed311d4A9A37383035b",
+        "oracleDecimals": 8,
         "oracleLatestAnswer": 224341679900,
         "oracleName": "wstETH/ETH/USD",
         "reserveFactor": 1500,

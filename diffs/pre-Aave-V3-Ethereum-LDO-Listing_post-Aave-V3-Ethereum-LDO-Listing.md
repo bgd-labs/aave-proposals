@@ -16,8 +16,9 @@
 | isFlashloanable | true |
 | eModeCategory | 0 |
 | oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
+| oracleDecimals | 8 |
 | oracleName | LDO/ETH/USD |
-| oracleLatestAnswer | 252,715,331 |
+| oracleLatestAnswer | 2.52715331 |
 | usageAsCollateralEnabled | true |
 | ltv | 40 % |
 | liquidationThreshold | 50 % |
@@ -72,6 +73,7 @@
         "liquidationThreshold": 5000,
         "ltv": 4000,
         "oracle": "0xb01e6C9af83879B8e06a092f0DD94309c0D497E4",
+        "oracleDecimals": 8,
         "oracleLatestAnswer": 252715331,
         "oracleName": "LDO/ETH/USD",
         "reserveFactor": 2000,
