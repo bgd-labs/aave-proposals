@@ -27,18 +27,12 @@ contract DeployArbitrumPayload is ArbitrumScript {
 contract PriceFeedsUpdateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](3);
-    payloads[0] = GovHelpers.buildMainnet(
-      address(0) // TODO: Replace by actual payload
-    );
-    payloads[1] = GovHelpers.buildOptimism(
-      address(0) // TODO: Replace by actual payload
-    );
-    payloads[2] = GovHelpers.buildArbitrum(
-      address(0) // TODO: Replace by actual payload
-    );
+    payloads[0] = GovHelpers.buildMainnet(0xab22988D93d5F942fC6B6c6Ea285744809D1d9Cc);
+    payloads[1] = GovHelpers.buildOptimism(0x3105C276558Dd4cf7E7be71d73Be8D33bD18F211);
+    payloads[2] = GovHelpers.buildArbitrum(0x80f2c02224a2E548FC67c0bF705eBFA825dd5439);
     GovHelpers.createProposal(
       payloads,
-      0 // TODO: replace by actual Hash
+      0xc6e257cf3e6b0c9b270d31776233ad32e4714277262d769b8979a8acafb4b321
     );
   }
 }
