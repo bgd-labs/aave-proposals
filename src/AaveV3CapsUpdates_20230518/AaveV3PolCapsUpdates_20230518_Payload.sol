@@ -13,7 +13,7 @@ import {AaveV3PayloadPolygon, IEngine, EngineFlags} from 'aave-helpers/v3-config
  */
 contract AaveV3PolCapsUpdates_20230518_Payload is AaveV3PayloadPolygon {
   uint256 public constant NEW_SUPPLY_CAP = 90_000_000;
-  uint256 public constant NEW_BORROW_CAP = 30_000_000;
+  uint256 public constant NEW_BORROW_CAP = 50_000_000;
 
   function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
     IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
