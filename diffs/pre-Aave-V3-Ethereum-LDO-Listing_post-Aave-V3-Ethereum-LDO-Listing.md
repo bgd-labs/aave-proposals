@@ -6,34 +6,35 @@
 
 | description | value |
 | --- | --- |
+| decimals | 18 |
+| isActive | true |
+| isFrozen | false |
 | supplyCap | 6,000,000 LDO |
 | borrowCap | 3,000,000 LDO |
-| oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
-| oracleName | LDO/ETH/USD |
-| oracleLatestAnswer | 252,715,331 |
-| aToken | [0x8A458A9dc9048e005d22849F470891b840296619](https://etherscan.io/address/0x8A458A9dc9048e005d22849F470891b840296619) |
-| aTokenImpl | [0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d](https://etherscan.io/address/0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d) |
-| borrowingEnabled | true |
-| debtCeiling | 750,000,000 |
-| decimals | 18 |
-| eModeCategory | 0 |
-| interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
-| isActive | true |
-| isBorrowableInIsolation | false |
-| isFlashloanable | true |
-| isFrozen | false |
+| debtCeiling | 7,500,000 $ |
 | isSiloed | false |
+| isFlashloanable | true |
+| eModeCategory | 0 |
+| oracle | [0xb01e6C9af83879B8e06a092f0DD94309c0D497E4](https://etherscan.io/address/0xb01e6C9af83879B8e06a092f0DD94309c0D497E4) |
+| oracleDecimals | 8 |
+| oracleName | LDO/ETH/USD |
+| oracleLatestAnswer | 2.52715331 |
+| usageAsCollateralEnabled | true |
+| ltv | 40 % |
+| liquidationThreshold | 50 % |
 | liquidationBonus | 9 % |
 | liquidationProtocolFee | 10 % |
-| liquidationThreshold | 50 % |
-| ltv | 40 % |
 | reserveFactor | 20 % |
-| stableBorrowRateEnabled | false |
-| stableDebtToken | [0x0496372BE7e426D28E89DEBF01f19F014d5938bE](https://etherscan.io/address/0x0496372BE7e426D28E89DEBF01f19F014d5938bE) |
-| stableDebtTokenImpl | [0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57](https://etherscan.io/address/0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57) |
-| usageAsCollateralEnabled | true |
+| aToken | [0x8A458A9dc9048e005d22849F470891b840296619](https://etherscan.io/address/0x8A458A9dc9048e005d22849F470891b840296619) |
+| aTokenImpl | [0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d](https://etherscan.io/address/0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d) |
 | variableDebtToken | [0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1](https://etherscan.io/address/0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1) |
 | variableDebtTokenImpl | [0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6](https://etherscan.io/address/0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6) |
+| stableDebtToken | [0x0496372BE7e426D28E89DEBF01f19F014d5938bE](https://etherscan.io/address/0x0496372BE7e426D28E89DEBF01f19F014d5938bE) |
+| stableDebtTokenImpl | [0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57](https://etherscan.io/address/0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57) |
+| borrowingEnabled | true |
+| stableBorrowRateEnabled | false |
+| isBorrowableInIsolation | false |
+| interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
@@ -72,6 +73,7 @@
         "liquidationThreshold": 5000,
         "ltv": 4000,
         "oracle": "0xb01e6C9af83879B8e06a092f0DD94309c0D497E4",
+        "oracleDecimals": 8,
         "oracleLatestAnswer": 252715331,
         "oracleName": "LDO/ETH/USD",
         "reserveFactor": 2000,

@@ -12,10 +12,10 @@
   resolved "https://registry.yarnpkg.com/@bgd-labs/aave-tenderly-cli/-/aave-tenderly-cli-0.0.13.tgz#c44aa6d448abf43af45b58bfb6c5e5a41d39ffa3"
   integrity sha512-zRgZhsXmkdjPC3mrsWxB5sSN/8ex4cYM3tTu+ezRPB0hR1KwdnudmMZ4+tfGwDrmefZE/OipqySqy92F6YEL6w==
 
-"@bgd-labs/report-engine@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.8.tgz#bfbf3455717ded9b3d1412b1e7bc9720e9861830"
-  integrity sha512-Ctzi09ppp4RX9+RN59HNB67CyRHIoHJpQcRAQK3zH38IjsdKKJg7Po0+EZ3E9OIaL30tGRY9H/b+pnGMaUdq2w==
+"@bgd-labs/report-engine@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@bgd-labs/report-engine/-/report-engine-0.0.11.tgz#03209a5924c8499febe75b93208f196fd6673535"
+  integrity sha512-6NiP8gwi3GV5gISsfnd7PZcLd2tOLU1okjGJACtb8iJuLcdRlbASJPDmR/aTtaGpItmjoQJNVWpPkFQgoy5W6A==
   dependencies:
     json-bigint "^1.0.0"
     node-fetch "^2.6.9"
@@ -65,10 +65,10 @@
     "@noble/hashes" "~1.3.0"
     "@scure/base" "~1.1.0"
 
-"@solidity-parser/parser@^0.14.5":
-  version "0.14.5"
-  resolved "https://registry.npmjs.org/@solidity-parser/parser/-/parser-0.14.5.tgz"
-  integrity sha512-6dKnHZn7fg/iQATVEzqyUOyEidbn05q7YA2mQ9hC0MMXhhV3/JrsxmFSYZAcr7j1yUP700LLhTruvJ3MiQmjJg==
+"@solidity-parser/parser@^0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@solidity-parser/parser/-/parser-0.16.0.tgz#1fb418c816ca1fc3a1e94b08bcfe623ec4e1add4"
+  integrity sha512-ESipEcHyRHg4Np4SqBCfcXwyxxna1DgFVz69bgpLV8vzl/NP1DtcKsJ4dJZXWQhY/Z4J2LeKBiOkOVZn9ct33Q==
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
@@ -208,12 +208,12 @@ path-key@^3.1.0:
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
-prettier-plugin-solidity@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/prettier-plugin-solidity/-/prettier-plugin-solidity-1.1.1.tgz"
-  integrity sha512-uD24KO26tAHF+zMN2nt1OUzfknzza5AgxjogQQrMLZc7j8xiQrDoNWNeOlfFC0YLTwo12CLD10b9niLyP6AqXg==
+prettier-plugin-solidity@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-solidity/-/prettier-plugin-solidity-1.1.3.tgz#9a35124f578404caf617634a8cab80862d726cba"
+  integrity sha512-fQ9yucPi2sBbA2U2Xjh6m4isUTJ7S7QLc/XDDsktqqxYfTwdYKJ0EnnywXHwCGAaYbQNK+HIYPL1OemxuMsgeg==
   dependencies:
-    "@solidity-parser/parser" "^0.14.5"
+    "@solidity-parser/parser" "^0.16.0"
     semver "^7.3.8"
     solidity-comments-extractor "^0.0.7"
 
