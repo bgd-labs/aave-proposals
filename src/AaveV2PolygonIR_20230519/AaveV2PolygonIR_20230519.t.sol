@@ -5,8 +5,6 @@ import 'forge-std/Test.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
-import {AaveV2Avalanche, AaveV2AvalancheAssets} from 'aave-address-book/AaveV2Avalanche.sol';
-import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 import {AaveV2PolygonIR_20230519} from './AaveV2PolygonIR_20230519.sol';
 
@@ -17,7 +15,7 @@ contract AaveV2PolygonIR_20230519_Test is ProtocolV2TestBase, TestWithExecutor {
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
-  function testPolygon20230507UpdatePayload() public {
+  function testpayload() public {
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preTestPolygonUpdate20230507',
       AaveV2Polygon.POOL
@@ -41,16 +39,9 @@ contract AaveV2PolygonIR_20230519_Test is ProtocolV2TestBase, TestWithExecutor {
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
     ReserveConfig[] memory configs = _getReservesConfigs(AaveV2Polygon.POOL);
-    ReserveConfig memory usdtCfg = _findReserveConfig(configs, AaveV2PolygonAssets.USDT_UNDERLYING);
-    _deposit(usdtCfg, AaveV2Polygon.POOL, address(42), 100);
-    ReserveConfig memory wbtcCfg = _findReserveConfig(configs, AaveV2PolygonAssets.WBTC_UNDERLYING);
-    _deposit(wbtcCfg, AaveV2Polygon.POOL, address(42), 100);
-    ReserveConfig memory wethCfg = _findReserveConfig(configs, AaveV2PolygonAssets.WETH_UNDERLYING);
-    _deposit(wethCfg, AaveV2Polygon.POOL, address(42), 100);
-    ReserveConfig memory wmaticCfg = _findReserveConfig(
-      configs,
-      AaveV2PolygonAssets.WMATIC_UNDERLYING
-    );
-    _deposit(wmaticCfg, AaveV2Polygon.POOL, address(42), 100);
+    for (uint i = 0; i < assetsChanged.length; i++) {
+      ReserveConfig memory cfg = _findReserveConfig(configs, assetsChanged[i]);
+      _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
+    }
   }
 }
