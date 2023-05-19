@@ -40,6 +40,17 @@ contract AaveV2PolygonIR_20230519_Test is ProtocolV2TestBase, TestWithExecutor {
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    this.e2eTest(AaveV2Polygon.POOL, address(42));
+    ReserveConfig[] memory configs = _getReservesConfigs(AaveV2Polygon.POOL);
+    ReserveConfig memory usdtCfg = _findReserveConfig(configs, AaveV2PolygonAssets.USDT_UNDERLYING);
+    _deposit(usdtCfg, AaveV2Polygon.POOL, address(42), 100);
+    ReserveConfig memory wbtcCfg = _findReserveConfig(configs, AaveV2PolygonAssets.WBTC_UNDERLYING);
+    _deposit(wbtcCfg, AaveV2Polygon.POOL, address(42), 100);
+    ReserveConfig memory wethCfg = _findReserveConfig(configs, AaveV2PolygonAssets.WETH_UNDERLYING);
+    _deposit(wethCfg, AaveV2Polygon.POOL, address(42), 100);
+    ReserveConfig memory wmaticCfg = _findReserveConfig(
+      configs,
+      AaveV2PolygonAssets.WMATIC_UNDERLYING
+    );
+    _deposit(wmaticCfg, AaveV2Polygon.POOL, address(42), 100);
   }
 }
