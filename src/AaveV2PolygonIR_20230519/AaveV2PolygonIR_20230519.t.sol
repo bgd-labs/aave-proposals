@@ -39,5 +39,7 @@ contract AaveV2PolygonIR_20230519_Test is ProtocolV2TestBase, TestWithExecutor {
     assetsChanged[3] = AaveV2PolygonAssets.WMATIC_UNDERLYING;
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
+    this.e2eTest(AaveV2Polygon.POOL, address(42));
   }
 }
