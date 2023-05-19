@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity 0.8.17;
 
-import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {SafeERC20} from "solidity-utils/contracts/oz-common/SafeERC20.sol";
+import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 
 contract COWTrader {
@@ -19,7 +20,7 @@ contract COWTrader {
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404;
-  address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262;
+  address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262; // TODO: Update with BGD or AAVE controlled address
 
   uint256 balBalance;
   uint256 wethBalance;
@@ -43,7 +44,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
+      abi.encode(150) // 1.5% slippage
     );
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
@@ -52,7 +53,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
+      abi.encode(150) // 1.5% slippage
     );
 
     emit TradeRequested();
@@ -68,7 +69,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
+      abi.encode(150) // 1.5% slippage
     );
 
     IMilkman(balMilkman).cancelSwap(
@@ -77,7 +78,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(50) // 0.5% slippage
+      abi.encode(150) // 1.5% slippage
     );
 
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).safeTransfer(

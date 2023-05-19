@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity 0.8.17;
-import {console2} from 'forge-std/Test.sol';
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 
 import {COWTrader} from './COWTrader.sol';
 
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
-  uint256 public constant WETH_AMOUNT = 326_88e16; //338.10 aWETH
+  uint256 public constant WETH_AMOUNT = 326_88e16; // 326.88 aWETH
 
   function execute() external {
     /*******************************************************************************
