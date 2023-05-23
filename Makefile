@@ -140,3 +140,11 @@ deploy-mai-op-payload :; forge script src/AaveV3OPARBMAIListings_20230425/Deploy
 deploy-mai-arb-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Steward
+deploy-steward-mainnet :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-arbitrum :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-optimism :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-polygon :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-avalanche :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-metis :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadMetis --rpc-url metis --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv

@@ -27,42 +27,48 @@ contract CreateProposal is EthereumScript {
 
 contract DeployPayloadEthereum is EthereumScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Ethereum.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(
+      AaveV3Ethereum.ACL_MANAGER,
+      AaveV3Ethereum.CAPS_PLUS_RISK_STEWARD
+    );
   }
 }
 
 contract DeployPayloadPolygon is PolygonScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Polygon.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(AaveV3Polygon.ACL_MANAGER, AaveV3Polygon.CAPS_PLUS_RISK_STEWARD);
   }
 }
 
 contract DeployPayloadOptimism is OptimismScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Optimism.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(
+      AaveV3Optimism.ACL_MANAGER,
+      AaveV3Optimism.CAPS_PLUS_RISK_STEWARD
+    );
   }
 }
 
 contract DeployPayloadArbitrum is ArbitrumScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Arbitrum.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(
+      AaveV3Arbitrum.ACL_MANAGER,
+      AaveV3Arbitrum.CAPS_PLUS_RISK_STEWARD
+    );
   }
 }
 
 contract DeployPayloadAvalanche is AvalancheScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Avalanche.ACL_MANAGER, address(0));
-  }
-}
-
-contract DeployPayloadFantom is FantomScript {
-  function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Fantom.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(
+      AaveV3Avalanche.ACL_MANAGER,
+      AaveV3Avalanche.CAPS_PLUS_RISK_STEWARD
+    );
   }
 }
 
 contract DeployPayloadMetis is MetisScript {
   function run() external broadcast {
-    new AaveV3RiskSteward_20230404(AaveV3Metis.ACL_MANAGER, address(0));
+    new AaveV3RiskSteward_20230404(AaveV3Metis.ACL_MANAGER, AaveV3Metis.CAPS_PLUS_RISK_STEWARD);
   }
 }
