@@ -16,7 +16,7 @@ import {AaveV3RiskSteward_20230404} from './AaveV3RiskSteward_20230404.sol';
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](5);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0x90127A46207e97e4205db5CCC1Ec9D6D43633FD4);
     payloads[1] = GovHelpers.buildPolygon(0x4C0633Bf70fB2bB984A9eEC5d9052BdEA451C70A);
     payloads[2] = GovHelpers.buildArbitrum(0xE79Ca44408Dae5a57eA2a9594532f1E84d2edAa4);
     payloads[3] = GovHelpers.buildOptimism(0xA3e44d830440dF5098520F62Ebec285B1198c51E);
