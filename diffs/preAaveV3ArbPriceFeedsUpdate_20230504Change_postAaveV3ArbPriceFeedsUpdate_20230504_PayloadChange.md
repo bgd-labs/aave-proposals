@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | oracle | [0x230E0321Cf38F09e247e50Afc7801EA2351fe56F](https://https://arbiscan.io/address/0x230E0321Cf38F09e247e50Afc7801EA2351fe56F) | [0x3105C276558Dd4cf7E7be71d73Be8D33bD18F211](https://https://arbiscan.io/address/0x3105C276558Dd4cf7E7be71d73Be8D33bD18F211) |
 | oracleName | wstETH/stETH/USD | wstETH/ETH/USD |
-| oracleLatestAnswer | 2085.4122364 | 2086.92690561 |
+| oracleLatestAnswer | 2085.4122364 | 2079.69942554 |
 
 
 ## Raw diff
@@ -23,7 +23,7 @@
       },
       "oracleLatestAnswer": {
         "from": 208541223640,
-        "to": 208692690561
+        "to": 207969942554
       },
       "oracleName": {
         "from": "wstETH/stETH/USD",
