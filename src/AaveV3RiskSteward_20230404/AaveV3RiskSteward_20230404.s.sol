@@ -18,7 +18,7 @@ contract CreateProposal is EthereumScript {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](5);
     payloads[0] = GovHelpers.buildMainnet(address(0));
     payloads[1] = GovHelpers.buildPolygon(0x4C0633Bf70fB2bB984A9eEC5d9052BdEA451C70A);
-    payloads[2] = GovHelpers.buildArbitrum(address(0));
+    payloads[2] = GovHelpers.buildArbitrum(0xE79Ca44408Dae5a57eA2a9594532f1E84d2edAa4);
     payloads[3] = GovHelpers.buildOptimism(0xA3e44d830440dF5098520F62Ebec285B1198c51E);
     payloads[4] = GovHelpers.buildMetis(0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4);
     GovHelpers.createProposal(payloads, '');
@@ -59,6 +59,7 @@ contract DeployPayloadArbitrum is ArbitrumScript {
 }
 
 contract DeployPayloadAvalanche is AvalancheScript {
+  // 0x7e1f23bdfc7287af276f77b5a867e85cf0377a31
   function run() external broadcast {
     new AaveV3RiskSteward_20230404(
       AaveV3Avalanche.ACL_MANAGER,
