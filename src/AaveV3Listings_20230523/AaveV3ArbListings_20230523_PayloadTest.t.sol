@@ -14,16 +14,18 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
   AaveV3ArbListings_20230523_Payload public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 93404396);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 93742385);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     payload = new AaveV3ArbListings_20230523_Payload();
   }
 
   function testPoolActivation() public {
-    ReserveConfig[] memory allConfigs = createConfigurationSnapshot('pre-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
+    createConfigurationSnapshot('pre-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
 
     _executePayload(address(payload));
+
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot('post-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
 
     ReserveConfig memory rETH = ReserveConfig({
       symbol: 'rETH',
@@ -39,7 +41,7 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
       reserveFactor: 1500,
       usageAsCollateralEnabled: true,
       borrowingEnabled: true,
-      interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'rETH').interestRateStrategy,
+      interestRateStrategy: _findReserveConfig(allConfigs, payload.RETH()).interestRateStrategy,
       stableBorrowRateEnabled: false,
       isActive: true,
       isFrozen: false,
@@ -61,8 +63,8 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
         addressesProvider: address(AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER),
         optimalUsageRatio: 45 * (RAY / 100),
         optimalStableToTotalDebtRatio: 20 * (RAY / 100),
-        baseStableBorrowRate: 10 * (RAY / 1000),
-        stableRateSlope1: 13 * (RAY / 1000),
+        baseStableBorrowRate: 10 * (RAY / 100),
+        stableRateSlope1: 13 * (RAY / 100),
         stableRateSlope2: 300 * (RAY / 100),
         baseVariableBorrowRate: 0,
         variableRateSlope1: 7 * (RAY / 100),
@@ -88,9 +90,9 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
       liquidationBonus: 0,
       liquidationProtocolFee: 0,
       reserveFactor: 1000,
-      usageAsCollateralEnabled: true,
+      usageAsCollateralEnabled: false,
       borrowingEnabled: true,
-      interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'LUSD').interestRateStrategy,
+      interestRateStrategy: _findReserveConfig(allConfigs, payload.LUSD()).interestRateStrategy,
       stableBorrowRateEnabled: false,
       isActive: true,
       isFrozen: false,
@@ -112,8 +114,8 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
         addressesProvider: address(AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER),
         optimalUsageRatio: 80 * (RAY / 100),
         optimalStableToTotalDebtRatio: 20 * (RAY / 100),
-        baseStableBorrowRate: 4 * (RAY / 100),
-        stableRateSlope1: 4 * (RAY / 1000),
+        baseStableBorrowRate: 5 * (RAY / 100),
+        stableRateSlope1: 4 * (RAY / 100),
         stableRateSlope2: 87 * (RAY / 100),
         baseVariableBorrowRate: 0,
         variableRateSlope1: 4 * (RAY / 100),
@@ -126,8 +128,6 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3TestBase, TestWithE
       payload.LUSD(),
       payload.LUSD_PRICE_FEED()
     );
-
-    createConfigurationSnapshot('post-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
 
     diffReports('pre-Aave-V3-Arbitrum-Listings-20230523', 'post-Aave-V3-Arbitrum-Listings-20230523');
   }

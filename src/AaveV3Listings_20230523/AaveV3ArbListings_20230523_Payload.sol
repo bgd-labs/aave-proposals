@@ -16,7 +16,7 @@ import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  */
 contract AaveV3ArbListings_20230523_Payload is AaveV3PayloadArbitrum {
   address public constant RETH = 0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8;
-  address public constant RETH_PRICE_FEED = address(0); // TODO: Create Syncrhonicity
+  address public constant RETH_PRICE_FEED = 0x853844459106feefd8C7C4cC34066bFBC0531722;
 
   address public constant LUSD = 0x93b346b6BC2548dA6A1E7d98E9a421B42541425b;
   address public constant LUSD_PRICE_FEED = 0x0411D28c94d85A36bC72Cb0f875dfA8371D8fFfF;
