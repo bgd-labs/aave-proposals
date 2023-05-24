@@ -3,12 +3,12 @@
 pragma solidity 0.8.19;
 
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbListings_20230524_Payload} from './AaveV3ArbListings_20230524_Payload.sol';
 
-contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
   uint256 internal constant RAY = 1e27;
   AaveV3ArbListings_20230524_Payload public payload;
 
@@ -46,7 +46,7 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3TestBase, TestWithE
       isFrozen: false,
       isSiloed: false,
       isBorrowableInIsolation: false,
-      isFlashloanable: false,
+      isFlashloanable: true,
       supplyCap: 325,
       borrowCap: 85,
       debtCeiling: 0,

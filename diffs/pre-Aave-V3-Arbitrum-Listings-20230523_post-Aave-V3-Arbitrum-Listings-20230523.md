@@ -13,7 +13,7 @@
 | borrowCap | 85 rETH |
 | debtCeiling | 0 $ |
 | isSiloed | false |
-| isFlashloanable | false |
+| isFlashloanable | true |
 | eModeCategory | 0 |
 | oracle | [0x853844459106feefd8C7C4cC34066bFBC0531722](https://https://arbiscan.io/address/0x853844459106feefd8C7C4cC34066bFBC0531722) |
 | oracleName | rETH/ETH/USD |
@@ -64,7 +64,7 @@
         "interestRateStrategy": "0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A",
         "isActive": true,
         "isBorrowableInIsolation": false,
-        "isFlashloanable": false,
+        "isFlashloanable": true,
         "isFrozen": false,
         "isSiloed": false,
         "liquidationBonus": 10750,
