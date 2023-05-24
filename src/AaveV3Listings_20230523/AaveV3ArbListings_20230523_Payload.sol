@@ -38,7 +38,7 @@ contract AaveV3ArbListings_20230523_Payload is AaveV3PayloadArbitrum {
       stableRateModeEnabled: EngineFlags.DISABLED,
       borrowableInIsolation: EngineFlags.DISABLED,
       withSiloedBorrowing: EngineFlags.DISABLED,
-      flashloanable: EngineFlags.DISABLED,
+      flashloanable: EngineFlags.ENABLED,
       ltv: 0,
       liqThreshold: 0,
       liqBonus: 0,

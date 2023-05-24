@@ -13,7 +13,7 @@
 | borrowCap | 900,000 LUSD |
 | debtCeiling | 0 $ |
 | isSiloed | false |
-| isFlashloanable | false |
+| isFlashloanable | true |
 | eModeCategory | 0 |
 | oracle | [0x0411D28c94d85A36bC72Cb0f875dfA8371D8fFfF](https://https://arbiscan.io/address/0x0411D28c94d85A36bC72Cb0f875dfA8371D8fFfF) |
 | oracleDecimals | 8 |
@@ -65,7 +65,7 @@
         "interestRateStrategy": "0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A",
         "isActive": true,
         "isBorrowableInIsolation": false,
-        "isFlashloanable": false,
+        "isFlashloanable": true,
         "isFrozen": false,
         "isSiloed": false,
         "liquidationBonus": 0,
