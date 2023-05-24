@@ -158,3 +158,7 @@ deploy-steward-polygon :; forge script src/AaveV3RiskSteward_20230404/AaveV3Risk
 deploy-steward-avalanche :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-steward-metis :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadMetis --rpc-url metis --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-steward-proposal :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# DFS flashBorrow OP activation
+
+create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_20230524/CreateDFSProposal.s.sol:DFSProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
