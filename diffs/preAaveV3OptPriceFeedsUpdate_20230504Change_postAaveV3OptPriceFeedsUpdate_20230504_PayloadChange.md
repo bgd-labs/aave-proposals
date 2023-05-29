@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | oracle | [0x698B585CbC4407e2D54aa898B2600B53C68958f7](https://optimistic.etherscan.io/address/0x698B585CbC4407e2D54aa898B2600B53C68958f7) | [0x05225Cd708bCa9253789C1374e4337a019e99D56](https://optimistic.etherscan.io/address/0x05225Cd708bCa9253789C1374e4337a019e99D56) |
 | oracleName | null | wstETH/ETH/USD |
-| oracleLatestAnswer | 2021.0196311 | 2016.07573043 |
+| oracleLatestAnswer | 2118.36632 | 2122.94456946 |
 
 
 ## Raw diff
@@ -28,8 +28,8 @@
         "to": "0x05225Cd708bCa9253789C1374e4337a019e99D56"
       },
       "oracleLatestAnswer": {
-        "from": 202101963110,
-        "to": 201607573043
+        "from": 211836632000,
+        "to": 212294456946
       },
       "oracleName": {
         "from": null,

@@ -40,7 +40,7 @@ contract PriceFeedsUpdateProposal is EthereumScript {
     payloads[3] = GovHelpers.buildPolygon(0x6acCc155626E0CF8bFe97e68A17a567394D51238);
     GovHelpers.createProposal(
       payloads,
-      0 // TODO: replace by actual Hash
+      0x0ca46e519ea882777cc3eca0136cbf0177c16f5538b60803f57defd5ad11e4b5
     );
   }
 }
