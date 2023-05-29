@@ -8,7 +8,7 @@ import {AaveV3PayloadPolygon, IEngine} from 'aave-helpers/v3-config-engine/AaveV
  * @title stMatic and MaticX Price Feeds update
  * @author BGD Labs
  * @notice Change LSTs price feeds on the Aave Polygon v3 pool.
- * - Governance Forum Post: https://governance.aave.com/t/bgd-generalised-price-sync-adapters/11416
+ * - Governance Forum Post: https://governance.aave.com/t/bgd-operational-oracles-update/13213
  */
 contract AaveV3PolPriceFeedsUpdate_20230504_Payload is AaveV3PayloadPolygon {
   address public constant STMATIC_ADAPTER = address(0xEe96b77129cF54581B5a8FECCcC50A6A067034a1);
