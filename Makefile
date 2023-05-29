@@ -162,3 +162,8 @@ create-steward-proposal :; forge script src/AaveV3RiskSteward_20230404/AaveV3Ris
 # DFS flashBorrow OP activation
 
 create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_20230524/CreateDFSProposal.s.sol:DFSProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# ChaosLabs risk params update for Ethereum 20230529
+test-risk-params-eth-20230529-payload :; forge test -vvv --match-contract AaveV3EthRiskParams_20230529_Test
+deploy-risk-params-eth-20230529-payload :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230529 :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
