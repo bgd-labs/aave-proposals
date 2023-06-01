@@ -27,6 +27,9 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Get all changed *.md file(s)
         id: changed-files
         uses: tj-actions/changed-files@f569b77fb1d9ad9f1a125757d7e9e07b1f320199
@@ -48,5 +51,5 @@ jobs:
           declare -p json_array
           for i in "${json_array[@]}"
           do
-            npx @bgd-labs/aave-cli ipfs "$i" -u true
+            npx aave-cli ipfs $i -u true
           done
