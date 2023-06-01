@@ -35,6 +35,7 @@ jobs:
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
 
       - name: Upload
+        if: fromJson(steps.changed-files.outputs.all_changed_files)[0] != null
         run: |
           for x in ${{ fromJson(steps.changed-files.outputs.all_changed_files) }}; do
             echo "$x"
