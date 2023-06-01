@@ -33,3 +33,9 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
+
+      - name: Upload
+        run: |
+          for x in ${{ fromJson(steps.changed-files.outputs.all_changed_files) }}; do
+            echo "$x"
+          done
