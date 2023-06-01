@@ -46,6 +46,9 @@ jobs:
 
       - name: Upload
         if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          PINATA_KEY: ${{ secrets.PINATA_KEY }}
+          PINATA_SECRET: ${{ secrets.PINATA_SECRET }}
         run: |
           json_array=($(jq -r '.[]' ".github/outputs/added_files.json"))
           for i in "${json_array[@]}"
