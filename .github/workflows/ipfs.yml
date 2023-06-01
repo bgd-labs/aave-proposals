@@ -35,8 +35,9 @@ jobs:
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
 
       - name: Upload
+        if: ${{ fromJSON(steps.changed-files.outputs.all_changed_files)[0] != null }}
         run: |
-          json='[${{ steps.changed-files.outputs.all_changed_files }}]'
+          json='[${{ fromJSON(steps.changed-files.outputs.all_changed_files) }}]'
           readarray -t json_array < <(jq -r '.[]' <<<"$json")
           declare -p json_array
           for i in "${json_array[@]}"
