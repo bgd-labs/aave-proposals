@@ -37,6 +37,10 @@ jobs:
       - name: Upload
         if: fromJson(steps.changed-files.outputs.all_changed_files)[0] != null
         run: |
-          for x in ${{ fromJson(steps.changed-files.outputs.all_changed_files) }}; do
-            echo "$x"
+          json='[${{ steps.changed-files.outputs.all_changed_files }}]'
+          readarray -t json_array < <(jq -r '.[]' <<<"$json")
+          declare -p json_array
+          for i in "${json_array[@]}"
+          do
+            npx aave-cli ipfs "$i" -u true
           done
