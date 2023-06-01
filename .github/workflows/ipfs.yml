@@ -21,6 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
+
       - name: Get all changed *.md file(s)
         id: changed-files
         uses: tj-actions/changed-files@f569b77fb1d9ad9f1a125757d7e9e07b1f320199
