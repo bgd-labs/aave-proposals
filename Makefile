@@ -162,3 +162,9 @@ create-steward-proposal :; forge script src/AaveV3RiskSteward_20230404/AaveV3Ris
 # DFS flashBorrow OP activation
 
 create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_20230524/CreateDFSProposal.s.sol:DFSProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# BUSD Offboarding plan Part II
+
+test-busd-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
+deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
