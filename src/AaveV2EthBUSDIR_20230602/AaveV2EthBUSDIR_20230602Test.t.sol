@@ -29,8 +29,23 @@ contract AaveV3EthBUSDPayloadTest is ProtocolV2TestBase, TestWithExecutor {
 
     address BUSDPayload = address(new AaveV2EthBUSDIR_20230602());
 
+    uint256 aBUSDBalanceBefore = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 BUSDBalanceBefore = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+
     _executePayload(BUSDPayload);
 
+    uint256 aBUSDBalanceAfter = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 BUSDBalanceAfter = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    assertApproxEqAbs(aBUSDBalanceAfter, 0, 300 ether, 'aBUSD_LEFTOVER');
+    assertEq(BUSDBalanceAfter, aBUSDBalanceBefore + BUSDBalanceBefore);
     ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV2Ethereum.POOL);
 
     _noReservesConfigsChangesApartFrom(
