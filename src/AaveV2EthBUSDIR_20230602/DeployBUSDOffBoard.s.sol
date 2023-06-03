@@ -14,7 +14,7 @@ contract BUSDPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
-      address(new AaveV2EthBUSDIR_20230602()) // TODO: Replace by actual payload
+      address(0) // TODO: Replace by actual payload
     );
     GovHelpers.createProposal(
       payloads,

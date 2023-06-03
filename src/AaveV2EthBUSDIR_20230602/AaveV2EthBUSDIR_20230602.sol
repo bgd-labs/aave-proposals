@@ -19,10 +19,17 @@ contract AaveV2EthBUSDIR_20230602 is IProposalGenericExecutor {
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       INTEREST_RATE_STRATEGY
     );
+
+    uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 availableBUSD = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
+      AaveV2EthereumAssets.BUSD_A_TOKEN
+    );
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.BUSD_A_TOKEN,
       address(this),
-      IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR))
+      aBUSDBalance > availableBUSD ? availableBUSD : aBUSDBalance
     );
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
