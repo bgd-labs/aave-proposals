@@ -23,7 +23,7 @@ contract BUSDPayloadProposal is EthereumScript {
         'src/AaveV2EthBUSDIR_20230602/BUSD-OFFBOARDING-PLAN-PART-II-AIP.md',
         // if you set `upload` to `true`, your env must contain PINATA_KEY & PINATA_SECRET
         // the file will be uploaded automatically once merged to main
-        true
+        false
       )
     );
   }
