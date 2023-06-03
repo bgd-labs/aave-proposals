@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
+import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
@@ -12,16 +13,20 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  */
 contract AaveV2EthBUSDIR_20230602 is IProposalGenericExecutor {
   address public constant INTEREST_RATE_STRATEGY = 0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
-  uint256 public constant MAX_INT = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe; 
 
   function execute() external {
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       INTEREST_RATE_STRATEGY
     );
+    AaveV2Ethereum.COLLECTOR.transfer(
+      AaveV2EthereumAssets.BUSD_A_TOKEN,
+      address(this),
+      IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR))
+    );
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
-      MAX_INT,
+      type(uint256).max,
       address(AaveV2Ethereum.COLLECTOR)
     );
   }

@@ -21,8 +21,9 @@ The remaining vBUSD debt holders seem to be inactive or unaffected by high rates
 This second part of the offboarding plan will concentrate efforts on creating unsustainable positions for remaining borrowers to either motivate them enough to repay or reach liquidation thresholds.
 
 Both actions are proposed to be performed :
-1) modify risk parameters to "force" slope 2 interest rate curve and increase slope 2 aggressiveness
-2) remove POL BUSD liquidity to increase the utilization ratio of BUSD and increase the cost of open positions.
+
+1. modify risk parameters to "force" slope 2 interest rate curve and increase slope 2 aggressiveness
+2. remove POL BUSD liquidity to increase the utilization ratio of BUSD and increase the cost of open positions.
 
 ## Specification
 
@@ -42,17 +43,24 @@ Withdrawal of aBUSD from the collector contract. The BUSD will be kept as such i
 
 ```solidity
 contract AaveV2EthBUSDIR_20230602 is IProposalGenericExecutor {
-  address public constant INTEREST_RATE_STRATEGY = 0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
-  uint256 public constant MAX_INT = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe; 
+  address public constant INTEREST_RATE_STRATEGY =
+    0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
 
   function execute() external {
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       INTEREST_RATE_STRATEGY
     );
+    AaveV2Ethereum.COLLECTOR.transfer(
+      AaveV2EthereumAssets.BUSD_A_TOKEN,
+      address(this),
+      IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)
+      )
+    );
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
-      MAX_INT,
+      type(uint256).max,
       address(AaveV2Ethereum.COLLECTOR)
     );
   }

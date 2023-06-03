@@ -166,5 +166,5 @@ create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_2023
 # BUSD Offboarding plan Part II
 
 test-busd-payload :; forge test -vvv --match-contract AaveV3EthBUSDPayloadTest
-deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
-create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
+create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
