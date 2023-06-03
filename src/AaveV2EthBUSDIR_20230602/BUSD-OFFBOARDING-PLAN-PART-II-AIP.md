@@ -43,20 +43,24 @@ Withdrawal of aBUSD from the collector contract. The BUSD will be kept as such i
 
 ```solidity
 contract AaveV2EthBUSDIR_20230602 is IProposalGenericExecutor {
-  address public constant INTEREST_RATE_STRATEGY =
-    0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
+  address public constant INTEREST_RATE_STRATEGY = 0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
 
   function execute() external {
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       INTEREST_RATE_STRATEGY
     );
+
+    uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 availableBUSD = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
+      AaveV2EthereumAssets.BUSD_A_TOKEN
+    );
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.BUSD_A_TOKEN,
       address(this),
-      IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR)
-      )
+      aBUSDBalance > availableBUSD ? availableBUSD : aBUSDBalance
     );
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.BUSD_UNDERLYING,
