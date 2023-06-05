@@ -37,7 +37,7 @@ jobs:
           json: true
           write_output_files: true
           files: |
-            **/*.md
+            src/**/*.md
 
       - name: Run step if any *.md file(s) change
         if: steps.changed-files.outputs.any_changed == 'true'
