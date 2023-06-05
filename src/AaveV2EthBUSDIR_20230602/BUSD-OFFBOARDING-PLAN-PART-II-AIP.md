@@ -23,7 +23,7 @@ This second part of the offboarding plan will concentrate efforts on creating un
 Both actions are proposed to be performed :
 
 1. modify risk parameters to "force" slope 2 interest rate curve and increase slope 2 aggressiveness
-2. remove POL BUSD liquidity to increase the utilization ratio of BUSD and increase the cost of open positions.
+2. remove Protocol Owned Liquidity aBUSD to increase the utilization ratio of BUSD and increase the cost of open positions.
 
 ## Specification
 
