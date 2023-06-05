@@ -168,3 +168,9 @@ create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_2023
 test-busd-payload :; forge test -vv --match-contract AaveV3EthBUSDPayloadTest
 deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
 create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
+
+# ADD FUSDC Aave V3 Ethereum pool
+
+test-fusdc-payload :; forge test -vv --match-contract AaveV3ethFUSDCListing_20230605Test
+deploy-fusdc-payload :; forge script src/AaveV3ethFUSDCListing_20230605/DeployMainnetFUSDCPayloads.s.sol:DeployFUSDCPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
+create-fusdc-proposal :; forge script src/AaveV3ethFUSDCListing_20230605/DeployMainnetFUSDCPayloads.s.sol:CreateFUSDC --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
