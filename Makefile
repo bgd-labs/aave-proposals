@@ -143,7 +143,30 @@ deploy-mai-arb-payload :; forge script src/AaveV3OPARBMAIListings_20230425/Deplo
 create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
-
 # ir
 deploy-polygon-payload :; forge script src/AaveV2PolygonIR_20230519/AaveV2PolygonIR_20230519.s.sol:DeployPolygonPayload --rpc-url polygon --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-ir-proposal :; forge script src/AaveV2PolygonIR_20230519/AaveV2PolygonIR_20230519.s.sol:DeployProposal --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# ACI rETH emode and BUSD Offboarding
+
+test-rETH-emode-payload :; forge test -vvv --match-contract AaveV3ETHrETHEmode_20230522_Test
+deploy-rETH-emode-payload :; forge script src/AaveV3EthrETHEmode_20230522/AaveV3ETHrETHEmode_20230522.sol:AaveV3ETHrETHEmode_20230522 --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Steward
+deploy-steward-mainnet :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-arbitrum :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-optimism :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadOptimism --rpc-url optimism --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-polygon :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-avalanche :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadAvalanche --rpc-url avalanche --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-steward-metis :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:DeployPayloadMetis --rpc-url metis --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-steward-proposal :; forge script src/AaveV3RiskSteward_20230404/AaveV3RiskSteward_20230404.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# DFS flashBorrow OP activation
+
+create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_20230524/CreateDFSProposal.s.sol:DFSProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# BUSD Offboarding plan Part II
+
+test-busd-payload :; forge test -vv --match-contract AaveV3EthBUSDPayloadTest
+deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
+create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
