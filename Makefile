@@ -170,3 +170,11 @@ create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_2023
 test-busd-payload :; forge test -vv --match-contract AaveV3EthBUSDPayloadTest
 deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
 create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
+
+# MAI ARB & OP Fix
+
+test-mai-fix-arb-payload :; forge test -vvv --match-contract AaveV3ArbUpdate_20230327_Test
+test-mai-fix-op-payload :; forge test -vvv --match-contract AaveV3OpUpdate_20230327_Test
+deploy-mai-fix-op-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3OPMAIFixes_20230606 --rpc-url optimism --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-mai-fix-arb-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3ARBMAIFixes_20230606 --rpc-url arbitrum --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-mai-proposal :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:CreateMaiFixesProposal --rpc-url mainnet --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
