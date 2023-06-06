@@ -173,5 +173,5 @@ create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBo
 
 # MAI ARB & OP Fix
 
-test-mai-arb-payload :; forge test -vvv --match-contract AaveV3ArbUpdate_20230327_Test
-test-mai-op-payload :; forge test -vvv --match-contract AaveV3OpUpdate_20230327_Test
+test-mai-fix-arb-payload :; forge test -vvv --match-contract AaveV3ArbUpdate_20230327_Test
+test-mai-fix-op-payload :; forge test -vvv --match-contract AaveV3OpUpdate_20230327_Test
