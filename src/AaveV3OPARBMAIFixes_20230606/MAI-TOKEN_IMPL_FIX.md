@@ -17,11 +17,11 @@ While all existing reserves `a/s/v` implementations were upgraded in the [origin
 In the current state repayments could still work, as `repayWithAToken` is not affected, but `liquidations` wouldn't work as they rely on `repay`.
 To reduce risk, the guardian coordinated a pause for these mostly empty reserves(~8k).
 
-This proposal resolves the current issues & unpauses the reserve by:
+This proposal resolves the current issues by:
 
 - upgrading the `a/s/v` token implementations
 - setting `flashloanable` to `true`
-- unpausing the pool
+- unpausing the reserve
 
 ## Specification
 
