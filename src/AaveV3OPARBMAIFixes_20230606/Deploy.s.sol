@@ -5,13 +5,13 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ARBMAIFixes_20230606} from './AaveV3ARBMAIFixes_20230606.sol';
 import {AaveV3OPMAIFixes_20230606} from './AaveV3OPMAIFixes_20230606.sol';
 
-contract DeployAaveV3OPMAIFixes_20230425 is OptimismScript {
+contract DeployAaveV3OPMAIFixes_20230606 is OptimismScript {
   function run() external broadcast {
     new AaveV3OPMAIFixes_20230606();
   }
 }
 
-contract DeployAaveV3ARBMAIFixes_20230425 is ArbitrumScript {
+contract DeployAaveV3ARBMAIFixes_20230606 is ArbitrumScript {
   function run() external broadcast {
     new AaveV3ARBMAIFixes_20230606();
   }
