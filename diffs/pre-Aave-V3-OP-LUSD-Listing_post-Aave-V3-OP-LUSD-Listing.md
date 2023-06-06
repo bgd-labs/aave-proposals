@@ -35,6 +35,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://optimistic.etherscan.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD) |
+| isPaused | false |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 0 % |
@@ -67,6 +68,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": false,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 0,
         "liquidationProtocolFee": 0,

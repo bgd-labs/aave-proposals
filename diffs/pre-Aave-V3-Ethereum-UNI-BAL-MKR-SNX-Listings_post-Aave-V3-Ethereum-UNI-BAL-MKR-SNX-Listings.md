@@ -35,6 +35,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
+| isPaused | false |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
@@ -80,6 +81,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
+| isPaused | false |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
@@ -125,6 +127,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://etherscan.io/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
+| isPaused | false |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 3 % |
@@ -170,6 +173,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A](https://etherscan.io/address/0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A) |
+| isPaused | false |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 3 % |
@@ -202,6 +206,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 11000,
         "liquidationProtocolFee": 1000,
@@ -238,6 +243,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10850,
         "liquidationProtocolFee": 1000,
@@ -274,6 +280,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10850,
         "liquidationProtocolFee": 1000,
@@ -310,6 +317,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10830,
         "liquidationProtocolFee": 1000,

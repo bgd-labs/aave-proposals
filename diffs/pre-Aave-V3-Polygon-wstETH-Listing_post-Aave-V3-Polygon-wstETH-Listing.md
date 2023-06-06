@@ -35,6 +35,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
+| isPaused | false |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0.25 % |
@@ -95,6 +96,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": false,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10720,
         "liquidationProtocolFee": 1000,

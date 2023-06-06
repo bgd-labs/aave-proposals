@@ -35,6 +35,7 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://arbiscan.io/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
+| isPaused | false |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 0 % |
@@ -67,6 +68,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": false,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10500,
         "liquidationProtocolFee": 1000,

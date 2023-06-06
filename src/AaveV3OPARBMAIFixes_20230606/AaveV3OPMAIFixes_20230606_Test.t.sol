@@ -8,11 +8,23 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
 import {AaveV3OPMAIFixes_20230606} from './AaveV3OPMAIFixes_20230606.sol';
 import 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3OpUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3OpUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecutor {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 105088970);
 
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
+  }
+
+  function testFail() public {
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preTestArbMaiFixJun06',
+      AaveV3Optimism.POOL
+    );
+    e2eTestAsset(
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.MAI_UNDERLYING)
+    );
   }
 
   function testNewChanges() public {
@@ -21,10 +33,7 @@ contract AaveV3OpUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
       AaveV3Optimism.POOL
     );
 
-    _findReserveConfig(
-      allConfigsBefore,
-      AaveV3OptimismAssets.MAI_UNDERLYING
-    );
+    _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.MAI_UNDERLYING);
 
     _executePayload(address(new AaveV3OPMAIFixes_20230606()));
 
@@ -48,6 +57,12 @@ contract AaveV3OpUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
         stableDebtToken: AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2,
         variableDebtToken: AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2
       })
+    );
+
+    e2eTestAsset(
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.MAI_UNDERLYING)
     );
   }
 }
