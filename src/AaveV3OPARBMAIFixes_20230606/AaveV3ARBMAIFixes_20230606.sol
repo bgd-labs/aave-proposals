@@ -42,5 +42,10 @@ contract AaveV3ARBMAIFixes_20230606 is IProposalGenericExecutor {
         params: bytes('')
       })
     );
+
+    AaveV3Arbitrum.POOL_CONFIGURATOR.setReservePause(
+      AaveV3ArbitrumAssets.MAI_UNDERLYING,
+      false
+    );
   }
 }

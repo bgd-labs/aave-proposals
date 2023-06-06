@@ -43,5 +43,10 @@ contract AaveV3OPMAIFixes_20230606 is IProposalGenericExecutor {
       })
     );
 
+    AaveV3Optimism.POOL_CONFIGURATOR.setReservePause(
+      AaveV3OptimismAssets.MAI_UNDERLYING,
+      false
+    );
+
   }
 }

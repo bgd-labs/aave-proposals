@@ -8,7 +8,7 @@ import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbi
 import {AaveV3ARBMAIFixes_20230606} from './AaveV3ARBMAIFixes_20230606.sol';
 import 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3ArbUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ARBUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 98298854);
 
