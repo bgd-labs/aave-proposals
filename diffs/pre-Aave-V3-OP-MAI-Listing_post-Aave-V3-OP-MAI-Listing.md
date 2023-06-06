@@ -35,7 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xD624AFA34614B4fe7FEe7e1751a2E5E04fb47398](https://optimistic.etherscan.io/address/0xD624AFA34614B4fe7FEe7e1751a2E5E04fb47398) |
+| aTokenName | Aave Optimism MAI |
+| aTokenSymbol | aOptMAI |
 | isPaused | false |
+| stableDebtTokenName | Aave Optimism Stable Debt MAI |
+| stableDebtTokenSymbol | stableDebtOptMAI |
+| variableDebtTokenName | Aave Optimism Variable Debt MAI |
+| variableDebtTokenSymbol | variableDebtOptMAI |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 0 % |
@@ -58,6 +64,8 @@
       "to": {
         "aToken": "0x8ffDf2DE812095b1D19CB146E4c004587C0A0692",
         "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
+        "aTokenName": "Aave Optimism MAI",
+        "aTokenSymbol": "aOptMAI",
         "borrowCap": 2500000,
         "borrowingEnabled": true,
         "debtCeiling": 190000000,
@@ -82,12 +90,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0xa5e408678469d23efDB7694b1B0A85BB0669e8bd",
         "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
+        "stableDebtTokenName": "Aave Optimism Stable Debt MAI",
+        "stableDebtTokenSymbol": "stableDebtOptMAI",
         "supplyCap": 7600000,
         "symbol": "MAI",
         "underlying": "0xdFA46478F9e5EA86d57387849598dbFB2e964b02",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0xA8669021776Bc142DfcA87c21b4A52595bCbB40a",
-        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3"
+        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3",
+        "variableDebtTokenName": "Aave Optimism Variable Debt MAI",
+        "variableDebtTokenSymbol": "variableDebtOptMAI"
       }
     }
   },

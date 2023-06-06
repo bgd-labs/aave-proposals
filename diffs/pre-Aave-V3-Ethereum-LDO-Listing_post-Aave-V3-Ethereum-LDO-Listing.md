@@ -35,7 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F](https://etherscan.io/address/0x27eFE5db315b71753b2a38ED3d5dd7E9362ba93F) |
+| aTokenName | Aave Ethereum LDO |
+| aTokenSymbol | aEthLDO |
 | isPaused | false |
+| stableDebtTokenName | Aave Ethereum Stable Debt LDO |
+| stableDebtTokenSymbol | stableDebtEthLDO |
+| variableDebtTokenName | Aave Ethereum Variable Debt LDO |
+| variableDebtTokenSymbol | variableDebtEthLDO |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
@@ -58,6 +64,8 @@
       "to": {
         "aToken": "0x8A458A9dc9048e005d22849F470891b840296619",
         "aTokenImpl": "0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d",
+        "aTokenName": "Aave Ethereum LDO",
+        "aTokenSymbol": "aEthLDO",
         "borrowCap": 3000000,
         "borrowingEnabled": true,
         "debtCeiling": 750000000,
@@ -82,12 +90,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x0496372BE7e426D28E89DEBF01f19F014d5938bE",
         "stableDebtTokenImpl": "0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57",
+        "stableDebtTokenName": "Aave Ethereum Stable Debt LDO",
+        "stableDebtTokenSymbol": "stableDebtEthLDO",
         "supplyCap": 6000000,
         "symbol": "LDO",
         "underlying": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1",
-        "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6"
+        "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6",
+        "variableDebtTokenName": "Aave Ethereum Variable Debt LDO",
+        "variableDebtTokenSymbol": "variableDebtEthLDO"
       }
     }
   },
