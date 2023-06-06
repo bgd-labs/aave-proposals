@@ -175,3 +175,6 @@ create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBo
 
 test-mai-fix-arb-payload :; forge test -vvv --match-contract AaveV3ArbUpdate_20230327_Test
 test-mai-fix-op-payload :; forge test -vvv --match-contract AaveV3OpUpdate_20230327_Test
+deploy-mai-fix-op-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-mai-fix-arb-payload :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.sol:DeployAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --ledger --mnemonics RANDOM --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
