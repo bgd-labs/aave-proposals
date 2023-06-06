@@ -20,5 +20,28 @@ contract AaveV3OPMAIFixes_20230606 is IProposalGenericExecutor {
         params: bytes('')
       })
     );
+
+    AaveV3Optimism.POOL_CONFIGURATOR.updateStableDebtToken(
+      ConfiguratorInputTypes.UpdateDebtTokenInput({
+        asset: AaveV3OptimismAssets.MAI_UNDERLYING,
+        incentivesController: address(AaveV3Optimism.DEFAULT_INCENTIVES_CONTROLLER),
+        name: 'Aave Optimism Stable Debt MAI',
+        symbol: 'stableDebtOptMAI',
+        implementation: AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2,
+        params: bytes('')
+      })
+    );
+
+    AaveV3Optimism.POOL_CONFIGURATOR.updateVariableDebtToken(
+      ConfiguratorInputTypes.UpdateDebtTokenInput({
+        asset: AaveV3OptimismAssets.MAI_UNDERLYING,
+        incentivesController: address(AaveV3Optimism.DEFAULT_INCENTIVES_CONTROLLER),
+        name: 'Aave Optimism Variable Debt MAI',
+        symbol: 'variableDebtOptMAI',
+        implementation: AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2,
+        params: bytes('')
+      })
+    );
+
   }
 }
