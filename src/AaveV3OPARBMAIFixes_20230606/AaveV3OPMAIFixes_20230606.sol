@@ -7,7 +7,6 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
 import {ConfiguratorInputTypes} from 'aave-v3-core/contracts/protocol/libraries/types/ConfiguratorInputTypes.sol';
 
 contract AaveV3OPMAIFixes_20230606 is IProposalGenericExecutor {
-
   function execute() external {
     AaveV3Optimism.POOL_CONFIGURATOR.updateAToken(
       ConfiguratorInputTypes.UpdateATokenInput({
@@ -43,10 +42,11 @@ contract AaveV3OPMAIFixes_20230606 is IProposalGenericExecutor {
       })
     );
 
-    AaveV3Optimism.POOL_CONFIGURATOR.setReservePause(
-      AaveV3OptimismAssets.MAI_UNDERLYING,
-      false
-    );
+    AaveV3Optimism.POOL_CONFIGURATOR.setReservePause(AaveV3OptimismAssets.MAI_UNDERLYING, false);
 
+    AaveV3Optimism.POOL_CONFIGURATOR.setReserveFlashLoaning(
+      AaveV3OptimismAssets.MAI_UNDERLYING,
+      true
+    );
   }
 }

@@ -49,6 +49,8 @@ contract AaveV3ArbUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecut
 
     diffReports('preTestArbMaiFixJun06', 'postTestArbMaiFixJun06');
 
+    assertEq(maiAfter.isFlashloanable, true);
+
     _validateReserveTokensImpls(
       AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
       maiAfter,
