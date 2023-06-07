@@ -24,7 +24,10 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3_0_1TestBase, TestW
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = createConfigurationSnapshot('post-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Arbitrum-Listings-20230523',
+      AaveV3Arbitrum.POOL
+    );
 
     ReserveConfig memory lusd = ReserveConfig({
       symbol: 'LUSD',
@@ -42,6 +45,7 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3_0_1TestBase, TestW
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfig(allConfigs, payload.LUSD()).interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
@@ -77,6 +81,15 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3_0_1TestBase, TestW
       payload.LUSD_PRICE_FEED()
     );
 
-    diffReports('pre-Aave-V3-Arbitrum-Listings-20230523', 'post-Aave-V3-Arbitrum-Listings-20230523');
+    e2eTestAsset(
+      AaveV3Arbitrum.POOL,
+      _findReserveConfig(allConfigs, AaveV3ArbitrumAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigs, payload.LUSD())
+    );
+
+    diffReports(
+      'pre-Aave-V3-Arbitrum-Listings-20230523',
+      'post-Aave-V3-Arbitrum-Listings-20230523'
+    );
   }
 }
