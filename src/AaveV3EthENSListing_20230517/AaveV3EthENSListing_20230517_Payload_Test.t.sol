@@ -26,7 +26,7 @@ contract AaveV3EthENSListing_20230517_Payload_Test is ProtocolV3_0_1TestBase, Te
     _executePayload(address(payload));
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
-      'post-AaAave-V3-Ethereum-ENS-Listing',
+      'post-Aave-V3-Ethereum-ENS-Listing',
       AaveV3Ethereum.POOL
     );
 

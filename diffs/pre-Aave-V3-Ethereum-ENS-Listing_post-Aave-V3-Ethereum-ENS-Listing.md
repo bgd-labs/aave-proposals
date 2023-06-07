@@ -35,6 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0x8F183Ee74C790CB558232a141099b316D6C8Ba6E](https://etherscan.io/address/0x8F183Ee74C790CB558232a141099b316D6C8Ba6E) |
+| aTokenName | Aave Ethereum ENS |
+| aTokenSymbol | aEthENS |
+| isPaused | false |
+| stableDebtTokenName | Aave Ethereum Stable Debt ENS |
+| stableDebtTokenSymbol | stableDebtEthENS |
+| variableDebtTokenName | Aave Ethereum Variable Debt ENS |
+| variableDebtTokenSymbol | variableDebtEthENS |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
@@ -57,6 +64,8 @@
       "to": {
         "aToken": "0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e",
         "aTokenImpl": "0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d",
+        "aTokenName": "Aave Ethereum ENS",
+        "aTokenSymbol": "aEthENS",
         "borrowCap": 40000,
         "borrowingEnabled": true,
         "debtCeiling": 390000000,
@@ -67,6 +76,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10800,
         "liquidationProtocolFee": 1000,
@@ -80,12 +90,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x7617d02E311CdE347A0cb45BB7DF2926BBaf5347",
         "stableDebtTokenImpl": "0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57",
+        "stableDebtTokenName": "Aave Ethereum Stable Debt ENS",
+        "stableDebtTokenSymbol": "stableDebtEthENS",
         "supplyCap": 1000000,
         "symbol": "ENS",
         "underlying": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0xd180D7fdD4092f07428eFE801E17BC03576b3192",
-        "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6"
+        "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6",
+        "variableDebtTokenName": "Aave Ethereum Variable Debt ENS",
+        "variableDebtTokenSymbol": "variableDebtEthENS"
       }
     }
   },
