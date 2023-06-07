@@ -19,7 +19,7 @@ contract AaveV3ArbListings_20230523_PayloadTest is ProtocolV3_0_1TestBase, TestW
     payload = new AaveV3ArbListings_20230523_Payload();
   }
 
-  function testPoolActivation() public {
+  function testReserveActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
 
     _executePayload(address(payload));
