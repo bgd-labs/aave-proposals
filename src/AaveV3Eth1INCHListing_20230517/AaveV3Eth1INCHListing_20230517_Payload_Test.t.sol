@@ -25,7 +25,8 @@ contract AaveV3Eth1INCHListing_20230517_Payload_Test is ProtocolV3_0_1TestBase, 
 
         _executePayload(address(payload));
 
-        ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Ethereum.POOL);
+        ReserveConfig[] memory allConfigs =
+            createConfigurationSnapshot("post-Aave-V3-Ethereum-1INCH-Listing", AaveV3Ethereum.POOL);
 
         ReserveConfig memory oneInch = ReserveConfig({
             symbol: "1INCH",
@@ -43,6 +44,7 @@ contract AaveV3Eth1INCHListing_20230517_Payload_Test is ProtocolV3_0_1TestBase, 
             borrowingEnabled: true,
             interestRateStrategy: _findReserveConfigBySymbol(allConfigs, "1INCH").interestRateStrategy,
             stableBorrowRateEnabled: false,
+            isPaused: false,
             isActive: true,
             isFrozen: false,
             isSiloed: false,
@@ -76,7 +78,11 @@ contract AaveV3Eth1INCHListing_20230517_Payload_Test is ProtocolV3_0_1TestBase, 
             AaveV3Ethereum.POOL_ADDRESSES_PROVIDER, payload.ONEINCH(), payload.ONEINCH_PRICE_FEED()
         );
 
-        createConfigurationSnapshot("post-Aave-V3-Ethereum-1INCH-Listing", AaveV3Ethereum.POOL);
+        e2eTestAsset(
+            AaveV3Ethereum.POOL,
+            _findReserveConfig(allConfigs, AaveV3EthereumAssets.DAI_UNDERLYING),
+            _findReserveConfig(allConfigs, payload.ONEINCH())
+        );
 
         diffReports("pre-Aave-V3-Ethereum-1INCH-Listing", "post-Aave-V3-Ethereum-1INCH-Listing");
     }
