@@ -75,17 +75,17 @@ Checkout [Makefile](./Makefile) for reference.
 
 ### 2. Create an aip
 
-Refer to the [aip repo](https://github.com/aave/aip) for instructions on aip creation.
-Once your pr is successfully merged an [encodedHash](https://github.com/aave/aip/pull/276/files#diff-1c9f2c11da854f3177ad4ef0558e3caf4c22b47752330082ace7e6b6f2dc25e9R4) will be generated, which you will need for the final step.
+The aip can be co-located with the proposal code as a markdown file.
+This repository will manage the upload to ipfs automatically once a pr is merged to `main`.
+Alternatively you can submit your aip to the [aave/aip](https://github.com/aave/aip) repository or upload it yourself.
 
 ### 3. Create proposal
 
 The proposal requires at least one `payload address` and the `encodedHash`.
-Make sure the referenced `encodedHash` is properly encoded (check if the ipfs file is in json format and renders nicely on https://app.aave.com/governance/ipfs-preview/?ipfsHash=<encodedHash>).
 
 To create the proposal you need to adjust:
 
-- [CreateMainnetProposals](./script/CreateMainnetProposals.s.sol) according to your needs.
+- [CreateMainnetProposals](./script/CreateProposals.s.sol) according to your needs.
 
 Once adjusted, you need to create the proposal.
 Checkout [Makefile](./Makefile) for reference.

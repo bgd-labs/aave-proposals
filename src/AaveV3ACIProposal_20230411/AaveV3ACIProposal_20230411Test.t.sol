@@ -14,8 +14,6 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
 contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
-  address internal constant ECOSYSTEM_RESERVE = AaveMisc.ECOSYSTEM_RESERVE;
-
   IERC20 public constant AUSDT = IERC20(0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811);
 
   // 0x464
