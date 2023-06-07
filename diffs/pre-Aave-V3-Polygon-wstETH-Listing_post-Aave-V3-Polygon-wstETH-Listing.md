@@ -16,8 +16,9 @@
 | isFlashloanable | false |
 | eModeCategory | 3 |
 | oracle | [0xA2508729b1282Cc70dd33Ed311d4A9A37383035b](https://polygonscan.com/address/0xA2508729b1282Cc70dd33Ed311d4A9A37383035b) |
+| oracleDecimals | 8 |
 | oracleName | wstETH/ETH/USD |
-| oracleLatestAnswer | 224,341,679,900 |
+| oracleLatestAnswer | 2243.416799 |
 | usageAsCollateralEnabled | true |
 | ltv | 70 % |
 | liquidationThreshold | 79 % |
@@ -34,6 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E](https://polygonscan.com/address/0xA6459195d60A797D278f58Ffbd2BA62Fb3F7FA1E) |
+| aTokenName | Aave Polygon wstETH |
+| aTokenSymbol | aPolwstETH |
+| isPaused | false |
+| stableDebtTokenName | Aave Polygon Stable Debt wstETH |
+| stableDebtTokenSymbol | stableDebtPolwstETH |
+| variableDebtTokenName | Aave Polygon Variable Debt wstETH |
+| variableDebtTokenSymbol | variableDebtPolwstETH |
 | optimalUsageRatio | 45 % |
 | maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0.25 % |
@@ -84,6 +92,8 @@
       "to": {
         "aToken": "0xf59036CAEBeA7dC4b86638DFA2E3C97dA9FcCd40",
         "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
+        "aTokenName": "Aave Polygon wstETH",
+        "aTokenSymbol": "aPolwstETH",
         "borrowCap": 285,
         "borrowingEnabled": true,
         "debtCeiling": 0,
@@ -94,24 +104,30 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": false,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 10720,
         "liquidationProtocolFee": 1000,
         "liquidationThreshold": 7900,
         "ltv": 7000,
         "oracle": "0xA2508729b1282Cc70dd33Ed311d4A9A37383035b",
+        "oracleDecimals": 8,
         "oracleLatestAnswer": 224341679900,
         "oracleName": "wstETH/ETH/USD",
         "reserveFactor": 1500,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x173e54325AE58B072985DbF232436961981EA000",
         "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
+        "stableDebtTokenName": "Aave Polygon Stable Debt wstETH",
+        "stableDebtTokenSymbol": "stableDebtPolwstETH",
         "supplyCap": 1800,
         "symbol": "wstETH",
         "underlying": "0x03b54A6e9a984069379fae1a4fC4dBAE93B3bCCD",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0x77fA66882a8854d883101Fb8501BD3CaD347Fc32",
-        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3"
+        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3",
+        "variableDebtTokenName": "Aave Polygon Variable Debt wstETH",
+        "variableDebtTokenSymbol": "variableDebtPolwstETH"
       }
     }
   },

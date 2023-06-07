@@ -6,7 +6,7 @@ import 'forge-std/Test.sol';
 
 // contract dependencies
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV2Ethereum, ICollector} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveMisc, IStreamable} from 'aave-address-book/AaveMisc.sol';
 import {AaveV3ACIProposal_20230411} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
@@ -14,15 +14,14 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 
 contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
-  address internal constant ECOSYSTEM_RESERVE = AaveMisc.ECOSYSTEM_RESERVE;
-
   IERC20 public constant AUSDT = IERC20(0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811);
 
   // 0x464
-  address public immutable AAVE_COLLECTOR = address(AaveV2Ethereum.COLLECTOR);
+  ICollector public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
   address public constant ACI_TREASURY = 0x57ab7ee15cE5ECacB1aB84EE42D5A9d0d8112922;
 
-  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR = IStreamable(address(AaveV2Ethereum.COLLECTOR));
+  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR =
+    IStreamable(address(AaveV2Ethereum.COLLECTOR));
 
   uint256 public constant STREAM_AMOUNT = 250_000 * 1e6;
   uint256 public constant STREAM_DURATION = 180 days;
@@ -30,7 +29,7 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
   uint256 public constant actualAmountUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17026907);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17138369);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
@@ -57,7 +56,7 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
 
       ) = STREAMABLE_AAVE_COLLECTOR.getStream(nextCollectorStreamID);
 
-      assertEq(senderUSDT, AAVE_COLLECTOR);
+      assertEq(senderUSDT, address(AAVE_COLLECTOR));
       assertEq(recipientUSDT, ACI_TREASURY);
       assertEq(depositUSDT, actualAmountUSDT);
       assertEq(tokenAddressUSDT, address(AUSDT));

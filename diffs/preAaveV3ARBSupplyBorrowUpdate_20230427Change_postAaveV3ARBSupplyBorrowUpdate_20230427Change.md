@@ -2,14 +2,14 @@
 
 ### Reserve altered
 
-#### WBTC ([0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f](https://https://arbiscan.io/address/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f))
+#### WBTC ([0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f](https://arbiscan.io/address/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f))
 
 | description | value before | value after |
 | --- | --- | --- |
 | supplyCap | 2,100 WBTC | 4,200 WBTC |
 
 
-#### WETH ([0x82aF49447D8a07e3bd95BD0d56f35241523fBab1](https://https://arbiscan.io/address/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1))
+#### WETH ([0x82aF49447D8a07e3bd95BD0d56f35241523fBab1](https://arbiscan.io/address/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1))
 
 | description | value before | value after |
 | --- | --- | --- |
