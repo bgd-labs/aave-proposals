@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
@@ -53,5 +54,22 @@ contract AaveV3OptPriceFeedsSentinelUpdate_20230504_PayloadTest is
       'preAaveV3OptPriceFeedsUpdate_20230504Change',
       'postAaveV3OptPriceFeedsUpdate_20230504_PayloadChange'
     );
+
+    // 6. e2e
+    address user = address(9999);
+    uint256 amount = 3000 * 10e6;
+
+    deal(AaveV3OptimismAssets.USDC_UNDERLYING, user, amount);
+
+    vm.startPrank(user);
+
+    IERC20(AaveV3OptimismAssets.USDC_UNDERLYING).approve(address(AaveV3Optimism.POOL), amount);
+    AaveV3Optimism.POOL.deposit(AaveV3OptimismAssets.USDC_UNDERLYING, amount, user, 0);
+    AaveV3Optimism.POOL.borrow(AaveV3OptimismAssets.wstETH_UNDERLYING, 1 * 10e18, 2, 0, user);
+
+    vm.expectRevert();
+    AaveV3Optimism.POOL.borrow(AaveV3OptimismAssets.wstETH_UNDERLYING, 1 * 10e18, 2, 0, user);
+
+    vm.stopPrank();
   }
 }

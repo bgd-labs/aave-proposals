@@ -35,6 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xc76EF342898f1AE7E6C4632627Df683FAD8563DD](https://optimistic.etherscan.io/address/0xc76EF342898f1AE7E6C4632627Df683FAD8563DD) |
+| aTokenName | Aave Optimism LUSD |
+| aTokenSymbol | aOptLUSD |
+| isPaused | false |
+| stableDebtTokenName | Aave Optimism Stable Debt LUSD |
+| stableDebtTokenSymbol | stableDebtOptLUSD |
+| variableDebtTokenName | Aave Optimism Variable Debt LUSD |
+| variableDebtTokenSymbol | variableDebtOptLUSD |
 | optimalUsageRatio | 80 % |
 | maxExcessUsageRatio | 20 % |
 | baseVariableBorrowRate | 0 % |
@@ -57,6 +64,8 @@
       "to": {
         "aToken": "0x8Eb270e296023E9D92081fdF967dDd7878724424",
         "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
+        "aTokenName": "Aave Optimism LUSD",
+        "aTokenSymbol": "aOptLUSD",
         "borrowCap": 1210000,
         "borrowingEnabled": true,
         "debtCeiling": 0,
@@ -67,6 +76,7 @@
         "isBorrowableInIsolation": false,
         "isFlashloanable": false,
         "isFrozen": false,
+        "isPaused": false,
         "isSiloed": false,
         "liquidationBonus": 0,
         "liquidationProtocolFee": 0,
@@ -80,12 +90,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc",
         "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
+        "stableDebtTokenName": "Aave Optimism Stable Debt LUSD",
+        "stableDebtTokenSymbol": "stableDebtOptLUSD",
         "supplyCap": 3000000,
         "symbol": "LUSD",
         "underlying": "0xc40F949F8a4e094D1b49a23ea9241D289B7b2819",
         "usageAsCollateralEnabled": false,
         "variableDebtToken": "0xCE186F6Cccb0c955445bb9d10C59caE488Fea559",
-        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3"
+        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3",
+        "variableDebtTokenName": "Aave Optimism Variable Debt LUSD",
+        "variableDebtTokenSymbol": "variableDebtOptLUSD"
       }
     }
   },
