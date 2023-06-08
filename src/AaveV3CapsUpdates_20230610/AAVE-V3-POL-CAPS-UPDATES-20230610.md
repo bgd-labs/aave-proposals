@@ -66,8 +66,8 @@ Contract: [`0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6`](https://polygonscan.com
 
 A list of relevant links like for this proposal:
 
-- [Test Cases](XXX)
-- [Payload Implementation](XXX)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3CapsUpdates_20230610/AaveV3PolCapsUpdates_20230610_PayloadTest.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3CapsUpdates_20230610/AaveV3PolCapsUpdates_20230610_Payload.sol)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
