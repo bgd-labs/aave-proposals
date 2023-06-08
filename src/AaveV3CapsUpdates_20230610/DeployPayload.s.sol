@@ -15,17 +15,14 @@ contract DeployMainnetPayload is PolygonScript {
 contract PayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(
+    payloads[0] = GovHelpers.buildPolygon(
       address(0) // TODO: Replace by actual payload
     );
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV3CapsUpdates_20230610/AAVE-V3-POL-CAPS-UPDATES-20230610.md',
-        // if you set `upload` to `true`, your env must contain PINATA_KEY & PINATA_SECRET
-        // the file will be uploaded automatically once merged to main
-        false
+        'src/AaveV3CapsUpdates_20230610/AAVE-V3-POL-CAPS-UPDATES-20230610.md'
       )
     );
   }

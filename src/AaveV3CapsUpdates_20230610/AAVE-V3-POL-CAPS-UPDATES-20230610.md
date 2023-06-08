@@ -16,7 +16,7 @@ The utilisation of the stMATIC and MaticX Supply Caps has reached 100% and is pr
 
 The yield maximising strategy is current incentivised by two communities, Polygon Foundation and Stader Labs. These incentives encourage users to deposit either Liquid Staking Token (LST) into Aave v3 Protocl.
 
-This AIP, with support from Chaos Labs and a favour Snapshot, shall increase the Supply Caps to enable users to deposit funds in the stMATIC and MaticX reserves on Polygon v3.
+This AIP, with support from Chaos Labs and a favourable Snapshot, shall increase the Supply Caps to enable users to deposit funds in the stMATIC and MaticX reserves on Polygon v3.
 
 # Motivation
 
