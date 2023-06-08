@@ -44,6 +44,7 @@ contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWith
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'LDO').interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,

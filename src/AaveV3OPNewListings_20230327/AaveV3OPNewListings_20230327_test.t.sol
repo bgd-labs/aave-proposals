@@ -47,6 +47,7 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'LUSD').interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
