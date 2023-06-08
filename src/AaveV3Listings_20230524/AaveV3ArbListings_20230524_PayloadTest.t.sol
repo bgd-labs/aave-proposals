@@ -19,7 +19,7 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestW
     payload = new AaveV3ArbListings_20230524_Payload();
   }
 
-  function testPoolActivation() public {
+  function testReserveActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Arbitrum-Listings-20230523', AaveV3Arbitrum.POOL);
 
     _executePayload(address(payload));
@@ -42,6 +42,7 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestW
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfig(allConfigs, payload.RETH()).interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
@@ -75,6 +76,12 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestW
       AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
       payload.RETH(),
       payload.RETH_PRICE_FEED()
+    );
+
+    e2eTestAsset(
+      AaveV3Arbitrum.POOL,
+      _findReserveConfig(allConfigs, AaveV3ArbitrumAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigs, payload.RETH())
     );
 
     diffReports('pre-Aave-V3-Arbitrum-Listings-20230523', 'post-Aave-V3-Arbitrum-Listings-20230523');

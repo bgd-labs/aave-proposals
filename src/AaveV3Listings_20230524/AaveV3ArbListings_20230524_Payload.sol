@@ -16,10 +16,11 @@ contract AaveV3ArbListings_20230524_Payload is AaveV3PayloadArbitrum {
   address public constant RETH = 0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8;
   address public constant RETH_PRICE_FEED = 0x853844459106feefd8C7C4cC34066bFBC0531722;
 
-  function newListings() public pure override returns (IEngine.Listing[] memory) {
-    IEngine.Listing[] memory listings = new IEngine.Listing[](1);
+  function newListingsCustom() public pure override returns (IEngine.ListingWithCustomImpl[] memory) {
+    IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](1);
 
-    listings[0] = IEngine.Listing({
+    listings[0] = IEngine.ListingWithCustomImpl(
+      IEngine.Listing({
       asset: RETH,
       assetSymbol: 'rETH',
       priceFeed: RETH_PRICE_FEED,
@@ -48,7 +49,13 @@ contract AaveV3ArbListings_20230524_Payload is AaveV3PayloadArbitrum {
       debtCeiling: 0,
       liqProtocolFee: 10_00,
       eModeCategory: 0
-    });
+    }),
+    IEngine.TokenImplementations({
+        aToken: AaveV3Arbitrum.DEFAULT_A_TOKEN_IMPL_REV_2,
+        vToken: AaveV3Arbitrum.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2,
+        sToken: AaveV3Arbitrum.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2
+      })
+    );
 
     return listings;
   }
