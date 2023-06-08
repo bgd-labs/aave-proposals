@@ -186,6 +186,12 @@ test-1inch-eth-payload :; forge test -vvv --match-contract AaveV3Eth1INCHListing
 deploy-1inch-eth-payload :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-1inch-eth-proposal :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
+# ChaosLabs risk params update for Ethereum 20230529
+
+test-risk-params-eth-20230529-payload :; forge test -vvv --match-contract AaveV3EthRiskParams_20230529_Test
+deploy-risk-params-eth-20230529-payload :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230529 :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
 # ENS Onboarding on Ethereum V3
 
 test-ens-eth-payload :; forge test -vvv --match-contract AaveV3EthENSListing_20230517_Payload_Test
