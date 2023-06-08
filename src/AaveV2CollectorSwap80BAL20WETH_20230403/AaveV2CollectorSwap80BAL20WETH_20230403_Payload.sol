@@ -10,10 +10,24 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 
 import {COWTrader} from './COWTrader.sol';
 
+/**
+ * @title Acquire B-80BAL-20WETH BPT
+ * @author Llama
+ * @dev This proposal swaps BAL and wETH tokens held by the collector for B-80BAL-20WETH
+ * Governance: https://governance.aave.com/t/deploy-bal-abal-from-the-collector-contract/9747
+ * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x05182d6092e7a075b94ab937a6cd57968f36c6ac225196561a58b437e591065f
+ */
 contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   uint256 public constant WETH_AMOUNT = 326_88e16; // 326.88 aWETH
 
   function execute() external {
+
+    /*******************************************************************************
+     ********************************* New Trader **********************************
+     *******************************************************************************/
+
+    COWTrader trader = new COWTrader();
+
     /*******************************************************************************
      ******************************* Withdraw aTokens *******************************
      *******************************************************************************/
@@ -39,40 +53,24 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.WETH_UNDERLYING,
       type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
+      address(trader)
     );
 
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.BAL_UNDERLYING,
       type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
+      address(trader)
     );
 
     AaveV3Ethereum.POOL.withdraw(
       AaveV3EthereumAssets.BAL_UNDERLYING,
       type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
+      address(trader)
     );
 
     /*******************************************************************************
-     ********************************** Transfer ***********************************
+     *********************************** Trade *************************************
      *******************************************************************************/
-
-    COWTrader trader = new COWTrader();
-
-    AaveV2Ethereum.COLLECTOR.transfer(
-      AaveV2EthereumAssets.WETH_UNDERLYING,
-      address(trader),
-      WETH_AMOUNT
-    );
-
-    AaveV2Ethereum.COLLECTOR.transfer(
-      AaveV2EthereumAssets.BAL_UNDERLYING,
-      address(trader),
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR)
-      )
-    );
 
     trader.trade();
   }

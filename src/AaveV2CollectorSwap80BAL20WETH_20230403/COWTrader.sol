@@ -20,7 +20,7 @@ contract COWTrader {
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404;
-  address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262; // TODO: Update with BGD or AAVE controlled address
+  address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262; // TODO: Update with AAVE controlled address??
 
   uint256 balBalance;
   uint256 wethBalance;
@@ -95,11 +95,12 @@ contract COWTrader {
     emit TradeCanceled();
   }
 
-  /// @notice Transfer any tokens accidentally sent to this contract to Aave V2 Collector
+    /// @notice Transfer any tokens accidentally sent to this contract to Aave V2 Collector
     /// @param tokens List of token addresses
     function rescueTokens(address[] calldata tokens) external {
-        for (uint256 i = 0; i < tokens.length; ++i) {
-            IERC20(tokens[i]).safeTransfer(address(AaveV2Ethereum.COLLECTOR), IERC20(tokens[i]).balanceOf(address(this)));
-        }
+      if (msg.sender != ALLOWED_CALLER) revert InvalidCaller();
+      for (uint256 i = 0; i < tokens.length; ++i) {
+          IERC20(tokens[i]).safeTransfer(address(AaveV2Ethereum.COLLECTOR), IERC20(tokens[i]).balanceOf(address(this)));
+      }
     }
 }
