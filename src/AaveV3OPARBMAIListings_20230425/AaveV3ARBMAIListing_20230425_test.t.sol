@@ -45,6 +45,7 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'MAI').interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
