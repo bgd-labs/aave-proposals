@@ -185,3 +185,9 @@ create-mai-proposal :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.so
 test-1inch-eth-payload :; forge test -vvv --match-contract AaveV3Eth1INCHListing_20230517_Payload_Test
 deploy-1inch-eth-payload :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-1inch-eth-proposal :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ENS Onboarding on Ethereum V3
+
+test-ens-eth-payload :; forge test -vvv --match-contract AaveV3EthENSListing_20230517_Payload_Test
+deploy-ens-eth-payload :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-ens-eth-proposal :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
