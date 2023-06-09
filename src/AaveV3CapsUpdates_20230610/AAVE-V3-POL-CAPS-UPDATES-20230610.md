@@ -12,7 +12,7 @@ This AIP increases the stMATIC and MaticX Supply Cap on Polygon to 40M units and
 
 # Abstract
 
-The utilisation of the stMATIC and MaticX Supply Caps has reached 100% and is preverting strategies built on Aave Protocol from depositing into these reserves.
+The utilisation of the stMATIC and MaticX Supply Caps has reached 100% and is preventing strategies built on Aave Protocol from depositing into these reserves.
 
 The yield maximising strategy is current incentivised by two communities, Polygon Foundation and Stader Labs. These incentives encourage users to deposit either Liquid Staking Token (LST) into Aave v3 Protocl.
 
@@ -22,7 +22,7 @@ This AIP, with support from Chaos Labs and a favourable Snapshot, shall increase
 
 Over the previous months, Llama has been working with various communities to craft favourable conditions on Aave v3 Polygon to facilitate the creation of several yield aggregation products. These products are now active with more soon to be deployed.
 
-With conservative Supply Caps being implemented and filled within minutes, or hours, communities who have built products on Aave v3 are experiencing great frustration. After investing time, resources and incurring audit costs, these communities are unable to promote there products to prospective users without the newly implemented Supply Caps being filled.
+With conservative Supply Caps being implemented and filled within minutes, or hours, communities who have built products on Aave v3 are experiencing great frustration. After investing time, resources and incurring audit costs, these communities are unable to promote their products to prospective users without the newly implemented Supply Caps being filled.
 
 For these integrations to be successful, the Supply Caps need to be increased such that a wide array of prospective users can enter into these automated strategies. Currently, the smaller Supply Cap increases are filling quickly and we are experiencing several whales / products absoring near 100% of newly implemented Supply Caps is not promoting a desirable UX for users.
 
