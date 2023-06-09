@@ -1,4 +1,4 @@
-name: Head branch workflow
+name: PR Comment
 
 on:
   workflow_run:
