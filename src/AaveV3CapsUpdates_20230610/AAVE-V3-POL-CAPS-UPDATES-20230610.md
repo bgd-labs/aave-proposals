@@ -14,24 +14,24 @@ This AIP increases the stMATIC and MaticX Supply Cap on Polygon to 40M units and
 
 The utilisation of the stMATIC and MaticX Supply Caps has reached 100% and is preventing strategies built on Aave Protocol from depositing into these reserves.
 
-The yield maximising strategy is current incentivised by two communities, Polygon Foundation and Stader Labs. These incentives encourage users to deposit either Liquid Staking Token (LST) into the Aave V3 Protocol.
+The yield maximising strategy is currently incentivised by two communities, Polygon Foundation and Stader Labs. These incentives encourage users to deposit either Liquid Staking Token (LST) into Aave v3 Protocl.
 
 This AIP, with support from Chaos Labs and a favourable Snapshot, shall increase the Supply Caps to enable users to deposit funds in the stMATIC and MaticX reserves on Polygon v3.
 
 # Motivation
 
-Over the previous months, Llama has been working with various communities to craft favourable conditions on Aave V3 Polygon to facilitate the creation of several yield aggregation products. These products are now active, with more soon to be deployed.
+Over the previous months, Llama has been working with various communities to craft favourable conditions on Aave v3 Polygon to facilitate the creation of several yield aggregation products. These products are now active with more soon to be deployed.
 
-With conservative Supply Caps being implemented and filled within minutes, or hours, communities who have built products on Aave V3 are experiencing great frustration. After investing time, resources and incurring auditing costs, these communities are unable to promote their products to prospective users without the newly implemented Supply Caps being filled.
+With conservative Supply Caps being implemented and filled within minutes, or hours, communities who have built products on Aave v3 are experiencing great frustration. After investing time, resources and incurring audit costs, these communities are unable to promote their products to prospective users without the newly implemented Supply Caps being filled.
 
-For these integrations to be successful, the Supply Caps need to be increased such that a wide array of prospective users can enter into these automated strategies. Currently, the smaller Supply Cap increases are filling quickly; and we are experiencing several whales / products absorbing near 100% of newly implemented Supply Caps, which is not promoting a desirable UX for users.
+For these integrations to be successful, the Supply Caps need to be increased such that a wide array of prospective users can enter into these automated strategies. Currently, the smaller Supply Cap increases are filling quickly and we are experiencing several whales / products absoring near 100% of newly implemented Supply Caps is not promoting a desirable UX for users.
 
 The original ARFC links below:
 
 - [MaticX Forum Post](https://governance.aave.com/t/arfc-polygon-supply-cap-update-23-05-2023/13190)
 - [stMATIC Forum Post](https://governance.aave.com/t/arfc-polygon-v3-supply-cap-update-2023-05-21/13161)
 
-The proposed Supply Caps are supported by Chaos Labs. However, Gauntlet has a more conservative risk model which limits the Supply Cap to 50% of supply on the network relative to Chaose Labs' 75%. This difference leads to differing Supply Cap recommendations. Do note, Aave DAO voted to increase the Supply Caps to [75%](https://snapshot.org/#/aave.eth/proposal/0xf9261916c696ce2d793af41b7fe556896ed1ff7a8330b7d0489d5567ebefe3ba) of supply. A Snapshot vote for each Supply Cap is linked below:
+The proposed Supply Caps are supported by Chaos Labs. However, Gauntlet has a more conservative risk model which limits the Supply Cap to 50% of supply on the network relative to Chaose Lab's 75%. This difference leads to differing Supply Cap recommendations. Do note, Aave DAO voted to increase the Supply Caps to [75%](https://snapshot.org/#/aave.eth/proposal/0xf9261916c696ce2d793af41b7fe556896ed1ff7a8330b7d0489d5567ebefe3ba) of supply. A Snapshot vote for each Supply Cap is linked below:
 
 - [MaticX Snapshot](https://snapshot.org/#/aave.eth/proposal/0xbbb92805d7b15d46d668cdc8e40d9a15e6a3ed2ac94802667e7d3c35a763bc8c)
 - [stMATIC Snapshop](https://snapshot.org/#/aave.eth/proposal/0xd0e157ef44b5429df7e412126d632afa1192f84fa6045dcdcaed61bc79ad1b45)
