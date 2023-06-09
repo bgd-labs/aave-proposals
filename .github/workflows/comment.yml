@@ -1,9 +1,5 @@
 name: Head branch workflow
 
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: true
-
 on:
   workflow_run:
     workflows: [Test]
