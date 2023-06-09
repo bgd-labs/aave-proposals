@@ -13,7 +13,7 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestW
   AaveV3ArbListings_20230524_Payload public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 93742385);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 99531326);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     payload = new AaveV3ArbListings_20230524_Payload();
