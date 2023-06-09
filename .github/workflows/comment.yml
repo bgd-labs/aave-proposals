@@ -1,0 +1,16 @@
+name: Head branch workflow
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_run:
+    workflows: [Test]
+    types:
+      - completed
+
+jobs:
+  test:
+    uses: bgd-labs/github-workflows/.github/workflows/comment.yml@6a446cb1023bf293ae55e94b216a220f5a33665e
+    secrets: inherit
