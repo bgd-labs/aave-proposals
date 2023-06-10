@@ -14,7 +14,7 @@ import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  */
 contract AaveV3ArbListings_20230524_Payload is AaveV3PayloadArbitrum {
   address public constant RETH = 0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8;
-  address public constant RETH_PRICE_FEED = 0x853844459106feefd8C7C4cC34066bFBC0531722;
+  address public constant RETH_PRICE_FEED = 0x04c28D6fE897859153eA753f986cc249Bf064f71;
 
   function newListingsCustom() public pure override returns (IEngine.ListingWithCustomImpl[] memory) {
     IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](1);

@@ -15,10 +15,10 @@
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
-| oracle | [0x853844459106feefd8C7C4cC34066bFBC0531722](https://arbiscan.io/address/0x853844459106feefd8C7C4cC34066bFBC0531722) |
+| oracle | [0x04c28D6fE897859153eA753f986cc249Bf064f71](https://arbiscan.io/address/0x04c28D6fE897859153eA753f986cc249Bf064f71) |
 | oracleDecimals | 8 |
-| oracleName | rETH/ETH/USD |
-| oracleLatestAnswer | 1983.72582495 |
+| oracleDescription | rETH/ETH/USD |
+| oracleLatestAnswer | 1972.27085432 |
 | usageAsCollateralEnabled | true |
 | ltv | 67 % |
 | liquidationThreshold | 74 % |
@@ -34,7 +34,7 @@
 | borrowingEnabled | true |
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
-| interestRateStrategy | [0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A](https://arbiscan.io/address/0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A) |
+| interestRateStrategy | [0xC82dF96432346cFb632473eB619Db3B8AC280234](https://arbiscan.io/address/0xC82dF96432346cFb632473eB619Db3B8AC280234) |
 | aTokenName | Aave Arbitrum rETH |
 | aTokenSymbol | aArbrETH |
 | isPaused | false |
@@ -71,7 +71,7 @@
         "debtCeiling": 0,
         "decimals": 18,
         "eModeCategory": 0,
-        "interestRateStrategy": "0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A",
+        "interestRateStrategy": "0xC82dF96432346cFb632473eB619Db3B8AC280234",
         "isActive": true,
         "isBorrowableInIsolation": false,
         "isFlashloanable": true,
@@ -82,10 +82,10 @@
         "liquidationProtocolFee": 1000,
         "liquidationThreshold": 7400,
         "ltv": 6700,
-        "oracle": "0x853844459106feefd8C7C4cC34066bFBC0531722",
+        "oracle": "0x04c28D6fE897859153eA753f986cc249Bf064f71",
         "oracleDecimals": 8,
-        "oracleLatestAnswer": 198372582495,
-        "oracleName": "rETH/ETH/USD",
+        "oracleDescription": "rETH/ETH/USD",
+        "oracleLatestAnswer": 197227085432,
         "reserveFactor": 1500,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x3EF10DFf4928279c004308EbADc4Db8B7620d6fc",
@@ -104,7 +104,7 @@
     }
   },
   "strategies": {
-    "0xCbDC7D7984D7AD59434f0B1999D2006898C40f9A": {
+    "0xC82dF96432346cFb632473eB619Db3B8AC280234": {
       "from": null,
       "to": {
         "baseStableBorrowRate": "100000000000000000000000000",
