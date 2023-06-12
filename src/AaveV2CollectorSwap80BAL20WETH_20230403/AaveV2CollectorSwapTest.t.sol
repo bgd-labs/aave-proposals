@@ -59,9 +59,18 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     assertApproxEqAbs(balanceAWethAfter, balanceAWethBefore - payload.WETH_AMOUNT(), 1e17);
   }
 
+  function test_tradeRevertsIf_invalidCaller() public {
+    COWTrader trader = new COWTrader();
+
+    vm.expectRevert(COWTrader.InvalidCaller.selector);
+    trader.trade();
+  }
+
   function test_cannotTradeTwice() public {
     COWTrader trader = new COWTrader();
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     trader.trade();
+    vm.stopPrank();
 
     vm.expectRevert(COWTrader.PendingTrade.selector);
     trader.trade();
@@ -87,13 +96,15 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).transfer(address(trader), 1_000e18);
     vm.stopPrank();
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     trader.trade();
+    vm.stopPrank();
 
     vm.expectRevert(COWTrader.InvalidCaller.selector);
     trader.cancelTrades(address(0), address(0));
   }
 
-  function test_cannotCancelTrade_successful() public {
+  function test_cancelTrade_successful() public {
     COWTrader trader = new COWTrader();
 
     address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
@@ -106,7 +117,9 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).transfer(address(trader), 1_000e18);
     vm.stopPrank();
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     trader.trade();
+    vm.stopPrank();
 
     vm.expectEmit(true, true, true, true);
     emit TradeCanceled();
@@ -115,7 +128,7 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     trader.cancelTrades(0xafD72023254Fb9118B9bcCe8E302aEBA1e554276, 0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23);
   }
 
-  function testSendEthToCOWTrader() public {
+  function test_SendEthToCOWTrader() public {
         address ethWale = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
         // Testing that you can't send ETH to the contract directly since there's no fallback() or receive() function
         vm.startPrank(ethWale);
@@ -123,7 +136,7 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
         assertTrue(!success);
     }
 
-    function testRescueTokens() public {
+    function test_RescueTokens() public {
         address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
         address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
