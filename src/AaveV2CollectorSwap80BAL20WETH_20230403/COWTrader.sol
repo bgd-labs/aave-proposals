@@ -37,8 +37,8 @@ contract COWTrader {
 
     if (balBalance == 0 && wethBalance == 0) return;
 
-    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).forceApprove(MILKMAN, wethBalance);
-    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).forceApprove(MILKMAN, balBalance);
+    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, wethBalance);
+    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).approve(MILKMAN, balBalance);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       wethBalance,

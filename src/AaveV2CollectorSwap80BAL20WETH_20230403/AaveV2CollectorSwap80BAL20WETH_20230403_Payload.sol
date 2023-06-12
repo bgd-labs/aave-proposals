@@ -68,6 +68,14 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
       address(trader)
     );
 
+    AaveV2Ethereum.COLLECTOR.transfer(
+      AaveV2EthereumAssets.BAL_UNDERLYING,
+      address(trader),
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+        address(AaveV2Ethereum.COLLECTOR)
+      )
+    );
+
     /*******************************************************************************
      *********************************** Trade *************************************
      *******************************************************************************/
