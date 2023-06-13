@@ -35,8 +35,6 @@ contract COWTrader {
     balBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(this));
     wethBalance = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(this));
 
-    if (balBalance == 0 && wethBalance == 0) return;
-
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, wethBalance);
     IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).approve(MILKMAN, balBalance);
 
