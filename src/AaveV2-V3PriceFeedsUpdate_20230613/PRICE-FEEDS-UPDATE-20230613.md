@@ -25,10 +25,10 @@ For the `wstETH` adapters we are removing the usage of intermeiate `stETH / ETH`
 
 Upon execution, the proposal will:
 
-- call `ORACLE.setAssetSources([0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599], [])` to replace the price source for `stETH` on Aave v2
-- use Config Engine to update `wstETH` price feed to []() on Ethereum v3
-- use Config Engine to update `wstETH` price feed to []() on Optimism
-- use Config Engine to update `wstETH` price feed to []() on Arbitrum
+- call `ORACLE.setAssetSources([0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84], [0xADE6CBA6c45aa8E9d0337cAc3D2619eabc39D901])` to replace the price source for `stETH` on Aave v2
+- use Config Engine to update `wstETH` price feed to [0x8B6851156023f4f5A66F68BEA80851c3D905Ac93](https://etherscan.io/address/0x8b6851156023f4f5a66f68bea80851c3d905ac93) on Ethereum v3
+- use Config Engine to update `wstETH` price feed to [0x945fD405773973d286De54E44649cc0d9e264F78](https://arbiscan.io/address/0x945fd405773973d286de54e44649cc0d9e264f78) on Optimism
+- use Config Engine to update `wstETH` price feed to [0x80f2c02224a2E548FC67c0bF705eBFA825dd5439](https://optimistic.etherscan.io/address/0x80f2c02224a2e548fc67c0bf705ebfa825dd5439) on Arbitrum
 
 ## Security and additional considerations
 
@@ -53,7 +53,7 @@ Tests: [Ethereum V2](https://github.com/bgd-labs/aave-proposals/blob/main/src/Aa
 
 Proposal payload implementation: [Ethereum V2](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2-V3PriceFeedsUpdate_20230613/AaveV2PriceFeedsUpdate_20230613_Payload.sol), [Ethereum V3](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2-V3PriceFeedsUpdate_20230613/AaveV3PriceFeedsUpdate_20230613_Payload.sol), [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2-V3PriceFeedsUpdate_20230613/AaveV3OptPriceFeedsUpdate_20230613_Payload.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2-V3PriceFeedsUpdate_20230613/AaveV3ArbPriceFeedsUpdate_20230613_Payload.sol)
 
-Price Adapters: [stETH Ethereum v2](), [wstETH Ethereum v3](), [wstETH Optimism](), [wstETH Arbitrum]()
+Price Adapters: [stETH Ethereum v2](https://etherscan.io/address/0xade6cba6c45aa8e9d0337cac3d2619eabc39d901), [wstETH Ethereum v3](https://etherscan.io/address/0x8b6851156023f4f5a66f68bea80851c3d905ac93), [wstETH Optimism](https://optimistic.etherscan.io/address/0x80f2c02224a2e548fc67c0bf705ebfa825dd5439), [wstETH Arbitrum](https://arbiscan.io/address/0x945fd405773973d286de54e44649cc0d9e264f78)
 
 ## Copyright
 

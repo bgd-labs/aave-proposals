@@ -12,7 +12,7 @@ import {AaveV3PayloadArbitrum, IEngine} from 'aave-helpers/v3-config-engine/Aave
  */
 contract AaveV3ArbPriceFeedsUpdate_20230613_Payload is AaveV3PayloadArbitrum {
   // WSTETH / ETH / USD price adapter
-  address public constant WSTETH_ADAPTER = address(0);
+  address public constant WSTETH_ADAPTER = 0x945fD405773973d286De54E44649cc0d9e264F78;
 
   function priceFeedsUpdates() public pure override returns (IEngine.PriceFeedUpdate[] memory) {
     IEngine.PriceFeedUpdate[] memory priceFeedUpdate = new IEngine.PriceFeedUpdate[](1);

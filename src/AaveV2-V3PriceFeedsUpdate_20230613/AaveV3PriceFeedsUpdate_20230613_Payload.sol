@@ -12,7 +12,7 @@ import {AaveV3PayloadEthereum, IEngine} from 'aave-helpers/v3-config-engine/Aave
  */
 contract AaveV3PriceFeedsUpdate_20230613_Payload is AaveV3PayloadEthereum {
   // WSTETH / ETH / USD price adapter
-  address public constant WSTETH_ADAPTER = address(0);
+  address public constant WSTETH_ADAPTER = 0x8B6851156023f4f5A66F68BEA80851c3D905Ac93;
 
   function priceFeedsUpdates() public pure override returns (IEngine.PriceFeedUpdate[] memory) {
     IEngine.PriceFeedUpdate[] memory priceFeedUpdate = new IEngine.PriceFeedUpdate[](1);
