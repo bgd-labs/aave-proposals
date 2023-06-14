@@ -10,6 +10,7 @@ import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
 import {IMilkman} from './interfaces/IMilkman.sol';
+import {IRocketPoolDeposit} from './interfaces/IRocketPoolDeposit.sol';
 
 contract AaveCOWTrader {
     using SafeERC20 for IERC20;
@@ -21,10 +22,12 @@ contract AaveCOWTrader {
     event TradeCanceled(address fromToken, address toToken, uint256 amount);
     event TradeRequested(address fromToken, address toToken, uint256 amount);
 
+    address public constant admin = AaveGovernanceV2.SHORT_EXECUTOR;
     address public milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-    address public admin = AaveGovernanceV2.SHORT_EXECUTOR;
+    address public manager;
 
-    mapping (address => bool) private allowedCallers;
+    IRocketPoolDeposit public rocketPool = IRocketPoolDeposit(0xDD3f50F8A6CafbE9b31a427582963f465E745AF8);
+
     mapping (address => IERC20) private allowedFromTokens;
     mapping (address => IERC20) private allowedToTokens;
     mapping (address => address) private tokenChainlinkOracle;
@@ -44,7 +47,7 @@ contract AaveCOWTrader {
     }
 
     modifier onlyAdminOrAllowedCaller() {
-        if (msg.sender != admin || allowedCallers[msg.sender]) {
+        if (msg.sender != admin && msg.sender != manager) {
             revert InvalidCaller();
         }
     }
@@ -74,10 +77,6 @@ contract AaveCOWTrader {
         emit TradeRequested(fromToken, toToken, balance);
     }
 
-    function claimParaswapFees() external onlyAdminOrAllowedCaller {
-        // TODO: Needed?
-    }
-
     // TODO: Bulk trade? Bulk claimFees? Bulk cancel?
 
     // TODO: Function depositIntoWstEth()/rEth()
@@ -85,8 +84,8 @@ contract AaveCOWTrader {
 
     }
 
-    function depositRETH() external onlyAdmin {
-
+    function depositRETH(uint256 amount) external onlyAdmin {
+        rocketPool.deposit{value: amount}();
     }
 
     function cancelTrade(address tradeMilkman, address fromToken, address toToken, address recipient, uint256 amount) external onlyAdminOrAllowedCaller {
@@ -117,9 +116,13 @@ contract AaveCOWTrader {
         AaveV3Ethereum.POOL.deposit(token, IERC20(token).balanceOf(address(this)), address(AaveV3Ethereum.COLLECTOR), 0);
     }
 
-    function setAllowedCaller(address caller, bool allowed) external onlyAdmin {
-        if (caller == address(0)) revert Invalid0xAddress();
-        allowedCallers[caller] = allowed;
+    function setManager(address _manager) external onlyAdmin {
+        if (_manager == address(0)) revert Invalid0xAddress();
+        manager = _manager;
+    }
+
+    function removeManager() external onlyAdmin {
+        manager = address(0);
     }
 
     function setAllowedFromToken(address token, address oracle, bool allowed) external onlyAdminOrAllowedCaller {
