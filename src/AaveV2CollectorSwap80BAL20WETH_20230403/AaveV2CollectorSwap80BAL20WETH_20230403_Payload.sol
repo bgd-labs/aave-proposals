@@ -13,7 +13,7 @@ import {COWTrader} from './COWTrader.sol';
 /**
  * @title Acquire B-80BAL-20WETH BPT
  * @author Llama
- * @dev This proposal swaps BAL and wETH tokens held by the collector for B-80BAL-20WETH
+ * @dev This proposal swaps BAL, aBAL, aEthBAL and wETH tokens held by the collector for B-80BAL-20WETH
  * Governance: https://governance.aave.com/t/deploy-bal-abal-from-the-collector-contract/9747
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x05182d6092e7a075b94ab937a6cd57968f36c6ac225196561a58b437e591065f
  */
