@@ -8,7 +8,7 @@ import {AaveV3PayloadArbitrum, IEngine} from 'aave-helpers/v3-config-engine/Aave
  * @title wstETH Price Feed update
  * @author BGD Labs
  * @notice Change wstETH price feed on the Aave Arbitrum v3 pool.
- * - Governance Forum Post:
+ * - Governance Forum Post: https://governance.aave.com/t/bgd-operational-oracles-update/13213/9
  */
 contract AaveV3ArbPriceFeedsUpdate_20230613_Payload is AaveV3PayloadArbitrum {
   // WSTETH / ETH / USD price adapter

@@ -10,7 +10,7 @@ import {AaveV3PriceFeedsUpdate_20230613_Payload} from './AaveV3PriceFeedsUpdate_
 
 contract AaveV3PriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17446450);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17471270);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 

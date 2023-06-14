@@ -6,7 +6,6 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {IPriceOracleSentinel} from 'aave-v3-core/contracts/interfaces/IPriceOracleSentinel.sol';
 import {AaveV3OptPriceFeedsUpdate_20230613_Payload} from './AaveV3OptPriceFeedsUpdate_20230613_Payload.sol';
 
 contract AaveV3OptPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {

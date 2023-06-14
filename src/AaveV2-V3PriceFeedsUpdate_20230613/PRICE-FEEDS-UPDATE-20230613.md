@@ -2,7 +2,7 @@
 title: Price feeds operational update Pt2: stETH
 author: BGD Labs (@bgdlabs)
 shortDescription: Swap price adapters for stETH and wstETH to use primary rate
-discussions:
+discussions: https://governance.aave.com/t/bgd-operational-oracles-update/13213/9
 created: 2023-06-13
 ---
 

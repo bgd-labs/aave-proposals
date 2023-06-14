@@ -7,7 +7,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * @title stETH Price Feed update
  * @author BGD Labs
  * @notice Change stETH price feed on the Aave Ethereum v2 pool.
- * Governance Forum Post:
+ * Governance Forum Post: https://governance.aave.com/t/bgd-operational-oracles-update/13213/9
  */
 contract AaveV2PriceFeedsUpdate_20230613_Payload {
   // stETH / ETH price adapter

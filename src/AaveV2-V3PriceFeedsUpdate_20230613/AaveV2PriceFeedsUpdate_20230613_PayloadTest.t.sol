@@ -10,7 +10,7 @@ import {AaveV2PriceFeedsUpdate_20230613_Payload} from './AaveV2PriceFeedsUpdate_
 
 contract AaveV2PriceFeedsUpdate_20230613_PayloadTest is ProtocolV2TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17446450);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17471210);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
@@ -40,19 +40,18 @@ contract AaveV2PriceFeedsUpdate_20230613_PayloadTest is ProtocolV2TestBase, Test
     );
 
     // 6. e2e
-    address user = address(9999);
-    uint256 amount = 3000 * 10e6;
-
-    deal(AaveV2EthereumAssets.USDC_UNDERLYING, user, amount);
+    address user = address(0xe3D8FDDf1DdaC1b117Ed0d5C45490FeeCaE81b60); // holding 450 stETH
+    uint256 amount = 1 * 10e18;
 
     vm.startPrank(user);
 
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(AaveV2Ethereum.POOL), amount);
-    AaveV2Ethereum.POOL.deposit(AaveV2EthereumAssets.USDC_UNDERLYING, amount, user, 0);
-    AaveV2Ethereum.POOL.borrow(AaveV2EthereumAssets.stETH_UNDERLYING, 1 * 10e18, 2, 0, user);
+    IERC20(AaveV2EthereumAssets.stETH_UNDERLYING).approve(address(AaveV2Ethereum.POOL), amount);
+
+    AaveV2Ethereum.POOL.deposit(AaveV2EthereumAssets.stETH_UNDERLYING, amount, user, 0);
+    AaveV2Ethereum.POOL.borrow(AaveV2EthereumAssets.USDC_UNDERLYING, 1000 * 10e6, 2, 0, user);
 
     vm.expectRevert();
-    AaveV2Ethereum.POOL.borrow(AaveV2EthereumAssets.stETH_UNDERLYING, 1 * 10e18, 2, 0, user);
+    AaveV2Ethereum.POOL.borrow(AaveV2EthereumAssets.USDC_UNDERLYING, 1000 * 10e6, 2, 0, user);
 
     vm.stopPrank();
   }
