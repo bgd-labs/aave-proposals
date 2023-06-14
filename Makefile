@@ -8,7 +8,8 @@ update:; forge update
 # Build & test
 build  :; forge build
 
-test   :; forge test -vvv
+test   :; forge test -vv
+test-contract :; forge test --match-contract ${filter} -vvv
 
 test-usdt-v3-ethereum :; forge test -vvv --match-contract AaveV3EthUSDTPayloadTest
 
@@ -55,6 +56,10 @@ caps-ledger :;  forge script script/DeployAvalanchePayload.s.sol:ExampleAvalanch
 caps-pk :;  forge script script/DeployAvalanchePayload.s.sol:ExampleAvalanchePayload --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 # ################ EXAMPLE END #############
 
+# GENERIC SCRIPTS
+
+# GENERIC SCRIPTS END
+
 # YOUR SCRIPT GOES BELOW HERE
 
 # Gauntlet rates updates
@@ -66,18 +71,15 @@ deploy-arb-payload-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/Aa
 emit-create-proposal-rates-mar7 :; forge script src/AaveV3RatesUpdates_20230307/AaveV3RatesUpdates_20230307.s.sol:CreateProposal --rpc-url mainnet -vv --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # ACI cbETH Supply cap
-test-aci-cbeth-supply-cap :; forge test -vvv --match-contract AaveV3EthCBETHSupplyCapsPayload_20230328Test
 deploy-cbeth-eth-payload :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-cbeth-eth-proposal :; forge script src/AaveV3EthCBETHSupplyCapsPayload_20230328/DeployEthCBETHSupplyCapUpdate_20230328.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 
 # ChaosLabs Risk Params Optimism
-test-risk-params-mar30 :; forge test -vvv --match-contract AaveV3OPRiskParams_20230330_Test
 deploy-risk-params-mar30-payload :; forge script src/AaveV3OPRiskParams_20230330/DeployAaveV3OPRiskParams_20230330.s.sol:DeployPayloadOptimism --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-risk-params-mar30-proposal :; forge script src/AaveV3OPRiskParams_20230330/DeployAaveV3OPRiskParams_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
 # ChaosLabs borrowable isolation update
-test-borrow-iso-mar30 :; forge test -vvv --match-contract AaveV3ETHIsoMode_20230330_Test
 deploy-borrow-iso-mar30-payload :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create--borrow-iso-mar30-proposal :; forge script src/AaveV3ETHIsoMode_20230330/DeployAaveV3ETHIsoMode_20230330.s.sol:CreateProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
@@ -85,7 +87,6 @@ deploy-ava-payload-rates-mar7:; forge script src/AaveV3AvaxRatesUpdates_20230331
 deploy-ava-payload-rates-mar7-dry :; forge script src/AaveV3AvaxRatesUpdates_20230331/DeployAaveV3AvaxRatesUpdatesSteward_20230331.s.sol --rpc-url avalanche -vvvv
 
 # ChaosLabs arbitrum supply and borrow caps update
-test-supply-borrow-caps-mar30 :; forge test -vvv --match-contract AaveV3ArbSupplyCapsUpdate_20230330_Test
 deploy-supply-borrow-caps-mar30-payload :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:DeployPayloadArbitrum --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-supply-borrow-caps-mar30-proposal :; forge script src/AaveV3ArbSupplyCapsUpdate_20230330/DeployAaveV3ArbSupplyCapsUpdate_20230330.s.sol:CreateProposal --rpc-url arbitrum --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
@@ -96,13 +97,10 @@ deploy-opt-dfs-payload :; forge script src/AaveV3DFSFlashBorrow_20230403/DeployD
 create-dfs-proposal :; forge script src/AaveV3DFSFlashBorrow_20230403/CreateDFSProposal.s.sol:DFSProposal --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 # ACI Proposal
-test-aci-proposal :; forge test -vvv --match-contract AaveV3ACIProposal_20230411Test
 deploy-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-aci-payload :; forge script src/AaveV3ACIProposal_20230411/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 # AAVE risk params
-
-test-aave-risk-params :; forge test -vvv --match-contract AaveV3RiskParams_20230516_Test
 deploy-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:DeployMainnetACIPayload --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-aci-payload :; forge script src/AaveV3RiskParams_20230516/DeployMainnetACIPayload.s.sol:ACIPayloadProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
@@ -111,11 +109,6 @@ deploy-caps-apr21-payload :; forge script src/AaveV3PolCapsUpdate_20230421/Deplo
 emit-create-caps-apr21-proposal :; forge script src/AaveV3PolCapsUpdate_20230421/DeployAaveV3PolCapsUpdate_20230421.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # ChaosLabs Caps Update
-test-eth-caps-update-apr27 :; forge test -vvv --match-contract AaveV3ETHSupplyBorrowUpdate_20230427Test
-test-arb-caps-update-apr27 :; forge test -vvv --match-contract AaveV3ARBSupplyBorrowUpdate_20230427Test
-test-op-caps-update-apr27 :; forge test -vvv --match-contract AaveV3OPSupplyBorrowUpdate_20230427Test
-test-pol-caps-update-apr27 :; forge test -vvv --match-contract AaveV3POLSupplyBorrowUpdate_20230427Test
-test-ava-caps-update-apr27 :; forge test -vvv --match-contract AaveV3AVASupplyBorrowUpdate_20230427Test
 deploy-pol-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3POLSupplyBorrowUpdate_20230427 --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 deploy-op-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3OPSupplyBorrowUpdate_20230427 --rpc-url optimism --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 deploy-eth-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:DeployAaveV3ETHSupplyBorrowUpdate_20230427 --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
@@ -124,7 +117,6 @@ deploy-arb-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdat
 create-caps-update-apr27-payload :; forge script src/AaveV3SupplyBorrowUpdate_20230427/DepolyAaveV3SupplyBorrowUpdatePayloads.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
 
 # ChaosLabs risk params for Polygon
-test-risk-params-poly-apr27 :; forge test -vvv --match-contract AaveV3PolRiskParams_20230423_Test
 deploy-risk-params-poly-apr27 :; forge script src/AaveV3PolRiskParams_20230423/DeployAaveV3PolRiskParams_20230423.s.sol:DeployPayloadPolygon --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-risk-params-poly-apr27 :; forge script src/AaveV3PolRiskParams_20230423/DeployAaveV3PolRiskParams_20230423.s.sol:CreateProposal --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
@@ -136,8 +128,6 @@ deploy-pol-price-feeds-payload-may4 :; forge script src/AaveV2-V3PriceFeedsUpdat
 create-price-feeds-proposal-may4 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230504/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 # MAI ARB & OP Onboarding
-test-mai-op-payload :; forge test -vvv --match-contract AaveV3OPMAIListing_20230425Test
-test-mai-arb-payload :; forge test -vvv --match-contract AaveV3ARBMAIListing_20230425Test
 deploy-mai-op-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-mai-arb-payload :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:DeployAaveV3ARBMAIListing_20230425 --rpc-url arbitrum --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-mai-op-proposal :; forge script src/AaveV3OPARBMAIListings_20230425/DeployMainnetARBOPPayloads.s.sol:CreateAaveV3OPMAIListing_20230425 --rpc-url optimism --broadcast --legacy --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
@@ -149,7 +139,6 @@ deploy-ir-proposal :; forge script src/AaveV2PolygonIR_20230519/AaveV2PolygonIR_
 
 # ACI rETH emode and BUSD Offboarding
 
-test-rETH-emode-payload :; forge test -vvv --match-contract AaveV3ETHrETHEmode_20230522_Test
 deploy-rETH-emode-payload :; forge script src/AaveV3EthrETHEmode_20230522/AaveV3ETHrETHEmode_20230522.sol:AaveV3ETHrETHEmode_20230522 --rpc-url mainnet --broadcast --ledger --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
 # Steward
@@ -167,7 +156,6 @@ create-dfs-flashborrow-op-proposal :; forge script src/AaveV3DFSFlashBorrow_2023
 
 # BUSD Offboarding plan Part II
 
-test-busd-payload :; forge test -vv --match-contract AaveV3EthBUSDPayloadTest
 deploy-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:DeployMainnetBUSDPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
 create-busd-payload :; forge script src/AaveV2EthBUSDIR_20230602/DeployBUSDOffBoard.s.sol:BUSDPayloadProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vv
 
@@ -182,6 +170,21 @@ create-mai-proposal :; forge script src/AaveV3OPARBMAIFixes_20230606/Deploy.s.so
 
 # 1INCH Onboarding on Ethereum V3
 
-test-1inch-eth-payload :; forge test -vvv --match-contract AaveV3Eth1INCHListing_20230517_Payload_Test
 deploy-1inch-eth-payload :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-1inch-eth-proposal :; forge script src/AaveV3Eth1INCHListing_20230517/DeployAaveV3Eth1INCHListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ChaosLabs risk params update for Ethereum 20230529
+
+deploy-risk-params-eth-20230529-payload :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230529 :; forge script src/AaveV3EthRiskParams_20230529/DeployAaveV3EthRiskParams_20230529.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ENS Onboarding on Ethereum V3
+deploy-ens-eth-payload :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+create-ens-eth-proposal :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# Price feeds update 13 june
+deploy-eth-v2-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetV2Payload --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-eth-v3-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetV3Payload --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
