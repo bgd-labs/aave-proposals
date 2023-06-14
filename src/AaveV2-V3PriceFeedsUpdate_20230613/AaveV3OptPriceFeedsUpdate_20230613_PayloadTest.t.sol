@@ -9,10 +9,7 @@ import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {IPriceOracleSentinel} from 'aave-v3-core/contracts/interfaces/IPriceOracleSentinel.sol';
 import {AaveV3OptPriceFeedsUpdate_20230613_Payload} from './AaveV3OptPriceFeedsUpdate_20230613_Payload.sol';
 
-contract AaveV3OptPriceFeedsSentinelUpdate_20230613_PayloadTest is
-  ProtocolV3TestBase,
-  TestWithExecutor
-{
+contract AaveV3OptPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'));
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);

@@ -1,34 +1,37 @@
 ---
-title: stETH/wstETH price feeds update
+title: Price feeds operational update Pt2: stETH
 author: BGD Labs (@bgdlabs)
-shortDescription: Swap price adapters for stETH and wstETH
+shortDescription: Swap price adapters for stETH and wstETH to use primary rate
 discussions:
 created: 2023-06-13
 ---
 
 ## Simple Summary
 
-This proposal changes the following price adapters:
+This proposal further updates price feeds of LSTs (in this case stETH/wstETH) to be priced based on the so-called exchange rate, and not on the secondary market (e.g. DEXes).
+The changes are the following:
 
-- `stETH` on Ethereum v2 to the custom adapter, which will return 1:1 `stETH / ETH` value
-- `wstETH` on Ethereum, Optimism and Arbitrum v3 to the custom adapter, which uses `wstETH / stETH` ratio and `ETH / USD` feed
+- The feed of `stETH` on Aave v2 Ethereum will be a custom adapter, which will return 1:1 `stETH / ETH` value, as with stETH being a rebasing asset, that represents the stETH/ETH exchange rate.
+- The feeds for `wstETH` on Aave v3 Ethereum, Optimism, and Arbitrum will be custom adapters too (CL synchronicity), using the `wstETH / stETH` exchange rate and `ETH / USD` feed
 
 ## Motivation
 
-We assume the price of the `stETH` to be in the ration 1 to 1 to the price of the `ETH`, but the current price feed for `stETH` currently uses `stETH / ETH` feed, which is based on secondary market and can introduce additional unnecessary volatility of the asset. The same issue applies to the `wstETH` adapters, which are whether using `stETH / ETH` or `stETH / USD` feed inside.
+We assume the price of the `stETH` to be in the ration 1 to 1 to the price of the `ETH`, but the current price feed for `stETH` currently uses `stETH / ETH` feed, which is based on secondary market and can introduce additional unnecessary volatility of the asset. The same issue applies to the `wstETH` adapters, which are whether using a `stETH / ETH` or a `stETH / USD` feed inside.
 
 To address the issue for `stETH` we are substituting the usage of the `stETH / ETH` feed by using the custom adapter, which returns constant 1:1 ratio.
 
-For the `wstETH` adapters we are removing the usage of intermeiate `stETH / ETH` feed or substituting `stETH / USD` for `ETH / USD` feed.
+For the `wstETH` adapters we are removing the usage of intermediate `stETH / ETH` feed or substituting `stETH / USD` for `ETH / USD` feed.
+
+An update for wstETH on Aave v3 Polygon will be done in the close future to apply the same pricing strategy, once Chainlink provides a wstETH/stETH exchange rate feed.
 
 ## Specification
 
 Upon execution, the proposal will:
 
-- call `ORACLE.setAssetSources([0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84], [0xADE6CBA6c45aa8E9d0337cAc3D2619eabc39D901])` to replace the price source for `stETH` on Aave v2
-- use Config Engine to update `wstETH` price feed to [0x8B6851156023f4f5A66F68BEA80851c3D905Ac93](https://etherscan.io/address/0x8b6851156023f4f5a66f68bea80851c3d905ac93) on Ethereum v3
-- use Config Engine to update `wstETH` price feed to [0x945fD405773973d286De54E44649cc0d9e264F78](https://arbiscan.io/address/0x945fd405773973d286de54e44649cc0d9e264f78) on Optimism
-- use Config Engine to update `wstETH` price feed to [0x80f2c02224a2E548FC67c0bF705eBFA825dd5439](https://optimistic.etherscan.io/address/0x80f2c02224a2e548fc67c0bf705ebfa825dd5439) on Arbitrum
+- call `ORACLE.setAssetSources([0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84], [0xADE6CBA6c45aa8E9d0337cAc3D2619eabc39D901])` to replace the price source for `stETH` on Aave v2 Ethereum
+- use Config Engine to update `wstETH` price feed to [0x8B6851156023f4f5A66F68BEA80851c3D905Ac93](https://etherscan.io/address/0x8b6851156023f4f5a66f68bea80851c3d905ac93) on Aave v3 Ethereum
+- use Config Engine to update `wstETH` price feed to [0x945fD405773973d286De54E44649cc0d9e264F78](https://arbiscan.io/address/0x945fd405773973d286de54e44649cc0d9e264f78) on Aave v3 Optimism
+- use Config Engine to update `wstETH` price feed to [0x80f2c02224a2E548FC67c0bF705eBFA825dd5439](https://optimistic.etherscan.io/address/0x80f2c02224a2e548fc67c0bf705ebfa825dd5439) on Aave v3 Arbitrum
 
 ## Security and additional considerations
 
