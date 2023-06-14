@@ -197,3 +197,10 @@ create-risk-params-eth-20230529 :; forge script src/AaveV3EthRiskParams_20230529
 test-ens-eth-payload :; forge test -vvv --match-contract AaveV3EthENSListing_20230517_Payload_Test
 deploy-ens-eth-payload :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-ens-eth-proposal :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# Price feeds update 13 june
+deploy-eth-v2-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetV2Payload --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-eth-v3-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployMainnetV3Payload --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
