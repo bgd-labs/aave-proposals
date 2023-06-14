@@ -29,7 +29,11 @@ yarn
 ### Test
 
 ```sh
+# You can use vanilla forge to customize your test
+# https://book.getfoundry.sh/reference/forge/forge-test
 forge test
+# We also provide a script with sensible defaults to just test a single contract matching a filter
+make test-contract filter=ENS
 ```
 
 ### Simulate
