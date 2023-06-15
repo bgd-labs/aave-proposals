@@ -47,6 +47,14 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
 
     ReserveConfig[] memory configs = _getReservesConfigs(AaveV2Polygon.POOL);
     for (uint i = 0; i < assetsChanged.length; i++) {
+      if (
+        assetsChanged[i] == AaveV2PolygonAssets.BAL_UNDERLYING ||
+        assetsChanged[i] == AaveV2PolygonAssets.CRV_UNDERLYING ||
+        assetsChanged[i] == AaveV2PolygonAssets.GHST_UNDERLYING ||
+        assetsChanged[i] == AaveV2PolygonAssets.LINK_UNDERLYING
+      ) {
+        continue;
+      }
       ReserveConfig memory cfg = _findReserveConfig(configs, assetsChanged[i]);
       _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
     }
