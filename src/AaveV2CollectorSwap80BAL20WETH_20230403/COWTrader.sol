@@ -21,7 +21,7 @@ contract COWTrader {
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404;
-  address public constant ALLOWED_CALLER = 0x55B16934C3661E1990939bC57322554d9B09f262; // TODO: Update with LLAMA Multisig
+  address public constant ALLOWED_CALLER = 0xA519a7cE7B24333055781133B13532AEabfAC81b;
 
   uint256 balBalance;
   uint256 wethBalance;
