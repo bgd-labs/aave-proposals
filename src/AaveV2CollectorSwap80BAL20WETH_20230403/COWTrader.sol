@@ -3,7 +3,7 @@
 pragma solidity 0.8.17;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-import {SafeERC20} from "solidity-utils/contracts/oz-common/SafeERC20.sol";
+import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
@@ -61,7 +61,8 @@ contract COWTrader {
 
   function cancelTrades(address wethMilkman, address balMilkman) external {
     if (!trading) revert NoPendingTrade();
-    if (msg.sender != ALLOWED_CALLER) revert InvalidCaller();
+    if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR)
+      revert InvalidCaller();
 
     IMilkman(wethMilkman).cancelSwap(
       wethBalance,
@@ -95,12 +96,16 @@ contract COWTrader {
     emit TradeCanceled();
   }
 
-    /// @notice Transfer any tokens accidentally sent to this contract to Aave V2 Collector
-    /// @param tokens List of token addresses
-    function rescueTokens(address[] calldata tokens) external {
-      if (msg.sender != ALLOWED_CALLER) revert InvalidCaller();
-      for (uint256 i = 0; i < tokens.length; ++i) {
-          IERC20(tokens[i]).safeTransfer(address(AaveV2Ethereum.COLLECTOR), IERC20(tokens[i]).balanceOf(address(this)));
-      }
+  /// @notice Transfer any tokens accidentally sent to this contract to Aave V2 Collector
+  /// @param tokens List of token addresses
+  function rescueTokens(address[] calldata tokens) external {
+    if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR)
+      revert InvalidCaller();
+    for (uint256 i = 0; i < tokens.length; ++i) {
+      IERC20(tokens[i]).safeTransfer(
+        address(AaveV2Ethereum.COLLECTOR),
+        IERC20(tokens[i]).balanceOf(address(this))
+      );
     }
+  }
 }

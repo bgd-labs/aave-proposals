@@ -14,8 +14,8 @@ import {SwapFor80BAL20WETHPayload} from './AaveV2CollectorSwap80BAL20WETH_202304
 import {COWTrader} from './COWTrader.sol';
 
 contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
-    event TradeCanceled();
-    event TradeRequested();
+  event TradeCanceled();
+  event TradeRequested();
 
   SwapFor80BAL20WETHPayload payload;
 
@@ -27,11 +27,21 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
   }
 
   function test_execute_tradeSuccessful() public {
-    uint256 balanceABalBefore = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceAEthBalBefore = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceBalBefore = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceWethBefore = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceAWethBefore = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 balanceABalBefore = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceAEthBalBefore = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceBalBefore = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceWethBefore = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceAWethBefore = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
 
     assertEq(balanceABalBefore, 9644860562923757165584);
     assertEq(balanceAEthBalBefore, 24678874950526891803);
@@ -43,12 +53,22 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     emit TradeRequested();
 
     _executePayload(address(payload));
-    
-    uint256 balanceABalAfter = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceAEthBalAfter = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceBalAfter = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceWethAfter = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceAWethAfter = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+
+    uint256 balanceABalAfter = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceAEthBalAfter = IERC20(AaveV3EthereumAssets.BAL_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceBalAfter = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceWethAfter = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceAWethAfter = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
 
     assertEq(balanceABalAfter, 19081042984225183256);
     assertEq(balanceAEthBalAfter, 0);
@@ -106,7 +126,7 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     trader.cancelTrades(address(0), address(0));
   }
 
-  function test_cancelTrade_successful() public {
+  function test_cancelTrade_successful_allowedCaller() public {
     COWTrader trader = new COWTrader();
 
     address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
@@ -127,75 +147,164 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
     emit TradeCanceled();
 
     vm.prank(trader.ALLOWED_CALLER());
-    trader.cancelTrades(0xafD72023254Fb9118B9bcCe8E302aEBA1e554276, 0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23);
+    trader.cancelTrades(
+      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
+      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+    );
+  }
+
+  function test_cancelTrade_successful_governanceCaller() public {
+    COWTrader trader = new COWTrader();
+
+    address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+    vm.startPrank(BAL_WHALE);
+    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).transfer(address(trader), 1_000e18);
+    vm.stopPrank();
+
+    address WETH_WHALE = 0xeD1840223484483C0cb050E6fC344d1eBF0778a9;
+    vm.startPrank(WETH_WHALE);
+    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).transfer(address(trader), 1_000e18);
+    vm.stopPrank();
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    trader.trade();
+    vm.stopPrank();
+
+    vm.expectEmit(true, true, true, true);
+    emit TradeCanceled();
+
+    vm.prank(AaveGovernanceV2.SHORT_EXECUTOR);
+    trader.cancelTrades(
+      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
+      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+    );
   }
 
   function test_SendEthToCOWTrader() public {
-        address ethWale = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
-        // Testing that you can't send ETH to the contract directly since there's no fallback() or receive() function
-        vm.startPrank(ethWale);
-        (bool success, ) = address(new COWTrader()).call{value: 1 ether}("");
-        assertTrue(!success);
-    }
+    address ethWale = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+    // Testing that you can't send ETH to the contract directly since there's no fallback() or receive() function
+    vm.startPrank(ethWale);
+    (bool success, ) = address(new COWTrader()).call{value: 1 ether}('');
+    assertTrue(!success);
+  }
 
-    function test_RescueTokens() public {
-        address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
-        address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+  function test_RescueTokens_allowedCaller() public {
+    address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
+    address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
-        COWTrader trader = new COWTrader();
+    COWTrader trader = new COWTrader();
 
-        assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), 0);
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
 
-        uint256 balAmount = 1_000e18;
-        uint256 aaveAmount = 1_000e18;
+    uint256 balAmount = 1_000e18;
+    uint256 aaveAmount = 1_000e18;
 
-        vm.startPrank(BAL_WHALE);
-        IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).transfer(address(trader), balAmount);
-        vm.stopPrank();
+    vm.startPrank(BAL_WHALE);
+    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).transfer(address(trader), balAmount);
+    vm.stopPrank();
 
-        vm.startPrank(AAVE_WHALE);
-        IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).transfer(address(trader), aaveAmount);
-        vm.stopPrank();
+    vm.startPrank(AAVE_WHALE);
+    IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).transfer(address(trader), aaveAmount);
+    vm.stopPrank();
 
-        assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), balAmount);
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), aaveAmount);
+    assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), balAmount);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), aaveAmount);
 
-        uint256 initialCollectorBalBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-        uint256 initialCollectorUsdcBalance = IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 initialCollectorBalBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 initialCollectorUsdcBalance = IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
 
-        address[] memory tokens = new address[](2);
-        tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
-        tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
-        vm.startPrank(trader.ALLOWED_CALLER());
-        trader.rescueTokens(tokens);
-        vm.stopPrank();
+    address[] memory tokens = new address[](2);
+    tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
+    tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
+    vm.startPrank(trader.ALLOWED_CALLER());
+    trader.rescueTokens(tokens);
+    vm.stopPrank();
 
-        assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)), initialCollectorBalBalance + balAmount);
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)), initialCollectorUsdcBalance + aaveAmount);
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
-    }
+    assertEq(
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      initialCollectorBalBalance + balAmount
+    );
+    assertEq(
+      IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      initialCollectorUsdcBalance + aaveAmount
+    );
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+  }
+
+  function test_RescueTokens_governanceCaller() public {
+    address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
+    address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+
+    COWTrader trader = new COWTrader();
+
+    assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+
+    uint256 balAmount = 1_000e18;
+    uint256 aaveAmount = 1_000e18;
+
+    vm.startPrank(BAL_WHALE);
+    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).transfer(address(trader), balAmount);
+    vm.stopPrank();
+
+    vm.startPrank(AAVE_WHALE);
+    IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).transfer(address(trader), aaveAmount);
+    vm.stopPrank();
+
+    assertEq(IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(trader)), balAmount);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), aaveAmount);
+
+    uint256 initialCollectorBalBalance = IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 initialCollectorUsdcBalance = IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+
+    address[] memory tokens = new address[](2);
+    tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
+    tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    trader.rescueTokens(tokens);
+    vm.stopPrank();
+
+    assertEq(
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      initialCollectorBalBalance + balAmount
+    );
+    assertEq(
+      IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      initialCollectorUsdcBalance + aaveAmount
+    );
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+  }
 
   function test_RescueTokens_revertsIfInvalidCaller() public {
-        address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
+    address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
 
-        COWTrader trader = new COWTrader();
+    COWTrader trader = new COWTrader();
 
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), 0);
 
-        uint256 aaveAmount = 1_000e18;
+    uint256 aaveAmount = 1_000e18;
 
-        vm.startPrank(AAVE_WHALE);
-        IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).transfer(address(trader), aaveAmount);
-        vm.stopPrank();
+    vm.startPrank(AAVE_WHALE);
+    IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).transfer(address(trader), aaveAmount);
+    vm.stopPrank();
 
-        assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), aaveAmount);
+    assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(trader)), aaveAmount);
 
-        address[] memory tokens = new address[](1);
-        tokens[0] = AaveV2EthereumAssets.AAVE_UNDERLYING;
+    address[] memory tokens = new address[](1);
+    tokens[0] = AaveV2EthereumAssets.AAVE_UNDERLYING;
 
-        vm.expectRevert(COWTrader.InvalidCaller.selector);
-        trader.rescueTokens(tokens);
-    }
+    vm.expectRevert(COWTrader.InvalidCaller.selector);
+    trader.rescueTokens(tokens);
+  }
 }

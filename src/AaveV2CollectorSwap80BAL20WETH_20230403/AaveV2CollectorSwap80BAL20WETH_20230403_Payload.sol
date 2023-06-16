@@ -21,7 +21,6 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
   uint256 public constant WETH_AMOUNT = 326_88e16; // 326.88 aWETH
 
   function execute() external {
-
     /*******************************************************************************
      ********************************* New Trader **********************************
      *******************************************************************************/
@@ -71,9 +70,7 @@ contract SwapFor80BAL20WETHPayload is IProposalGenericExecutor {
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.BAL_UNDERLYING,
       address(trader),
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(
-        address(AaveV2Ethereum.COLLECTOR)
-      )
+      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR))
     );
 
     /*******************************************************************************

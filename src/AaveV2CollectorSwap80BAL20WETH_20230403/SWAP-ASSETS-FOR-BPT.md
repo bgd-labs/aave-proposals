@@ -1,7 +1,7 @@
 ---
 title: Treasury Management - Acquire B-80BAL-20WETH
 discussions: https://governance.aave.com/t/deploy-bal-abal-from-the-collector-contract/9747
-shortDescription: Aave DAO is to swap BAL and wETH to B-80BAL-20WETH via CoW Swap using Milkman to prevent MEV attacks and bad price slippage whilst mitigating reentrancy risk.
+shortDescription: Aave DAO is to swap BAL and wETH to B-80BAL-20WETH via CoW Swap using Milkman to prevent MEV attacks, bad price slippage and reentrancy exploits
 author: Llama (Fermin Carranza & TokenLogic)
 created: 2023-05-17
 ---
@@ -62,21 +62,22 @@ The payload will do the following:
    b. Withdraw aEthBAL
    c. Transfer all BAL now held in Collector to COWTrader.sol
    d. Transfer specified wETH quantity to COWTrader.sol
-2. The COWTrader contract has one function to execute two trades using Milkman, utilizing its balance of wETH and BAL respectively. Both trades take the held token for 80-BAL-20-WETH BPT.
+2. The COWTrader contract has one function to execute two trades using Milkman, utilizing its balance of wETH and BAL respectively. Both trades take the held token for B-80-BAL-20-WETH BPT.
 3. Milkman creates a new instance per trade, which will then hold the funds until the trades are settled via CoW Swap. Under the hood, Milkman approves CoW Swap's Settlement contract so it can transfer funds once there is a match.
-4. Once there is a match, the dynamic price checker will protect Aave's funds against a bad quote. If it passes our specified parameters, then the trade will go through and the Collector contract will receive 80-BAL-20-WETH.
+4. Once there is a match, the dynamic price checker will protect Aave's funds against a bad quote. If it passes our specified parameters, then the trade will go through and the Collector contract will receive B-80-BAL-20-WETH.
 
 If everything goes well and the number of tokens to be received matches our parameters (slippage, price against our oracle) then the Collector contract will receive the BPT.
 
-The trade can remain open in perpetuity until it is canceled (by Aave) or settled.
+The trade can remain open in perpetuity until it is canceled or settled. The trade can be cancelled by either Aave Governance or an allowed Llama multi-sig. If cancelled, the tokens are sent automatically back to the collector.
 
 # Implementation
 
 A list of relevant links for this proposal:
 
 - [Governance Forum Discussion](https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205)
-- [Test Cases](XXX)
-- [Payload Implementation](XXX)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2CollectorSwap80BAL20WETH_20230403/AaveV2CollectorSwapTest.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2CollectorSwap80BAL20WETH_20230403/AaveV2CollectorSwap80BAL20WETH_20230403_Payload.sol)
+- [Trade Contract](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2CollectorSwap80BAL20WETH_20230403/COWTrader.sol)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
