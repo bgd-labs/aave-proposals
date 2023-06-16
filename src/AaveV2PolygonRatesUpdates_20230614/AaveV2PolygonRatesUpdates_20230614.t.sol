@@ -21,7 +21,9 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
       AaveV2Polygon.POOL
     );
 
-    _executePayload(0xBBD2B7418395d1782f0016095C6A26487d184873);
+    AaveV2PolygonRatesUpdates_20230614 payload = AaveV2PolygonRatesUpdates_20230614(0xBBD2B7418395d1782f0016095C6A26487d184873);
+
+    _executePayload(address(payload));
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestPolygonUpdate20230614',
