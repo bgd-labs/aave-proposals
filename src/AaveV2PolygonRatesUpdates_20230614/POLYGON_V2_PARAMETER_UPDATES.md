@@ -2,7 +2,7 @@
 title: Polygon v2 - Parameter Update
 author: TokenLogic
 discussions: https://governance.aave.com/t/arfc-polygon-v2-parameter-update/12817
-shortDescription: Encourage Polygon v2 users to migrate to v3 by updating Uoptimal, Reserve Factor and Slope2 paramters on Polygon v2.
+shortDescription: Encourage Polygon v2 users to migrate to v3
 created: 2023-06-20
 ---
 
@@ -57,7 +57,7 @@ A list of relevant links like for this proposal:
 * [Test Cases](https://github.com/defijesus/aave-proposals/blob/main/src/AaveV2PolygonRatesUpdates_20230614/AaveV2PolygonRatesUpdates_20230614.t.sol)
 * [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/main/diffs/preTestPolygonUpdate20230614_proTestPolygonUpdate20230614.md)
 * [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/main/src/AaveV2PolygonRatesUpdates_20230614/AaveV2PolygonRatesUpdates_20230614.sol)
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://polygonscan.com/address/0x0cbdb61e8e22cdfa8684935c87b4a8286ec59967#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
