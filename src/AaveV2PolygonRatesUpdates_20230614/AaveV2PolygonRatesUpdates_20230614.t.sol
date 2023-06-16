@@ -24,11 +24,11 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
     _executePayload(0xBBD2B7418395d1782f0016095C6A26487d184873);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'posTestPolygonUpdate20230614',
+      'postTestPolygonUpdate20230614',
       AaveV2Polygon.POOL
     );
 
-    diffReports('preTestPolygonUpdate20230614', 'posTestPolygonUpdate20230614');
+    diffReports('preTestPolygonUpdate20230614', 'postTestPolygonUpdate20230614');
 
     address[] memory assetsChanged = new address[](10);
     assetsChanged[0] = AaveV2PolygonAssets.DAI_UNDERLYING;
@@ -45,7 +45,6 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    ReserveConfig[] memory configs = _getReservesConfigs(AaveV2Polygon.POOL);
     for (uint i = 0; i < assetsChanged.length; i++) {
       if (
         assetsChanged[i] == AaveV2PolygonAssets.BAL_UNDERLYING ||
@@ -55,7 +54,7 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
       ) {
         continue;
       }
-      ReserveConfig memory cfg = _findReserveConfig(configs, assetsChanged[i]);
+      ReserveConfig memory cfg = _findReserveConfig(allConfigsAfter, assetsChanged[i]);
       _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
     }
   }
