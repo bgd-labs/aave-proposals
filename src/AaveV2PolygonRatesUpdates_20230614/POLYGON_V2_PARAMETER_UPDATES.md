@@ -54,7 +54,7 @@ A list of relevant links like for this proposal:
 
 * [Governance Forum Discussion](https://governance.aave.com/t/arfc-polygon-v2-parameter-update/12817)
 * [Test Cases](https://github.com/defijesus/aave-proposals/blob/main/src/AaveV2PolygonRatesUpdates_20230614/AaveV2PolygonRatesUpdates_20230614.t.sol)
-* [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/main/diffs/preTestPolygonUpdate20230614_proTestPolygonUpdate20230614.md)
+* [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/main/diffs/preTestPolygonUpdate20230614_postTestPolygonUpdate20230614.md)
 * [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/main/src/AaveV2PolygonRatesUpdates_20230614/AaveV2PolygonRatesUpdates_20230614.sol)
 * [Deployed Contracts](https://polygonscan.com/address/0xbbd2b7418395d1782f0016095c6a26487d184873#code)
 
