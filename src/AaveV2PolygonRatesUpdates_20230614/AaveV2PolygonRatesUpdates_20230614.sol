@@ -23,9 +23,10 @@ import 'aave-helpers/v2-config-engine/AaveV2PayloadPolygon.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets, ILendingPoolConfigurator} from 'aave-address-book/AaveV2Polygon.sol';
 
 /**
- * @dev Smart contract for a mock rates update, for testing purposes
- * IMPORTANT Parameters are pseudo-random, DON'T USE THIS ANYHOW IN PRODUCTION
- * @author BGD Labs
+ * @dev Encourage Polygon v2 users to migrate to v3 by updating Uoptimal, Reserve Factor and Slope2 paramters on Polygon v2.
+ * @author defijesus.eth - TokenLogic
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x013f763e92d253926bc7f04d79138593a1b31c969a34db7f0955e46850c796d9
+ * - Discussion: https://governance.aave.com/t/arfc-polygon-v2-parameter-update/12817
  */
 contract AaveV2PolygonRatesUpdates_20230614 is AaveV2PayloadPolygon {
 

@@ -14,7 +14,7 @@ contract PolygonV2RatesUpdatesPayloadProposal is PolygonScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildPolygon(
-      0x0cbdB61E8E22cdFA8684935c87b4a8286EC59967
+      0xBBD2B7418395d1782f0016095C6A26487d184873
     );
     GovHelpers.createProposal(
       payloads,
