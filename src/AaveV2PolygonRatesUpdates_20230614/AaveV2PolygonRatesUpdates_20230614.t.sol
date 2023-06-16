@@ -10,7 +10,7 @@ import {AaveV2PolygonRatesUpdates_20230614} from './AaveV2PolygonRatesUpdates_20
 
 contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 43914253);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 43979799);
 
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
@@ -21,7 +21,7 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
       AaveV2Polygon.POOL
     );
 
-    _executePayload(address(new AaveV2PolygonRatesUpdates_20230614()));
+    _executePayload(0x0cbdB61E8E22cdFA8684935c87b4a8286EC59967);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'proTestPolygonUpdate20230614',
