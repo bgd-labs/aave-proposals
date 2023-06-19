@@ -4,10 +4,10 @@ pragma solidity 0.8.19;
 
 import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 
-import {AaveCOWTrader} from './AaveCOWTrader.sol';
+import {AaveCurator} from './AaveCurator.sol';
 
-contract DeployAaveCOWTraderScript is EthereumScript {
+contract DeployAaveCuratorScript is EthereumScript {
     function run() external broadcast {
-        new AaveCOWTrader();
+        new AaveCurator();
     }
 }
