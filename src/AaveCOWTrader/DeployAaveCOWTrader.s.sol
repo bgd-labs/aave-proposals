@@ -7,7 +7,7 @@ import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {AaveCurator} from './AaveCurator.sol';
 
 contract DeployAaveCuratorScript is EthereumScript {
-    function run() external broadcast {
-        new AaveCurator();
-    }
+  function run() external broadcast {
+    new AaveCurator();
+  }
 }

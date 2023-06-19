@@ -6,24 +6,15 @@ import {Test} from 'forge-std/Test.sol';
 import {AaveCurator} from './AaveCurator.sol';
 
 contract AaveCuratorTest is Test {
-    AaveCurator private trader = new AaveCurator();
+  AaveCurator private trader = new AaveCurator();
 
-    function setUp() public {
-
-    }
+  function setUp() public {}
 }
 
-contract AaveTreasuryManagementTrade is AaveCuratorTest {
+contract AaveTreasuryManagementTrade is AaveCuratorTest {}
 
-}
+contract ClaimParaswapFees is AaveCuratorTest {}
 
-contract ClaimParaswapFees is AaveCuratorTest {
-}
+contract CancelTrade is AaveCuratorTest {}
 
-contract CancelTrade is AaveCuratorTest {
-}
-
-contract DepositIntoAave is AaveCuratorTest {
-}
-
-
+contract DepositIntoAave is AaveCuratorTest {}
