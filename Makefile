@@ -188,3 +188,7 @@ deploy-eth-v3-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeeds
 deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+deploy-payload :; forge script src/AaveV2CollectorSwap80BAL20WETH_20230403/DeployProposal.s.sol:DeployPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvv
+deploy-proposal :; forge script src/AaveV2CollectorSwap80BAL20WETH_20230403/DeployProposal.s.sol:SinglePayloadProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} -vvvv
+
