@@ -188,3 +188,8 @@ deploy-eth-v3-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeeds
 deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Polygon v2 parameter updates
+
+deploy-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:DeployPolygonV2RatesUpdatesPayload --rpc-url polygon --broadcast --legacy --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:PolygonV2RatesUpdatesPayloadProposal --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
