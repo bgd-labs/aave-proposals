@@ -2,16 +2,14 @@
 
 pragma solidity 0.8.17;
 
-import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadArbitrum.sol';
 
 /**
- * @title List FRAX on AaveV3Ethereum
+ * @title List FRAX on AaveV3Arbitrum
  * @author defijesus - TokenLogic
- * @dev This proposal lists FRAX on Aave V3 Ethereum
+ * @dev This proposal lists FRAX on Aave V3 Arbitrum
  * Governance: TODO
- * Snapshot: https://snapshot.org/#/aave.eth/proposal/0xf0a3ef553905b03d36e0982719cfe25e85d97f563c3ef401f25e8455960576f8
+ * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x03798dc3d6382f0d461590059d554a4405eefd5c95e3de917515702fdfc9ecfb
  */
 contract AaveV3ArbFraxListing_20230619 is AaveV3PayloadArbitrum {
   address public constant PRICE_FEED = 0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8;
