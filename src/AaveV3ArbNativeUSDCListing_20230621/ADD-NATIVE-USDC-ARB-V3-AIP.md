@@ -7,7 +7,7 @@ discussions: https://governance.aave.com/t/arfc-add-native-usdc-to-the-arbitrum-
 ## Simple Summary
 
 This AIP propose to add the native USDC token issued by Circle to the Arbitrum V3 pool.
-Currently onboarded USDC.e token will be kept as is. and two USDC tokens will be available on the pool. the bridged asset USDC.e and the native USDC with the symbol USDCn.
+Currently onboarded USDC.e token will be kept as is and two USDC tokens will be available on the pool. The bridged asset USDC.e and the native USDC with the symbol USDCn.
 
 ## Motivation
 
@@ -24,10 +24,10 @@ This ARFC is focused solely on the onboarding of the native USDC and does not pr
 - Token Symbol: USDC
 - Token Address: [0xaf88d065e77c8cC2239327C5EDb3A432268e5831](https://arbiscan.io/address/0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
 
-the implementation of the token is the same as the one used for the USDC.e token.
-the payload use a custom engine to avoid compatibility issues with the current USDC.e token and protocol version.
+The implementation of the token is the same as the one used for the USDC.e token.
+The payload use a custom engine to avoid compatibility issues with the current USDC.e token and protocol version.
 
-while the protocol code use "USDCN" to distinguish both versions of the token. we recommend that UI supports USDCn with the symbol "USDC" to avoid confusion.
+while the protocol code use "USDCn" to distinguish both versions of the token. we recommend that UI supports USDCn with the symbol "USDC" to avoid confusion.
 
 Likewise, What the protocol consider "USDC" will be shown as "USDC.e" on the UI.
 
@@ -49,7 +49,7 @@ contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
     listings[0] = IEngine.ListingWithCustomImpl(
       IEngine.Listing({
         asset: USDCN,
-        assetSymbol: "USDC",
+        assetSymbol: "USDCn",
         priceFeed: USDCN_PRICE_FEED,
         rateStrategyParams: Rates.RateStrategyParams({
           optimalUsageRatio: _bpsToRay(90_00),
