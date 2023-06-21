@@ -27,7 +27,7 @@ contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
     listings[0] = IEngine.ListingWithCustomImpl(
       IEngine.Listing({
         asset: USDCN,
-        assetSymbol: 'USDC',
+        assetSymbol: 'USDCn',
         priceFeed: USDCN_PRICE_FEED,
         rateStrategyParams: Rates.RateStrategyParams({
           optimalUsageRatio: _bpsToRay(90_00),

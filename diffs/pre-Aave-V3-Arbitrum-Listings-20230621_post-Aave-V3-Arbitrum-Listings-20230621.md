@@ -35,13 +35,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xf6733B9842883BFE0e0a940eA2F572676af31bde](https://arbiscan.io/address/0xf6733B9842883BFE0e0a940eA2F572676af31bde) |
-| aTokenName | Aave Arbitrum USDC |
-| aTokenSymbol | aArbUSDC |
+| aTokenName | Aave Arbitrum USDCn |
+| aTokenSymbol | aArbUSDCn |
 | isPaused | false |
-| stableDebtTokenName | Aave Arbitrum Stable Debt USDC |
-| stableDebtTokenSymbol | stableDebtArbUSDC |
-| variableDebtTokenName | Aave Arbitrum Variable Debt USDC |
-| variableDebtTokenSymbol | variableDebtArbUSDC |
+| stableDebtTokenName | Aave Arbitrum Stable Debt USDCn |
+| stableDebtTokenSymbol | stableDebtArbUSDCn |
+| variableDebtTokenName | Aave Arbitrum Variable Debt USDCn |
+| variableDebtTokenSymbol | variableDebtArbUSDCn |
 | optimalUsageRatio | 90 % |
 | maxExcessUsageRatio | 10 % |
 | baseVariableBorrowRate | 0 % |
@@ -64,8 +64,8 @@
       "to": {
         "aToken": "0x724dc807b04555b71ed48a6896b6F41593b8C637",
         "aTokenImpl": "0x1Be1798b70aEe431c2986f7ff48d9D1fa350786a",
-        "aTokenName": "Aave Arbitrum USDC",
-        "aTokenSymbol": "aArbUSDC",
+        "aTokenName": "Aave Arbitrum USDCn",
+        "aTokenSymbol": "aArbUSDCn",
         "borrowCap": 41000000,
         "borrowingEnabled": true,
         "debtCeiling": 0,
@@ -90,16 +90,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0xDC1fad70953Bb3918592b6fCc374fe05F5811B6a",
         "stableDebtTokenImpl": "0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7",
-        "stableDebtTokenName": "Aave Arbitrum Stable Debt USDC",
-        "stableDebtTokenSymbol": "stableDebtArbUSDC",
+        "stableDebtTokenName": "Aave Arbitrum Stable Debt USDCn",
+        "stableDebtTokenSymbol": "stableDebtArbUSDCn",
         "supplyCap": 41000000,
         "symbol": "USDC",
         "underlying": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0xf611aEb5013fD2c0511c9CD55c7dc5C1140741A6",
         "variableDebtTokenImpl": "0x5E76E98E0963EcDC6A065d1435F84065b7523f39",
-        "variableDebtTokenName": "Aave Arbitrum Variable Debt USDC",
-        "variableDebtTokenSymbol": "variableDebtArbUSDC"
+        "variableDebtTokenName": "Aave Arbitrum Variable Debt USDCn",
+        "variableDebtTokenSymbol": "variableDebtArbUSDCn"
       }
     }
   },
