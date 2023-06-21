@@ -33,7 +33,7 @@
 | stableDebtTokenImpl | [0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7](https://arbiscan.io/address/0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7) |
 | borrowingEnabled | true |
 | stableBorrowRateEnabled | false |
-| isBorrowableInIsolation | false |
+| isBorrowableInIsolation | true |
 | interestRateStrategy | [0xf6733B9842883BFE0e0a940eA2F572676af31bde](https://arbiscan.io/address/0xf6733B9842883BFE0e0a940eA2F572676af31bde) |
 | aTokenName | Aave Arbitrum USDCn |
 | aTokenSymbol | aArbUSDCn |
@@ -48,11 +48,11 @@
 | variableRateSlope1 | 3.5 % |
 | variableRateSlope2 | 60 % |
 | baseStableBorrowRate | 4.5 % |
-| stableRateSlope1 | 3.5 % |
+| stableRateSlope1 | 5 % |
 | stableRateSlope2 | 60 % |
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
-| interestRate | ![ir](/.assets/d89ecf5f1ccbeb07b104da02d99f5a5862da4efa.svg) |
+| interestRate | ![ir](/.assets/26fe9d5b1f609d3f149edb1d9d48db7c8ef3a63d.svg) |
 
 ## Raw diff
 
@@ -73,7 +73,7 @@
         "eModeCategory": 1,
         "interestRateStrategy": "0xf6733B9842883BFE0e0a940eA2F572676af31bde",
         "isActive": true,
-        "isBorrowableInIsolation": false,
+        "isBorrowableInIsolation": true,
         "isFlashloanable": true,
         "isFrozen": false,
         "isPaused": false,
@@ -113,7 +113,7 @@
         "maxExcessUsageRatio": "100000000000000000000000000",
         "optimalStableToTotalDebtRatio": "200000000000000000000000000",
         "optimalUsageRatio": "900000000000000000000000000",
-        "stableRateSlope1": "35000000000000000000000000",
+        "stableRateSlope1": "50000000000000000000000000",
         "stableRateSlope2": "600000000000000000000000000",
         "variableRateSlope1": "35000000000000000000000000",
         "variableRateSlope2": "600000000000000000000000000"

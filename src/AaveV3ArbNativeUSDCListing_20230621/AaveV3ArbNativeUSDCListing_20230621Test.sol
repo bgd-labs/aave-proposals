@@ -52,7 +52,7 @@ contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest is
       isActive: true,
       isFrozen: false,
       isSiloed: false,
-      isBorrowableInIsolation: false,
+      isBorrowableInIsolation: true,
       isFlashloanable: true,
       supplyCap: 41_000_000,
       borrowCap: 41_000_000,
@@ -70,7 +70,7 @@ contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest is
         optimalUsageRatio: 90 * (RAY / 100),
         optimalStableToTotalDebtRatio: 20 * (RAY / 100),
         baseStableBorrowRate: 45 * (RAY / 1000), // slope1 + stableRateOffset
-        stableRateSlope1: 35 * (RAY / 1000),
+        stableRateSlope1: 50 * (RAY / 1000),
         stableRateSlope2: 60 * (RAY / 100),
         baseVariableBorrowRate: 0,
         variableRateSlope1: 35 * (RAY / 1000),
