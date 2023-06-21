@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import {ArbitrumScript} from 'aave-helpers/ScriptUtils.sol';
+import {ArbitrumScript, EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbFraxListing_20230619} from 'src/AaveV3ArbFraxListing_20230619/AaveV3ArbFraxListing_20230619.sol';
 
@@ -10,7 +10,7 @@ contract DeployAaveV3FraxListingPayload is ArbitrumScript {
   }
 }
 
-contract AaveV3FraxListingPayloadProposal is ArbitrumScript {
+contract AaveV3FraxListingPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildPolygon(
