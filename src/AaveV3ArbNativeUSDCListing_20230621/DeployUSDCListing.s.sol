@@ -14,7 +14,7 @@ contract USDCNPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildArbitrum(
-      0xA125a7c1c4ef4830Fe7b66A6735862eB6Ff0fbb6
+      0x7B20e2008c714f209131C7EC90294526e8f493cc
     );
     GovHelpers.createProposal(
       payloads,
