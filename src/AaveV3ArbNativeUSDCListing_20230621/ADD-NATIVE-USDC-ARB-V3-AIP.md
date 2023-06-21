@@ -56,7 +56,7 @@ contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
           baseVariableBorrowRate: 0,
           variableRateSlope1: _bpsToRay(3_50),
           variableRateSlope2: _bpsToRay(60_00),
-          stableRateSlope1: _bpsToRay(3_50),
+          stableRateSlope1: _bpsToRay(5_00),
           stableRateSlope2: _bpsToRay(60_00),
           baseStableRateOffset: _bpsToRay(1_00),
           stableRateExcessOffset: _bpsToRay(8_00),
