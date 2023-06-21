@@ -64,7 +64,7 @@ contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
         }),
         enabledToBorrow: EngineFlags.ENABLED,
         stableRateModeEnabled: EngineFlags.DISABLED,
-        borrowableInIsolation: EngineFlags.DISABLED,
+        borrowableInIsolation: EngineFlags.ENABLED,
         withSiloedBorrowing: EngineFlags.DISABLED,
         flashloanable: EngineFlags.ENABLED,
         ltv: 81_00,
