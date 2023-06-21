@@ -19,6 +19,12 @@ Users are able to borrow FRAX and earn yield across DeFi, such as on Curve Finan
 
 # Specification
 
+The parameters shown below are the combined recommendation of Gauntlet and Chaos Labs.
+
+Ticker: FRAX
+
+Contract Address: [Ethereum: 0x853d955aCEf822Db058eb8505911ED77F175b99e](https://etherscan.io/address/0x853d955aCEf822Db058eb8505911ED77F175b99e)
+
 Oracle Address: [`Ethereum: 0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD`](https://etherscan.io/address/0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD)
 
 |Parameter|Value|
@@ -50,6 +56,14 @@ Oracle Address: [`Ethereum: 0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD`](https:/
 [Test](TODO)
 [Pre-Post Payload Diff](TODO)
 [Deployed Payload Address](TODO)
+
+The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
+
+# Disclaimer
+
+The author, TokenLogic, receives payment indirectly from [Aave Grant DAO](https://twitter.com/AaveGrants) via [Butter](https://twitter.com/butterymoney) as part of the [Incentivised Delegate Campaign](https://governance.aave.com/t/temp-check-incentivized-delegate-campaign-3-month/11732). [TokenLogic is a delegate](https://governance.aave.com/t/tokenlogic-delegate-platform/12516) within Aave community. 
+
+Delegate: [0xA06c2e5BB33cd6718b08EC9335081Cbba62861f7](https://app.aave.com/governance/)
 
 # Copyright
 
