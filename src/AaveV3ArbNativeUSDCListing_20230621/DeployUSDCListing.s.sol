@@ -20,10 +20,7 @@ contract USDCNPayloadProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV3ArbNativeUSDCListing_20230621/ADD-NATIVE-USDC-ARB-V3-AIP.md',
-        // if you set `upload` to `true`, your env must contain PINATA_KEY & PINATA_SECRET
-        // the file will be uploaded automatically once merged to main
-        false
+        'src/AaveV3ArbNativeUSDCListing_20230621/ADD-NATIVE-USDC-ARB-V3-AIP.md'
       )
     );
   }
