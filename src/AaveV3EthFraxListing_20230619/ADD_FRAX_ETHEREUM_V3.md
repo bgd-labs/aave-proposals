@@ -51,10 +51,10 @@ Oracle Address: [`Ethereum: 0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD`](https:/
 
 # References
 
-[Forum Post](TODO)
-[Payload Implementation](TODO)
-[Test](TODO)
-[Pre-Post Payload Diff](TODO)
+[Forum Post](https://governance.aave.com/t/arfc-add-frax-to-aave-v3-ethereum/13051)
+[Payload Implementation](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/src/AaveV3EthFraxListing_20230619/AaveV3EthFraxListing_20230619.sol)
+[Test](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/src/AaveV3EthFraxListing_20230619/AaveV3EthFraxListing_20230619.t.sol)
+[Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/diffs/pre-Aave-V3-Ethereum-FRAX-Listing_post-Aave-V3-Ethereum-FRAX-Listing.md)
 [Deployed Payload Address](TODO)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
