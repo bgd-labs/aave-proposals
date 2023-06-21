@@ -24,7 +24,7 @@ This ARFC is focused solely on the onboarding of the native USDC and does not pr
 - Token Symbol: USDC
 - Token Address: [0xaf88d065e77c8cC2239327C5EDb3A432268e5831](https://arbiscan.io/address/0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
 
-the implementation of the token is the same as the one used for the USDC.e token.
+The implementation of the token is the same as the one used for the USDC.e token.
 The payload use a custom engine to avoid compatibility issues with the current USDC.e token and protocol version.
 
 while the protocol code use "USDCn" to distinguish both versions of the token. we recommend that UI supports USDCn with the symbol "USDC" to avoid confusion.
