@@ -8,7 +8,10 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbNativeUSDCListing_20230621} from 'src/AaveV3ArbNativeUSDCListing_20230621/AaveV3ArbNativeUSDCListing_20230621.sol';
 
-contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest is
+  ProtocolV3_0_1TestBase,
+  TestWithExecutor
+{
   uint256 internal constant RAY = 1e27;
   AaveV3ArbNativeUSDCListing_20230621 public payload;
 
@@ -59,21 +62,21 @@ contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest is ProtocolV3_0_1TestBa
 
     _validateReserveConfig(usdcn, allConfigs);
 
-    // _validateInterestRateStrategy(
-    //   usdcn.interestRateStrategy,
-    //   usdcn.interestRateStrategy,
-    //   InterestStrategyValues({
-    //     addressesProvider: address(AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER),
-    //     optimalUsageRatio: 90 * (RAY / 100),
-    //     optimalStableToTotalDebtRatio: 20 * (RAY / 100),
-    //     baseStableBorrowRate: 0 * (RAY / 100),
-    //     stableRateSlope1: 35 * (RAY / 1000),
-    //     stableRateSlope2: 60 * (RAY / 100),
-    //     baseVariableBorrowRate: 0,
-    //     variableRateSlope1: 35 * (RAY / 1000),
-    //     variableRateSlope2: 60 * (RAY / 100)
-    //   })
-    // );
+    _validateInterestRateStrategy(
+      usdcn.interestRateStrategy,
+      usdcn.interestRateStrategy,
+      InterestStrategyValues({
+        addressesProvider: address(AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER),
+        optimalUsageRatio: 90 * (RAY / 100),
+        optimalStableToTotalDebtRatio: 20 * (RAY / 100),
+        baseStableBorrowRate: 45 * (RAY / 1000), // slope1 + stableRateOffset
+        stableRateSlope1: 35 * (RAY / 1000),
+        stableRateSlope2: 60 * (RAY / 100),
+        baseVariableBorrowRate: 0,
+        variableRateSlope1: 35 * (RAY / 1000),
+        variableRateSlope2: 60 * (RAY / 100)
+      })
+    );
 
     _validateAssetSourceOnOracle(
       AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,

@@ -1,9 +1,7 @@
 ---
 title: Add Native USDC To Arbitrum V3 Pool
 author: Marc Zeller (@marczeller), Aave-Chan initiative
-shortDescription: Add Native USDC To Arbitrum V3 Pool
 discussions: https://governance.aave.com/t/arfc-add-native-usdc-to-the-arbitrum-v3-pool/13568
-created: 2023-06-21
 ---
 
 ## Simple Summary
@@ -30,7 +28,8 @@ the implementation of the token is the same as the one used for the USDC.e token
 ```solidity
 contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
   address public constant USDCN = 0xaf88d065e77c8cC2239327C5EDb3A432268e5831;
-  address public constant USDCN_PRICE_FEED = 0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3;
+  address public constant USDCN_PRICE_FEED =
+    0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3;
 
   function newListingsCustom()
     public
@@ -38,12 +37,13 @@ contract AaveV3ArbNativeUSDCListing_20230621 is AaveV3PayloadArbitrum {
     override
     returns (IEngine.ListingWithCustomImpl[] memory)
   {
-    IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](1);
+    IEngine.ListingWithCustomImpl[]
+      memory listings = new IEngine.ListingWithCustomImpl[](1);
 
     listings[0] = IEngine.ListingWithCustomImpl(
       IEngine.Listing({
         asset: USDCN,
-        assetSymbol: 'USDC',
+        assetSymbol: "USDC",
         priceFeed: USDCN_PRICE_FEED,
         rateStrategyParams: Rates.RateStrategyParams({
           optimalUsageRatio: _bpsToRay(90_00),
