@@ -27,7 +27,7 @@ This ARFC is focused solely on the onboarding of the native USDC and does not pr
 the implementation of the token is the same as the one used for the USDC.e token.
 The payload use a custom engine to avoid compatibility issues with the current USDC.e token and protocol version.
 
-while the protocol code use "USDCN" to distinguish both versions of the token. we recommend that UI supports USDCn with the symbol "USDC" to avoid confusion.
+while the protocol code use "USDCn" to distinguish both versions of the token. we recommend that UI supports USDCn with the symbol "USDC" to avoid confusion.
 
 Likewise, What the protocol consider "USDC" will be shown as "USDC.e" on the UI.
 
