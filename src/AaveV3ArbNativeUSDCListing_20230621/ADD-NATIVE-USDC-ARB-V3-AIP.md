@@ -11,7 +11,7 @@ Currently onboarded USDC.e token will be kept as is. and two USDC tokens will be
 
 ## Motivation
 
-Circle is set to launch a native version of USDC on Arbitrum, which is anticipated to become the primary version of the USDC stablecoin on the Arbitrum L2. This will supersede the current “USDC.e” token, which is a bridged asset with an underlying USDC on Ethereum.
+Circle has launched a native version of USDC on Arbitrum, which is anticipated to become the primary version of the USDC stablecoin on the Arbitrum L2. This will supersede the current “USDC.e” token, which is a bridged asset with an underlying USDC on Ethereum.
 
 From our experience with the Avalanche Pool, we’ve learned that a prudent approach to integrating such a native token involves initially onboarding it with parameters similar to its bridged counterpart, but with more conservative caps. As the native USDC builds secondary liquidity and matures, we can gradually decrease the attractiveness of USDC.e and increase the caps for the native USDC.
 
