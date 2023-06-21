@@ -7,7 +7,7 @@ discussions: https://governance.aave.com/t/arfc-add-native-usdc-to-the-arbitrum-
 ## Simple Summary
 
 This AIP propose to add the native USDC token issued by Circle to the Arbitrum V3 pool.
-Currently onboarded USDC.e token will be kept as is. and two USDC tokens will be available on the pool. the bridged asset USDC.e and the native USDC with the symbol USDCn.
+Currently onboarded USDC.e token will be kept as is and two USDC tokens will be available on the pool. The bridged asset USDC.e and the native USDC with the symbol USDCn.
 
 ## Motivation
 
