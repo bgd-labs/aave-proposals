@@ -19,6 +19,8 @@ Users are able to borrow FRAX and earn yield across DeFi, such as on Curve Finan
 
 # Specification
 
+The parameters shown below are the combined recommendation of Gauntlet and Chaos Labs.
+
 Ticker: FRAX
 
 Contract Address: [`Abritrum: 0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F`](https://arbiscan.io/token/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F)
