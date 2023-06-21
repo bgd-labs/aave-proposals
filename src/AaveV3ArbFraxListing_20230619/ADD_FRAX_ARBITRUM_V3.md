@@ -19,9 +19,11 @@ Users are able to borrow FRAX and earn yield across DeFi, such as on Curve Finan
 
 # Specification
 
-Arbitrum Contract Address: [`Abritrum: 0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F`](https://arbiscan.io/token/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F)
+Ticker: FRAX
 
-Oracle Address: [`Arbitrum: 0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8`](https://arbiscan.io/token/0x17fc002b466eec40dae837fc4be5c67993ddbd6f)
+Contract Address: [`Abritrum: 0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F`](https://arbiscan.io/token/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F)
+
+Chainlink Oracle Address: [`Arbitrum: 0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8`](https://arbiscan.io/address/0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8)
 
 |Parameter|Value|
 | --- | --- |
@@ -52,6 +54,14 @@ Oracle Address: [`Arbitrum: 0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8`](https:/
 [Test](TODO)
 [Pre-Post Payload Diff](TODO)
 [Deployed Payload Address](TODO)
+
+The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
+
+# Disclaimer
+
+The author, TokenLogic, receives payment indirectly from [Aave Grant DAO](https://twitter.com/AaveGrants) via [Butter](https://twitter.com/butterymoney) as part of the [Incentivised Delegate Campaign](https://governance.aave.com/t/temp-check-incentivized-delegate-campaign-3-month/11732). [TokenLogic is a delegate](https://governance.aave.com/t/tokenlogic-delegate-platform/12516) within Aave community. 
+
+Delegate: [0xA06c2e5BB33cd6718b08EC9335081Cbba62861f7](https://app.aave.com/governance/)
 
 # Copyright
 
