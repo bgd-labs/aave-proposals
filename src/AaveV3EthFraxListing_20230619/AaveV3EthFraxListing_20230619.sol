@@ -27,7 +27,7 @@ import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  * @title List FRAX on AaveV3Ethereum
  * @author defijesus - TokenLogic
  * @dev This proposal lists FRAX on Aave V3 Ethereum
- * Governance: TODO
+ * Governance: https://governance.aave.com/t/arfc-add-frax-to-aave-v3-ethereum/13051
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0xf0a3ef553905b03d36e0982719cfe25e85d97f563c3ef401f25e8455960576f8
  */
 contract AaveV3EthFraxListing_20230619 is AaveV3PayloadEthereum {

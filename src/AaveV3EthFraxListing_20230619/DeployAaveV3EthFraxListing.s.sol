@@ -13,7 +13,7 @@ contract DeployAaveV3FraxListingPayload is EthereumScript {
 contract AaveV3FraxListingPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildPolygon(
+    payloads[0] = GovHelpers.buildMainnet(
       address(0) //TODO
     );
     GovHelpers.createProposal(
