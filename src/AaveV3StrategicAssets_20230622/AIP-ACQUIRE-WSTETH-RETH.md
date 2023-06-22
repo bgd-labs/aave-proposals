@@ -17,6 +17,8 @@ Aave DAO currently holds 1,786.51 awETH (v2) and 258.58 units of aEthWeth in the
 This AIP converts a total of 1,600 wETH equivalent units. 800.00 units of wETH will be converted to wstETH.
 800.00 units of awETH will be converted to rETH.
 
+The collector contract currently holds 104 unproductive ETH that could potentially be deposited as well in the future.
+
 # Specification
 
 The following provides an overview for how the wstETH and rETH is acquired.
@@ -34,8 +36,8 @@ The following provides an overview for how the wstETH and rETH is acquired.
 
 A list of relevant links like for this proposal:
 
-- [Test Cases]()
-- [Payload Implementation]()
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3StrategicAssets_20230622/AaveV3StrategicAssets_20220622PayloadTest.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3StrategicAssets_20230622/AaveV3StrategicAssets_20220622Payload.sol)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
