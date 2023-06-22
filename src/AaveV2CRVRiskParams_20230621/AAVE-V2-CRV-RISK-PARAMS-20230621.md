@@ -3,7 +3,7 @@ title: Chaos Labs Risk Parameter Updates - CRV Aave V2 Ethereum - 2023.06.15
 author: Chaos Labs (@ori-chaoslabs, @yonikesel)
 shortDescription: CRV Risk Parameter Updates Aave V2 Ethereum
 discussions: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-crv-aave-v2-ethereum-2023-06-15/13709
-created: 2023-06-15
+created: 2023-06-21
 ---
 
 ## Simple Summary

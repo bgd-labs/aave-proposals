@@ -200,8 +200,8 @@ test-usdcn-arb-payload :; forge test -vvv --match-contract AaveV3ArbNativeUSDCLi
 deploy-usdcn-arb-payload :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:DeployArbUSDNPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:USDCNPayloadProposal --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
-# ChaosLabs crv risk params update for Ethereum V2 20230615
+# ChaosLabs CRV risk params update for Ethereum V2 20230621
 
-test-risk-params-crv-20230615-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
-deploy-risk-params-eth-20230615-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
-create-risk-params-eth-20230615 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+test-risk-params-crv-20230621-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
+deploy-risk-params-eth-20230621-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230621 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
