@@ -14,10 +14,10 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
   AaveV3ArbFraxListing_20230619 public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 102835400);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 103836954);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
-    payload = new AaveV3ArbFraxListing_20230619();
+    payload = AaveV3ArbFraxListing_20230619(0xB57183F99e7986A751A08FeAc6E26a040C541a0b);
   }
 
   function testPoolActivation() public {

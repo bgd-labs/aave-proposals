@@ -54,7 +54,7 @@ Chainlink Oracle Address: [`Arbitrum: 0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8
 [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/frax-arb-v3/src/AaveV3ArbFraxListing_20230619/AaveV3ArbFraxListing_20230619.sol)
 [Test](https://github.com/defijesus/aave-proposals/blob/frax-arb-v3/src/AaveV3ArbFraxListing_20230619/AaveV3ArbFraxListing_20230619.t.sol)
 [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/frax-arb-v3/diffs/pre-Aave-V3-Arbitrum-FRAX-Listing_post-Aave-V3-Arbitrum-FRAX-Listing.md)
-[Deployed Payload Address](TODO)
+[Deployed Payload Address](https://arbiscan.io/address/0xb57183f99e7986a751a08feac6e26a040c541a0b#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

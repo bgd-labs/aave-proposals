@@ -18,18 +18,18 @@
 | oracle | [0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8](https://arbiscan.io/address/0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8) |
 | oracleDecimals | 8 |
 | oracleDescription | FRAX / USD |
-| oracleLatestAnswer | 0.9995476 |
+| oracleLatestAnswer | 0.99914816 |
 | usageAsCollateralEnabled | true |
 | ltv | 70 % |
 | liquidationThreshold | 75 % |
 | liquidationBonus | 6 % |
 | liquidationProtocolFee | 10 % |
 | reserveFactor | 10 % |
-| aToken | [0x8ffDf2DE812095b1D19CB146E4c004587C0A0692](https://arbiscan.io/address/0x8ffDf2DE812095b1D19CB146E4c004587C0A0692) |
+| aToken | [0x724dc807b04555b71ed48a6896b6F41593b8C637](https://arbiscan.io/address/0x724dc807b04555b71ed48a6896b6F41593b8C637) |
 | aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://arbiscan.io/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
-| variableDebtToken | [0xA8669021776Bc142DfcA87c21b4A52595bCbB40a](https://arbiscan.io/address/0xA8669021776Bc142DfcA87c21b4A52595bCbB40a) |
+| variableDebtToken | [0xf611aEb5013fD2c0511c9CD55c7dc5C1140741A6](https://arbiscan.io/address/0xf611aEb5013fD2c0511c9CD55c7dc5C1140741A6) |
 | variableDebtTokenImpl | [0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3](https://arbiscan.io/address/0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3) |
-| stableDebtToken | [0xa5e408678469d23efDB7694b1B0A85BB0669e8bd](https://arbiscan.io/address/0xa5e408678469d23efDB7694b1B0A85BB0669e8bd) |
+| stableDebtToken | [0xDC1fad70953Bb3918592b6fCc374fe05F5811B6a](https://arbiscan.io/address/0xDC1fad70953Bb3918592b6fCc374fe05F5811B6a) |
 | stableDebtTokenImpl | [0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e](https://arbiscan.io/address/0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e) |
 | borrowingEnabled | true |
 | stableBorrowRateEnabled | false |
@@ -62,7 +62,7 @@
     "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F": {
       "from": null,
       "to": {
-        "aToken": "0x8ffDf2DE812095b1D19CB146E4c004587C0A0692",
+        "aToken": "0x724dc807b04555b71ed48a6896b6F41593b8C637",
         "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
         "aTokenName": "Aave Arbitrum FRAX",
         "aTokenSymbol": "aArbFRAX",
@@ -85,10 +85,10 @@
         "oracle": "0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8",
         "oracleDecimals": 8,
         "oracleDescription": "FRAX / USD",
-        "oracleLatestAnswer": 99954760,
+        "oracleLatestAnswer": 99914816,
         "reserveFactor": 1000,
         "stableBorrowRateEnabled": false,
-        "stableDebtToken": "0xa5e408678469d23efDB7694b1B0A85BB0669e8bd",
+        "stableDebtToken": "0xDC1fad70953Bb3918592b6fCc374fe05F5811B6a",
         "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
         "stableDebtTokenName": "Aave Arbitrum Stable Debt FRAX",
         "stableDebtTokenSymbol": "stableDebtArbFRAX",
@@ -96,7 +96,7 @@
         "symbol": "FRAX",
         "underlying": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
         "usageAsCollateralEnabled": true,
-        "variableDebtToken": "0xA8669021776Bc142DfcA87c21b4A52595bCbB40a",
+        "variableDebtToken": "0xf611aEb5013fD2c0511c9CD55c7dc5C1140741A6",
         "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3",
         "variableDebtTokenName": "Aave Arbitrum Variable Debt FRAX",
         "variableDebtTokenSymbol": "variableDebtArbFRAX"

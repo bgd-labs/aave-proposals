@@ -14,13 +14,13 @@ contract AaveV3FraxListingPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildArbitrum(
-      address(0) //TODO
+      0xB57183F99e7986A751A08FeAc6E26a040C541a0b
     );
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV3ArbFraxListing_20230619/TODO.md'
+        'src/AaveV3ArbFraxListing_20230619/ADD_FRAX_ARBITRUM_V3.md'
       )
     );
   }
