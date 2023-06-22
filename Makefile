@@ -197,3 +197,9 @@ create-risk-params-eth-20230529 :; forge script src/AaveV3EthRiskParams_20230529
 test-ens-eth-payload :; forge test -vvv --match-contract AaveV3EthENSListing_20230517_Payload_Test
 deploy-ens-eth-payload :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 create-ens-eth-proposal :; forge script src/AaveV3EthENSListing_20230517/AaveV3EthENSListing_20230517_Payload.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
+# ChaosLabs crv risk params update for Ethereum V2 20230615
+
+test-risk-params-crv-20230615-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
+deploy-risk-params-eth-20230615-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230615 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
