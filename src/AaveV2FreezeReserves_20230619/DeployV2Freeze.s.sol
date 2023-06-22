@@ -21,9 +21,6 @@ contract CreateProposal is EthereumScript {
       GovHelpers.ipfsHashFile(
         vm,
         'src/AaveV2FreezeReserves_20230619/V2-to-V3-MIGRATION-NEXT-STEPS.md',
-        // if you set `upload` to `true`, your env must contain PINATA_KEY & PINATA_SECRET
-        // the file will be uploaded automatically once merged to main
-        false
       )
     );
   }
