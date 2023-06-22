@@ -200,7 +200,6 @@ test-usdcn-arb-payload :; forge test -vvv --match-contract AaveV3ArbNativeUSDCLi
 deploy-usdcn-arb-payload :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:DeployArbUSDNPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:USDCNPayloadProposal --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
-
 # ADD FUSDC Aave V3 Ethereum pool
 
 test-fusdc-payload :; forge test -vv --match-contract AaveV3ethFUSDCListing_20230605Test
