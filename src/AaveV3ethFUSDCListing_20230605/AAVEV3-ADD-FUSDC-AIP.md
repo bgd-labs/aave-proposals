@@ -20,24 +20,24 @@ Ticker: fUSDC
 
 Contract Address: [0x465a5a630482f3abd6d3b84b39b29b07214d19e5](https://etherscan.io/address/0x465a5a630482f3abd6d3b84b39b29b07214d19e5)
 
-| Parameter | Value |
-| --- | --- |
-| Isolation Mode | Yes |
-| Borrowable | No |
-| Collateral Enabled | Yes |
-| Supply Cap | 220M (~$4.45M) |
-| Borrow Cap | N/A |
-| Debt Ceiling | $1M |
-| LTV | 77% |
-| LT | 79% |
-| Liquidation Bonus | 4.5% |
-| Liquidation Protocol Fee | 20% |
-| Variable Base | 0.00% |
-| Variable Slope1 | 4.00% |
-| Variable Slope2 | 60.00% |
-| Uoptimal | 90.00% |
-| Reserve Factor | 10.00% |
-| Stable Borrowing | Disabled |
+| Parameter                | Value          |
+| ------------------------ | -------------- |
+| Isolation Mode           | Yes            |
+| Borrowable               | No             |
+| Collateral Enabled       | Yes            |
+| Supply Cap               | 220M (~$4.45M) |
+| Borrow Cap               | N/A            |
+| Debt Ceiling             | $1M            |
+| LTV                      | 77%            |
+| LT                       | 79%            |
+| Liquidation Bonus        | 4.5%           |
+| Liquidation Protocol Fee | 20%            |
+| Variable Base            | 0.00%          |
+| Variable Slope1          | 4.00%          |
+| Variable Slope2          | 60.00%         |
+| Uoptimal                 | 90.00%         |
+| Reserve Factor           | 10.00%         |
+| Stable Borrowing         | Disabled       |
 
 ## References
 

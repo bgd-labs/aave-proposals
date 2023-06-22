@@ -21,9 +21,6 @@ contract CreateFUSDC is EthereumScript {
       GovHelpers.ipfsHashFile(
         vm,
         'src/AaveV3ethFUSDCListing_20230605/AAVEV3-ADD-FUSDC-AIP.md',
-        // if you set `upload` to `true`, your env must contain PINATA_KEY & PINATA_SECRET
-        // the file will be uploaded automatically once merged to main
-        false
       )
     );
   }
