@@ -200,6 +200,11 @@ test-usdcn-arb-payload :; forge test -vvv --match-contract AaveV3ArbNativeUSDCLi
 deploy-usdcn-arb-payload :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:DeployArbUSDNPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:USDCNPayloadProposal --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
+# V2 freeze reserves Chaos Labs
+
+deploy-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
 # ChaosLabs CRV risk params update for Ethereum V2 20230621
 
 test-risk-params-crv-20230621-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
