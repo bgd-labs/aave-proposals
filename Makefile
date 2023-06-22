@@ -189,6 +189,17 @@ deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpd
 deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
+# Polygon v2 parameter updates
+
+deploy-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:DeployPolygonV2RatesUpdatesPayload --rpc-url polygon --broadcast --legacy --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:PolygonV2RatesUpdatesPayloadProposal --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# add USDCN to arbitrum V3
+
+test-usdcn-arb-payload :; forge test -vvv --match-contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest
+deploy-usdcn-arb-payload :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:DeployArbUSDNPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:USDCNPayloadProposal --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
 # V2 freeze reserves Chaos Labs
 
 deploy-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
