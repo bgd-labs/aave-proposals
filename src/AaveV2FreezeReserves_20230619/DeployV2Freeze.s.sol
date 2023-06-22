@@ -20,7 +20,7 @@ contract CreateProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV2FreezeReserves_20230619/V2-to-V3-MIGRATION-NEXT-STEPS.md',
+        'src/AaveV2FreezeReserves_20230619/V2-to-V3-MIGRATION-NEXT-STEPS.md'
       )
     );
   }
