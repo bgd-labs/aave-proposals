@@ -43,6 +43,7 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
       borrowingEnabled: true,
       interestRateStrategy: _findReserveConfigBySymbol(allConfigs, 'wstETH').interestRateStrategy,
       stableBorrowRateEnabled: false,
+      isPaused: false,
       isActive: true,
       isFrozen: false,
       isSiloed: false,
