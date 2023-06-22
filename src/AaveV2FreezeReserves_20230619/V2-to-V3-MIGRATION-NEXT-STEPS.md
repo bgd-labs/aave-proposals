@@ -3,7 +3,6 @@ title: Chaos Labs V2 to V3 Migration Next Steps
 author: Chaos Labs (@Chaos Labs)
 shortDescription: Chaos Labs V2 to V3 Migration Next Steps
 discussions: https://governance.aave.com/t/arfc-chaos-labs-v2-to-v3-migration-next-steps/13701
-created: 2023-06-19
 ---
 
 ## Simple Summary
