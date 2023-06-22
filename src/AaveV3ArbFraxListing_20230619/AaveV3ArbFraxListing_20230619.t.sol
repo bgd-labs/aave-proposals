@@ -28,7 +28,10 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Arbitrum-FRAX-Listing',
+      AaveV3Arbitrum.POOL
+    );
 
     ReserveConfig memory frax = ReserveConfig({
       symbol: 'FRAX',
@@ -80,11 +83,6 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
       payload.FRAX_UNDERLYING(),
       payload.PRICE_FEED()
-    );
-
-    createConfigurationSnapshot(
-      'post-Aave-V3-Arbitrum-FRAX-Listing',
-      AaveV3Arbitrum.POOL
     );
 
     diffReports(

@@ -1,7 +1,6 @@
 ---
 title: Add FRAX Arbitrum Aave v3 
 discussions: https://governance.aave.com/t/arfc-add-frax-arbitrum-aave-v3/13222
-shortDescription: Add FRAX Arbitrum Aave v3 
 author: Flipside & TokenLogic
 ---
 
@@ -13,7 +12,7 @@ This publication presents the community an opportunity to add FRAX to the Arbitr
 
 FRAX can use its Lending AMO (similar to Maker’s DAI Direct Deposit Module) to mint protocol controlled FRAX to be lent out on Aave Protocol. Frax Finance has in the past done so in Aave v2 on Ethereum and has already stated on the Aave governance forum an interest in doing so on other deployments once FRAX is added.
 
-The Frax Finance team could deploy a similar Aave Lending AMOs to Aave v3 after FRAX is listed.This will provide Aave users with access to FRAX and present an alternative to the four USD stable coins on Aave v3.
+The Frax Finance team could deploy a similar Aave Lending AMOs to Aave v3 after FRAX is listed. This will provide Aave users with access to FRAX and present an alternative to the four USD stable coins on Aave v3.
 
 Users are able to borrow FRAX and earn yield across DeFi, such as on Curve Finance and Convex Finance.
 

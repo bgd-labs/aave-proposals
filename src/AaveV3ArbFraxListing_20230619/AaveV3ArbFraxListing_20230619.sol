@@ -25,7 +25,7 @@ import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  * @title List FRAX on AaveV3Arbitrum
  * @author defijesus - TokenLogic
  * @dev This proposal lists FRAX on Aave V3 Arbitrum
- * Governance: TODO
+ * Governance: https://governance.aave.com/t/arfc-add-frax-arbitrum-aave-v3/13222
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0x03798dc3d6382f0d461590059d554a4405eefd5c95e3de917515702fdfc9ecfb
  */
 contract AaveV3ArbFraxListing_20230619 is AaveV3PayloadArbitrum {
