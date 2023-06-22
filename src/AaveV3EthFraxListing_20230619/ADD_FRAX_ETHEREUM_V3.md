@@ -54,7 +54,7 @@ Oracle Address: [`Ethereum: 0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD`](https:/
 [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/src/AaveV3EthFraxListing_20230619/AaveV3EthFraxListing_20230619.sol)
 [Test](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/src/AaveV3EthFraxListing_20230619/AaveV3EthFraxListing_20230619.t.sol)
 [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/frax-eth-v3/diffs/pre-Aave-V3-Ethereum-FRAX-Listing_post-Aave-V3-Ethereum-FRAX-Listing.md)
-[Deployed Payload Address](TODO)
+[Deployed Payload Address](https://etherscan.io/address/0x56cf1dbd6cfca7898ba6a96ce1fbf1f038e6466b#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

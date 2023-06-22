@@ -15,10 +15,10 @@ contract AaveV3EthFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
   AaveV3EthFraxListing_20230619 public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17515310);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17536695);
     _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
 
-    payload = new AaveV3EthFraxListing_20230619();
+    payload = AaveV3EthFraxListing_20230619(0x56Cf1dbd6CfCA7898BA6A96Ce1Fbf1F038E6466b);
   }
 
   function testPoolActivation() public {

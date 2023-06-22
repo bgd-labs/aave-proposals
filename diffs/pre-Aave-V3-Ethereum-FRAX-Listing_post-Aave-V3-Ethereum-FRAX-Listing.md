@@ -18,7 +18,7 @@
 | oracle | [0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD](https://etherscan.io/address/0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD) |
 | oracleDecimals | 8 |
 | oracleDescription | FRAX / USD |
-| oracleLatestAnswer | 0.99948722 |
+| oracleLatestAnswer | 0.99932715 |
 | usageAsCollateralEnabled | true |
 | ltv | 70 % |
 | liquidationThreshold | 75 % |
@@ -85,7 +85,7 @@
         "oracle": "0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD",
         "oracleDecimals": 8,
         "oracleDescription": "FRAX / USD",
-        "oracleLatestAnswer": 99948722,
+        "oracleLatestAnswer": 99932715,
         "reserveFactor": 1000,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x7617d02E311CdE347A0cb45BB7DF2926BBaf5347",
