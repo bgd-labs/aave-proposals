@@ -11,6 +11,7 @@ This AIP proposes to Freeze the the 1INCH, ENS, LINK, MKR, SNX & UNI reserves on
 ## Motivation
 
 Following the successful deployment of Aave V3 on the Ethereum network, we propose a reassessment of smaller-to-medium capitalization tokens. Unlike CRV (we will soon contribute further insights on this topic, as the complexity of the CRV market, primarily due to its substantial scale, warrants a more nuanced examination), these markets exhibit a more modest size and generally can be conveniently migrated. This diverges from preceding deliberations on market freezes prior to the V3 launch. With V3 live, invoking a freeze on V2 markets does not preclude users from capitalizing on these markets. Instead, it enhances the community’s capacity to safeguard user funds more effectively, as V3’s advanced risk management mechanisms provide a more secure environment. This proactive strategy aims to enforce a freeze on low-to-medium capital assets on V2, thereby averting a scenario resembling Aave V2’s current overexposure to CRV while permitting users to engage with Aave via V3 markets.
+
 ## Specification
 
 This AIP will call freezeReserve() method from the Aave V2 Pool Configurator contract for the following assets: 1INCH, ENS, LINK, MKR, SNX & UNI
