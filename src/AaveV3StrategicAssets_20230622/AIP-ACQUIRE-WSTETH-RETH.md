@@ -1,7 +1,7 @@
 ---
 title: Treasury Managemet - Acquire wstETH & rETH
 discussions: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205/5
-shortDescription: Convert 1,600 units of wETH/ETH held in the Collector Contract to 800 units of both wstETH and rETH.
+shortDescription: Convert 1,600 units of awETH/aEthWETH held in the Collector Contract to the equivalent of 800 units of both wstETH and rETH.
 author: Llama (Fermin Carranza & TokenLogic)
 created: 2023-06-23
 ---
@@ -12,30 +12,29 @@ This AIP will convert 1,600 wETH to equal amounts of wstETH and rETH to be held 
 
 # Motivation
 
-Aave DAO currently holds 1,786.51 awETH (v2) and 104.548 units of ETH in the Collector Contract. The awETH deposit yield in Aave v2 earns 1.69%, relative to 3.8% with wstETH and 3.13% with rETH.
+Aave DAO currently holds 1,786.51 awETH (v2) and 258.58 units of aEthWeth in the Collector Contract. The awETH deposit yield in Aave v2 earns 1.69%, relative to 3.8% with wstETH and 3.13% with rETH.
 
-This AIP converts all the unproductive ETH balance and 695.452 units of wETH into wstETH. The total wstETH acquired will be 800 units.
-
+This AIP converts a total of 1,600 wETH equivalent units. 800.00 units of wETH will be converted to wstETH.
 800.00 units of awETH will be converted to rETH.
 
 # Specification
 
 The following provides an overview for how the wstETH and rETH is acquired.
 
-**wstETH**
-
-1. Deposit 104.548 ETH into stETH, wrap into wstETH and hold wstETH in Collector Contract
-2. Redeem 695.452 awETH for ETH, deposit into stETH, wrap into wstETH and hold wstETH in Collector Contract.
-
-**rETH**
-
-1. Redeem 800.00 awETH for ETH, deposit into rETH and hold rETH in Collector Contract
+1. Withdraw 1,400 units of awETH into wETH.
+2. Withdraw 200 untis of aEthWeth into wETH.
+3. Withdraw 1,600 units of wETH into ETH.
+4. Deposit into RocketPool 800 ETH.
+5. Deposit into Lido's stETH 800 ETH.
+6. Wrap the received stETH into wstETH.
+7. Deposit rETH into aEthRETH Aave V3 Pool.
+8. Deposit wstETH into aEthWstETH Aave V3 Pool.
 
 # Implementation
 
 A list of relevant links like for this proposal:
 
-- [Test Cases]())
+- [Test Cases]()
 - [Payload Implementation]()
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
