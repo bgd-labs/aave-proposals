@@ -1,9 +1,7 @@
 ---
 title: Optimism - Create ETH eMode Category
 discussions: https://governance.aave.com/t/arfc-optimism-create-eth-e-mode/13144
-shortDescription: Create a ETH nominated eMode category on the Aave v3 Optimism deployment.
 author: Llama, TokenLogic
-created: 2023-06-23
 ---
 
 # Summary
@@ -42,7 +40,7 @@ Contract: [`optimism:0x4200000000000000000000000000000000000006`](https://optimi
 
 # Implementation
 
-A list of relevant links like for this proposal:
+A list of relevant links for this proposal:
 
 - [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3OPEmode_20220622/AaveV3OPEmode_20220622_PayloadTest.t.sol)
 - [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3OPEmode_20220622/AaveV3OPEmode_20220622_Payload.sol)
