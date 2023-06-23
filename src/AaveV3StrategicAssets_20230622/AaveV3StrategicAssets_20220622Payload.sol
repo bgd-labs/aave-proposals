@@ -21,11 +21,11 @@ contract AaveV3StrategicAssets_20220622Payload is IProposalGenericExecutor {
   uint256 public constant WSTETH_TO_ACQUIRE = 800 ether;
   uint256 public constant RETH_TO_ACQUIRE = 800 ether;
 
-  IRocketPoolDeposit private constant ROCKET_POOL =
+  IRocketPoolDeposit public constant ROCKET_POOL =
     IRocketPoolDeposit(0xDD3f50F8A6CafbE9b31a427582963f465E745AF8);
-  IWeth private constant WETH = IWeth(AaveV2EthereumAssets.WETH_UNDERLYING);
+  IWeth public constant WETH = IWeth(AaveV2EthereumAssets.WETH_UNDERLYING);
 
-  address private constant STETH = AaveV2EthereumAssets.stETH_UNDERLYING;
+  address public constant STETH = AaveV2EthereumAssets.stETH_UNDERLYING;
 
   function execute() external {
     uint256 balanceEth = address(AaveV2Ethereum.COLLECTOR).balance;
