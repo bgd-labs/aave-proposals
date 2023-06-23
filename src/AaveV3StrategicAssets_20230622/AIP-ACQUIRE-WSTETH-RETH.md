@@ -1,9 +1,7 @@
 ---
 title: Treasury Managemet - Acquire wstETH & rETH
 discussions: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205/5
-shortDescription: Convert 1,600 units of awETH/aEthWETH/ETH held in the Collector Contract to the equivalent of 800 units of both wstETH and rETH.
 author: Llama (Fermin Carranza & TokenLogic)
-created: 2023-06-23
 ---
 
 # Summary

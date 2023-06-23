@@ -63,9 +63,9 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
     );
 
     assertEq(balanceAWethV2After, 390846942816239323048);
-    assertEq(balanceAWethV3After, 58598410745291062983);
+    assertEq(balanceAWethV3After, 163146573028761337390);
     assertEq(balanceEthAfter, 0);
-    assertEq(balanceWstEthAfter, 0);
-    assertEq(balanceREthAfter, 0);
+    assertEq(balanceWstEthAfter, 708375617728822895268);
+    assertEq(balanceREthAfter, 744068417600381302219);
   }
 }
