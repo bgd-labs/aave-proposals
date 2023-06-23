@@ -19,14 +19,26 @@ contract AaveV3OPEmode_20220622_PayloadTest is ProtocolV3_0_1TestBase, TestWithE
   }
 
   function test_proposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot('pre-Aave-V3-Optimism-EMode-20220622', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'pre-Aave-V3-Optimism-EMode-20220622',
+      AaveV3Optimism.POOL
+    );
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot('post-Aave-V3-Optimism-EMode-20220622', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'post-Aave-V3-Optimism-EMode-20220622',
+      AaveV3Optimism.POOL
+    );
 
-    ReserveConfig memory weth = _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.WETH_UNDERLYING);
-    ReserveConfig memory wsteth = _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.wstETH_UNDERLYING);
+    ReserveConfig memory weth = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3OptimismAssets.WETH_UNDERLYING
+    );
+    ReserveConfig memory wsteth = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3OptimismAssets.wstETH_UNDERLYING
+    );
 
     weth.eModeCategory = payload.EMODE_CATEGORY_ID_ETH_CORRELATED();
     wsteth.eModeCategory = payload.EMODE_CATEGORY_ID_ETH_CORRELATED();

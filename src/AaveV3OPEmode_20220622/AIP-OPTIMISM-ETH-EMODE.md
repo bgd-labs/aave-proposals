@@ -44,8 +44,8 @@ Contract: [`optimism:0x4200000000000000000000000000000000000006`](https://optimi
 
 A list of relevant links like for this proposal:
 
-- [Test Cases]()
-- [Payload Implementation]()
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3OPEmode_20220622/AaveV3OPEmode_20220622_PayloadTest.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3OPEmode_20220622/AaveV3OPEmode_20220622_Payload.sol)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
