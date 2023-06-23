@@ -28,9 +28,15 @@ contract AaveV3StrategicAssets_20220622Payload is IProposalGenericExecutor {
   address private constant STETH = AaveV2EthereumAssets.stETH_UNDERLYING;
 
   function execute() external {
-    AaveV2Ethereum.COLLECTOR.transfer(AaveV2EthereumAssets.WETH_A_TOKEN, address(this), 1_400e18);
+    uint256 balanceEth = address(AaveV2Ethereum.COLLECTOR).balance;
+    uint256 amountWethWithdrawV2 = 1_400e18;
 
-    AaveV3Ethereum.COLLECTOR.transfer(AaveV3EthereumAssets.WETH_A_TOKEN, address(this), 200e18);
+    AaveV2Ethereum.COLLECTOR.transfer(AaveV2EthereumAssets.WETH_A_TOKEN, address(this), amountWethWithdrawV2);
+
+    uint256 amountWethWithdrawV3 = WSTETH_TO_ACQUIRE + RETH_TO_ACQUIRE - amountWethWithdrawV2 - balanceEth;
+
+    AaveV3Ethereum.COLLECTOR.transfer(AaveV3EthereumAssets.WETH_A_TOKEN, address(this), amountWethWithdrawV3);
+    AaveV3Ethereum.COLLECTOR.transfer(AaveV3Ethereum.COLLECTOR.ETH_MOCK_ADDRESS(), address(this), address(AaveV3Ethereum.COLLECTOR).balance);
 
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.WETH_UNDERLYING,
@@ -56,28 +62,5 @@ contract AaveV3StrategicAssets_20220622Payload is IProposalGenericExecutor {
       IERC20(STETH).balanceOf(address(this))
     );
     IWstEth(AaveV3EthereumAssets.wstETH_UNDERLYING).wrap(IERC20(STETH).balanceOf(address(this)));
-
-    IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).approve(
-      address(AaveV3Ethereum.POOL),
-      IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(this))
-    );
-    IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).approve(
-      address(AaveV3Ethereum.POOL),
-      IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(this))
-    );
-
-    AaveV3Ethereum.POOL.deposit(
-      AaveV3EthereumAssets.wstETH_UNDERLYING,
-      IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(this)),
-      address(AaveV3Ethereum.COLLECTOR),
-      0
-    );
-
-    AaveV3Ethereum.POOL.deposit(
-      AaveV3EthereumAssets.rETH_UNDERLYING,
-      IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(this)),
-      address(AaveV3Ethereum.COLLECTOR),
-      0
-    );
   }
 }

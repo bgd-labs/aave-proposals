@@ -30,13 +30,6 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
     );
     uint256 balanceEthBefore = address(AaveV2Ethereum.COLLECTOR).balance;
 
-    uint256 balanceAwstEthBefore = IERC20(AaveV3EthereumAssets.wstETH_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-    uint256 balanceArEthBefore = IERC20(AaveV3EthereumAssets.rETH_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-
     uint256 balanceWstEthBefore = IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -47,8 +40,6 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
     assertEq(balanceAWethV2Before, 1786462001889926403735);
     assertEq(balanceAWethV3Before, 258587244666787600985);
     assertEq(balanceEthBefore, 104548162283470274407);
-    assertEq(balanceAwstEthBefore, 560437565049714601);
-    assertEq(balanceArEthBefore, 352584449731577523);
     assertEq(balanceWstEthBefore, 0);
     assertEq(balanceREthBefore, 0);
 
@@ -64,13 +55,6 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
     );
     uint256 balanceEthAfter = address(AaveV2Ethereum.COLLECTOR).balance;
 
-    uint256 balanceAwstEthAfter = IERC20(AaveV3EthereumAssets.wstETH_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-    uint256 balanceArEthAfter = IERC20(AaveV3EthereumAssets.rETH_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-
     uint256 balanceWstEthAfter = IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -80,9 +64,7 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
 
     assertEq(balanceAWethV2After, 390846942816239323048);
     assertEq(balanceAWethV3After, 58598410745291062983);
-    assertEq(balanceEthAfter, balanceEthBefore);
-    assertEq(balanceAwstEthAfter, 708936055338620023248);
-    assertEq(balanceArEthAfter, 744421002135286828252);
+    assertEq(balanceEthAfter, 0);
     assertEq(balanceWstEthAfter, 0);
     assertEq(balanceREthAfter, 0);
   }
