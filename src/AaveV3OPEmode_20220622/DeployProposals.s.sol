@@ -14,7 +14,7 @@ contract DeployPayload is EthereumScript {
 contract SinglePayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildOptimism(address(0));
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV3OPEmode_20220622/AIP-OPTIMISM-ETH-EMODE.md'));
   }
 }
