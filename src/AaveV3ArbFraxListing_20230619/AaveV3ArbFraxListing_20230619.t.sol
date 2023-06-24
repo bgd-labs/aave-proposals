@@ -3,7 +3,7 @@
 pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
-import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
+import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
@@ -83,6 +83,12 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       AaveV3Arbitrum.POOL_ADDRESSES_PROVIDER,
       payload.FRAX_UNDERLYING(),
       payload.PRICE_FEED()
+    );
+
+    e2eTestAsset(
+      AaveV3Arbitrum.POOL,
+      _findReserveConfig(allConfigs, AaveV3ArbitrumAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigs, payload.FRAX_UNDERLYING())
     );
 
     diffReports(
