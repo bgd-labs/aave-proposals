@@ -86,6 +86,12 @@ contract AaveV3EthFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       payload.PRICE_FEED()
     );
 
+    e2eTestAsset(
+      AaveV3Ethereum.POOL,
+      _findReserveConfig(allConfigs, AaveV2EthereumAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigs, AaveV2EthereumAssets.FRAX_UNDERLYING)
+    );
+
     diffReports(
       'pre-Aave-V3-Ethereum-FRAX-Listing',
       'post-Aave-V3-Ethereum-FRAX-Listing'
