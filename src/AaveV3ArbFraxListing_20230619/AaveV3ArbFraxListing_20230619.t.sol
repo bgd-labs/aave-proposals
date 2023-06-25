@@ -14,10 +14,10 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
   AaveV3ArbFraxListing_20230619 public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 103836954);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 104611792);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
-    payload = AaveV3ArbFraxListing_20230619(0xB57183F99e7986A751A08FeAc6E26a040C541a0b);
+    payload = AaveV3ArbFraxListing_20230619(0x449E1B11BF74D57972D2d2CF057b337b203490C4);
   }
 
   function testPoolActivation() public {
@@ -36,9 +36,9 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
     ReserveConfig memory frax = ReserveConfig({
       symbol: 'FRAX',
       underlying: payload.FRAX_UNDERLYING(),
-      aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-      variableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
-      stableDebtToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
+      aToken: AaveV3Arbitrum.DEFAULT_A_TOKEN_IMPL_REV_2,
+      variableDebtToken: AaveV3Arbitrum.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2,
+      stableDebtToken: AaveV3Arbitrum.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2,
       decimals: 18,
       ltv: 70_00,
       liquidationThreshold: 75_00,

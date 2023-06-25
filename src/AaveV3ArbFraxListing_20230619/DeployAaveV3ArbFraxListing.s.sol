@@ -14,7 +14,7 @@ contract AaveV3FraxListingPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildArbitrum(
-      0xB57183F99e7986A751A08FeAc6E26a040C541a0b
+      0x449E1B11BF74D57972D2d2CF057b337b203490C4
     );
     GovHelpers.createProposal(
       payloads,
