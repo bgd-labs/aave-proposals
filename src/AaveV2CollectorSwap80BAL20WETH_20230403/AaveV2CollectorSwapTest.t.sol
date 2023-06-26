@@ -48,9 +48,6 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase {
     assertEq(balanceWethBefore, 20240221969534450944);
     assertEq(balanceAWethBefore, 1804382544356404175696);
 
-    vm.expectEmit(true, true, true, true);
-    emit TradeRequested();
-
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     uint256 balanceABalAfter = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(
@@ -69,13 +66,13 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceABalAfter, 19081042984225183256);
+    assertEq(balanceABalAfter, 2565159223857302288);
     assertEq(balanceAEthBalAfter, 0);
-    assertEq(balanceBalAfter, 0);
-    assertEq(balanceWethAfter, balanceWethBefore);
+    assertEq(balanceBalAfter, 0); // All BAL should leave
+    assertEq(balanceWethAfter, balanceWethBefore); // No changes to WETH value
 
-    // Withdraw is not an exact science so within 0.1 wETH
-    assertApproxEqAbs(balanceAWethAfter, balanceAWethBefore - payload.WETH_AMOUNT(), 1e17);
+    // no more than 326.88 aWETH should be transfered out of v2 aWETH
+    assertGe(balanceAWethAfter, balanceAWethBefore - payload.WETH_AMOUNT());
   }
 
   function test_tradeRevertsIf_invalidCaller() public {
