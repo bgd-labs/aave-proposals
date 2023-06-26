@@ -16,31 +16,17 @@ contract TestTrade is Script {
     function run() external {
         vm.startBroadcast();
 
-        // IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, 17e16);
+        IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).approve(MILKMAN, 15e16);
 
         IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-            17e16,
+            15e16,
             IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-            IERC20(AaveV2EthereumAssets.BAL_UNDERLYING),
+            IERC20(BAL80WETH20),
             0x2fb7d6bEb9AD75c1ffD392681cC68171B8551107,
             PRICE_CHECKER,
-            abi.encode(2000, bytes('')) // 1.5% slippage
+            abi.encode(2000, bytes('')) // 20% slippage for testing purposes
         );
 
         vm.stopBroadcast();
     }
-
-    // function run() external {
-    //     vm.startBroadcast();
-
-    //     IMilkman(0xE3c71D4F072e27D6c5522162DFD77A1fb959530A).cancelSwap(
-    //         17e16,
-    //         IERC20(AaveV2EthereumAssets.WETH_UNDERLYING),
-    //         IERC20(AaveV2EthereumAssets.BAL_UNDERLYING),
-    //         0x2fb7d6bEb9AD75c1ffD392681cC68171B8551107,
-    //         PRICE_CHECKER,
-    //         abi.encode(2000, bytes('')) // 1.5% slippage
-    //     );
-    //     vm.stopBroadcast();
-    // }
 }
