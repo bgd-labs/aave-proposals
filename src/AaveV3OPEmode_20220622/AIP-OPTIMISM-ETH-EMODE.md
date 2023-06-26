@@ -20,7 +20,7 @@ wstETH and wETH will be included as initial assets within the ETH correlated eMo
 
 # Specification
 
-The following risk parameters have been approved by Chaos Labs and Gauntlet.
+The following risk parameters have been approved by Chaos Labs.
 
 Ticker: wstETH
 
