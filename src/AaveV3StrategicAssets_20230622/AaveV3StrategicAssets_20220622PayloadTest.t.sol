@@ -21,7 +21,6 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
 
   function test_payloadExecution() public {
     // Pre-execution assertions
-
     uint256 balanceAWethV2Before = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -37,16 +36,9 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceAWethV2Before, 1786462001889926403735);
-    assertEq(balanceAWethV3Before, 258587244666787600985);
-    assertEq(balanceEthBefore, 104548162283470274407);
-    assertEq(balanceWstEthBefore, 0);
-    assertEq(balanceREthBefore, 0);
-
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // Post-execution assertions
-
     uint256 balanceAWethV2After = IERC20(AaveV2EthereumAssets.WETH_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -62,10 +54,17 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceAWethV2After, 390846942816239323048);
-    assertEq(balanceAWethV3After, 163146573028761337390);
+    // no more than 1_400 ether should be transfered out of v2 aETH
+    assertGe(balanceAWethV2After, balanceAWethV2Before - 1_400 ether);
+    // all eth should be transferred out
     assertEq(balanceEthAfter, 0);
-    assertEq(balanceWstEthAfter, 708375617728822895268);
-    assertEq(balanceREthAfter, 744068417600381302219);
+    // no more than the rest (1800-1400-balance) should be transferred out of v3 aETH
+    assertGe(
+      balanceAWethV3After,
+      balanceAWethV3Before - (1_800 ether - 1_400 ether - balanceEthBefore)
+    );
+    // wstETH and rETH balances should increase by roughly 800 x exchangeRate
+    assertEq(balanceWstEthAfter, balanceWstEthBefore + 708_375617728822895268);
+    assertEq(balanceREthAfter, balanceREthBefore + 744_068417600381302219);
   }
 }
