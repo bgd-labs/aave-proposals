@@ -205,6 +205,15 @@ create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_2023062
 deploy-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 
+# V3 Arbitrum Frax Listing
+
+deploy-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/DeployAaveV3ArbFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/DeployAaveV3ArbFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# V3 Ethereum Frax Listing
+
+deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
 # Test trade for B-80BAL-20WETH acquisition
 test-80bal20weth-trade :; forge script src/AaveV2CollectorSwap80BAL20WETH_20230403/TestTrade.s.sol:TestTrade --rpc-url mainnet --slow --broadcast --private-key ${PRIVATE_KEY} -vvvvv
-
