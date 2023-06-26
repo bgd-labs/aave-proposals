@@ -214,3 +214,9 @@ create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/Dep
 
 deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# Chaos Labs Payment Request
+
+test-chaos-labs-payment-20230626 :; forge test -vvv --match-contract AaveV3ChaosLabsPaymentCollection_20230626Test
+deploy-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:DeployPayloadPolygon --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:CreateProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
