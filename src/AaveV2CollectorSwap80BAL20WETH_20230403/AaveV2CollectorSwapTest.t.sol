@@ -3,25 +3,24 @@ pragma solidity 0.8.17;
 
 import {console2} from 'forge-std/Test.sol';
 
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {SwapFor80BAL20WETHPayload} from './AaveV2CollectorSwap80BAL20WETH_20230403_Payload.sol';
 import {COWTrader} from './COWTrader.sol';
 
-contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase {
   event TradeCanceled();
   event TradeRequested();
 
   SwapFor80BAL20WETHPayload payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17175879);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17565222);
 
     payload = new SwapFor80BAL20WETHPayload();
   }
@@ -43,16 +42,16 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceABalBefore, 9644860562923757165584);
-    assertEq(balanceAEthBalBefore, 24678874950526891803);
+    assertEq(balanceABalBefore, 10107242892946522821558);
+    assertEq(balanceAEthBalBefore, 457113692897315491862);
     assertEq(balanceBalBefore, 300_000e18);
-    assertEq(balanceWethBefore, 10312312833722949345);
-    assertEq(balanceAWethBefore, 1516828016650101081302);
+    assertEq(balanceWethBefore, 20240221969534450944);
+    assertEq(balanceAWethBefore, 1804382544356404175696);
 
     vm.expectEmit(true, true, true, true);
     emit TradeRequested();
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     uint256 balanceABalAfter = IERC20(AaveV2EthereumAssets.BAL_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
@@ -148,8 +147,8 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     vm.prank(trader.ALLOWED_CALLER());
     trader.cancelTrades(
-      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
-      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+      0x31ff4574ECE1b8241acE6Fd98199251935919f8c, // These are created when running tests and emitted via log
+      0x2447558467045EDe814981EE62Cd078B7bdcC7D2  // Addresses were retrieved from there
     );
   }
 
@@ -175,8 +174,8 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase, TestWithExecutor {
 
     vm.prank(AaveGovernanceV2.SHORT_EXECUTOR);
     trader.cancelTrades(
-      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
-      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+      0x31ff4574ECE1b8241acE6Fd98199251935919f8c, // These are created when running tests and emitted via log
+      0x2447558467045EDe814981EE62Cd078B7bdcC7D2  // Addresses were retrieved from there
     );
   }
 
