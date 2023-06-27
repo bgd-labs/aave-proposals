@@ -58,10 +58,10 @@ contract AaveV3StrategicAssets_20220622PayloadTest is ProtocolV3_0_1TestBase {
     assertGe(balanceAWethV2After, balanceAWethV2Before - 1_400 ether);
     // all eth should be transferred out
     assertEq(balanceEthAfter, 0);
-    // no more than the rest (1800-1400-balance) should be transferred out of v3 aETH
+    // no more than the rest (1600-1400-balance) should be transferred out of v3 aETH
     assertGe(
       balanceAWethV3After,
-      balanceAWethV3Before - (1_800 ether - 1_400 ether - balanceEthBefore)
+      balanceAWethV3Before - (1_600 ether - 1_400 ether - balanceEthBefore)
     );
     // wstETH and rETH balances should increase by roughly 800 x exchangeRate
     assertEq(balanceWstEthAfter, balanceWstEthBefore + 708_375617728822895268);

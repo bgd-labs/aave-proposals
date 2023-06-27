@@ -14,7 +14,7 @@ contract DeployPayload is EthereumScript {
 contract SinglePayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0xE5b5B70f9A5CCc2841f9FaCBb0c5C6030e68F341);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(vm, 'src/AaveV3StrategicAssets_20230622/AIP-ACQUIRE-WSTETH-RETH.md')
