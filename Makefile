@@ -204,3 +204,6 @@ create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_2023062
 
 deploy-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+deploy-payload :; forge script src/AaveV3StrategicAssets_20230622/DeployProposals.s.sol:DeployPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvvv
+deploy-proposal :; forge script src/AaveV3StrategicAssets_20230622/DeployProposals.s.sol:SinglePayloadProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} -vvvvv
