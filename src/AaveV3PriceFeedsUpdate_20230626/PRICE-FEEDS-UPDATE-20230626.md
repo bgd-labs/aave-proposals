@@ -1,9 +1,7 @@
 ---
 title: Price feeds operational update Pt2.5 - wstETH
 author: BGD Labs (@bgdlabs)
-shortDescription: Swap price adapter for wstETH to use primary rate
 discussions: https://governance.aave.com/t/bgd-operational-oracles-update/13213/9
-created: 2023-06-26
 ---
 
 ## Simple Summary
