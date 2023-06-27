@@ -214,6 +214,3 @@ create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/Dep
 
 deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
-
-deploy-payload :; forge script src/AaveV3StrategicAssets_20230622/DeployProposals.s.sol:DeployPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify --etherscan-api-key ${ETHERSCAN_API_KEY} -vvvvv
-deploy-proposal :; forge script src/AaveV3StrategicAssets_20230622/DeployProposals.s.sol:SinglePayloadProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} -vvvvv
