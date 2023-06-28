@@ -15,7 +15,7 @@ This AIP is designed to take a conservative approach to the TUSD situation. It w
 
 ## Specification
 
-This AIP will call freezeReserve() method from the Aave V2 Pool Configurator contract for the following assets: 1INCH, ENS, LINK, MKR, SNX & UNI
+This AIP will call freezeReserve() method from the Aave V2 Pool Configurator contract for TUSD.
 
 ```solidity
 contract AaveV2FreezeReserves_20230627 is IProposalGenericExecutor {
