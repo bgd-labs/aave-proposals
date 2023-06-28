@@ -6,7 +6,7 @@ import 'forge-std/Test.sol';
 
 // contract dependencies
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV2Ethereum, ICollector, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3ChaosLabsPaymentCollection_20230626} from 'src/AaveV3ChaosLabsPaymentCollection_20230626/AaveV3ChaosLabsPaymentCollection_20230626.sol';
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
