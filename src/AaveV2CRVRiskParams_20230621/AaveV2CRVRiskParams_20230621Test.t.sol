@@ -21,15 +21,20 @@ contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase, TestWithExecut
   function testPayload() public {
     AaveV2CRVRiskParams_20230621 proposalPayload = new AaveV2CRVRiskParams_20230621();
 
-
     // 1. create snapshot before payload execution
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot('preAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV2CRVRiskParams_20230621Change',
+      AaveV2Ethereum.POOL
+    );
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot after payload execution
-    ReserveConfig[] memory allConfigsAfterReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot('postAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV2CRVRiskParams_20230621Change',
+      AaveV2Ethereum.POOL
+    );
 
     // 4. Verify payload:
 
