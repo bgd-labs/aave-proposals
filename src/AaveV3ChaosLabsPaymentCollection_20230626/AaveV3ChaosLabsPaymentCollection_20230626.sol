@@ -2,8 +2,8 @@
 pragma solidity ^0.8.16;
 
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
-import {AaveMisc, IAaveEcosystemReserveController} from 'aave-address-book/AaveMisc.sol';
-import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
+import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 
 /**
  * @title ChaosLabs Service Provider Payment Collection
@@ -13,7 +13,6 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  */
 contract AaveV3ChaosLabsPaymentCollection_20230626 is IProposalGenericExecutor {
   address public constant CHAOS_LABS = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
-  address public constant AAVE = AaveV2EthereumAssets.AAVE_UNDERLYING;
   uint256 public constant PAYMENT_AMOUNT = 6541e18;
 
   function execute() external {

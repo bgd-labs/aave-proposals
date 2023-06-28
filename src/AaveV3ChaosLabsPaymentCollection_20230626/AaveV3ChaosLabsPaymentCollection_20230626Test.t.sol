@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
 // testing libraries
@@ -15,10 +15,9 @@ import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
 contract AaveV3ChaosLabsPaymentCollection_20230626Test is TestWithExecutor {
   IERC20 public constant AAVE_ERC20 = IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING);
 
-  ICollector public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
   address public constant CHAOS_LABS = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
 
-  uint256 public constant PAYMENT_AMOUNT = 6541 * 1e18;
+  uint256 public constant PAYMENT_AMOUNT = 6541e18;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17561761);
@@ -37,7 +36,5 @@ contract AaveV3ChaosLabsPaymentCollection_20230626Test is TestWithExecutor {
     uint256 finalReserveAAVEBalance = AAVE_ERC20.balanceOf(AaveMisc.ECOSYSTEM_RESERVE);
     assertEq(initialChaosAAVEBalance, finalChaosAAVEBalance - PAYMENT_AMOUNT);
     assertEq(initialReserveAAVEBalance, finalReserveAAVEBalance + PAYMENT_AMOUNT);
-    console.log('Chaos Labs AAVE balance increase');
-    console.log((finalChaosAAVEBalance - initialChaosAAVEBalance) / 10 ** 18);
   }
 }

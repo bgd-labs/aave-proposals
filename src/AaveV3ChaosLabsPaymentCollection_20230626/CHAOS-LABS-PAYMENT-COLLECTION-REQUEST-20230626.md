@@ -1,9 +1,7 @@
 ---
 title: Chaos Labs - Payment Collection Request
 discussions: https://governance.aave.com/t/arfc-chaos-labs-payment-collection-request/13792
-shortDescription: Chaos Labs requests the collection of a $350,000 delivery-based payment.
 author: ChaosLabs (yonikesel, ori-chaoslabs)
-created: 2023-06-26
 ---
 
 # Summary
@@ -33,7 +31,7 @@ Resources:
 
 A one-time transfer amounting to 6,541 $AAVE ($350,000 using 7-day TWAP, $53.50, calculated on 06.23.2023) will be made to a Chaos Labs-controlled account (0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0) as the recipient.
 
-In terms of technical implementation, the AIP will call the transfer()method of the IAaveEcosystemReserveController interface to create a payment of 6,541 $AAVE.
+In terms of technical implementation, the AIP will call the transfer() method of the IAaveEcosystemReserveController interface to create a payment of 6,541 $AAVE.
 
 # Implementation
 
