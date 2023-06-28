@@ -67,20 +67,10 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
     // Checking if ACI can withdraw from streams
     vm.startPrank(ACI_TREASURY);
     vm.warp(block.timestamp + STREAM_DURATION + 1 days);
-    uint256 currentUSDTStreamBalance = STREAMABLE_AAVE_COLLECTOR.balanceOf(
-      nextCollectorStreamID,
-      ACI_TREASURY
-    );
-    console.log('stream USDT balance');
-    console.log(currentUSDTStreamBalance);
-    console.log('actual amount USDT');
-    console.log(actualAmountUSDT);
 
     STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, actualAmountUSDT);
     uint256 nextACIUSDTBalance = AUSDT.balanceOf(ACI_TREASURY);
     assertEq(initialACIUSDTBalance, nextACIUSDTBalance - actualAmountUSDT);
-    console.log('ACI aUSDT balance increase');
-    console.log((nextACIUSDTBalance - initialACIUSDTBalance) / 10 ** 6);
     vm.stopPrank();
   }
 }

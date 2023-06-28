@@ -21,10 +21,8 @@ contract AaveV3POLSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
   }
 
   function testSupplyCapsEth() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3POLSupplyBorrowUpdate_20230427Change',
       AaveV3Polygon.POOL
     );
@@ -37,16 +35,12 @@ contract AaveV3POLSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = reateConfigurationSnapshot(
       'postAaveV3POLSupplyBorrowUpdate_20230427Change',
       AaveV3Polygon.POOL
     );
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
-      AaveV3Polygon.POOL
-    );
-
     //WBTC
     ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -55,7 +49,6 @@ contract AaveV3POLSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     WBTCConfig.supplyCap = WBTC_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
 
-
     //LINK
     ReserveConfig memory LINKConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -63,7 +56,6 @@ contract AaveV3POLSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     );
     LINKConfig.supplyCap = LINK_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(LINKConfig, allConfigsAfter);
-
 
     // 5. compare snapshots
     diffReports(

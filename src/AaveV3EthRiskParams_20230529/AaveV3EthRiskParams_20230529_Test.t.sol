@@ -12,7 +12,7 @@ import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase
 contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecutor {
   uint256 public constant WETH_UNDERLYING_LIQ_THRESHOLD = 83_00; // 83.0%
   uint256 public constant WETH_UNDERLYING_LTV = 80_50; // 80.5%
-  
+
   uint256 public constant WBTC_UNDERLYING_LIQ_THRESHOLD = 78_00; // 78.0%
   uint256 public constant WBTC_UNDERLYING_LTV = 73_00; // 73.0%
   uint256 public constant WBTC_UNDERLYING_LIQ_BONUS = 10500; // 5%
@@ -38,20 +38,22 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
   function testPayload() public {
     AaveV3EthRiskParams_20230529 proposalPayload = new AaveV3EthRiskParams_20230529();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV3EthRiskParams_20230529Change', AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV3EthRiskParams_20230529Change',
+      AaveV3Ethereum.POOL
+    );
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot after payload execution
-    createConfigurationSnapshot('postAaveV3EthRiskParams_20230529Change', AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV3EthRiskParams_20230529Change',
+      AaveV3Ethereum.POOL
+    );
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Ethereum.POOL);
-
     ReserveConfig memory WETH_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.WETH_UNDERLYING

@@ -27,7 +27,10 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-OP-LUSD-Listing',
+      AaveV3Optimism.POOL
+    );
 
     // LUSD
 
@@ -60,8 +63,6 @@ contract AaveV3OPNewListings_20230327Test is ProtocolV3TestBase, TestWithExecuto
     });
 
     _validateReserveConfig(lusd, allConfigs);
-
-    createConfigurationSnapshot('post-Aave-V3-OP-LUSD-Listing', AaveV3Optimism.POOL);
 
     diffReports('pre-Aave-V3-OP-LUSD-Listing', 'post-Aave-V3-OP-LUSD-Listing');
   }

@@ -14,15 +14,14 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
   uint256 public constant WBTC_UNDERLYING_LTV = 73_00;
 
   uint256 public constant DAI_UNDERLYING_LIQ_THRESHOLD = 81_00;
-  uint256 public constant DAI_UNDERLYING_LTV = 76_00; 
+  uint256 public constant DAI_UNDERLYING_LTV = 76_00;
 
   uint256 public constant LINK_UNDERLYING_LIQ_THRESHOLD = 68_00;
-  uint256 public constant LINK_UNDERLYING_LTV = 53_00; 
-  
+  uint256 public constant LINK_UNDERLYING_LTV = 53_00;
+
   uint256 public constant WMATIC_UNDERLYING_LIQ_THRESHOLD = 73_00;
   uint256 public constant WMATIC_UNDERLYING_LTV = 68_00;
   uint256 public constant WMATIC_UNDERLYING_BONUS = 10700;
-
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 42021187);
@@ -32,20 +31,22 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
   function testPayload() public {
     AaveV3PolRiskParams_20230423 proposalPayload = new AaveV3PolRiskParams_20230423();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV3PolRiskParams_20230423Change', AaveV3Polygon.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV3PolRiskParams_20230423Change',
+      AaveV3Polygon.POOL
+    );
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot after payload execution
-    createConfigurationSnapshot('postAaveV3PolRiskParams_20230423Change', AaveV3Polygon.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV3PolRiskParams_20230423Change',
+      AaveV3Polygon.POOL
+    );
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Polygon.POOL);
-
     // WBTC
     ReserveConfig memory WBTC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -66,7 +67,6 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
     DAI_UNDERLYING_CONFIG.liquidationThreshold = DAI_UNDERLYING_LIQ_THRESHOLD;
     DAI_UNDERLYING_CONFIG.ltv = DAI_UNDERLYING_LTV;
 
-
     // LINK
     ReserveConfig memory LINK_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -77,7 +77,6 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
     LINK_UNDERLYING_CONFIG.ltv = LINK_UNDERLYING_LTV;
 
     ProtocolV3TestBase._validateReserveConfig(LINK_UNDERLYING_CONFIG, allConfigsAfter);
-
 
     // WMATIC
     ReserveConfig memory WMATIC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
@@ -90,7 +89,6 @@ contract AaveV3PolRiskParams_20230423_Test is ProtocolV3TestBase, TestWithExecut
     WMATIC_UNDERLYING_CONFIG.liquidationBonus = WMATIC_UNDERLYING_BONUS;
 
     ProtocolV3TestBase._validateReserveConfig(WMATIC_UNDERLYING_CONFIG, allConfigsAfter);
-
 
     // 5. compare snapshots
     diffReports('preAaveV3PolRiskParams_20230423Change', 'postAaveV3PolRiskParams_20230423Change');

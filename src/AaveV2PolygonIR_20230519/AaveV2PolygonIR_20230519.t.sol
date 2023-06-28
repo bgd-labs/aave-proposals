@@ -38,9 +38,8 @@ contract AaveV2PolygonIR_20230519_Test is ProtocolV2TestBase, TestWithExecutor {
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    ReserveConfig[] memory configs = _getReservesConfigs(AaveV2Polygon.POOL);
     for (uint i = 0; i < assetsChanged.length; i++) {
-      ReserveConfig memory cfg = _findReserveConfig(configs, assetsChanged[i]);
+      ReserveConfig memory cfg = _findReserveConfig(allConfigsAfter, assetsChanged[i]);
       _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
     }
   }

@@ -25,7 +25,10 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-ARB-MAI-Listing',
+      AaveV3Arbitrum.POOL
+    );
 
     // MAI
 
@@ -58,8 +61,6 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
     });
 
     _validateReserveConfig(MAI, allConfigs);
-
-    createConfigurationSnapshot('post-Aave-V3-ARB-MAI-Listing', AaveV3Arbitrum.POOL);
 
     diffReports('pre-Aave-V3-ARB-MAI-Listing', 'post-Aave-V3-ARB-MAI-Listing');
   }

@@ -18,20 +18,22 @@ contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3TestBase, TestWithExecutor 
   function testPayload() public {
     AaveV3ETHIsoMode_20230330 proposalPayload = new AaveV3ETHIsoMode_20230330();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV3ETHIsoMode_20230330_Change', AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV3ETHIsoMode_20230330_Change',
+      AaveV3Ethereum.POOL
+    );
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot before payload execution
-    createConfigurationSnapshot('postAaveV3ETHIsoMode_20230330_Change', AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV3ETHIsoMode_20230330_Change',
+      AaveV3Ethereum.POOL
+    );
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Ethereum.POOL);
-
     ReserveConfig memory USDC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.USDC_UNDERLYING
