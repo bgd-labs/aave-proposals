@@ -21,21 +21,19 @@ contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase, TestWithExecut
   function testPayload() public {
     AaveV2CRVRiskParams_20230621 proposalPayload = new AaveV2CRVRiskParams_20230621();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV2Ethereum.POOL);
 
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot('preAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot after payload execution
-    createConfigurationSnapshot('postAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsAfterReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot('postAaveV2CRVRiskParams_20230621Change', AaveV2Ethereum.POOL);
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV2Ethereum.POOL);
 
-    ReserveConfig memory CRV_UNDERLYING_CONFIG = ProtocolV2TestBase._findReserveConfig(
+    ReserveConfig memory CRV_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV2EthereumAssets.CRV_UNDERLYING
     );
@@ -44,7 +42,7 @@ contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase, TestWithExecut
 
     CRV_UNDERLYING_CONFIG.ltv = CRV_LTV;
 
-    ProtocolV2TestBase._validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports('preAaveV2CRVRiskParams_20230621Change', 'postAaveV2CRVRiskParams_20230621Change');
