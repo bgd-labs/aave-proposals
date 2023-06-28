@@ -15,14 +15,28 @@ contract AaveV2FreezeReserves_20230627Test is ProtocolV2TestBase {
   }
 
   function testFreeze() public {
-    createConfigurationSnapshot('pre-TUSD-freeze-v2', AaveV2Ethereum.POOL);
+    ReserveConfig[] memory configsBefore = createConfigurationSnapshot(
+      'pre-TUSD-freeze-v2',
+      AaveV2Ethereum.POOL
+    );
 
     GovHelpers.executePayload(
       vm,
       address(new AaveV2FreezeReserves_20230627()),
       AaveGovernanceV2.SHORT_EXECUTOR
     );
-    createConfigurationSnapshot('post-TUSD-freeze-v2', AaveV2Ethereum.POOL);
+
+    ReserveConfig[] memory configsAfter = createConfigurationSnapshot(
+      'post-TUSD-freeze-v2',
+      AaveV2Ethereum.POOL
+    );
+
+    assertEq(_findReserveConfig(configsAfter, AaveV2EthereumAssets.TUSD_UNDERLYING).isFrozen, true);
+    _noReservesConfigsChangesApartFrom(
+      configsBefore,
+      configsAfter,
+      AaveV2EthereumAssets.TUSD_UNDERLYING
+    );
 
     diffReports('pre-TUSD-freeze-v2', 'post-TUSD-freeze-v2');
   }
