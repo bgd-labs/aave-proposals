@@ -225,3 +225,9 @@ create-V2-TUSD-freeze :; forge script src/AaveV2FreezeReserves_20230627/DeployV2
 test-chaos-labs-payment-20230626 :; forge test -vvv --match-contract AaveV3ChaosLabsPaymentCollection_20230626Test
 deploy-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:DeployPayloadPolygon --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
 create-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:CreateProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# ChaosLabs CRV risk params update for Ethereum V2 20230621
+
+test-risk-params-crv-20230621-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
+deploy-risk-params-eth-20230621-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230621 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
