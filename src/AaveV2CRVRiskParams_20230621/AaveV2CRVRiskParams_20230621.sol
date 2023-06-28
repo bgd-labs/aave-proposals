@@ -2,8 +2,6 @@
 pragma solidity ^0.8.16;
 
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {AaveV2PayloadEthereum, IEngine, EngineFlags} from 'aave-helpers/v2-config-engine/AaveV2PayloadEthereum.sol';
-import {ILendingPoolConfigurator} from 'aave-address-book/AaveV2.sol';
 
 /**
  * @title This proposal updates CRV risk params on Aave V2 Ethereum
