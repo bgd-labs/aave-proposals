@@ -1,6 +1,6 @@
 ---
 title: Freeze TUSD Reserve on Aave V2 Ethereum
-author: @marczeller - Aave-Chan Initiative
+author: Marc Zeller (@marczeller), Aave-Chan initiative
 discussions: https://governance.aave.com/t/arfc-freeze-tusd-on-aave-v2-ethereum-pool/13835
 ---
 
