@@ -14,7 +14,7 @@ contract AaveV3OptPriceFeedsSentinelUpdate_20230504_PayloadTest is
   TestWithExecutor
 {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'));
+    vm.createSelectFork(vm.rpcUrl('optimism'), 105088970);
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 

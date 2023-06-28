@@ -10,7 +10,7 @@ import {AaveV3OptPriceFeedsUpdate_20230613_Payload} from './AaveV3OptPriceFeedsU
 
 contract AaveV3OptPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'));
+    vm.createSelectFork(vm.rpcUrl('optimism'), 105888970);
     _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 

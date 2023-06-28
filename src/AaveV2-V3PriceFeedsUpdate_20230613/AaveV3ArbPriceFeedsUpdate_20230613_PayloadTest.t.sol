@@ -10,7 +10,7 @@ import {AaveV3ArbPriceFeedsUpdate_20230613_Payload} from './AaveV3ArbPriceFeedsU
 
 contract AaveV3ArbPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'));
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 104611792);
     _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
