@@ -214,3 +214,8 @@ create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/Dep
 
 deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# Ethereum V2 reserve factor updates 20230627
+test-eth-v2-reserve-factor-update-20230627 :; forge test -vvv --match-contract AaveV2EthereumRatesUpdates_20230627_Test
+deploy-eth-v2-reserve-factor-update-20230627-payload :; forge script src/AaveV2EthereumRatesUpdates_20230627/DeployAaveV2EthereumRatesUpdates_20230627.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-eth-v2-reserve-factor-update-20230627-proposal  :; forge script src/AaveV2EthereumRatesUpdates_20230627/DeployAaveV2EthereumRatesUpdates_20230627.s.sol:CreateProposal --rpc-url mainnet --legacy --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
