@@ -35,7 +35,7 @@ contract AaveV3POLSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    ReserveConfig[] memory allConfigsAfter = reateConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3POLSupplyBorrowUpdate_20230427Change',
       AaveV3Polygon.POOL
     );
