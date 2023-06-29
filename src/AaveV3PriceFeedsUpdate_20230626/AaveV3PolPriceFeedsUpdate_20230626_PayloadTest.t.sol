@@ -11,7 +11,7 @@ import {AaveV3PolPriceFeedsUpdate_20230626_Payload} from './AaveV3PolPriceFeedsU
 
 contract AaveV3PolPriceFeedsUpdate_20230626_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'));
+    vm.createSelectFork(vm.rpcUrl('polygon'),44448455);
     _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
