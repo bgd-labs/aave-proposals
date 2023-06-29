@@ -188,3 +188,46 @@ deploy-eth-v3-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeeds
 deploy-arb-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployArbitrumPayload --rpc-url arbitrum --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 deploy-opt-price-feeds-payload-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:DeployOptimismPayload --rpc-url optimism --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-price-feeds-proposal-june13 :; forge script src/AaveV2-V3PriceFeedsUpdate_20230613/DeployAavePriceFeedsUpdate.s.sol:PriceFeedsUpdateProposal --rpc-url mainnet --broadcast --legacy --ledger --mnemonics a --mnemonic-indexes ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Polygon v2 parameter updates
+
+deploy-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:DeployPolygonV2RatesUpdatesPayload --rpc-url polygon --broadcast --legacy --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-polygon-v2-param-updates-payload :; forge script src/AaveV2PolygonRatesUpdates_20230614/DeployPolygonRatesUpdates.s.sol:PolygonV2RatesUpdatesPayloadProposal --rpc-url polygon --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# add USDCN to arbitrum V3
+
+test-usdcn-arb-payload :; forge test -vvv --match-contract AaveV3ArbNativeUSDCListing_20230621_PayloadTest
+deploy-usdcn-arb-payload :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:DeployArbUSDNPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-usdcn-arb-proposal :; forge script src/AaveV3ArbNativeUSDCListing_20230621/DeployUSDCListing.s.sol:USDCNPayloadProposal --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# V2 freeze reserves Chaos Labs
+
+deploy-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-V2-freeze :; forge script src/AaveV2FreezeReserves_20230619/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# V3 Arbitrum Frax Listing
+
+deploy-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/DeployAaveV3ArbFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url arbitrum --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/DeployAaveV3ArbFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# V3 Ethereum Frax Listing
+
+deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# V2 freeze reserves Chaos Labs
+
+deploy-V2-TUSD-freeze :; forge script src/AaveV2FreezeReserves_20230627/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-V2-TUSD-freeze :; forge script src/AaveV2FreezeReserves_20230627/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Chaos Labs Payment Request
+
+test-chaos-labs-payment-20230626 :; forge test -vvv --match-contract AaveV3ChaosLabsPaymentCollection_20230626Test
+deploy-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:DeployPayloadPolygon --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:CreateProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# ChaosLabs CRV risk params update for Ethereum V2 20230621
+
+test-risk-params-crv-20230621-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
+deploy-risk-params-eth-20230621-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230621 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
