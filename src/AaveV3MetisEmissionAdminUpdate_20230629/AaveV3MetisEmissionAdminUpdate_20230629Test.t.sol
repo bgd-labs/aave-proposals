@@ -12,7 +12,7 @@ contract AaveV3MetisEmissionAdminUpdate_20230629Test is ProtocolV3TestBase, Test
   AaveV3MetisEmissionAdminUpdate_20230629 public proposalPayload;
 
   function setUp() public {
-    vm.createSelectFork('https://andromeda.metis.io/?owner=1088', 6634879);
+    vm.createSelectFork('metis', 6634879);
     _selectPayloadExecutor(AaveGovernanceV2.METIS_BRIDGE_EXECUTOR);
   }
 
