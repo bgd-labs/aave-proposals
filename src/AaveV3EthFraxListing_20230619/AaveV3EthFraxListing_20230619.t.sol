@@ -5,29 +5,24 @@ pragma solidity 0.8.17;
 import 'forge-std/Test.sol';
 import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3EthFraxListing_20230619} from './AaveV3EthFraxListing_20230619.sol';
 
-contract AaveV3EthFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3EthFraxListing_20230619Test is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3EthFraxListing_20230619 public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17536695);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
-
     payload = AaveV3EthFraxListing_20230619(0x56Cf1dbd6CfCA7898BA6A96Ce1Fbf1F038E6466b);
   }
 
   function testPoolActivation() public {
-    createConfigurationSnapshot(
-      'pre-Aave-V3-Ethereum-FRAX-Listing',
-      AaveV3Ethereum.POOL
-    );
+    createConfigurationSnapshot('pre-Aave-V3-Ethereum-FRAX-Listing', AaveV3Ethereum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
       'post-Aave-V3-Ethereum-FRAX-Listing',
@@ -92,9 +87,6 @@ contract AaveV3EthFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       _findReserveConfig(allConfigs, AaveV2EthereumAssets.FRAX_UNDERLYING)
     );
 
-    diffReports(
-      'pre-Aave-V3-Ethereum-FRAX-Listing',
-      'post-Aave-V3-Ethereum-FRAX-Listing'
-    );
+    diffReports('pre-Aave-V3-Ethereum-FRAX-Listing', 'post-Aave-V3-Ethereum-FRAX-Listing');
   }
 }

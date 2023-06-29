@@ -5,11 +5,11 @@ import 'forge-std/Test.sol';
 
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3EthRiskParams_20230529} from './AaveV3EthRiskParams_20230529.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3EthRiskParams_20230529_Test is ProtocolV3LegacyTestBase {
   uint256 public constant WETH_UNDERLYING_LIQ_THRESHOLD = 83_00; // 83.0%
   uint256 public constant WETH_UNDERLYING_LTV = 80_50; // 80.5%
 
@@ -32,7 +32,6 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17305356);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPayload() public {
@@ -45,7 +44,7 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     );
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 3. create snapshot after payload execution
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
@@ -54,7 +53,7 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     );
 
     // 4. Verify payload:
-    ReserveConfig memory WETH_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory WETH_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.WETH_UNDERLYING
     );
@@ -62,9 +61,9 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     WETH_UNDERLYING_CONFIG.liquidationThreshold = WETH_UNDERLYING_LIQ_THRESHOLD;
     WETH_UNDERLYING_CONFIG.ltv = WETH_UNDERLYING_LTV;
 
-    ProtocolV3TestBase._validateReserveConfig(WETH_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(WETH_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory WBTC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory WBTC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.WBTC_UNDERLYING
     );
@@ -73,9 +72,9 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     WBTC_UNDERLYING_CONFIG.ltv = WBTC_UNDERLYING_LTV;
     WBTC_UNDERLYING_CONFIG.liquidationBonus = WBTC_UNDERLYING_LIQ_BONUS;
 
-    ProtocolV3TestBase._validateReserveConfig(WBTC_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(WBTC_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory DAI_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory DAI_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.DAI_UNDERLYING
     );
@@ -83,9 +82,9 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     DAI_UNDERLYING_CONFIG.liquidationThreshold = DAI_UNDERLYING_LIQ_THRESHOLD;
     DAI_UNDERLYING_CONFIG.ltv = DAI_UNDERLYING_LTV;
 
-    ProtocolV3TestBase._validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory USDC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory USDC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.USDC_UNDERLYING
     );
@@ -93,9 +92,9 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     USDC_UNDERLYING_CONFIG.liquidationThreshold = USDC_UNDERLYING_LIQ_THRESHOLD;
     USDC_UNDERLYING_CONFIG.ltv = USDC_UNDERLYING_LTV;
 
-    ProtocolV3TestBase._validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory LINK_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory LINK_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.LINK_UNDERLYING
     );
@@ -104,9 +103,9 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     LINK_UNDERLYING_CONFIG.ltv = LINK_UNDERLYING_LTV;
     LINK_UNDERLYING_CONFIG.liquidationBonus = LINK_UNDERLYING_LIQ_BONUS;
 
-    ProtocolV3TestBase._validateReserveConfig(LINK_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(LINK_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory wstETH_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory wstETH_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.wstETH_UNDERLYING
     );
@@ -114,7 +113,7 @@ contract AaveV3EthRiskParams_20230529_Test is ProtocolV3TestBase, TestWithExecut
     wstETH_UNDERLYING_CONFIG.liquidationThreshold = wstETH_UNDERLYING_LIQ_THRESHOLD;
     wstETH_UNDERLYING_CONFIG.ltv = wstETH_UNDERLYING_LTV;
 
-    ProtocolV3TestBase._validateReserveConfig(wstETH_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(wstETH_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports('preAaveV3EthRiskParams_20230529Change', 'postAaveV3EthRiskParams_20230529Change');

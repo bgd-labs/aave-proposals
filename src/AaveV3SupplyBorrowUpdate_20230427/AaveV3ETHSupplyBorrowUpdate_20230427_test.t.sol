@@ -4,18 +4,17 @@ pragma solidity ^0.8.16;
 import 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveAddressBook.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ETHSupplyBorrowUpdate_20230427} from './AaveV3ETHSupplyBorrowUpdate_20230427.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3LegacyTestBase {
   AaveV3ETHSupplyBorrowUpdate_20230427 public proposalPayload;
 
   uint256 public constant BORROW_CAP = 12_000;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16932117);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testSupplyCapsEth() public {
@@ -30,7 +29,7 @@ contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
 
     // 3. execute payload
 
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 4. create snapshot after payload execution
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
@@ -40,12 +39,12 @@ contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
 
     //Verify payload:
     //wstETH
-    ReserveConfig memory wstETHConfig = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory wstETHConfig = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.wstETH_UNDERLYING
     );
     wstETHConfig.borrowCap = BORROW_CAP;
-    ProtocolV3TestBase._validateReserveConfig(wstETHConfig, allConfigsAfter);
+    _validateReserveConfig(wstETHConfig, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports(

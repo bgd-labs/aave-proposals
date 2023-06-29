@@ -4,14 +4,13 @@ pragma solidity ^0.8.17;
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3PolPriceFeedsUpdate_20230626_Payload} from './AaveV3PolPriceFeedsUpdate_20230626_Payload.sol';
 
-contract AaveV3PolPriceFeedsUpdate_20230626_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3PolPriceFeedsUpdate_20230626_PayloadTest is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 44448455);
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
   function testPayload() public {
@@ -24,7 +23,7 @@ contract AaveV3PolPriceFeedsUpdate_20230626_PayloadTest is ProtocolV3TestBase, T
     );
 
     // 2. execute payload
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     // 3. create snapshot after payload execution
     ReserveConfig[] memory configs = createConfigurationSnapshot(

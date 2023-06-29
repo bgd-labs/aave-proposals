@@ -5,17 +5,16 @@ import 'forge-std/Test.sol';
 
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV2CRVRiskParams_20230621} from './AaveV2CRVRiskParams_20230621.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
 
-contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase {
   uint256 public constant CRV_LTV = 49_00; // 49%
   uint256 public constant CRV_LIQUIDATION_THRESHOLD = 55_00; // 55%
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17533013);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPayload() public {
@@ -28,7 +27,7 @@ contract AaveV2CRVRiskParams_20230621_Test is ProtocolV2TestBase, TestWithExecut
     );
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 3. create snapshot after payload execution
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(

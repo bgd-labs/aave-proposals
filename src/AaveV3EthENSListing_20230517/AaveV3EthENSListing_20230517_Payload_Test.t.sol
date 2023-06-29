@@ -4,26 +4,24 @@ pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3EthENSListing_20230517_Payload} from './AaveV3EthENSListing_20230517_Payload.sol';
 
-contract AaveV3EthENSListing_20230517_Payload_Test is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3EthENSListing_20230517_Payload_Test is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3EthENSListing_20230517_Payload public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17269492);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
-
     payload = new AaveV3EthENSListing_20230517_Payload();
   }
 
   function testPoolActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Ethereum-ENS-Listing', AaveV3Ethereum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
       'post-Aave-V3-Ethereum-ENS-Listing',
