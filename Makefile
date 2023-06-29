@@ -23,8 +23,8 @@ git-diff :
 
 
 # ################ EXAMPLE ################
-# The script section will be periodically cleaned up as each script will usually just be executed once
 # The commented out section suits as an example for contributors and should not be altered
+# See README.md for more details
 
 # Create proposal (always mainnet on Governance v2)
 create-proposal-ledger :; make deploy-ledger contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet
