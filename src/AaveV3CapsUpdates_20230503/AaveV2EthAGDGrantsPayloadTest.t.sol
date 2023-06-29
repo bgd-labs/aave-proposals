@@ -4,18 +4,16 @@ pragma solidity 0.8.19;
 import {ProtocolV2TestBase} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {AaveV2EthAGDGrantsPayload} from './AaveV2EthAGDGrantsPayload.sol';
 
-contract AaveV2EthAGDGrantsPayloadTest is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2EthAGDGrantsPayloadTest is ProtocolV2TestBase {
   AaveV2EthAGDGrantsPayload payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17180572);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
-
     payload = new AaveV2EthAGDGrantsPayload();
   }
 
@@ -37,7 +35,7 @@ contract AaveV2EthAGDGrantsPayloadTest is ProtocolV2TestBase, TestWithExecutor {
     );
     // End AGD Approvals Pre-Execution
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // AGD Approvals Post-Execution
     assertEq(

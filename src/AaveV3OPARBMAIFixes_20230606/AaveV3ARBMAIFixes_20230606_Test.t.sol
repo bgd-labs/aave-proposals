@@ -2,17 +2,15 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {AaveV3ARBMAIFixes_20230606} from './AaveV3ARBMAIFixes_20230606.sol';
 import 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3ArbUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3ArbUpdate_20230327_Test is ProtocolV3TestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 98298854);
-
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testFail() public {
@@ -35,7 +33,11 @@ contract AaveV3ArbUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecut
 
     _findReserveConfig(allConfigsBefore, AaveV3ArbitrumAssets.MAI_UNDERLYING);
 
-    _executePayload(address(new AaveV3ARBMAIFixes_20230606()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3ARBMAIFixes_20230606()),
+      AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestArbMaiFixJun06',

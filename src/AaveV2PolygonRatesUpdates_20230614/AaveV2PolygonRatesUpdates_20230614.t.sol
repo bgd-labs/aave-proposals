@@ -2,17 +2,15 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 import {AaveV2PolygonRatesUpdates_20230614} from './AaveV2PolygonRatesUpdates_20230614.sol';
 
-contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 43981679);
-
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
   function testpayload() public {
@@ -21,9 +19,11 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
       AaveV2Polygon.POOL
     );
 
-    AaveV2PolygonRatesUpdates_20230614 payload = AaveV2PolygonRatesUpdates_20230614(0xBBD2B7418395d1782f0016095C6A26487d184873);
+    AaveV2PolygonRatesUpdates_20230614 payload = AaveV2PolygonRatesUpdates_20230614(
+      0xBBD2B7418395d1782f0016095C6A26487d184873
+    );
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestPolygonUpdate20230614',
@@ -43,7 +43,6 @@ contract AaveV2PolygonRatesUpdates_20230614_Test is ProtocolV2TestBase, TestWith
     assetsChanged[7] = AaveV2PolygonAssets.CRV_UNDERLYING;
     assetsChanged[8] = AaveV2PolygonAssets.GHST_UNDERLYING;
     assetsChanged[9] = AaveV2PolygonAssets.LINK_UNDERLYING;
-
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 

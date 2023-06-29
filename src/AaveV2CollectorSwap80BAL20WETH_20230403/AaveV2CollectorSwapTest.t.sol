@@ -3,17 +3,17 @@ pragma solidity 0.8.17;
 
 import {console2} from 'forge-std/Test.sol';
 
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {SwapFor80BAL20WETHPayload} from './AaveV2CollectorSwap80BAL20WETH_20230403_Payload.sol';
 import {COWTrader} from './COWTrader.sol';
 
-contract SwapFor80BAL20WETHPayloadTest is ProtocolV3TestBase {
+contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
   event TradeCanceled();
   event TradeRequested();
 

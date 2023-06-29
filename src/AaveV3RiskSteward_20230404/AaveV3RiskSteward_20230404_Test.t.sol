@@ -2,17 +2,17 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {IACLManager, IPoolConfigurator, IPoolDataProvider, IPool} from 'aave-address-book/AaveV3.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum, AaveV3Optimism, AaveV3Arbitrum, AaveV3Avalanche, AaveV3Polygon, AaveV3Metis} from 'aave-address-book/AaveAddressBook.sol';
-import {ProtocolV3_0_1TestBase, ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3RiskSteward_20230404} from './AaveV3RiskSteward_20230404.sol';
 import {CapsPlusRiskSteward} from 'aave-helpers/riskstewards/CapsPlusRiskSteward.sol';
 import {ICapsPlusRiskSteward} from 'aave-helpers/riskstewards/ICapsPlusRiskSteward.sol';
 import {IAaveV3ConfigEngine} from 'aave-helpers/v3-config-engine/IAaveV3ConfigEngine.sol';
 
-abstract contract StewardTestBase is ProtocolV3_0_1TestBase, TestWithExecutor {
+abstract contract StewardTestBase is ProtocolV3TestBase {
   IPoolDataProvider immutable AAVE_PROTOCOL_DATA_PROVIDER;
   IPool immutable POOL;
   address immutable CAPS_PLUS_RISK_STEWARD;
@@ -30,8 +30,7 @@ abstract contract StewardTestBase is ProtocolV3_0_1TestBase, TestWithExecutor {
   function _setup(address executor) internal {
     proposalPayload = new AaveV3RiskSteward_20230404(ACL_MANAGER, CAPS_PLUS_RISK_STEWARD);
 
-    _selectPayloadExecutor(executor);
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), executor);
   }
 
   function test_increaseCapsMax() public {

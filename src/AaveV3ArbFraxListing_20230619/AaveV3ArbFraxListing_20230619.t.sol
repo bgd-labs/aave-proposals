@@ -4,29 +4,24 @@ pragma solidity 0.8.17;
 
 import 'forge-std/Test.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbFraxListing_20230619} from './AaveV3ArbFraxListing_20230619.sol';
 
-contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3ArbFraxListing_20230619Test is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3ArbFraxListing_20230619 public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 104611792);
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
-
     payload = AaveV3ArbFraxListing_20230619(0x449E1B11BF74D57972D2d2CF057b337b203490C4);
   }
 
   function testPoolActivation() public {
-    createConfigurationSnapshot(
-      'pre-Aave-V3-Arbitrum-FRAX-Listing',
-      AaveV3Arbitrum.POOL
-    );
+    createConfigurationSnapshot('pre-Aave-V3-Arbitrum-FRAX-Listing', AaveV3Arbitrum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
       'post-Aave-V3-Arbitrum-FRAX-Listing',
@@ -55,7 +50,7 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       isSiloed: false,
       isBorrowableInIsolation: false,
       isFlashloanable: true,
-      supplyCap:7_000_000,
+      supplyCap: 7_000_000,
       borrowCap: 5_500_000,
       debtCeiling: 1_000_000_00,
       eModeCategory: 0
@@ -91,9 +86,6 @@ contract AaveV3ArbFraxListing_20230619Test is ProtocolV3_0_1TestBase, TestWithEx
       _findReserveConfig(allConfigs, payload.FRAX_UNDERLYING())
     );
 
-    diffReports(
-      'pre-Aave-V3-Arbitrum-FRAX-Listing',
-      'post-Aave-V3-Arbitrum-FRAX-Listing'
-    );
+    diffReports('pre-Aave-V3-Arbitrum-FRAX-Listing', 'post-Aave-V3-Arbitrum-FRAX-Listing');
   }
 }
