@@ -5,14 +5,13 @@ import 'forge-std/Test.sol';
 
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3ETHIsoMode_20230330} from './AaveV3ETHIsoMode_20230330.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16925078);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPayload() public {
@@ -25,7 +24,7 @@ contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3TestBase, TestWithExecutor 
     );
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 3. create snapshot before payload execution
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
@@ -34,37 +33,37 @@ contract AaveV3ETHIsoMode_20230330_Test is ProtocolV3TestBase, TestWithExecutor 
     );
 
     // 4. Verify payload:
-    ReserveConfig memory USDC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory USDC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.USDC_UNDERLYING
     );
 
     USDC_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
-    ProtocolV3TestBase._validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory USDT_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory USDT_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.USDT_UNDERLYING
     );
 
     USDT_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
-    ProtocolV3TestBase._validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory DAI_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory DAI_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.DAI_UNDERLYING
     );
 
     DAI_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
-    ProtocolV3TestBase._validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory LUSD_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory LUSD_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.LUSD_UNDERLYING
     );
 
     LUSD_UNDERLYING_CONFIG.isBorrowableInIsolation = true;
-    ProtocolV3TestBase._validateReserveConfig(LUSD_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(LUSD_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports('preAaveV3ETHIsoMode_20230330_Change', 'postAaveV3ETHIsoMode_20230330_Change');

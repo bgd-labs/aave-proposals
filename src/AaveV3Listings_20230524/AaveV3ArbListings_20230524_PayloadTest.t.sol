@@ -3,28 +3,29 @@
 pragma solidity 0.8.19;
 
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbListings_20230524_Payload} from './AaveV3ArbListings_20230524_Payload.sol';
 
-contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3ArbListings_20230524_Payload public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 99531326);
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
-
     payload = new AaveV3ArbListings_20230524_Payload();
   }
 
   function testReserveActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Arbitrum-Listings-20230524', AaveV3Arbitrum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
-    ReserveConfig[] memory allConfigs = createConfigurationSnapshot('post-Aave-V3-Arbitrum-Listings-20230524', AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Arbitrum-Listings-20230524',
+      AaveV3Arbitrum.POOL
+    );
 
     ReserveConfig memory rETH = ReserveConfig({
       symbol: 'rETH',
@@ -84,6 +85,9 @@ contract AaveV3ArbListings_20230524_PayloadTest is ProtocolV3_0_1TestBase, TestW
       _findReserveConfig(allConfigs, payload.RETH())
     );
 
-    diffReports('pre-Aave-V3-Arbitrum-Listings-20230524', 'post-Aave-V3-Arbitrum-Listings-20230524');
+    diffReports(
+      'pre-Aave-V3-Arbitrum-Listings-20230524',
+      'post-Aave-V3-Arbitrum-Listings-20230524'
+    );
   }
 }

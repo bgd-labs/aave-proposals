@@ -2,23 +2,21 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ArbRatesUpdates_20230307} from './AaveV3ArbRatesUpdates_20230307.sol';
 import {AaveV3PolRatesUpdates_20230307} from './AaveV3PolRatesUpdates_20230307.sol';
 import {AaveV3OptRatesUpdates_20230307} from './AaveV3OptRatesUpdates_20230307.sol';
 
 /// @dev Assuming that rates, as they use the RATES_FACTORY have correct code, so verification via
 /// diff reports is enough
-contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 40098990);
-
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
   }
 
   function testNewChanges() public {
@@ -60,7 +58,11 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       AaveV3PolygonAssets.DPI_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3PolRatesUpdates_20230307()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3PolRatesUpdates_20230307()),
+      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestPolRatesUpdateMar7',
@@ -146,11 +148,9 @@ contract AaveV3PolRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
   }
 }
 
-contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 79218113);
-
-    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testNewChanges() public {
@@ -169,7 +169,11 @@ contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       AaveV3OptimismAssets.WETH_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3OptRatesUpdates_20230307()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3OptRatesUpdates_20230307()),
+      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestOptRatesUpdateMar7',
@@ -203,11 +207,9 @@ contract AaveV3OptRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
   }
 }
 
-contract AaveV3ArbRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbRatesUpdates_20230307_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 74573291);
-
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testNewChanges() public {
@@ -231,7 +233,11 @@ contract AaveV3ArbRatesUpdates_20230307_Test is ProtocolV3TestBase, TestWithExec
       AaveV3ArbitrumAssets.WETH_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3ArbRatesUpdates_20230307()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3ArbRatesUpdates_20230307()),
+      AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestArbRatesUpdateMar7',

@@ -11,9 +11,9 @@ import {AaveMisc, IStreamable} from 'aave-address-book/AaveMisc.sol';
 import {AaveV3ACIProposal_20230411} from 'src/AaveV3ACIProposal_20230411/AaveV3ACIProposal_20230411.sol';
 import {DeployMainnetProposal} from 'script/DeployMainnetProposal.s.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
-contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
+contract AaveV3ACIProposal_20230411Test is Test {
   IERC20 public constant AUSDT = IERC20(0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811);
 
   // 0x464
@@ -30,7 +30,6 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17138369);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   // Full Vesting Test
@@ -40,7 +39,11 @@ contract AaveV3ACIProposal_20230411Test is TestWithExecutor {
     uint256 initialACIUSDTBalance = AUSDT.balanceOf(ACI_TREASURY);
 
     // execute proposal
-    _executePayload(address(new AaveV3ACIProposal_20230411()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3ACIProposal_20230411()),
+      AaveGovernanceV2.SHORT_EXECUTOR
+    );
 
     // Checking if the streams have been created properly
     // scoping to avoid the "stack too deep" error

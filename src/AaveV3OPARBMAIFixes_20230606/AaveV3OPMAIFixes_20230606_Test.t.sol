@@ -2,17 +2,15 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveV3OPMAIFixes_20230606} from './AaveV3OPMAIFixes_20230606.sol';
 import 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3OpUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3OpUpdate_20230327_Test is ProtocolV3TestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 105088970);
-
-    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testFail() public {
@@ -35,7 +33,11 @@ contract AaveV3OpUpdate_20230327_Test is ProtocolV3_0_1TestBase, TestWithExecuto
 
     _findReserveConfig(allConfigsBefore, AaveV3OptimismAssets.MAI_UNDERLYING);
 
-    _executePayload(address(new AaveV3OPMAIFixes_20230606()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3OPMAIFixes_20230606()),
+      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestOpMaiFixJun06',

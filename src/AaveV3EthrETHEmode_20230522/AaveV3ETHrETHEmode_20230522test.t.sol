@@ -5,16 +5,15 @@ import 'forge-std/Test.sol';
 
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3ETHrETHEmode_20230522} from 'src/AaveV3EthrETHEmode_20230522/AaveV3ETHrETHEmode_20230522.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3ETHrETHEmode_20230522_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ETHrETHEmode_20230522_Test is ProtocolV3LegacyTestBase {
   uint256 public constant AAVE_EMODE_CATEGORY = 1;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17314034);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPayload() public {
@@ -27,7 +26,7 @@ contract AaveV3ETHrETHEmode_20230522_Test is ProtocolV3TestBase, TestWithExecuto
     );
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 3. create snapshot after payload execution
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
@@ -36,14 +35,14 @@ contract AaveV3ETHrETHEmode_20230522_Test is ProtocolV3TestBase, TestWithExecuto
     );
 
     // 4. Verify payload:
-    ReserveConfig memory rETH_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory rETH_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.rETH_UNDERLYING
     );
 
     rETH_UNDERLYING_CONFIG.eModeCategory = AAVE_EMODE_CATEGORY;
 
-    ProtocolV3TestBase._validateReserveConfig(rETH_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(rETH_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports('preAaveV3ETHrETHEmode_20230522Change', 'postAaveV3ETHrETHEmode_20230522Change');
