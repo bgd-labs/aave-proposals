@@ -21,10 +21,8 @@ contract AaveV3OPSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWith
   }
 
   function testSupplyCapsEth() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3OPSupplyBorrowUpdate_20230427Change',
       AaveV3Optimism.POOL
     );
@@ -37,16 +35,12 @@ contract AaveV3OPSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWith
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3OPSupplyBorrowUpdate_20230427Change',
       AaveV3Optimism.POOL
     );
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
-      AaveV3Optimism.POOL
-    );
-
     //WBTC
     ReserveConfig memory WBTCConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -55,7 +49,6 @@ contract AaveV3OPSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWith
     WBTCConfig.supplyCap = WBTC_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(WBTCConfig, allConfigsAfter);
 
-
     //wstETH
     ReserveConfig memory wstETHConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
@@ -63,7 +56,6 @@ contract AaveV3OPSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWith
     );
     wstETHConfig.supplyCap = wstETH_SUPPLY_CAP;
     ProtocolV3TestBase._validateReserveConfig(wstETHConfig, allConfigsAfter);
-
 
     // 5. compare snapshots
     diffReports(

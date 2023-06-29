@@ -13,17 +13,14 @@ contract AaveV3AVASupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
 
   uint256 public constant WAVAX_BORROW_CAP = 2_400_000;
 
-
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('avalanche'), 29282429);
     _selectPayloadExecutor(AaveV3Avalanche.ACL_ADMIN);
   }
 
   function testSupplyCapsEth() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Avalanche.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3AVASupplyBorrowUpdate_20230427Change',
       AaveV3Avalanche.POOL
     );
@@ -36,16 +33,12 @@ contract AaveV3AVASupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3AVASupplyBorrowUpdate_20230427Change',
       AaveV3Avalanche.POOL
     );
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
-      AaveV3Avalanche.POOL
-    );
-
     //WAVAX
     ReserveConfig memory WAVAXConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,

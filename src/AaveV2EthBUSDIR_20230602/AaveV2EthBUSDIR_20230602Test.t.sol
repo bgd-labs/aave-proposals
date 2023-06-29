@@ -19,8 +19,10 @@ contract AaveV3EthBUSDPayloadTest is ProtocolV2TestBase, TestWithExecutor {
   }
 
   function testBUSD() public {
-    createConfigurationSnapshot('pre-BUSD-Payload-activation', AaveV2Ethereum.POOL);
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'pre-BUSD-Payload-activation',
+      AaveV2Ethereum.POOL
+    );
 
     ReserveConfig memory configBUSDBefore = _findReserveConfigBySymbol(
       allConfigsBefore,
@@ -47,7 +49,10 @@ contract AaveV3EthBUSDPayloadTest is ProtocolV2TestBase, TestWithExecutor {
     );
     assertApproxEqAbs(aBUSDBalanceAfter, 0, 1500 ether, 'aBUSD_LEFTOVER');
     assertEq(BUSDBalanceAfter, aBUSDBalanceBefore + BUSDBalanceBefore);
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV2Ethereum.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'post-BUSD-Payload-activation',
+      AaveV2Ethereum.POOL
+    );
 
     // check it's not bricked
     ReserveConfig memory configBUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, BUSD_SYMBOL);
@@ -64,8 +69,6 @@ contract AaveV3EthBUSDPayloadTest is ProtocolV2TestBase, TestWithExecutor {
       allConfigsAfter,
       configBUSDBefore.underlying
     );
-
-    createConfigurationSnapshot('post-BUSD-Payload-activation', AaveV2Ethereum.POOL);
 
     diffReports('pre-BUSD-Payload-activation', 'post-BUSD-Payload-activation');
   }

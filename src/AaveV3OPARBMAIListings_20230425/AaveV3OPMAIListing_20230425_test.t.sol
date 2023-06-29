@@ -25,7 +25,10 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-OP-MAI-Listing',
+      AaveV3Optimism.POOL
+    );
 
     // MAI
 
@@ -58,8 +61,6 @@ contract AaveV3OPMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor
     });
 
     _validateReserveConfig(MAI, allConfigs);
-
-    createConfigurationSnapshot('post-Aave-V3-OP-MAI-Listing', AaveV3Optimism.POOL);
 
     diffReports('pre-Aave-V3-OP-MAI-Listing', 'post-Aave-V3-OP-MAI-Listing');
   }

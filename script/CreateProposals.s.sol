@@ -14,7 +14,7 @@ contract SinglePayloadProposal is EthereumScript {
     payloads[0] = GovHelpers.buildMainnet(
       0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4 // deployed cbETH payload
     );
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/script/example-aip.md'));
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'script/example-aip.md'));
   }
 }
 
@@ -25,11 +25,7 @@ contract SafeSinglePayloadProposal is EthereumScript {
     payloads[0] = GovHelpers.buildMainnet(
       0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4 // deployed cbETH payload
     );
-    GovHelpers.createProposal(
-      payloads,
-      GovHelpers.ipfsHashFile(vm, 'src/script/example-aip.md'),
-      true
-    );
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'script/example-aip.md'), true);
   }
 }
 
@@ -43,6 +39,6 @@ contract MultiPayloadProposal is EthereumScript {
     payloads[1] = GovHelpers.buildPolygon(
       0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4 // deployed cbETH payload
     );
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/script/example-aip.md'));
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'script/example-aip.md'));
   }
 }

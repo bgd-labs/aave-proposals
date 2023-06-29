@@ -29,7 +29,10 @@ contract AaveV3EthNewListings_20230321Test is ProtocolV3_0_1TestBase, TestWithEx
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Ethereum-UNI-BAL-MKR-SNX-Listings',
+      AaveV3Ethereum.POOL
+    );
 
     // UNI
 
@@ -245,11 +248,6 @@ contract AaveV3EthNewListings_20230321Test is ProtocolV3_0_1TestBase, TestWithEx
       AaveV3Ethereum.POOL_ADDRESSES_PROVIDER,
       AaveV2EthereumAssets.BAL_UNDERLYING,
       payload.BAL_PRICE_FEED()
-    );
-
-    createConfigurationSnapshot(
-      'post-Aave-V3-Ethereum-UNI-BAL-MKR-SNX-Listings',
-      AaveV3Ethereum.POOL
     );
 
     diffReports(

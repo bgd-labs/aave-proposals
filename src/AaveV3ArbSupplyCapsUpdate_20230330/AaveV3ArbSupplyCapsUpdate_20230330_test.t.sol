@@ -22,10 +22,8 @@ contract AaveV3ArbSupplyCapsUpdate_20230330_Test is ProtocolV3TestBase, TestWith
   }
 
   function testSupplyCapsArb() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Arbitrum.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3ArbSupplyCapsUpdate_20230330Change',
       AaveV3Arbitrum.POOL
     );
@@ -38,13 +36,8 @@ contract AaveV3ArbSupplyCapsUpdate_20230330_Test is ProtocolV3TestBase, TestWith
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3ArbSupplyCapsUpdate_20230330Change',
-      AaveV3Arbitrum.POOL
-    );
-
-    //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
       AaveV3Arbitrum.POOL
     );
 

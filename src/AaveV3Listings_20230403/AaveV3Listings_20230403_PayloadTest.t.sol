@@ -26,7 +26,10 @@ contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWith
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Ethereum-LDO-Listing',
+      AaveV3Ethereum.POOL
+    );
 
     ReserveConfig memory ldo = ReserveConfig({
       symbol: 'LDO',
@@ -79,8 +82,6 @@ contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWith
       payload.LDO(),
       payload.LDO_PRICE_FEED()
     );
-
-    createConfigurationSnapshot('post-Aave-V3-Ethereum-LDO-Listing', AaveV3Ethereum.POOL);
 
     diffReports('pre-Aave-V3-Ethereum-LDO-Listing', 'post-Aave-V3-Ethereum-LDO-Listing');
   }

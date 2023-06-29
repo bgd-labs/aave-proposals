@@ -25,7 +25,10 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
 
     _executePayload(address(payload));
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Polygon.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Polygon-wstETH-Listing',
+      AaveV3Polygon.POOL
+    );
 
     ReserveConfig memory wsteth = ReserveConfig({
       symbol: 'wstETH',
@@ -78,8 +81,6 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
       payload.wstETH(),
       payload.wstETH_PRICE_FEED()
     );
-
-    createConfigurationSnapshot('post-Aave-V3-Polygon-wstETH-Listing', AaveV3Polygon.POOL);
 
     diffReports('pre-Aave-V3-Polygon-wstETH-Listing', 'post-Aave-V3-Polygon-wstETH-Listing');
   }

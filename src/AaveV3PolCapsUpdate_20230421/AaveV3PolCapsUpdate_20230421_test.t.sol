@@ -20,9 +20,7 @@ contract AaveV3PolCapsUpdate_20230421_Test is ProtocolV3TestBase, TestWithExecut
   }
 
   function testBorrowCapsArb() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Polygon.POOL);
-
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3PolCapsUpdate_20230421Change',
       AaveV3Polygon.POOL
     );
@@ -31,12 +29,8 @@ contract AaveV3PolCapsUpdate_20230421_Test is ProtocolV3TestBase, TestWithExecut
 
     _executePayload(address(proposalPayload));
 
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3PolCapsUpdate_20230421Change',
-      AaveV3Polygon.POOL
-    );
-
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
       AaveV3Polygon.POOL
     );
 
@@ -47,9 +41,6 @@ contract AaveV3PolCapsUpdate_20230421_Test is ProtocolV3TestBase, TestWithExecut
     eursConfig.borrowCap = EURS_BORROW_CAP;
     ProtocolV3TestBase._validateReserveConfig(eursConfig, allConfigsAfter);
 
-    diffReports(
-      'preAaveV3PolCapsUpdate_20230421Change',
-      'postAaveV3PolCapsUpdate_20230421Change'
-    );
+    diffReports('preAaveV3PolCapsUpdate_20230421Change', 'postAaveV3PolCapsUpdate_20230421Change');
   }
 }

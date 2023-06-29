@@ -19,10 +19,8 @@ contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
   }
 
   function testSupplyCapsEth() public {
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Ethereum.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3ETHSupplyBorrowUpdate_20230427Change',
       AaveV3Ethereum.POOL
     );
@@ -35,16 +33,12 @@ contract AaveV3ETHSupplyBorrowUpdate_20230427Test is ProtocolV3TestBase, TestWit
     _executePayload(address(proposalPayload));
 
     // 4. create snapshot after payload execution
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3ETHSupplyBorrowUpdate_20230427Change',
       AaveV3Ethereum.POOL
     );
 
     //Verify payload:
-    ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
-      AaveV3Ethereum.POOL
-    );
-
     //wstETH
     ReserveConfig memory wstETHConfig = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,

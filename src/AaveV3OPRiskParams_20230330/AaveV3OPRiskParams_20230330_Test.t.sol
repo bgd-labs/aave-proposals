@@ -25,20 +25,22 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
   function testPayload() public {
     AaveV3OPRiskParams_20230330 proposalPayload = new AaveV3OPRiskParams_20230330();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV3OPRiskParams_20230330Change', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV3OPRiskParams_20230330Change',
+      AaveV3Optimism.POOL
+    );
 
     // 2. execute payload
     _executePayload(address(proposalPayload));
 
     // 3. create snapshot after payload execution
-    createConfigurationSnapshot('postAaveV3OPRiskParams_20230330Change', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV3OPRiskParams_20230330Change',
+      AaveV3Optimism.POOL
+    );
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Optimism.POOL);
-
     ReserveConfig memory WBTC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
       allConfigsBefore,
       AaveV3OptimismAssets.WBTC_UNDERLYING
