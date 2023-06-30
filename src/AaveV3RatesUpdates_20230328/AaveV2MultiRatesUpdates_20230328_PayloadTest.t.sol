@@ -6,7 +6,7 @@ import 'forge-std/Test.sol';
 import 'forge-std/console.sol';
 
 // contract dependencies
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
@@ -15,7 +15,7 @@ import {AaveV2PolRatesUpdates_20230328_Payload} from './AaveV2PolRatesUpdates_20
 import {ProtocolV2TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {IDefaultInterestRateStrategy} from 'aave-address-book/AaveV2.sol';
 
-contract AaveV2MultiRatesUpdates_20230328_PayloadTest is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2MultiRatesUpdates_20230328_PayloadTest is ProtocolV2TestBase {
   uint256 internal constant RAY = 1e27;
   uint256 public mainnetFork;
   uint256 public polygonFork;
@@ -69,8 +69,7 @@ contract AaveV2MultiRatesUpdates_20230328_PayloadTest is ProtocolV2TestBase, Tes
     );
     expectedConfig.interestRateStrategy = proposalPayload.INTEREST_RATE_STRATEGY();
 
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // Post-execution assertations
 
@@ -113,8 +112,11 @@ contract AaveV2MultiRatesUpdates_20230328_PayloadTest is ProtocolV2TestBase, Tes
     );
     expectedConfigPolygon.interestRateStrategy = proposalPayloadPolygon.INTEREST_RATE_STRATEGY();
 
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
-    _executePayload(address(proposalPayloadPolygon));
+    GovHelpers.executePayload(
+      vm,
+      address(proposalPayloadPolygon),
+      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfterPolygon = createConfigurationSnapshot(
       'post-AaveV2Polygon-interestRateUpdate-20230828',

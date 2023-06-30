@@ -36,6 +36,20 @@ forge test
 make test-contract filter=ENS
 ```
 
+### Deploy
+
+The makefile contains some generic templates for proposal deployments.
+To deploy a contract you can run `make deploy-ledger contract=pathToContract:Contract chain=chainAlias`.
+
+```sh
+# example
+make deploy-ledger contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet
+make deploy-pk contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet
+# both targets also expose a `dry` option you can run via
+make deploy-ledger contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet dry=true
+make deploy-pk contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet dry=true
+```
+
 ### Simulate
 
 While a proposal should be tested throughout, it usually is a good idea to simulate execution on a fork. Therefore this repository comes with the [aave-tenderly-cli](https://github.com/bgd-labs/aave-tenderly-cli) node package which can be used to streamline fork creation.

@@ -4,28 +4,29 @@ pragma solidity ^0.8.16;
 
 import 'forge-std/Test.sol';
 import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ARBMAIListing_20230425} from './AaveV3ARBMAIListing_20230425.sol';
 
-contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ARBMAIListing_20230425Test is ProtocolV3LegacyTestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3ARBMAIListing_20230425 public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 84468553);
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
-
     payload = new AaveV3ARBMAIListing_20230425();
   }
 
   function testMAI() public {
     createConfigurationSnapshot('pre-Aave-V3-ARB-MAI-Listing', AaveV3Arbitrum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Arbitrum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-ARB-MAI-Listing',
+      AaveV3Arbitrum.POOL
+    );
 
     // MAI
 
@@ -58,8 +59,6 @@ contract AaveV3ARBMAIListing_20230425Test is ProtocolV3TestBase, TestWithExecuto
     });
 
     _validateReserveConfig(MAI, allConfigs);
-
-    createConfigurationSnapshot('post-Aave-V3-ARB-MAI-Listing', AaveV3Arbitrum.POOL);
 
     diffReports('pre-Aave-V3-ARB-MAI-Listing', 'post-Aave-V3-ARB-MAI-Listing');
   }

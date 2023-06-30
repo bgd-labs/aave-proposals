@@ -4,14 +4,13 @@ pragma solidity ^0.8.17;
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3ArbPriceFeedsUpdate_20230613_Payload} from './AaveV3ArbPriceFeedsUpdate_20230613_Payload.sol';
 
-contract AaveV3ArbPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'));
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 104611792);
   }
 
   function testPayload() public {
@@ -21,7 +20,7 @@ contract AaveV3ArbPriceFeedsUpdate_20230613_PayloadTest is ProtocolV3TestBase, T
     createConfigurationSnapshot('preAaveV3ArbPriceFeedsUpdate_20230613Change', AaveV3Arbitrum.POOL);
 
     // 2. execute payload
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     // 3. create snapshot after payload execution
     createConfigurationSnapshot(

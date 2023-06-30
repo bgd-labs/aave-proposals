@@ -4,19 +4,17 @@ pragma solidity 0.8.19;
 
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3PolCapsUpdates_20230508_Payload} from './AaveV3PolCapsUpdates_20230508_Payload.sol';
 import {AaveV3ArbCapsUpdates_20230508_Payload} from './AaveV3ArbCapsUpdates_20230508_Payload.sol';
 
-contract AaveV3PolCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3PolCapsUpdates_20230508_PayloadTest is ProtocolV3LegacyTestBase {
   AaveV3PolCapsUpdates_20230508_Payload payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 42433756);
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
-
     payload = new AaveV3PolCapsUpdates_20230508_Payload();
   }
 
@@ -26,17 +24,14 @@ contract AaveV3PolCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWi
       AaveV3Polygon.POOL
     );
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     ReserveConfig memory stMATIC = _findReserveConfig(
       allConfigsBefore,
       AaveV3PolygonAssets.stMATIC_UNDERLYING
     );
 
-    ReserveConfig memory wstETH = _findReserveConfig(
-      allConfigsBefore,
-      payload.WSTETH_UNDERLYING()
-    );
+    ReserveConfig memory wstETH = _findReserveConfig(allConfigsBefore, payload.WSTETH_UNDERLYING());
 
     stMATIC.supplyCap = payload.NEW_SUPPLY_CAP_STMATIC();
     wstETH.supplyCap = payload.NEW_SUPPLY_CAP_WSTETH();
@@ -62,13 +57,11 @@ contract AaveV3PolCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWi
   }
 }
 
-contract AaveV3ArbCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbCapsUpdates_20230508_PayloadTest is ProtocolV3LegacyTestBase {
   AaveV3ArbCapsUpdates_20230508_Payload payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 88408814);
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
-
     payload = new AaveV3ArbCapsUpdates_20230508_Payload();
   }
 
@@ -78,7 +71,7 @@ contract AaveV3ArbCapsUpdates_20230508_PayloadTest is ProtocolV3TestBase, TestWi
       AaveV3Arbitrum.POOL
     );
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     ReserveConfig memory wstETH = _findReserveConfig(
       allConfigsBefore,
