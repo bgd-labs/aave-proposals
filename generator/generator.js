@@ -3,6 +3,8 @@ const path = require("path");
 const { Command, Option } = require("commander");
 const program = new Command();
 
+const { generateScript } = require("./scriptTemplate");
+
 program
   .name("proposal-generator")
   .description("CLI to generate aave proposals")
@@ -85,5 +87,9 @@ if (options.chains.length > 1) {
 
 fs.writeFileSync(
   path.join(baseFolder, `${baseName}.s.sol`),
-  "should use some template"
+  generateScript(options, baseName)
+);
+fs.writeFileSync(
+  path.join(baseFolder, `${options.topic}.md`),
+  `markdown template`
 );
