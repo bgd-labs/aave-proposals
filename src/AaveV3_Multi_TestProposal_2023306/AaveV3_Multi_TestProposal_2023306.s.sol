@@ -22,10 +22,7 @@ contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](2);
     payloads[0] = GovHelpers.buildMainnet(address(0));
-    payloads[1] = GovHelpers.buildPolygon(address(0));
-    GovHelpers.createProposal(
-      payloads,
-      GovHelpers.ipfsHashFile(vm, 'src/AaveV3_Multi_TestProposal_2023306/TestProposal.md')
-    );
+payloads[1] = GovHelpers.buildPolygon(address(0));
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV3_Multi_TestProposal_2023306/TestProposal.md'));
   }
 }

@@ -64,6 +64,7 @@ const baseName = `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
   options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
 }_${options.topic}_${years}${day}${months}`;
 
+// create files
 const baseFolder = path.join(process.cwd(), "src", baseName);
 fs.mkdirSync(baseFolder, { recursive: true });
 
@@ -93,3 +94,8 @@ fs.writeFileSync(
   path.join(baseFolder, `${options.topic}.md`),
   `markdown template`
 );
+
+// print instructions
+console.log("Here is a list of commands for testing and deployment");
+console.log(`test: make test-contract filter=${options.topic}`);
+// console.log(`deploy: make deploy-ledger filter=${options.topic}`);
