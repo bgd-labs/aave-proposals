@@ -11,6 +11,7 @@
     "simulate:avalanche": "env-cmd aave-tenderly-cli --networkId 43114 --keepAlive --artifactPath",
     "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bgd-labs/aave-v3-crosschain-listing-template"

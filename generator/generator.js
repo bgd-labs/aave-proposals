@@ -1,9 +1,15 @@
-const fs = require("fs");
-const path = require("path");
-const { Command, Option } = require("commander");
-const program = new Command();
+import fs from "fs";
+import path from "path";
+import { Command, Option } from "commander";
+import { generateAIP, generateScript } from "./templates.js";
+import {
+  SHORT_CHAINS,
+  generateChainName,
+  generateName,
+  getDate,
+} from "./common.js";
 
-const { generateScript } = require("./scriptTemplate");
+const program = new Command();
 
 program
   .name("proposal-generator")
@@ -12,8 +18,8 @@ program
   .addOption(new Option("-cfg, --configEngine", "extends config engine"))
   .addOption(
     new Option(
-      "-t, --topic <string>",
-      "topic of the proposal"
+      "-name, --name <string>",
+      "name of the proposal"
     ).makeOptionMandatory()
   )
   .addOption(
@@ -35,6 +41,7 @@ program
       .choices(["v2", "v3"])
       .makeOptionMandatory()
   )
+  .addOption(new Option("-t, --title <string>"))
   .addOption(new Option("-a, --author <string>"))
   .addOption(new Option("-d, --discussion <string>"))
   .addOption(new Option("-s, --snapshot <string>"));
@@ -44,25 +51,8 @@ program.parse();
 const options = program.opts();
 
 console.log(options);
-const date = new Date();
-const years = date.getFullYear();
-const months = date.getMonth() + 1; // it's js so months are 0 indexed
-const day = date.getDate();
 
-const SHORT_CHAINS = {
-  Ethereum: "Eth",
-  Polygon: "Pol",
-  Optimism: "Opt",
-  Arbitrum: "Arb",
-  Fantom: "Ftm",
-  Avalanche: "Ava",
-  Metis: "Met",
-  Harmony: "Har",
-};
-
-const baseName = `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
-  options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
-}_${options.topic}_${years}${day}${months}`;
+const baseName = generateName(options);
 
 // create files
 const baseFolder = path.join(process.cwd(), "src", baseName);
@@ -78,24 +68,21 @@ function createFiles(fileName) {
     "should use some template"
   );
 }
-if (options.chains.length > 1) {
-  options.chains.forEach((chain) =>
-    createFiles(baseName.replace("_Multi_", `_${chain}_`))
-  );
-} else {
-  createFiles(baseName);
-}
+
+options.chains.forEach((chain) =>
+  createFiles(generateChainName(options, chain))
+);
 
 fs.writeFileSync(
   path.join(baseFolder, `${baseName}.s.sol`),
   generateScript(options, baseName)
 );
 fs.writeFileSync(
-  path.join(baseFolder, `${options.topic}.md`),
-  `markdown template`
+  path.join(baseFolder, `${options.name}.md`),
+  generateAIP(options, baseName)
 );
 
 // print instructions
 console.log("Here is a list of commands for testing and deployment");
-console.log(`test: make test-contract filter=${options.topic}`);
-// console.log(`deploy: make deploy-ledger filter=${options.topic}`);
+console.log(`test: make test-contract filter=${options.name}`);
+// console.log(`deploy: make deploy-ledger filter=${options.name}`);

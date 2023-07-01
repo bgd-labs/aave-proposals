@@ -1,7 +1,9 @@
+import { generateChainName } from "./common.js";
+
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
 
-module.exports.generateScript = function generateScript(options, baseName) {
+export function generateScript(options, baseName) {
   let template = pragma;
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
@@ -10,7 +12,7 @@ module.exports.generateScript = function generateScript(options, baseName) {
     .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
     .map((chain) => {
-      const name = baseName.replace("_Multi_", `_${chain}_`);
+      const name = generateChainName(options, chain);
       return `import {${name}} from './${name}.sol';`;
     })
     .join("\n");
@@ -19,7 +21,7 @@ module.exports.generateScript = function generateScript(options, baseName) {
   // generate chain scripts
   template += options.chains
     .map((chain) => {
-      const name = baseName.replace("_Multi_", `_${chain}_`);
+      const name = generateChainName(options, chain);
 
       return `contract Deploy${chain} is ${chain}Script {
   function run() external broadcast {
@@ -45,9 +47,37 @@ module.exports.generateScript = function generateScript(options, baseName) {
       )
       .join("\n")}
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${baseName}/${
-    options.topic
+    options.name
   }.md'));
   }
 }`;
   return template;
-};
+}
+
+export function generateAIP(options, baseName) {
+  return `---
+  title: ${options.title || ""}
+  author: ${options.author || ""}
+  discussions: ${options.discussion || ""}
+  ---
+
+  ## Simple Summary
+
+  ## Motivation
+
+  ## Specification
+
+  ## References
+
+  - Implementation: ${options.chains
+    .map((chain) => `[${chain}](${generateChainName(options, chain)}.sol)`)
+    .join(", ")}
+  - Tests: ${options.chains
+    .map((chain) => `[${chain}](${generateChainName(options, chain)}.t.sol)`)
+    .join(", ")}
+
+  ## Copyright
+
+  Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
+  `;
+}
