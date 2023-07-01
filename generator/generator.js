@@ -1,7 +1,12 @@
 import fs from "fs";
 import path from "path";
 import { Command, Option } from "commander";
-import { generateAIP, generateScript } from "./templates.js";
+import {
+  generateAIP,
+  generateProposal,
+  generateScript,
+  generateTest,
+} from "./templates.js";
 import {
   SHORT_CHAINS,
   generateChainName,
@@ -38,7 +43,7 @@ program
   )
   .addOption(
     new Option("-pv, --protocolVersion <string>")
-      .choices(["v2", "v3"])
+      .choices(["V2", "V3"])
       .makeOptionMandatory()
   )
   .addOption(new Option("-t, --title <string>"))
@@ -58,28 +63,26 @@ const baseName = generateName(options);
 const baseFolder = path.join(process.cwd(), "src", baseName);
 fs.mkdirSync(baseFolder, { recursive: true });
 
-function createFiles(fileName) {
+function createFiles(options, chain) {
   fs.writeFileSync(
-    path.join(baseFolder, `${fileName}.sol`),
-    "should use some template"
+    path.join(baseFolder, `${generateChainName(options, chain)}.sol`),
+    generateProposal(options, chain)
   );
   fs.writeFileSync(
-    path.join(baseFolder, `${fileName}.t.sol`),
-    "should use some template"
+    path.join(baseFolder, `${generateChainName(options, chain)}.t.sol`),
+    generateTest(options, chain)
   );
 }
 
-options.chains.forEach((chain) =>
-  createFiles(generateChainName(options, chain))
-);
+options.chains.forEach((chain) => createFiles(options, chain));
 
 fs.writeFileSync(
   path.join(baseFolder, `${baseName}.s.sol`),
-  generateScript(options, baseName)
+  generateScript(options)
 );
 fs.writeFileSync(
   path.join(baseFolder, `${options.name}.md`),
-  generateAIP(options, baseName)
+  generateAIP(options)
 );
 
 // print instructions

@@ -1,9 +1,7 @@
 ---
-
-title:
-author:
-discussions:
-
+title: 
+author: Lachs
+discussions: 
 ---
 
 ## Simple Summary
@@ -14,8 +12,10 @@ discussions:
 
 ## References
 
-- Implementation: [Ethereum](AaveV3_Eth_TestProposal_202317.sol), [Polygon](AaveV3_Pol_TestProposal_202317.sol)
-- Tests: [Ethereum](AaveV3_Eth_TestProposal_202317.t.sol), [Polygon](AaveV3_Pol_TestProposal_202317.t.sol)
+- Implementation: [Ethereum](src/AaveV3_Multi_TestProposal_202317/AaveV3_Eth_TestProposal_202317.sol), [Polygon](src/AaveV3_Multi_TestProposal_202317/AaveV3_Pol_TestProposal_202317.sol)
+- Tests: [Ethereum](src/AaveV3_Multi_TestProposal_202317/AaveV3_Eth_TestProposal_202317.t.sol), [Polygon](src/AaveV3_Multi_TestProposal_202317/AaveV3_Pol_TestProposal_202317.t.sol)
+- [Snapshot](TODO)
+- [Discussion](TODO)
 
 ## Copyright
 
