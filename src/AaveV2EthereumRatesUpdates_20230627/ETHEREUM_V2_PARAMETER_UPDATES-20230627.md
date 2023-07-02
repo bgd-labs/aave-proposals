@@ -25,12 +25,12 @@ The following parameters are to be updated:
 
 | Asset | Current RF | Recommended RF |
 | ----- | ---------- | -------------- |
-| DAI   | 20.00%     | 15.00%         |
+| DAI   | 10.00%     | 15.00%         |
 | FRAX  | 20.00%     | 25.00%         |
 | GUSD  | 10.00%     | 15.00%         |
 | LUSD  | 10.00%     | 15.00%         |
 | sUSD  | 20.00%     | 25.00%         |
-| TUSD  | 20.00%     | 25.00%         |
+| TUSD  | 5.00%      | 10.00%         |
 | USDC  | 10.00%     | 15.00%         |
 | USDP  | 10.00%     | 15.00%         |
 | USDT  | 10.00%     | 15.00%         |
