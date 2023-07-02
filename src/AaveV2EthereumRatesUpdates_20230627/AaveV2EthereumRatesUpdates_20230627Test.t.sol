@@ -2,16 +2,17 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV2EthereumRatesUpdates_20230627} from './AaveV2EthereumRatesUpdates_20230627.sol';
 
-contract AaveV2EthereumRatesUpdates_20230627_Test is ProtocolV2TestBase, TestWithExecutor {
+contract AaveV2EthereumRatesUpdates_20230627_Test is ProtocolV2TestBase {
+  AaveV2EthereumRatesUpdates_20230627 public proposalPayload;
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17564111);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testPayload() public {
@@ -20,7 +21,12 @@ contract AaveV2EthereumRatesUpdates_20230627_Test is ProtocolV2TestBase, TestWit
       AaveV2Ethereum.POOL
     );
 
-    _executePayload(address(new AaveV2EthereumRatesUpdates_20230627()));
+    // 2. create payload
+    proposalPayload = new AaveV2EthereumRatesUpdates_20230627();
+
+    // 3. execute payload
+
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestAaveV2EthereumRatesUpdates_20230627',
