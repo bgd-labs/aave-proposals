@@ -12,8 +12,6 @@ Chaos Labs will publicly communicate the planned amendments and list of affected
 
 In the graph below, we share data to quantify and visualize the effect of the recommended reductions on protocol users. At the time of writing this post, zero (0) accounts will be affected by the proposed decrease.
 
-![CRV (2)|600x371](upload://pzE60mcB6ZzeMBVzalOnrxvzSFH.png)
-
 ## Specification
 
 | Asset | Parameter | Current Value | Recommendation |
