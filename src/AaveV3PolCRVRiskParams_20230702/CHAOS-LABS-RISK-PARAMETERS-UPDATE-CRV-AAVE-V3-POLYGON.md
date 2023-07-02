@@ -1,3 +1,9 @@
+---
+title: Chaos Labs Risk Parameter Update - CRV Aave V3 Polygon
+author: Chaos Labs (@ori-chaoslabs, @yonikesel)
+discussions: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-update-crv-aave-v3-polygon-2023-06-20/13767
+---
+
 ## Simple Summary
 
 A proposal to reduce Liquidation Threshold (LT) and Loan-To-Value (LTV) for CRV on Aave V3 Polygon.
