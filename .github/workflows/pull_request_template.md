@@ -7,6 +7,5 @@
 
 ## References
 
-- [AIP](link to aip repo)
 - [Discussion](link to forum)
 - [Snapshot](link to snapshot)

@@ -5,11 +5,11 @@ import 'forge-std/Test.sol';
 
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 import {AaveV3OPRiskParams_20230330} from './AaveV3OPRiskParams_20230330.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 
-contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3OPRiskParams_20230330_Test is ProtocolV3LegacyTestBase {
   uint256 public constant WBTC_UNDERLYING_LIQ_THRESHOLD = 78_00; // 78.0%
   uint256 public constant WBTC_UNDERLYING_LTV = 73_00; // 73.0%
   uint256 public constant WBTC_UNDERLYING_LIQ_BONUS = 10850; // 8.5%
@@ -19,27 +19,32 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 84619167);
-    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
   }
 
   function testPayload() public {
     AaveV3OPRiskParams_20230330 proposalPayload = new AaveV3OPRiskParams_20230330();
 
-    ReserveConfig[] memory allConfigsBefore = _getReservesConfigs(AaveV3Optimism.POOL);
-
     // 1. create snapshot before payload execution
-    createConfigurationSnapshot('preAaveV3OPRiskParams_20230330Change', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'preAaveV3OPRiskParams_20230330Change',
+      AaveV3Optimism.POOL
+    );
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(
+      vm,
+      address(proposalPayload),
+      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
+    );
 
     // 3. create snapshot after payload execution
-    createConfigurationSnapshot('postAaveV3OPRiskParams_20230330Change', AaveV3Optimism.POOL);
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'postAaveV3OPRiskParams_20230330Change',
+      AaveV3Optimism.POOL
+    );
 
     // 4. Verify payload:
-    ReserveConfig[] memory allConfigsAfter = _getReservesConfigs(AaveV3Optimism.POOL);
-
-    ReserveConfig memory WBTC_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory WBTC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3OptimismAssets.WBTC_UNDERLYING
     );
@@ -50,9 +55,9 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
 
     WBTC_UNDERLYING_CONFIG.liquidationBonus = WBTC_UNDERLYING_LIQ_BONUS;
 
-    ProtocolV3TestBase._validateReserveConfig(WBTC_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(WBTC_UNDERLYING_CONFIG, allConfigsAfter);
 
-    ReserveConfig memory DAI_UNDERLYING_CONFIG = ProtocolV3TestBase._findReserveConfig(
+    ReserveConfig memory DAI_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3OptimismAssets.DAI_UNDERLYING
     );
@@ -61,7 +66,7 @@ contract AaveV3OPRiskParams_20230330_Test is ProtocolV3TestBase, TestWithExecuto
 
     DAI_UNDERLYING_CONFIG.ltv = DAI_UNDERLYING_LTV;
 
-    ProtocolV3TestBase._validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
     diffReports('preAaveV3OPRiskParams_20230330Change', 'postAaveV3OPRiskParams_20230330Change');

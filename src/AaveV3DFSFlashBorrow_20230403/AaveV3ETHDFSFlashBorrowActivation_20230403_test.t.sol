@@ -6,7 +6,7 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveAddressBook.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {IERC20} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3EthDFSFlashBorrowActivation} from './AaveV3ETHDFSFlashBorrowActivation_20230403.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 
 /**
  * Simple flashloan receiver.
@@ -33,12 +33,11 @@ contract MockReceiver {
   }
 }
 
-contract AaveV3EthDFSFlashBorrowActivationTest is TestWithExecutor, MockReceiver {
+contract AaveV3EthDFSFlashBorrowActivationTest is Test, MockReceiver {
   address internal constant DAI = AaveV3EthereumAssets.DAI_UNDERLYING;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16932117);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   /**
@@ -50,7 +49,7 @@ contract AaveV3EthDFSFlashBorrowActivationTest is TestWithExecutor, MockReceiver
     AaveV3EthDFSFlashBorrowActivation proposalPayload = new AaveV3EthDFSFlashBorrowActivation();
 
     // 2. execute payload
-    _executePayload(address(proposalPayload));
+    GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // 3. check fee is zero
     address user = proposalPayload.FL_AAVE_V3();

@@ -2,19 +2,17 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3EthUpdate20230327Payload} from './AaveV3EthCapsUpdate_20230327.sol';
 import {AaveV3ArbUpdate20230327Payload} from './AaveV3ArbCapsUpdate_20230327.sol';
 
-contract AaveV3EthUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3EthUpdate_20230327_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16920398);
-
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
   }
 
   function testNewChanges() public {
@@ -33,7 +31,11 @@ contract AaveV3EthUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
       AaveV3EthereumAssets.rETH_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3EthUpdate20230327Payload()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3EthUpdate20230327Payload()),
+      AaveGovernanceV2.SHORT_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestEthCapsUpdateMar27',
@@ -60,12 +62,9 @@ contract AaveV3EthUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
   }
 }
 
-
-contract AaveV3ArbUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3ArbUpdate_20230327_Test is ProtocolV3LegacyTestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 74306378);
-
-    _selectPayloadExecutor(AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
   }
 
   function testNewChanges() public {
@@ -79,7 +78,11 @@ contract AaveV3ArbUpdate_20230327_Test is ProtocolV3TestBase, TestWithExecutor {
       AaveV3ArbitrumAssets.WETH_UNDERLYING
     );
 
-    _executePayload(address(new AaveV3ArbUpdate20230327Payload()));
+    GovHelpers.executePayload(
+      vm,
+      address(new AaveV3ArbUpdate20230327Payload()),
+      AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestArbCapsUpdateMar27',

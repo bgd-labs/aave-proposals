@@ -6,26 +6,27 @@ import 'forge-std/Test.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3Listings_20230413_Payload} from './AaveV3Listings_20230413_Payload.sol';
 
-contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3Listings_20230413_Payload public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 41497996);
-    _selectPayloadExecutor(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
-
     payload = new AaveV3Listings_20230413_Payload();
   }
 
   function testPoolActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Polygon-wstETH-Listing', AaveV3Polygon.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Polygon.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Polygon-wstETH-Listing',
+      AaveV3Polygon.POOL
+    );
 
     ReserveConfig memory wsteth = ReserveConfig({
       symbol: 'wstETH',
@@ -78,8 +79,6 @@ contract AaveV3Listings_20230413_PayloadTest is ProtocolV3TestBase, TestWithExec
       payload.wstETH(),
       payload.wstETH_PRICE_FEED()
     );
-
-    createConfigurationSnapshot('post-Aave-V3-Polygon-wstETH-Listing', AaveV3Polygon.POOL);
 
     diffReports('pre-Aave-V3-Polygon-wstETH-Listing', 'post-Aave-V3-Polygon-wstETH-Listing');
   }

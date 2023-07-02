@@ -3,18 +3,16 @@
 pragma solidity 0.8.19;
 
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3OPEmode_20220622_Payload} from './AaveV3OPEmode_20220622_Payload.sol';
 
-contract AaveV3OPEmode_20220622_PayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3OPEmode_20220622_PayloadTest is ProtocolV3TestBase {
   AaveV3OPEmode_20220622_Payload public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 105944795);
-    _selectPayloadExecutor(AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
-
     payload = new AaveV3OPEmode_20220622_Payload();
   }
 
@@ -24,7 +22,7 @@ contract AaveV3OPEmode_20220622_PayloadTest is ProtocolV3_0_1TestBase, TestWithE
       AaveV3Optimism.POOL
     );
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post-Aave-V3-Optimism-EMode-20220622',
