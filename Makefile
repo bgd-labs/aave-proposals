@@ -215,6 +215,23 @@ create-v3-arb-frax-listing :; forge script src/AaveV3ArbFraxListing_20230619/Dep
 deploy-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:DeployAaveV3FraxListingPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
 create-v3-eth-frax-listing :; forge script src/AaveV3EthFraxListing_20230619/DeployAaveV3EthFraxListing.s.sol:AaveV3FraxListingPayloadProposal --rpc-url mainnet --broadcast --legacy --private-key ${PRIVATE_KEY} --verify -vvvv
 
+# V2 freeze reserves Chaos Labs
+
+deploy-V2-TUSD-freeze :; forge script src/AaveV2FreezeReserves_20230627/DeployV2Freeze.s.sol:DeployPayload --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+create-V2-TUSD-freeze :; forge script src/AaveV2FreezeReserves_20230627/DeployV2Freeze.s.sol:CreateProposal --rpc-url mainnet --broadcast --ledger --mnemonics ${MNEMONIC_INDEX} --sender ${LEDGER_SENDER} --verify -vvvv
+
+# Chaos Labs Payment Request
+
+test-chaos-labs-payment-20230626 :; forge test -vvv --match-contract AaveV3ChaosLabsPaymentCollection_20230626Test
+deploy-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:DeployPayloadPolygon --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-chaos-labs-payment-20230626 :; forge script src/AaveV3ChaosLabsPaymentCollection_20230626/DeployAaveV3ChaosLabsPaymentCollection_20230626.s.sol:CreateProposal --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+
+# ChaosLabs CRV risk params update for Ethereum V2 20230621
+
+test-risk-params-crv-20230621-payload :; forge test -vvv --match-contract AaveV2CRVRiskParams_20230621_Test
+deploy-risk-params-eth-20230621-payload :; forge script src/AaveV2CRVRiskParams_20230621/AaveV2CRVRiskParams_20230621.s.sol:DeployPayloadEthereum --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
+create-risk-params-eth-20230621 :; forge script src/AaveV2CRVRiskParams_20230621/DeployAaveV2CRVRiskParams_20230621.s.sol:CreateProposal --rpc-url mainnet --sender 0x25F2226B597E8F9514B3F68F00f494cF4f286491
+
 # Ethereum V2 reserve factor updates 20230627
 test-eth-v2-reserve-factor-update-20230627 :; forge test -vvv --match-contract AaveV2EthereumRatesUpdates_20230627_Test
 deploy-eth-v2-reserve-factor-update-20230627-payload :; forge script src/AaveV2EthereumRatesUpdates_20230627/DeployAaveV2EthereumRatesUpdates_20230627.s.sol:DeployMainnetPayload --rpc-url mainnet --broadcast --private-key ${PRIVATE_KEY} --verify -vvvv
