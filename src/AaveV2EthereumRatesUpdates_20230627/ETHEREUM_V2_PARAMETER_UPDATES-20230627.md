@@ -1,8 +1,7 @@
 ---
 title: Ethereum v2 - Parameters Update
-author: ChaosLabs Inc
+author: ChaosLabsInc
 discussions: https://governance.aave.com/t/arfc-chaos-labs-incremental-reserve-factor-updates-aave-v2-ethereum/13766
-shortDescription: Reserve Factor (RF) increases across all V2 Ethereum assets
 ---
 
 # Simple Summary
