@@ -6,7 +6,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| reserveFactor | 5 % | 25 % |
+| reserveFactor | 5 % | 10 % |
 
 
 #### GUSD ([0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd](https://etherscan.io/address/0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd))
@@ -136,7 +136,7 @@
     "0x0000000000085d4780B73119b644AE5ecd22b376": {
       "reserveFactor": {
         "from": 500,
-        "to": 2500
+        "to": 1000
       }
     },
     "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd": {
