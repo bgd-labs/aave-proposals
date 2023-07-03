@@ -10,7 +10,7 @@ import {AaveV3EthTestProposal20230307} from './AaveV3EthTestProposal20230307.sol
 
 contract AaveV3EthTestProposal20230307_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), replaceWithCurrentBlockNumber);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17613660);
   }
 
   function testProposalExecution() public {
@@ -24,7 +24,7 @@ contract AaveV3EthTestProposal20230307_Test is ProtocolV3TestBase {
     GovHelpers.executePayload(
       vm,
       address(proposal),
-      replaceWithCorrectExecutor
+      AaveGovernanceV2.SHORT_EXECUTOR
     );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(

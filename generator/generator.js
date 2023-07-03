@@ -1,14 +1,17 @@
 import fs from "fs";
 import path from "path";
 import { Command, Option } from "commander";
-import handlebars from "handlebars";
 import { generateAIP, generateScript } from "./templates.js";
 import {
   SHORT_CHAINS,
   generateChainName,
   generateName,
+  getAlias,
   getDate,
 } from "./common.js";
+import { engineProposalTemplate } from "./templates/engineProposal.template.js";
+import { rawProposalTemplate } from "./templates/rawProposal.template.js";
+import { testTemplate } from "./templates/test.template.js";
 
 // prepare cli
 const program = new Command();
@@ -17,6 +20,9 @@ program
   .name("proposal-generator")
   .description("CLI to generate aave proposals")
   .version("0.0.0")
+  .addOption(
+    new Option("-f, --force", "force creation (might overwrite existing files)")
+  )
   .addOption(new Option("-cfg, --configEngine", "extends config engine"))
   .addOption(
     new Option(
@@ -54,80 +60,67 @@ const options = program.opts();
 
 const baseName = generateName(options);
 
-// prepare templates
-handlebars.registerHelper("lower", function (str) {
-  return str.toLowerCase();
-});
-handlebars.registerHelper("surroundWithCurlyBraces", function (str) {
-  return `{${str}}`;
-});
-const testTemplate = handlebars.compile(
-  fs.readFileSync(
-    path.join(process.cwd(), "generator/templates/test.template"),
-    "utf8"
-  )
-);
-const engineProposalTemplate = handlebars.compile(
-  fs.readFileSync(
-    path.join(process.cwd(), "generator/templates/engineProposal.template"),
-    "utf8"
-  )
-);
-const rawProposalTemplate = handlebars.compile(
-  fs.readFileSync(
-    path.join(process.cwd(), "generator/templates/rawProposal.template"),
-    "utf8"
-  )
-);
-
 // create files
 const baseFolder = path.join(process.cwd(), "src", baseName);
-fs.mkdirSync(baseFolder, { recursive: true });
+if (fs.existsSync(baseFolder) && !options.force) {
+  console.log("Creation skipped as folder already exists.");
+  console.log("If you want to overwrite, supply --force");
+} else {
+  fs.mkdirSync(baseFolder, { recursive: true });
 
-function createFiles(options, chain) {
-  const contractName = generateChainName(options, chain);
-  if (options.configEngine) {
+  async function createFiles(options, chain) {
+    const contractName = generateChainName(options, chain);
+    if (options.configEngine) {
+      fs.writeFileSync(
+        path.join(baseFolder, `${contractName}.sol`),
+        engineProposalTemplate({
+          ...options,
+          contractName,
+          chain,
+        })
+      );
+    } else {
+      fs.writeFileSync(
+        path.join(baseFolder, `${contractName}.sol`),
+        rawProposalTemplate({
+          ...options,
+          contractName,
+          chain,
+        })
+      );
+    }
     fs.writeFileSync(
-      path.join(baseFolder, `${contractName}.sol`),
-      engineProposalTemplate({
-        ...options,
-        contractName,
-        chain,
-      })
-    );
-  } else {
-    fs.writeFileSync(
-      path.join(baseFolder, `${contractName}.sol`),
-      rawProposalTemplate({
+      path.join(baseFolder, `${contractName}.t.sol`),
+      await testTemplate({
         ...options,
         contractName,
         chain,
       })
     );
   }
+
+  options.chains.forEach((chain) => createFiles(options, chain));
+
   fs.writeFileSync(
-    path.join(baseFolder, `${contractName}.t.sol`),
-    testTemplate({
-      ...options,
-      contractName,
-      chain,
-      rpc: chain === "Ethereum" ? "mainnet" : chain.toLowerCase(),
-    })
+    path.join(baseFolder, `${baseName}.s.sol`),
+    generateScript(options)
+  );
+  fs.writeFileSync(
+    path.join(baseFolder, `${options.name}.md`),
+    generateAIP(options)
+  );
+
+  // print instructions
+  console.log("Here is a list of commands for testing and deployment");
+  console.log(`test: make test-contract filter=${options.name}`);
+  options.chains.map((chain) =>
+    console.log(
+      `deploy payloads: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:Deploy${chain} chain=${getAlias(
+        chain
+      )}`
+    )
+  );
+  console.log(
+    `deploy payloads: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:CreateProposal chain=mainnet`
   );
 }
-
-options.chains.forEach((chain) => createFiles(options, chain));
-
-fs.writeFileSync(
-  path.join(baseFolder, `${baseName}.s.sol`),
-  generateScript(options)
-);
-fs.writeFileSync(
-  path.join(baseFolder, `${options.name}.md`),
-  generateAIP(options)
-);
-
-// print instructions
-console.log("Here is a list of commands for testing and deployment");
-console.log(`test: make test-contract filter=${options.name}`);
-// console.log(`deploy: make deploy-ledger filter=${options.name}`);

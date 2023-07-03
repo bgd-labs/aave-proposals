@@ -10,7 +10,7 @@ import {AaveV3PolTestProposal20230307} from './AaveV3PolTestProposal20230307.sol
 
 contract AaveV3PolTestProposal20230307_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), replaceWithCurrentBlockNumber);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 44634569);
   }
 
   function testProposalExecution() public {
@@ -24,7 +24,7 @@ contract AaveV3PolTestProposal20230307_Test is ProtocolV3TestBase {
     GovHelpers.executePayload(
       vm,
       address(proposal),
-      replaceWithCorrectExecutor
+      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
     );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(

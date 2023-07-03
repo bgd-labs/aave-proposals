@@ -28,3 +28,7 @@ export function generateName(options) {
 export function generateChainName(options, chain) {
   return generateName({ ...options, chains: [chain] }).replace(/_/g, "");
 }
+
+export function getAlias(chain) {
+  return chain === "Ethereum" ? "mainnet" : chain.toLowerCase();
+}
