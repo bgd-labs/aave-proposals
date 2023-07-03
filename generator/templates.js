@@ -3,55 +3,6 @@ import { generateChainName, generateName } from "./common.js";
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
 
-export function generateProposal(options, chain) {
-  let template = pragma;
-  if (options.configEngine) {
-    template += `import {Aave${
-      options.protocolVersion
-    }Payload${chain}, IEngine, Rates, EngineFlags} from 'aave-helpers/${options.protocolVersion.toLowerCase()}-config-engine/Aave${
-      options.protocolVersion
-    }Payload${chain}.sol';\n`;
-    template += `import {Aave${options.protocolVersion}${chain},Aave${options.protocolVersion}${chain}Assets} from 'aave-address-book/AaveV3${chain}.sol';\n`;
-  } else {
-    template += `import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';\n`;
-  }
-  template += "\n\n";
-  template += `/**
- * @title ${options.title || "TODO"}
- * @author ${options.author || "TODO"}
- * - Snapshot: ${options.snapshot || "TODO"}
- * - Discussion: ${options.discussion || "TODO"}
- */\n`;
-  if (options.configEngine) {
-    template += `contract ${generateChainName(options, chain)} is Aave${
-      options.protocolVersion
-    }Payload${chain} {
-
-
-}`;
-  } else {
-    template += `contract ${generateChainName(
-      options,
-      chain
-    )} is IProposalGenericExecutor {
-
-  function execute() external {
-
-  }
-
-}`;
-  }
-  return template;
-}
-
-export function generateTest(options, chain) {
-  let template = pragma;
-  template += `import 'forge-std/Test.sol';
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';`;
-  return template;
-}
-
 export function generateScript(options) {
   let template = pragma;
   // generate imports

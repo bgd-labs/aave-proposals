@@ -2,12 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Command, Option } from "commander";
 import handlebars from "handlebars";
-import {
-  generateAIP,
-  generateProposal,
-  generateScript,
-  generateTest,
-} from "./templates.js";
+import { generateAIP, generateScript } from "./templates.js";
 import {
   SHORT_CHAINS,
   generateChainName,
