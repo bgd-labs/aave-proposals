@@ -27,7 +27,7 @@ program
   .addOption(
     new Option(
       "-name, --name <string>",
-      "name of the proposal"
+      "name of the proposal (e.g. CapsIncrease)"
     ).makeOptionMandatory()
   )
   .addOption(
@@ -49,10 +49,10 @@ program
       .choices(["V2", "V3"])
       .makeOptionMandatory()
   )
-  .addOption(new Option("-t, --title <string>"))
-  .addOption(new Option("-a, --author <string>"))
-  .addOption(new Option("-d, --discussion <string>"))
-  .addOption(new Option("-s, --snapshot <string>"));
+  .addOption(new Option("-t, --title <string>", "aip title"))
+  .addOption(new Option("-a, --author <string>", "author"))
+  .addOption(new Option("-d, --discussion <string>", "forum link"))
+  .addOption(new Option("-s, --snapshot <string>", "snapshot link"));
 
 program.parse();
 

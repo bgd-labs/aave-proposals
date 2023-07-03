@@ -9,7 +9,8 @@
     "simulate:polygon": "env-cmd aave-tenderly-cli --networkId 137 --keepAlive --artifactPath",
     "simulate:arbitrum": "env-cmd aave-tenderly-cli --networkId 42161 --keepAlive --artifactPath",
     "simulate:avalanche": "env-cmd aave-tenderly-cli --networkId 43114 --keepAlive --artifactPath",
-    "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath"
+    "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath",
+    "generate": "node generator/generator.js"
   },
   "type": "module",
   "repository": {
