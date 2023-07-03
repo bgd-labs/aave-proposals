@@ -1,6 +1,6 @@
 ---
-title: 
-author: Lachs
+title: Generator test
+author: BGD
 discussions: 
 ---
 

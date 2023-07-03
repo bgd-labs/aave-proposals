@@ -6,8 +6,8 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
 
 
 /**
- * @title 
- * @author Lachs
+ * @title Generator test
+ * @author BGD
  * - Snapshot: 
  * - Discussion: 
  */
