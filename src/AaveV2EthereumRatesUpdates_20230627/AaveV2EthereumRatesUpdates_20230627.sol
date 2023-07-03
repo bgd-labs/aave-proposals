@@ -34,7 +34,7 @@ contract AaveV2EthereumRatesUpdates_20230627 is AaveV2PayloadEthereum {
     );
     ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
       AaveV2EthereumAssets.TUSD_UNDERLYING,
-      10_00
+      25_00
     );
     ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
       AaveV2EthereumAssets.USDC_UNDERLYING,
