@@ -14,7 +14,9 @@ export function getDate() {
   const years = date.getFullYear();
   const months = date.getMonth() + 1; // it's js so months are 0 indexed
   const day = date.getDate();
-  return `${years}${day}${months}`;
+  return `${years}${day <= 9 ? "0" : ""}${day}${
+    months <= 9 ? "0" : ""
+  }${months}`;
 }
 
 export function generateName(options) {
@@ -24,5 +26,5 @@ export function generateName(options) {
 }
 
 export function generateChainName(options, chain) {
-  return generateName({ ...options, chains: [chain] });
+  return generateName({ ...options, chains: [chain] }).replace(/_/g, "");
 }

@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@bgd-labs/aave-cli": "^0.0.9",
-    "commander": "^11.0.0"
+    "commander": "^11.0.0",
+    "handlebars": "^4.7.7"
   }
 }

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Command, Option } from "commander";
+import handlebars from "handlebars";
 import {
   generateAIP,
   generateProposal,
@@ -14,6 +15,7 @@ import {
   getDate,
 } from "./common.js";
 
+// prepare cli
 const program = new Command();
 
 program
@@ -55,22 +57,67 @@ program.parse();
 
 const options = program.opts();
 
-console.log(options);
-
 const baseName = generateName(options);
+
+// prepare templates
+handlebars.registerHelper("lower", function (str) {
+  return str.toLowerCase();
+});
+handlebars.registerHelper("surroundWithCurlyBraces", function (str) {
+  return `{${str}}`;
+});
+const testTemplate = handlebars.compile(
+  fs.readFileSync(
+    path.join(process.cwd(), "generator/templates/test.template"),
+    "utf8"
+  )
+);
+const engineProposalTemplate = handlebars.compile(
+  fs.readFileSync(
+    path.join(process.cwd(), "generator/templates/engineProposal.template"),
+    "utf8"
+  )
+);
+const rawProposalTemplate = handlebars.compile(
+  fs.readFileSync(
+    path.join(process.cwd(), "generator/templates/rawProposal.template"),
+    "utf8"
+  )
+);
 
 // create files
 const baseFolder = path.join(process.cwd(), "src", baseName);
 fs.mkdirSync(baseFolder, { recursive: true });
 
 function createFiles(options, chain) {
+  const contractName = generateChainName(options, chain);
+  if (options.configEngine) {
+    fs.writeFileSync(
+      path.join(baseFolder, `${contractName}.sol`),
+      engineProposalTemplate({
+        ...options,
+        contractName,
+        chain,
+      })
+    );
+  } else {
+    fs.writeFileSync(
+      path.join(baseFolder, `${contractName}.sol`),
+      rawProposalTemplate({
+        ...options,
+        contractName,
+        chain,
+      })
+    );
+  }
   fs.writeFileSync(
-    path.join(baseFolder, `${generateChainName(options, chain)}.sol`),
-    generateProposal(options, chain)
-  );
-  fs.writeFileSync(
-    path.join(baseFolder, `${generateChainName(options, chain)}.t.sol`),
-    generateTest(options, chain)
+    path.join(baseFolder, `${contractName}.t.sol`),
+    testTemplate({
+      ...options,
+      contractName,
+      chain,
+      rpc: chain === "Ethereum" ? "mainnet" : chain.toLowerCase(),
+    })
   );
 }
 

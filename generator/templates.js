@@ -46,6 +46,9 @@ export function generateProposal(options, chain) {
 
 export function generateTest(options, chain) {
   let template = pragma;
+  template += `import 'forge-std/Test.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';`;
   return template;
 }
 

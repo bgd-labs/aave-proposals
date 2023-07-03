@@ -1,0 +1,5 @@
+contract Deploy{{chain}} is {{chain}}Script {
+  function run() external broadcast {
+    new {{scriptName}}();
+  }
+}

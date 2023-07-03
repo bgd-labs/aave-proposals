@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import 'forge-std/Test.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
+import {Aave{{protocolVersion}}{{chain}}, Aave{{protocolVersion}}{{chain}}Assets} from 'aave-address-book/Aave{{protocolVersion}}{{chain}}.sol';
+import {Protocol{{protocolVersion}}TestBase, ReserveConfig} from 'aave-helpers/Protocol{{protocolVersion}}TestBase.sol';
+import {{ surroundWithCurlyBraces contractName}} from './{{contractName}}.sol';
+
+contract {{contractName}}_Test is Protocol{{protocolVersion}}TestBase {
+  function setUp() public {
+    vm.createSelectFork(vm.rpcUrl('{{rpc}}'), replaceWithCurrentBlockNumber);
+  }
+
+  function testProposalExecution() public {
+    {{contractName}} proposal = new {{contractName}}();
+
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+      'pre{{contractName}}',
+      Aave{{protocolVersion}}{{chain}}.POOL
+    );
+
+    GovHelpers.executePayload(
+      vm,
+      address(proposal),
+      replaceWithCorrectExecutor
+    );
+
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+      'pre{{contractName}}',
+      Aave{{protocolVersion}}{{chain}}.POOL
+    );
+  }
+}
