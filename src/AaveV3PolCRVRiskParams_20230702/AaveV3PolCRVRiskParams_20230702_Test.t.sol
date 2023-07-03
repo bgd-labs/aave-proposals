@@ -53,5 +53,11 @@ contract AaveV3PolCRVRiskParams_20230702_Test is ProtocolV3TestBase {
       'preAaveV3PolCRVRiskParams_20230702Change',
       'postAaveV3PolCRVRiskParams_20230702Change'
     );
+
+    _noReservesConfigsChangesApartFrom(
+      allConfigsBefore,
+      allConfigsAfter,
+      AaveV3PolygonAssets.CRV_UNDERLYING
+    );
   }
 }
