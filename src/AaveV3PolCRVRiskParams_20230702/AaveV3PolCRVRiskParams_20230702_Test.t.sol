@@ -49,6 +49,9 @@ contract AaveV3PolCRVRiskParams_20230702_Test is ProtocolV3TestBase {
     _validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
 
     // 5. compare snapshots
-    diffReports('preAaveV3PolRiskParams_20230423Change', 'postAaveV3PolRiskParams_20230423Change');
+    diffReports(
+      'preAaveV3PolCRVRiskParams_20230702Change',
+      'postAaveV3PolCRVRiskParams_20230702Change'
+    );
   }
 }
