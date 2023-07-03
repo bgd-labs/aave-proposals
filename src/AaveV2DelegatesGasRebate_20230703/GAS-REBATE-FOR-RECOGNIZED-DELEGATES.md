@@ -1,7 +1,7 @@
 ---
 title: Gas Rebate for Recognized Delegates
 author: Marc Zeller (@marczeller), Aave-Chan initiative
-discussions: https://governance.aave.com/t/arfc-busd-offboarding-plan-part-ii/13048
+discussions: https://governance.aave.com/t/arfc-gas-rebate-for-recognized-delegates/13290
 ---
 
 ## Simple Summary
