@@ -29,7 +29,7 @@ The following parameters are to be updated:
 | GUSD  | 10.00%     | 15.00%         |
 | LUSD  | 10.00%     | 15.00%         |
 | sUSD  | 20.00%     | 25.00%         |
-| TUSD  | 5.00%      | 10.00%         |
+| TUSD  | 5.00%      | 25.00%         |
 | USDC  | 10.00%     | 15.00%         |
 | USDP  | 10.00%     | 15.00%         |
 | USDT  | 10.00%     | 15.00%         |
