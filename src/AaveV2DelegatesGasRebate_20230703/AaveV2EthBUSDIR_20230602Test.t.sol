@@ -9,7 +9,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV2DelegatesGasRebate_20230703} from 'src/AaveV2DelegatesGasRebate_20230703/AaveV2DelegatesGasRebate_20230703.sol';
 import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC20.sol';
 
-contract AaveV3EthWETHPayloadTest is ProtocolV2TestBase {
+contract AaveV2DelegatesGasRebate_20230703Test is ProtocolV2TestBase {
   address public constant WETH = AaveV2EthereumAssets.WETH_UNDERLYING;
   string public constant WETH_SYMBOL = 'WETH';
   uint256 public constant Amount_DISTRIBUTED = 2.98e18;
