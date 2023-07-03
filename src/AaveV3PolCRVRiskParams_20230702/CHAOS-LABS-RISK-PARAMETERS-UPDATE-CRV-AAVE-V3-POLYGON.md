@@ -25,11 +25,6 @@ In the graph below, we share data to quantify and visualize the effect of the re
 | CRV   | LT        | 80            | 75             |
 | CRV   | LTV       | 75            | 70             |
 
-## Next Steps
-
-1. Following community feedback, submit the ARFC for a snapshot vote for final approval.
-2. If consensus is reached, submit an Aave Improvement Proposal (AIP) to implement the proposed updates.
-
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
