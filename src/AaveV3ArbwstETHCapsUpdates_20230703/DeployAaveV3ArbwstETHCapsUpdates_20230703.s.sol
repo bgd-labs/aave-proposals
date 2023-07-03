@@ -22,7 +22,7 @@ contract PayloadProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV3CapsUpdates_20230610/AAVE-V3-ARB-WSTETH-SUPPLY-CAP-UPDATE-20230703.md'
+        'src/AaveV3ArbwstETHCapsUpdates_20230703/AAVE-V3-ARB-WSTETH-SUPPLY-CAP-UPDATE-20230703.md'
       )
     );
   }
