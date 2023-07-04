@@ -11,7 +11,7 @@ A proposal to increase the Supply cap for wstETH on V3 Arbitrum.
 # Motivation
 
 The supply and borrow cap for wstETH on V3 Arbitrum is currently at 100% utilization.
-Utilizing our [supply cap methodology](https://governance.aave.com/t/chaos-labs-supply-cap-methodology/12842), we conducted stress tests simulating depeg scenarios (up to 15%). With an increase of the supply cap to 30K and current liquidity levels, such depeg scenario materializing could lead to protocol losses of ~$500K. Given the oracle updates introduce and most recent
+Utilizing our [supply cap methodology](https://governance.aave.com/t/chaos-labs-supply-cap-methodology/12842), we conducted stress tests simulating depeg scenarios (up to 15%). Given an increase of the supply cap to 30K, such a depeg scenario materializing could lead to protocol losses of ~$500K. This is an extreme scenario, given the Oracle configuration update introduced [here](https://app.aave.com/governance/proposal/248/).
 
 # Specification
 
