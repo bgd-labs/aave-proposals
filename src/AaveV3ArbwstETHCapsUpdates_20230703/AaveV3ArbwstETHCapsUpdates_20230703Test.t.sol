@@ -10,6 +10,7 @@ import {AaveV3ArbwstETHCapsUpdates_20230703} from './AaveV3ArbwstETHCapsUpdates_
 
 contract AaveV3ArbwstETHCapsUpdates_20230703_Test is ProtocolV3TestBase {
   AaveV3ArbwstETHCapsUpdates_20230703 public payload;
+  uint256 public constant NEW_SUPPLY_CAP_WSTETH = 30_000;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 107412640);
@@ -38,7 +39,7 @@ contract AaveV3ArbwstETHCapsUpdates_20230703_Test is ProtocolV3TestBase {
       AaveV3ArbitrumAssets.wstETH_UNDERLYING
     );
 
-    WSTETH_CONFIG.supplyCap = payload.NEW_SUPPLY_CAP_WSTETH();
+    WSTETH_CONFIG.supplyCap = NEW_SUPPLY_CAP_WSTETH;
 
     _noReservesConfigsChangesApartFrom(
       allConfigsBefore,
