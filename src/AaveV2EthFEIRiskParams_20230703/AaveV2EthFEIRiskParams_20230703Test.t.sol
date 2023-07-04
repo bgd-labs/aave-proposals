@@ -12,7 +12,7 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
   uint256 public constant FEI_LIQUIDATION_THRESHOLD = 1_00; // 1%
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17613332);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17618386);
   }
 
   function testPayload() public {
@@ -56,5 +56,9 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       'preAaveV2EthFEIRiskParams_20230703Change',
       'postAaveV2EthFEIRiskParams_20230703Change'
     );
+
+    // 6. E2E Test
+    address user = vm.addr(3);
+    e2eTest(AaveV2Ethereum.POOL, user);
   }
 }
