@@ -52,7 +52,8 @@ program
   .addOption(new Option("-t, --title <string>", "aip title"))
   .addOption(new Option("-a, --author <string>", "author"))
   .addOption(new Option("-d, --discussion <string>", "forum link"))
-  .addOption(new Option("-s, --snapshot <string>", "snapshot link"));
+  .addOption(new Option("-s, --snapshot <string>", "snapshot link"))
+  .allowExcessArguments(false);
 
 program.parse();
 
