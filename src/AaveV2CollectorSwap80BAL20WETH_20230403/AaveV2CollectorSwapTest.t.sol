@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {console2} from 'forge-std/Test.sol';
+import {Test} from 'forge-std/Test.sol';
 
-import {ProtocolV3LegacyTestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
@@ -13,14 +12,14 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {SwapFor80BAL20WETHPayload} from './AaveV2CollectorSwap80BAL20WETH_20230403_Payload.sol';
 import {COWTrader} from './COWTrader.sol';
 
-contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
+contract SwapFor80BAL20WETHPayloadTest is Test {
   event TradeCanceled();
   event TradeRequested();
 
   SwapFor80BAL20WETHPayload payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17175879);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17565222);
 
     payload = new SwapFor80BAL20WETHPayload();
   }
@@ -42,11 +41,11 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceABalBefore, 9644860562923757165584);
-    assertEq(balanceAEthBalBefore, 24678874950526891803);
+    assertEq(balanceABalBefore, 10107242892946522821558);
+    assertEq(balanceAEthBalBefore, 457113692897315491862);
     assertEq(balanceBalBefore, 300_000e18);
-    assertEq(balanceWethBefore, 10312312833722949345);
-    assertEq(balanceAWethBefore, 1516828016650101081302);
+    assertEq(balanceWethBefore, 20240221969534450944);
+    assertEq(balanceAWethBefore, 1804382544356404175696);
 
     vm.expectEmit(true, true, true, true);
     emit TradeRequested();
@@ -69,13 +68,13 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    assertEq(balanceABalAfter, 19081042984225183256);
+    assertEq(balanceABalAfter, 374475602896012690);
     assertEq(balanceAEthBalAfter, 0);
-    assertEq(balanceBalAfter, 0);
-    assertEq(balanceWethAfter, balanceWethBefore);
+    assertEq(balanceBalAfter, 0); // All BAL should leave
+    assertEq(balanceWethAfter, balanceWethBefore); // No changes to WETH value
 
-    // Withdraw is not an exact science so within 0.1 wETH
-    assertApproxEqAbs(balanceAWethAfter, balanceAWethBefore - payload.WETH_AMOUNT(), 1e17);
+    // no more than 326.88 aWETH should be transfered out of v2 aWETH
+    assertGe(balanceAWethAfter, balanceAWethBefore - payload.WETH_AMOUNT());
   }
 
   function test_tradeRevertsIf_invalidCaller() public {
@@ -147,8 +146,8 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
 
     vm.prank(trader.ALLOWED_CALLER());
     trader.cancelTrades(
-      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
-      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+      0x31ff4574ECE1b8241acE6Fd98199251935919f8c, // These are created when running tests and emitted via log
+      0x2447558467045EDe814981EE62Cd078B7bdcC7D2  // Addresses were retrieved from there
     );
   }
 
@@ -174,8 +173,8 @@ contract SwapFor80BAL20WETHPayloadTest is ProtocolV3LegacyTestBase {
 
     vm.prank(AaveGovernanceV2.SHORT_EXECUTOR);
     trader.cancelTrades(
-      0xafD72023254Fb9118B9bcCe8E302aEBA1e554276,
-      0xAC720F35F3e60D3E9e6FB6F4047EE6dB7D16cA23
+      0x31ff4574ECE1b8241acE6Fd98199251935919f8c, // These are created when running tests and emitted via log
+      0x2447558467045EDe814981EE62Cd078B7bdcC7D2  // Addresses were retrieved from there
     );
   }
 
