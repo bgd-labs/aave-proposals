@@ -32,7 +32,7 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
   uint256 public constant DPI_RF = 30_00; // 20 -> 30
 
   uint256 public constant ENJ_LTV = 0; // 60 -> 0
-  uint256 public constant ENJ_LIQUIDATION_THRESHOLD = 42_00; // 67 -> 60
+  uint256 public constant ENJ_LIQUIDATION_THRESHOLD = 60_00; // 67 -> 60
   uint256 public constant ENJ_LIQUIDATION_BONUS = 11000; // 6 -> 10
   uint256 public constant ENJ_RF = 30_00; // 20 -> 30
 
@@ -42,7 +42,7 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
   uint256 public constant KNC_RF = 30_00; // 20 -> 30
 
   uint256 public constant MANA_LTV = 0; // 61.5 -> 0
-  uint256 public constant MANA_LIQUIDATION_THRESHOLD = 1_00; // 75 -> 62
+  uint256 public constant MANA_LIQUIDATION_THRESHOLD = 62_00; // 75 -> 62
   uint256 public constant MANA_LIQUIDATION_BONUS = 11000; // 7.5 -> 10
   uint256 public constant MANA_RF = 45_00; // 35 -> 45
 
