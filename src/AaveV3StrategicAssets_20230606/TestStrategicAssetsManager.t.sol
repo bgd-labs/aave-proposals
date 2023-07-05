@@ -45,14 +45,14 @@ contract StrategicAssetsManagerTest is Test {
   }
 }
 
-contract Initialize is StrategicAssetManagerTest {
+contract Initialize is StrategicAssetsManagerTest {
   function test_revertsIf_alreadyInitialized() public {
     vm.expectRevert('Contract instance has already been initialized');
     strategicAssets.initialize();
   }
 }
 
-contract AddVeTokens is StrategicAssetManagerTest {
+contract AddVeTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.addVeToken(
@@ -122,7 +122,7 @@ contract AddVeTokens is StrategicAssetManagerTest {
   }
 }
 
-contract RemoveVeTokens is StrategicAssetManagerTest {
+contract RemoveVeTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.removeVeToken(B_80BAL_20WETH);
@@ -172,7 +172,7 @@ contract RemoveVeTokens is StrategicAssetManagerTest {
   }
 }
 
-contract AddSdTokens is StrategicAssetManagerTest {
+contract AddSdTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.addSdToken(CRV, SD_CRV, SD_CRV_DEPOSITOR);
@@ -205,7 +205,7 @@ contract AddSdTokens is StrategicAssetManagerTest {
   }
 }
 
-contract RemoveSdTokens is StrategicAssetManagerTest {
+contract RemoveSdTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.removeSdToken(CRV);
@@ -232,7 +232,7 @@ contract RemoveSdTokens is StrategicAssetManagerTest {
   }
 }
 
-contract SetAdmin is StrategicAssetManagerTest {
+contract SetAdmin is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.setAdmin(makeAddr('new-admin'));
@@ -248,7 +248,7 @@ contract SetAdmin is StrategicAssetManagerTest {
   }
 }
 
-contract SetStrategicAssetManager is StrategicAssetManagerTest {
+contract SetStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.setStrategicAssetsManager(makeAddr('new-admin'));
@@ -273,7 +273,7 @@ contract SetStrategicAssetManager is StrategicAssetManagerTest {
   }
 }
 
-contract RemoveStrategicAssetManager is StrategicAssetManagerTest {
+contract RemoveStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.removeStrategicAssetManager();
@@ -290,7 +290,7 @@ contract RemoveStrategicAssetManager is StrategicAssetManagerTest {
   }
 }
 
-contract WithdrawERC20 is StrategicAssetManagerTest {
+contract WithdrawERC20 is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert(Core.InvalidCaller.selector);
     strategicAssets.withdrawERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), 1e18);

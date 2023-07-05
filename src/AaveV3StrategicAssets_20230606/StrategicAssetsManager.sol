@@ -49,8 +49,8 @@ contract StrategicAssetsManager is
     newToken.veToken = veToken;
     newToken.warden = warden;
     newToken.lockDuration = lockDuration;
-    newToken.delegate = initialDelegate; // TODO: _setDelegateSnapshot(); internal
-    newToken.spaceId = spaceId; // TODO: _setSpaceId(); internal
+    newToken.delegate = initialDelegate;
+    newToken.spaceId = spaceId;
 
     veTokens[underlying] = newToken;
 

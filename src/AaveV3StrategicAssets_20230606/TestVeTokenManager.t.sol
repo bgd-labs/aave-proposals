@@ -2,7 +2,7 @@
 
 pragma solidity 0.8.19;
 
-import {Test, console2} from 'forge-std/Test.sol';
+import {Test} from 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
@@ -300,10 +300,6 @@ contract Claim is VeTokenManagerTest {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
-
-    console2.log('----------------');
-    IERC20(VE_BAL).balanceOf(address(strategicAssets));
-    console2.log('----------------');
 
     uint256 amount = 400e18;
     uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(address(strategicAssets), amount, 1);
