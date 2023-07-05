@@ -1,7 +1,7 @@
 ---
 title: Generator test
 author: BGD labs
-discussions: 
+discussions: TODO
 ---
 
 ## Simple Summary

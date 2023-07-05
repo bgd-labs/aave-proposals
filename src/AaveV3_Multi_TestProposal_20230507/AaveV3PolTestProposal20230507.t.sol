@@ -14,7 +14,7 @@ import {AaveV3PolTestProposal20230507} from './AaveV3PolTestProposal20230507.sol
  */
 contract AaveV3PolTestProposal20230507_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 44708084);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 44709071);
   }
 
   function testProposalExecution() public {

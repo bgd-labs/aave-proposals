@@ -66,9 +66,9 @@ contract CreateProposal is EthereumScript {
 
 export function generateAIP(options) {
   return `---
-title: ${options.title || ""}
-author: ${options.author || ""}
-discussions: ${options.discussion || ""}
+title: ${options.title || "TODO"}
+author: ${options.author || "TODO"}
+discussions: ${options.discussion || "TODO"}
 ---
 
 ## Simple Summary
