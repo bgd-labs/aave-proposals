@@ -52,6 +52,10 @@ import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} fr
 import {Protocol${protocolVersion}TestBase, ReserveConfig} from 'aave-helpers/Protocol${protocolVersion}TestBase.sol';
 import {${contractName}} from './${contractName}.sol';
 
+/**
+ * @dev Test for ${contractName}
+ * command: make test-contract filter=${contractName}
+ */
 contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('${getAlias(chain)}'), ${await getBlock(

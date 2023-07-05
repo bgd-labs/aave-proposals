@@ -1,9 +1,9 @@
-import { generateChainName, generateName } from "./common.js";
+import { generateChainName, generateName, getAlias } from "./common.js";
 
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
 
-export function generateScript(options) {
+export function generateScript(options, baseName) {
   let template = pragma;
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
@@ -23,7 +23,13 @@ export function generateScript(options) {
     .map((chain) => {
       const name = generateChainName(options, chain);
 
-      return `contract Deploy${chain} is ${chain}Script {
+      return `/**
+ * @dev Deploy ${name}
+ * command: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:Deploy${chain} chain=${getAlias(
+        chain
+      )}
+ */
+contract Deploy${chain} is ${chain}Script {
   function run() external broadcast {
     new ${name}();
   }
@@ -33,7 +39,11 @@ export function generateScript(options) {
   template += "\n\n";
 
   // generate proposal creation script
-  template += `contract CreateProposal is EthereumScript {
+  template += `/**
+ * @dev Create Proposal
+ * command: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:CreateProposal chain=mainnet
+ */
+contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${
       options.chains.length

@@ -103,24 +103,10 @@ if (fs.existsSync(baseFolder) && !options.force) {
 
   fs.writeFileSync(
     path.join(baseFolder, `${baseName}.s.sol`),
-    generateScript(options)
+    generateScript(options, baseName)
   );
   fs.writeFileSync(
     path.join(baseFolder, `${options.name}.md`),
     generateAIP(options)
-  );
-
-  // print instructions
-  console.log("Here is a list of commands for testing and deployment");
-  console.log(`test: make test-contract filter=${options.name}`);
-  options.chains.map((chain) =>
-    console.log(
-      `deploy payloads: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:Deploy${chain} chain=${getAlias(
-        chain
-      )}`
-    )
-  );
-  console.log(
-    `deploy payloads: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:CreateProposal chain=mainnet`
   );
 }
