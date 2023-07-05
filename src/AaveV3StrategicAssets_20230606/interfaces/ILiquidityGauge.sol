@@ -30,4 +30,6 @@ interface ILiquidityGaugeController {
   function vote_user_power(address user) external view returns (uint256);
 
   function gauge_types(address gauge) external view returns (int128);
+
+  function get_gauge_weight(address gauge) external view returns (uint256);
 }

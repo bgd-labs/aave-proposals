@@ -16,10 +16,6 @@ abstract contract LSDLiquidityGaugeManager is Core {
 
   /// @notice Setting to the same controller address as currently set.
   error SameController();
-  /// @notice Gauge not set
-  error InvalidGauge();
-  /// @notice Token does not have gauge configured.
-  error TokenGaugeNotConfigured();
 
   /// @notice Address of LSD to address of gauge controller mapping
   mapping(address => address) public gaugeControllers;
@@ -47,7 +43,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
     address gauge,
     uint256 weight
   ) external onlyAdminOrManager {
-    if (gauge == address(0)) revert TokenGaugeNotConfigured();
+    if (gauge == address(0)) revert Invalid0xAddress();
 
     ILiquidityGaugeController(gaugeControllers[token]).vote_for_gauge_weights(gauge, weight);
     emit GaugeVote(gauge, weight);
@@ -57,7 +53,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   /// @param token the address of the token to stake in the gauge
   /// @param amount the amount of tokens to stake in the gauge
   function stakeInGauge(address token, address gauge, uint256 amount) external onlyAdminOrManager {
-    if (gauge == address(0)) revert TokenGaugeNotConfigured();
+    if (gauge == address(0)) revert Invalid0xAddress();
 
     IERC20(token).approve(gauge, amount);
     ILiquidityGauge(gauge).deposit(amount);
@@ -69,7 +65,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   /// @param gauge the address of the gauge where token is staked
   /// @param amount the amount of tokens to unstake from the gauge
   function unstakeFromGauge(address gauge, uint256 amount) external onlyAdminOrManager {
-    if (gauge == address(0)) revert TokenGaugeNotConfigured();
+    if (gauge == address(0)) revert Invalid0xAddress();
     ILiquidityGauge(gauge).withdraw(amount, false);
 
     emit GaugeUnstake(gauge, amount);
@@ -78,7 +74,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   /// @notice Claim rewards for gauge where token is staked
   /// @param gauge The address of the gauge to claim rewards from
   function claimGaugeRewards(address gauge) external onlyAdminOrManager {
-    if (gauge == address(0)) revert TokenGaugeNotConfigured();
+    if (gauge == address(0)) revert Invalid0xAddress();
 
     uint256 nTokens = ILiquidityGauge(gauge).reward_count();
     address[] memory tokens = new address[](nTokens);
