@@ -20,7 +20,7 @@ contract COWTrader {
 
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-  address public constant PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404;
+  address public constant PRICE_CHECKER = 0xBeA6AAC5bDCe0206A9f909d80a467C93A7D6Da7c;
   address public constant ALLOWED_CALLER = 0xA519a7cE7B24333055781133B13532AEabfAC81b;
 
   uint256 balBalance;
@@ -44,7 +44,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(150) // 1.5% slippage
+      abi.encode(150, bytes('')) // 1.5% slippage
     );
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
@@ -53,7 +53,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(150) // 1.5% slippage
+      abi.encode(150, bytes('')) // 1.5% slippage
     );
 
     emit TradeRequested();
@@ -70,7 +70,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(150) // 1.5% slippage
+      abi.encode(150, bytes('')) // 1.5% slippage
     );
 
     IMilkman(balMilkman).cancelSwap(
@@ -79,7 +79,7 @@ contract COWTrader {
       IERC20(BAL80WETH20),
       address(AaveV2Ethereum.COLLECTOR),
       PRICE_CHECKER,
-      abi.encode(150) // 1.5% slippage
+      abi.encode(150, bytes('')) // 1.5% slippage
     );
 
     IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).safeTransfer(
