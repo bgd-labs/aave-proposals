@@ -2,13 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Command, Option } from "commander";
 import { generateAIP, generateScript } from "./templates.js";
-import {
-  SHORT_CHAINS,
-  generateChainName,
-  generateName,
-  getAlias,
-  getDate,
-} from "./common.js";
+import { generateChainName, generateName } from "./common.js";
 import { engineProposalTemplate } from "./templates/engineProposal.template.js";
 import { rawProposalTemplate } from "./templates/rawProposal.template.js";
 import { testTemplate } from "./templates/test.template.js";
@@ -52,7 +46,8 @@ program
   .addOption(new Option("-t, --title <string>", "aip title"))
   .addOption(new Option("-a, --author <string>", "author"))
   .addOption(new Option("-d, --discussion <string>", "forum link"))
-  .addOption(new Option("-s, --snapshot <string>", "snapshot link"));
+  .addOption(new Option("-s, --snapshot <string>", "snapshot link"))
+  .allowExcessArguments(false);
 
 program.parse();
 

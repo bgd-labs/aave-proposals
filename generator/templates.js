@@ -48,14 +48,14 @@ contract CreateProposal is EthereumScript {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${
       options.chains.length
     });
-    ${options.chains
-      .map(
-        (chain, ix) =>
-          `payloads[${ix}] = GovHelpers.build${
-            chain == "Ethereum" ? "Mainnet" : chain
-          }(address(0));`
-      )
-      .join("\n")}
+${options.chains
+  .map(
+    (chain, ix) =>
+      `    payloads[${ix}] = GovHelpers.build${
+        chain == "Ethereum" ? "Mainnet" : chain
+      }(address(0));`
+  )
+  .join("\n")}
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateName(
       options
     )}/${options.name}.md'));
@@ -66,9 +66,9 @@ contract CreateProposal is EthereumScript {
 
 export function generateAIP(options) {
   return `---
-title: ${options.title || ""}
-author: ${options.author || ""}
-discussions: ${options.discussion || ""}
+title: ${options.title || "TODO"}
+author: ${options.author || "TODO"}
+discussions: ${options.discussion || "TODO"}
 ---
 
 ## Simple Summary

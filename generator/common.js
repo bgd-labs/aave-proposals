@@ -26,7 +26,7 @@ export function generateName(options) {
 }
 
 export function generateChainName(options, chain) {
-  return generateName({ ...options, chains: [chain] }).replace(/_/g, "");
+  return generateName({ ...options, chains: [chain] });
 }
 
 export function getAlias(chain) {
