@@ -249,5 +249,8 @@ contract AaveV2EthRiskParams_20230702_Test is ProtocolV2TestBase {
 
     // 5. compare snapshots
     diffReports('preAaveV2EthRiskParams_20230702Change', 'postAaveV2EthRiskParams_20230702Change');
+
+    // 6. E2E Test
+    e2eTest(AaveV2Ethereum.POOL);
   }
 }

@@ -72,7 +72,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.BAL_UNDERLYING,
       BAL_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.BAL_UNDERLYING,
       BAL_LTV,
@@ -85,7 +84,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.BAT_UNDERLYING,
       BAT_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.BAT_UNDERLYING,
       BAT_LTV,
@@ -98,7 +96,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.CVX_UNDERLYING,
       CVX_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.CVX_UNDERLYING,
       CVX_LTV,
@@ -111,7 +108,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.DPI_UNDERLYING,
       DPI_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.DPI_UNDERLYING,
       DPI_LTV,
@@ -124,7 +120,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.ENJ_UNDERLYING,
       ENJ_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.ENJ_UNDERLYING,
       ENJ_LTV,
@@ -137,7 +132,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.KNC_UNDERLYING,
       KNC_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.KNC_UNDERLYING,
       KNC_LTV,
@@ -150,7 +144,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.MANA_UNDERLYING,
       MANA_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.MANA_UNDERLYING,
       MANA_LTV,
@@ -163,7 +156,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.REN_UNDERLYING,
       REN_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.REN_UNDERLYING,
       REN_LTV,
@@ -176,7 +168,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.xSUSHI_UNDERLYING,
       xSUSHI_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.xSUSHI_UNDERLYING,
       xSUSHI_LTV,
@@ -189,7 +180,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.YFI_UNDERLYING,
       YFI_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.YFI_UNDERLYING,
       YFI_LTV,
@@ -202,7 +192,6 @@ contract AaveV2EthRiskParams_20230702 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.ZRX_UNDERLYING,
       ZRX_RF
     );
-
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.ZRX_UNDERLYING,
       ZRX_LTV,
