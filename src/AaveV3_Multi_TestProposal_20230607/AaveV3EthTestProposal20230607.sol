@@ -11,7 +11,7 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
  * - Snapshot: TODO
  * - Discussion: TODO
  */
-contract AaveV3EthTestProposal20230507 is AaveV3PayloadEthereum {
+contract AaveV3EthTestProposal20230607 is AaveV3PayloadEthereum {
 
 
 }

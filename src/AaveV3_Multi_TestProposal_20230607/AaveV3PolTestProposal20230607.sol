@@ -11,7 +11,7 @@ import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygo
  * - Snapshot: TODO
  * - Discussion: TODO
  */
-contract AaveV3PolTestProposal20230507 is AaveV3PayloadPolygon {
+contract AaveV3PolTestProposal20230607 is AaveV3PayloadPolygon {
 
 
 }
