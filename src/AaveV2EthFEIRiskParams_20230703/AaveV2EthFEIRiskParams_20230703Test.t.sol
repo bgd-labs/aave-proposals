@@ -58,7 +58,6 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
     );
 
     // 6. E2E Test
-    address user = vm.addr(3);
-    e2eTest(AaveV2Ethereum.POOL, user);
+    e2eTest(AaveV2Ethereum.POOL);
   }
 }
