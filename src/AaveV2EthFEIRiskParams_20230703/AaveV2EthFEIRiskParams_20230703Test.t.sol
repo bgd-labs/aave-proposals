@@ -5,11 +5,14 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveV2EthFEIRiskParams_20230703} from './AaveV2EthFEIRiskParams_20230703.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
+import {ProtocolV2TestBase, ReserveConfig, InterestStrategyValues} from 'aave-helpers/ProtocolV2TestBase.sol';
+import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
 
 contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
   uint256 public constant FEI_LTV = 0; // 0%
   uint256 public constant FEI_LIQUIDATION_THRESHOLD = 1_00; // 1%
+  uint256 public constant FEI_LIQUIDATION_BONUS = 11000; // 10%
+  uint256 public constant FEI_UOPTIMAL = 1_00; // 1%
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17618386);
@@ -33,17 +36,36 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       AaveV2Ethereum.POOL
     );
 
-    // 4. Verify payload:
+    // 4. verify payload:
     ReserveConfig memory FEI_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV2EthereumAssets.FEI_UNDERLYING
     );
 
-    FEI_UNDERLYING_CONFIG.liquidationThreshold = FEI_LIQUIDATION_THRESHOLD;
+    ReserveConfig memory FEI_UNDERLYING_CONFIG_AFTER = _findReserveConfig(
+      allConfigsAfter,
+      AaveV2EthereumAssets.FEI_UNDERLYING
+    );
 
     FEI_UNDERLYING_CONFIG.ltv = FEI_LTV;
-
+    FEI_UNDERLYING_CONFIG.liquidationThreshold = FEI_LIQUIDATION_THRESHOLD;
+    FEI_UNDERLYING_CONFIG.liquidationBonus = FEI_LIQUIDATION_BONUS;
+    FEI_UNDERLYING_CONFIG.interestRateStrategy = FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy;
     _validateReserveConfig(FEI_UNDERLYING_CONFIG, allConfigsAfter);
+
+    _validateInterestRateStrategy(
+      FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy,
+      FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy,
+      InterestStrategyValues({
+        addressesProvider: address(AaveV2Ethereum.POOL_ADDRESSES_PROVIDER),
+        optimalUsageRatio: _bpsToRay(FEI_UOPTIMAL),
+        baseVariableBorrowRate: 0,
+        stableRateSlope1: _bpsToRay(2_00),
+        stableRateSlope2: _bpsToRay(100_00),
+        variableRateSlope1: _bpsToRay(4_00),
+        variableRateSlope2: _bpsToRay(100_00)
+      })
+    );
 
     _noReservesConfigsChangesApartFrom(
       allConfigsBefore,
@@ -57,7 +79,14 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       'postAaveV2EthFEIRiskParams_20230703Change'
     );
 
-    // 6. E2E Test
+    // 6. e2e Test
     e2eTest(AaveV2Ethereum.POOL);
+  }
+
+  /** @dev Converts basis points to RAY units
+   * e.g. 10_00 (10.00%) will return 100000000000000000000000000
+   */
+  function _bpsToRay(uint256 amount) internal pure returns (uint256) {
+    return (amount * WadRayMath.RAY) / 10_000;
   }
 }
