@@ -28,13 +28,6 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       AaveV2Ethereum.POOL
     );
 
-    DataTypes.ReserveData memory reserveData = AaveV2Ethereum.POOL.getReserveData(
-      AaveV2EthereumAssets.FEI_UNDERLYING
-    );
-    IDefaultInterestRateStrategy strategyBefore = IDefaultInterestRateStrategy(
-      reserveData.interestRateStrategyAddress
-    );
-
     // 2. execute payload
     GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.SHORT_EXECUTOR);
 
@@ -65,6 +58,10 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
     FEI_UNDERLYING_CONFIG.interestRateStrategy = FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy;
 
     _validateReserveConfig(FEI_UNDERLYING_CONFIG, allConfigsAfter);
+
+    IDefaultInterestRateStrategy strategyBefore = IDefaultInterestRateStrategy(
+      FEI_UNDERLYING_CONFIG.interestRateStrategy
+    );
 
     _validateInterestRateStrategy(
       FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy,
