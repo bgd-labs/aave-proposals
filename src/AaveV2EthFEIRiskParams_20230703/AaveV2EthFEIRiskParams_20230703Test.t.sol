@@ -7,7 +7,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig, InterestStrategyValues} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
-import {IDefaultInterestRateStrategy, DataTypes} from 'aave-address-book/AaveV2.sol';
+import {IDefaultInterestRateStrategy} from 'aave-address-book/AaveV2.sol';
 
 contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
   uint256 public constant FEI_LTV = 0; // 0%
