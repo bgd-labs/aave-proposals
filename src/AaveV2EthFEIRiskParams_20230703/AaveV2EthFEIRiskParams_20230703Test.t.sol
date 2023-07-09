@@ -7,6 +7,7 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase, ReserveConfig, InterestStrategyValues} from 'aave-helpers/ProtocolV2TestBase.sol';
 import {WadRayMath} from 'aave-v3-core/contracts/protocol/libraries/math/WadRayMath.sol';
+import {IDefaultInterestRateStrategy, DataTypes} from 'aave-address-book/AaveV2.sol';
 
 contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
   uint256 public constant FEI_LTV = 0; // 0%
@@ -25,6 +26,13 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV2EthFEIRiskParams_20230703Change',
       AaveV2Ethereum.POOL
+    );
+
+    DataTypes.ReserveData memory reserveData = AaveV2Ethereum.POOL.getReserveData(
+      AaveV2EthereumAssets.FEI_UNDERLYING
+    );
+    IDefaultInterestRateStrategy strategyBefore = IDefaultInterestRateStrategy(
+      reserveData.interestRateStrategyAddress
     );
 
     // 2. execute payload
@@ -47,10 +55,15 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       AaveV2EthereumAssets.FEI_UNDERLYING
     );
 
+    assert(
+      FEI_UNDERLYING_CONFIG.interestRateStrategy != FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy
+    );
+
     FEI_UNDERLYING_CONFIG.ltv = FEI_LTV;
     FEI_UNDERLYING_CONFIG.liquidationThreshold = FEI_LIQUIDATION_THRESHOLD;
     FEI_UNDERLYING_CONFIG.liquidationBonus = FEI_LIQUIDATION_BONUS;
     FEI_UNDERLYING_CONFIG.interestRateStrategy = FEI_UNDERLYING_CONFIG_AFTER.interestRateStrategy;
+
     _validateReserveConfig(FEI_UNDERLYING_CONFIG, allConfigsAfter);
 
     _validateInterestRateStrategy(
@@ -59,11 +72,11 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
       InterestStrategyValues({
         addressesProvider: address(AaveV2Ethereum.POOL_ADDRESSES_PROVIDER),
         optimalUsageRatio: _bpsToRay(FEI_UOPTIMAL),
-        baseVariableBorrowRate: 0,
-        stableRateSlope1: _bpsToRay(2_00),
-        stableRateSlope2: _bpsToRay(100_00),
-        variableRateSlope1: _bpsToRay(4_00),
-        variableRateSlope2: _bpsToRay(100_00)
+        baseVariableBorrowRate: strategyBefore.baseVariableBorrowRate(),
+        stableRateSlope1: strategyBefore.stableRateSlope1(),
+        stableRateSlope2: strategyBefore.stableRateSlope2(),
+        variableRateSlope1: strategyBefore.variableRateSlope1(),
+        variableRateSlope2: strategyBefore.variableRateSlope2()
       })
     );
 
