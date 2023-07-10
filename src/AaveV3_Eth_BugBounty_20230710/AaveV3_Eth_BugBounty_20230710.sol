@@ -19,7 +19,7 @@ contract AaveV3_Eth_BugBounty_20230710 {
   address public constant FOURTH_RECIPIENT = 0x192bDD30D272AabC2B1c3c719c518F0f2d10cc60; // Watchpug
 
   uint256 public constant FIRST_AMOUNT = 20_000e6;
-  uint256 public constant SECOND_AMOUNT = 5000e6 + 10_000e6 + 20_000e6;
+  uint256 public constant SECOND_AMOUNT = 35_000e6;
   uint256 public constant THIRD_AMOUNT = 20_000e6;
   uint256 public constant FOURTH_AMOUNT = 10_000e6;
 
