@@ -1,5 +1,5 @@
 ---
-title: TODO
+title: Bug Bounty 2023_07_10
 author: BGD labs
 discussions: https://governance.aave.com/t/bgd-bug-bounties-proposal/13077
 ---
