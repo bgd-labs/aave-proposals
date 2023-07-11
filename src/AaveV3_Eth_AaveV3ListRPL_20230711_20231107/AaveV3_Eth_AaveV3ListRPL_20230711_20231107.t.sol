@@ -36,7 +36,7 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
 
     // RPL
 
-    ReserveConfig memory RPL = ReserveConfig({
+    ReserveConfig memory RPL_ASSET = ReserveConfig({
       symbol: 'RPL',
       underlying: RPL,
       aToken: address(0), // Mock, as they don't get validated, because of the "dynamic" deployment on proposal execution
