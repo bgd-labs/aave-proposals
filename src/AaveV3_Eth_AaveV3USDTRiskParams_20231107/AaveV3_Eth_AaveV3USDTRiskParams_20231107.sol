@@ -8,8 +8,8 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
 /**
  * @title Make USDT a collateral for Aave V3 ETH Pool
  * @author Marc Zeller (@marczeller - Aave Chan Initiative)
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x3690a2555731c402ac5dbcd225bdbc64f0bd11991d4d391d2682eb77b5dfa2a6
+ * - Discussion: https://governance.aave.com/t/arfc-usdt-risk-parameters-update-aave-v3-eth-pool/13571
  */
 contract AaveV3_Eth_AaveV3USDTRiskParams_20231107 is AaveV3PayloadEthereum {
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
