@@ -35,7 +35,7 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
     );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
+      'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
       AaveV3Ethereum.POOL
     );
 
@@ -71,6 +71,6 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 
     _validateReserveConfig(RPL, allConfigsAfter);
 
-    diffReports('preAaveV3_Eth_AaveV3ListRPL_20230711_20231107', 'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107');
+    diffReports('preAaveV3_Eth_AaveV3ListRPL_20230711_20231107', 'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107');
   }
 }
