@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {EthereumScript, PolygonScript} from 'aave-helpers/ScriptUtils.sol';
-import {AaveV3_Pol_CapsUpdates_20231107} from './AaveV3_Pol_CapsUpdates_20231107.sol';
+import {AaveV3_Pol_CapsUpdates_20231107_Payload} from './AaveV3_Pol_CapsUpdates_20231107_Payload.sol';
 
 /**
  * @dev Deploy AaveV3_Pol_CapsUpdates_20231107
@@ -11,7 +11,7 @@ import {AaveV3_Pol_CapsUpdates_20231107} from './AaveV3_Pol_CapsUpdates_20231107
  */
 contract DeployPolygon is PolygonScript {
   function run() external broadcast {
-    new AaveV3_Pol_CapsUpdates_20231107();
+    new AaveV3_Pol_CapsUpdates_20231107_Payload();
   }
 }
 
