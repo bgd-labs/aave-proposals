@@ -1,5 +1,5 @@
 ---
-title: Add RPL to Aave V3 pool
+title: Add RPL to Aave V3 Ethereum pool
 author: Marc Zeller (@marczeller - Aave Chan Initiative)
 discussions: https://governance.aave.com/t/arfc-add-rpl-to-ethereum-v3/13181
 ---
