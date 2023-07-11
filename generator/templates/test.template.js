@@ -78,8 +78,10 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
     );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'pre${contractName}',
+      'post${contractName}',
       Aave${protocolVersion}${chain}.POOL
     );
+
+    diffReports('pre${contractName}', 'post${contractName}');
   }
 }`;
