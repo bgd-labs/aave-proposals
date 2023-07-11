@@ -8,8 +8,8 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
 /**
  * @title Add RPL to Aave V3 pool
  * @author Marc Zeller (@marczeller - Aave Chan Initiative)
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x036f9ce8b4a9fef0156ccf6b2a205d56d4f23b7ab9a485a16d7c8173cd85a316
+ * - Discussion: https://governance.aave.com/t/arfc-add-rpl-to-ethereum-v3/13181
  */
 contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107 is AaveV3PayloadEthereum {
 address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
