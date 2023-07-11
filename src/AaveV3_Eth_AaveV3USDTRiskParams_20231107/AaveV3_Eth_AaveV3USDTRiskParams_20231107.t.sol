@@ -17,6 +17,7 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
   uint256 public constant USDT_UNDERLYING_LTV = 74_00; // 74.0%
   uint256 public constant USDT_UNDERLYING_LIQ_THRESHOLD = 76_00; // 76.0%
   uint256 public constant USDT_UNDERLYING_LIQ_BONUS = 10450; // 4.5%
+  
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17669523);
@@ -51,6 +52,8 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
     USDT_UNDERLYING_CONFIG.ltv = USDT_UNDERLYING_LTV;
 
     USDT_UNDERLYING_CONFIG.liquidationBonus = USDT_UNDERLYING_LIQ_BONUS;
+
+    USDT_UNDERLYING_CONFIG.usageAsCollateralEnabled = true;
 
     _validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
     
