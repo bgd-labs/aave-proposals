@@ -25,6 +25,7 @@ Contract Address: [0xdAC17F958D2ee523a2206206994597C13D831ec7](https://etherscan
 | Loan to Value         | 74%   |
 | Liquidation threshold | 76%   |
 | Liquidation bonus     | 4.5%  |
+| Liquidation Protocol Fee | 10 % |
 
 ## References
 
