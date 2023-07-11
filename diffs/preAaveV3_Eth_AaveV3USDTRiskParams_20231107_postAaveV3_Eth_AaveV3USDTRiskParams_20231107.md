@@ -10,6 +10,7 @@
 | ltv | 0 % | 74 % |
 | liquidationThreshold | 0 % | 76 % |
 | liquidationBonus | 0 % | 4.5 % |
+| liquidationProtocolFee | 0 % | 10 % |
 
 
 ## Raw diff
@@ -21,6 +22,10 @@
       "liquidationBonus": {
         "from": 0,
         "to": 10450
+      },
+      "liquidationProtocolFee": {
+        "from": 0,
+        "to": 1000
       },
       "liquidationThreshold": {
         "from": 0,
