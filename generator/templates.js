@@ -7,7 +7,10 @@ export function generateScript(options, baseName) {
   let template = pragma;
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
-  template += `import {${options.chains
+  template += `import {${[
+    "Ethereum",
+    ...options.chains.filter((c) => c !== "Ethereum"),
+  ]
     .map((chain) => `${chain}Script`)
     .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
