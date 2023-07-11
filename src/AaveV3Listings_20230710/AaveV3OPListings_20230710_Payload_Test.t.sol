@@ -13,7 +13,7 @@ contract AaveV3OPListings_20230710_PayloadTest is ProtocolV3TestBase {
   AaveV3OPListings_20230710_Payload public payload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 106721134);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 106721909);
     payload = new AaveV3OPListings_20230710_Payload();
   }
 
@@ -52,7 +52,7 @@ contract AaveV3OPListings_20230710_PayloadTest is ProtocolV3TestBase {
       supplyCap: 6_000,
       borrowCap: 5_000,
       debtCeiling: 0,
-      eModeCategory: 0
+      eModeCategory: 2
     });
 
     _validateReserveConfig(rETH, allConfigs);
@@ -81,7 +81,7 @@ contract AaveV3OPListings_20230710_PayloadTest is ProtocolV3TestBase {
 
     e2eTestAsset(
       AaveV3Optimism.POOL,
-      _findReserveConfig(allConfigs, AaveV3OptimismAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigs, AaveV3OptimismAssets.USDC_UNDERLYING),
       _findReserveConfig(allConfigs, payload.RETH())
     );
 

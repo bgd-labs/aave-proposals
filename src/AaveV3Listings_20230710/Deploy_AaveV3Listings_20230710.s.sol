@@ -15,6 +15,9 @@ contract DeployAaveV3OPListings_20230710_Proposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildOptimism(address(0));
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV3Listings_20230710/LIST-RETH-OPTIMISM-V3.md'));
+    GovHelpers.createProposal(
+      payloads,
+      GovHelpers.ipfsHashFile(vm, 'src/AaveV3Listings_20230710/LIST-RETH-OPTIMISM-V3.md')
+    );
   }
 }

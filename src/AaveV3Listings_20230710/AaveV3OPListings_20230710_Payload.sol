@@ -14,41 +14,53 @@ import {AaveV3PayloadOptimism, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  */
 contract AaveV3OPListings_20230710_Payload is AaveV3PayloadOptimism {
   address public constant RETH = 0x9Bcef72be871e61ED4fBbc7630889beE758eb81D;
-  address public constant RETH_PRICE_FEED = ;
+  address public constant RETH_PRICE_FEED = 0x52d5F9f884CA21C27E2100735d793C6771eAB793;
 
-  function newListings() public pure override returns (IEngine.Listing[] memory) {
-    IEngine.Listing[] memory listings = new IEngine.Listing[](1);
+  function newListingsCustom()
+    public
+    pure
+    override
+    returns (IEngine.ListingWithCustomImpl[] memory)
+  {
+    IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](1);
 
-   listings[0] = IEngine.Listing({
-      asset: RETH,
-      assetSymbol: 'rETH',
-      priceFeed: RETH_PRICE_FEED,
-      rateStrategyParams: Rates.RateStrategyParams({
-        optimalUsageRatio: _bpsToRay(45_00),
-        baseVariableBorrowRate: 0,
-        variableRateSlope1: _bpsToRay(7_00),
-        variableRateSlope2: _bpsToRay(300_00),
-        stableRateSlope1: _bpsToRay(13_00),
-        stableRateSlope2: _bpsToRay(300_00),
-        baseStableRateOffset: _bpsToRay(3_00),
-        stableRateExcessOffset: _bpsToRay(5_00),
-        optimalStableToTotalDebtRatio: _bpsToRay(20_00)
+    listings[0] = IEngine.ListingWithCustomImpl(
+      IEngine.Listing({
+        asset: RETH,
+        assetSymbol: 'rETH',
+        priceFeed: RETH_PRICE_FEED,
+        rateStrategyParams: Rates.RateStrategyParams({
+          optimalUsageRatio: _bpsToRay(45_00),
+          baseVariableBorrowRate: 0,
+          variableRateSlope1: _bpsToRay(7_00),
+          variableRateSlope2: _bpsToRay(300_00),
+          stableRateSlope1: _bpsToRay(13_00),
+          stableRateSlope2: _bpsToRay(300_00),
+          baseStableRateOffset: _bpsToRay(3_00),
+          stableRateExcessOffset: _bpsToRay(5_00),
+          optimalStableToTotalDebtRatio: _bpsToRay(20_00)
+        }),
+        enabledToBorrow: EngineFlags.ENABLED,
+        stableRateModeEnabled: EngineFlags.DISABLED,
+        borrowableInIsolation: EngineFlags.DISABLED,
+        withSiloedBorrowing: EngineFlags.DISABLED,
+        flashloanable: EngineFlags.ENABLED,
+        ltv: 67_00,
+        liqThreshold: 74_00,
+        liqBonus: 7_50,
+        reserveFactor: 15_00,
+        supplyCap: 6_000,
+        borrowCap: 5_000,
+        debtCeiling: 0,
+        liqProtocolFee: 10_00,
+        eModeCategory: 2
       }),
-      enabledToBorrow: EngineFlags.ENABLED,
-      stableRateModeEnabled: EngineFlags.DISABLED,
-      borrowableInIsolation: EngineFlags.DISABLED,
-      withSiloedBorrowing: EngineFlags.DISABLED,
-      flashloanable: EngineFlags.ENABLED,
-      ltv: 67_00,
-      liqThreshold: 74_00,
-      liqBonus: 7_50,
-      reserveFactor: 15_00,
-      supplyCap: 6_000,
-      borrowCap: 5_000,
-      debtCeiling: 0,
-      liqProtocolFee: 10_00,
-      eModeCategory: 2
-    });
+      IEngine.TokenImplementations({
+        aToken: AaveV3Optimism.DEFAULT_A_TOKEN_IMPL_REV_2,
+        vToken: AaveV3Optimism.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2,
+        sToken: AaveV3Optimism.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2
+      })
+    );
 
     return listings;
   }
