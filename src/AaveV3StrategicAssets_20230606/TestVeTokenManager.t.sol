@@ -288,12 +288,19 @@ contract Claim is VeTokenManagerTest {
     vm.stopPrank();
   }
 
-  function test_successful() public {
-    // TODO: This test is reverting due to `deal(VE_BAL...)`
+  function test_successful_whatsUP() public {
+    vm.startPrank(0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f); // Authenticated Address
+    ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
+    vm.stopPrank();
 
     _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
 
-    deal(VE_BAL, address(strategicAssets), 1_000e18);
+    deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.lock(B_80BAL_20WETH);
+    vm.stopPrank();
+
     deal(BAL, address(this), 1_000e18);
 
     uint64 expiration = uint64(block.timestamp + WEEK);
