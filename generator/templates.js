@@ -82,19 +82,17 @@ discussions: ${options.discussion || "TODO"}
 - Implementation: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](src/${generateName(options)}/${generateChainName(
-          options,
-          chain
-        )}.sol)`
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+          options
+        )}/${generateChainName(options, chain)}.sol)`
     )
     .join(", ")}
 - Tests: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](src/${generateName(options)}/${generateChainName(
-          options,
-          chain
-        )}.t.sol)`
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+          options
+        )}/${generateChainName(options, chain)}.t.sol)`
     )
     .join(", ")}
 - [Snapshot](${options.snapshot || "TODO"})

@@ -20,17 +20,17 @@ Contract Address: [0xdAC17F958D2ee523a2206206994597C13D831ec7](https://etherscan
 
 ### new Risk Parameters
 
-| Parameter             | Value |
-| :-------------------- | :---- |
-| Loan to Value         | 74%   |
-| Liquidation threshold | 76%   |
-| Liquidation bonus     | 4.5%  |
-| Liquidation Protocol Fee | 10 % |
+| Parameter                | Value |
+| :----------------------- | :---- |
+| Loan to Value            | 74%   |
+| Liquidation threshold    | 76%   |
+| Liquidation bonus        | 4.5%  |
+| Liquidation Protocol Fee | 10 %  |
 
 ## References
 
-- Implementation: [Ethereum](src/AaveV3_Eth_AaveV3USDTRiskParams_20231107/AaveV3_Eth_AaveV3USDTRiskParams_20231107.sol)
-- Tests: [Ethereum](src/AaveV3_Eth_AaveV3USDTRiskParams_20231107/AaveV3_Eth_AaveV3USDTRiskParams_20231107.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3USDTRiskParams_20231107/AaveV3_Eth_AaveV3USDTRiskParams_20231107.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3USDTRiskParams_20231107/AaveV3_Eth_AaveV3USDTRiskParams_20231107.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x3690a2555731c402ac5dbcd225bdbc64f0bd11991d4d391d2682eb77b5dfa2a6)
 - [Discussion](https://governance.aave.com/t/arfc-usdt-risk-parameters-update-aave-v3-eth-pool/13571)
 
