@@ -9,7 +9,7 @@ import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x036f9ce8b4a9fef0156ccf6b2a205d56d4f23b7ab9a485a16d7c8173cd85a316
  * - Discussion: https://governance.aave.com/t/arfc-add-rpl-to-ethereum-v3/13181
  */
-contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107 is AaveV3PayloadEthereum {
+contract AaveV3_Eth_AaveV3ListRPL_20230711 is AaveV3PayloadEthereum {
   address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
   address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 

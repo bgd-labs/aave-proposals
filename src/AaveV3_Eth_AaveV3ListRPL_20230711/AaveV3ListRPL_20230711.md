@@ -42,8 +42,8 @@ Contract Address: [0xD33526068D116cE69F19A9ee46F0bd304F21A51f](https://etherscan
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3ListRPL_20230711_20231107/AaveV3_Eth_AaveV3ListRPL_20230711_20231107.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3ListRPL_20230711_20231107/AaveV3_Eth_AaveV3ListRPL_20230711_20231107.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3ListRPL_20230711/AaveV3_Eth_AaveV3ListRPL_20230711.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_AaveV3ListRPL_20230711/AaveV3_Eth_AaveV3ListRPL_20230711.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x036f9ce8b4a9fef0156ccf6b2a205d56d4f23b7ab9a485a16d7c8173cd85a316)
 - [Discussion](https://governance.aave.com/t/arfc-add-rpl-to-ethereum-v3/13181)
 

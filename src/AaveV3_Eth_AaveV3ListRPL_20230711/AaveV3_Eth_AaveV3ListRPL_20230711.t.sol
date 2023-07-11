@@ -5,13 +5,13 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {AaveV3_Eth_AaveV3ListRPL_20230711_20231107} from './AaveV3_Eth_AaveV3ListRPL_20230711_20231107.sol';
+import {AaveV3_Eth_AaveV3ListRPL_20230711} from './AaveV3_Eth_AaveV3ListRPL_20230711.sol';
 
 /**
- * @dev Test for AaveV3_Eth_AaveV3ListRPL_20230711_20231107
- * command: make test-contract filter=AaveV3_Eth_AaveV3ListRPL_20230711_20231107
+ * @dev Test for AaveV3_Eth_AaveV3ListRPL_20230711
+ * command: make test-contract filter=AaveV3_Eth_AaveV3ListRPL_20230711
  */
-contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
+contract AaveV3_Eth_AaveV3ListRPL_20230711_Test is ProtocolV3TestBase {
   address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
   address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 
@@ -20,17 +20,17 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
   }
 
   function testProposalExecution() public {
-    AaveV3_Eth_AaveV3ListRPL_20230711_20231107 proposal = new AaveV3_Eth_AaveV3ListRPL_20230711_20231107();
+    AaveV3_Eth_AaveV3ListRPL_20230711 proposal = new AaveV3_Eth_AaveV3ListRPL_20230711();
 
     createConfigurationSnapshot(
-      'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
+      'preAaveV3_Eth_AaveV3ListRPL_20230711',
       AaveV3Ethereum.POOL
     );
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
+      'PostAaveV3_Eth_AaveV3ListRPL_20230711',
       AaveV3Ethereum.POOL
     );
 
@@ -67,8 +67,8 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
     _validateReserveConfig(RPL_ASSET, allConfigsAfter);
 
     diffReports(
-      'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
-      'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107'
+      'preAaveV3_Eth_AaveV3ListRPL_20230711',
+      'PostAaveV3_Eth_AaveV3ListRPL_20230711'
     );
   }
 }
