@@ -13,9 +13,9 @@ import {AaveV3_Eth_AaveV3ListRPL_20230711_20231107} from './AaveV3_Eth_AaveV3Lis
  * command: make test-contract filter=AaveV3_Eth_AaveV3ListRPL_20230711_20231107
  */
 contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
+  address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
+  address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 
-address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
-address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17669147);
   }
@@ -28,11 +28,7 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
       AaveV3Ethereum.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
@@ -62,7 +58,7 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
       isFrozen: false,
       isSiloed: false,
       isBorrowableInIsolation: false,
-      isFlashloanable: false,
+      isFlashloanable: true,
       supplyCap: 105_000,
       borrowCap: 105_000,
       debtCeiling: 0,
@@ -71,6 +67,9 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 
     _validateReserveConfig(RPL, allConfigsAfter);
 
-    diffReports('preAaveV3_Eth_AaveV3ListRPL_20230711_20231107', 'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107');
+    diffReports(
+      'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
+      'PostAaveV3_Eth_AaveV3ListRPL_20230711_20231107'
+    );
   }
 }

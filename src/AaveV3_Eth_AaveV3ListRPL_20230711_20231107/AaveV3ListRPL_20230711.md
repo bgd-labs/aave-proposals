@@ -21,24 +21,24 @@ Ticker: RPL
 
 Contract Address: [0xD33526068D116cE69F19A9ee46F0bd304F21A51f](https://etherscan.io/address/0xD33526068D116cE69F19A9ee46F0bd304F21A51f)`
 
-|Parameter|Value|
-| --- | --- |
-|Isolation Mode|No|
-|Borrowable|Yes|
-|Collateral Enabled|No|
-|Supply Cap (RPL)|105,000|
-|Borrow Cap (RPL)|105,000|
-|Debt Ceiling|N/A|
-|LTV|N/A|
-|LT|N/A|
-|Liquidation Bonus|N/A|
-|Liquidation Protocol Fee|10%|
-|Variable Base|0.00%|
-|Variable Slope1|8.50%|
-|Variable Slope2|87.00%|
-|Uoptimal|80.00|
-|Reserve Factor|20.00%|
-|Stable Borrowing|Disabled|
+| Parameter                | Value    |
+| ------------------------ | -------- |
+| Isolation Mode           | No       |
+| Borrowable               | Yes      |
+| Collateral Enabled       | No       |
+| Supply Cap (RPL)         | 105,000  |
+| Borrow Cap (RPL)         | 105,000  |
+| Debt Ceiling             | N/A      |
+| LTV                      | N/A      |
+| LT                       | N/A      |
+| Liquidation Bonus        | N/A      |
+| Liquidation Protocol Fee | 10%      |
+| Variable Base            | 0.00%    |
+| Variable Slope1          | 8.50%    |
+| Variable Slope2          | 87.00%   |
+| Uoptimal                 | 80.00    |
+| Reserve Factor           | 20.00%   |
+| Stable Borrowing         | Disabled |
 
 ## References
 

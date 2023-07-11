@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
-
 /**
  * @title Add RPL to Aave V3 pool
  * @author Marc Zeller (@marczeller - Aave Chan Initiative)
@@ -12,8 +11,8 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
  * - Discussion: https://governance.aave.com/t/arfc-add-rpl-to-ethereum-v3/13181
  */
 contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107 is AaveV3PayloadEthereum {
-address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
-address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
+  address public constant RPL_USD_FEED = 0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d;
+  address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
     IEngine.Listing[] memory listings = new IEngine.Listing[](1);
@@ -37,7 +36,7 @@ address public constant RPL = 0xD33526068D116cE69F19A9ee46F0bd304F21A51f;
       stableRateModeEnabled: EngineFlags.DISABLED,
       borrowableInIsolation: EngineFlags.DISABLED,
       withSiloedBorrowing: EngineFlags.DISABLED,
-      flashloanable: EngineFlags.DISABLED,
+      flashloanable: EngineFlags.ENABLED,
       ltv: 0,
       liqThreshold: 0,
       liqBonus: 0,
