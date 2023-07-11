@@ -24,5 +24,4 @@ contract AaveV3_Pol_CapsUpdates_20231107_Payload is AaveV3PayloadPolygon {
 
     return capsUpdate;
   }
-
 }

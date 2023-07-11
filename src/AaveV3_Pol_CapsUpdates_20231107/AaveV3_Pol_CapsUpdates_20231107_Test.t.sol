@@ -25,11 +25,7 @@ contract AaveV3_Pol_CapsUpdates_20231107_Test is ProtocolV3TestBase {
       AaveV3Polygon.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     ReserveConfig memory MaticX = _findReserveConfig(
       allConfigsBefore,
@@ -50,9 +46,6 @@ contract AaveV3_Pol_CapsUpdates_20231107_Test is ProtocolV3TestBase {
 
     _validateReserveConfig(MaticX, allConfigsAfter);
 
-    diffReports(
-      'preAaveV3_Pol_CapsUpdates_20231107',
-      'postAaveV3_Pol_CapsUpdates_20231107'
-    );
+    diffReports('preAaveV3_Pol_CapsUpdates_20231107', 'postAaveV3_Pol_CapsUpdates_20231107');
   }
 }
