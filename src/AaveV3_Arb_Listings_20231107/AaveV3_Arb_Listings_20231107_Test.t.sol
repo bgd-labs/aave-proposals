@@ -23,16 +23,9 @@ contract AaveV3_Arb_Listings_20231107_Test is ProtocolV3TestBase {
   function testProposalExecution() public {
     AaveV3_Arb_Listings_20231107_Payload payload = new AaveV3_Arb_Listings_20231107_Payload();
 
-    createConfigurationSnapshot(
-      'preAaveV3_Arb_Listings_20231107',
-      AaveV3Arbitrum.POOL
-    );
+    createConfigurationSnapshot('preAaveV3_Arb_Listings_20231107', AaveV3Arbitrum.POOL);
 
-    GovHelpers.executePayload(
-      vm,
-      address(payload),
-      AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
       'postAaveV3_Arb_Listings_20231107',
@@ -97,9 +90,6 @@ contract AaveV3_Arb_Listings_20231107_Test is ProtocolV3TestBase {
       _findReserveConfig(allConfigs, payload.GMX())
     );
 
-    diffReports(
-      'preAaveV3_Arb_Listings_20231107',
-      'postAaveV3_Arb_Listings_20231107'
-    );
+    diffReports('preAaveV3_Arb_Listings_20231107', 'postAaveV3_Arb_Listings_20231107');
   }
 }
