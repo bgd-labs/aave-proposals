@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
+import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
@@ -46,11 +47,11 @@ contract AaveV3_Eth_BugBounty_20230710_Test is ProtocolV3TestBase {
     uint256 amountCmichelAfter = aUSDT.balanceOf(proposal.CMICHEL());
     uint256 amountWatchpugAfter = aUSDT.balanceOf(proposal.WATCHPUG());
 
-    assertAlmostEq(amountCollectorBefore, amountCollectorAfter + totalAmountToDisburse);
-    assertAlmostEq(amountKankoduBefore, amountKankoduAfter - proposal.KANKODU_AMOUNT());
-    assertAlmostEq(amountEmanueleBefore, amountEmanueleAfter - proposal.EMANUELE_AMOUNT());
-    assertAlmostEq(amountCmichelBefore, amountCmichelAfter - proposal.CMICHEL_AMOUNT());
-    assertAlmostEq(amountWatchpugBefore, amountWatchpugAfter - proposal.WATCHPUG_AMOUNT());
+    assertApproxEqAbs(amountCollectorBefore, amountCollectorAfter + totalAmountToDisburse, 1);
+    assertApproxEqAbs(amountKankoduBefore, amountKankoduAfter - proposal.KANKODU_AMOUNT(), 1);
+    assertApproxEqAbs(amountEmanueleBefore, amountEmanueleAfter - proposal.EMANUELE_AMOUNT(), 1);
+    assertApproxEqAbs(amountCmichelBefore, amountCmichelAfter - proposal.CMICHEL_AMOUNT(), 1);
+    assertApproxEqAbs(amountWatchpugBefore, amountWatchpugAfter - proposal.WATCHPUG_AMOUNT(), 1);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Eth_BugBounty_20230710',
@@ -59,13 +60,4 @@ contract AaveV3_Eth_BugBounty_20230710_Test is ProtocolV3TestBase {
 
     _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
   }
-
-  function assertAlmostEq(uint256 a, uint256 b) internal {
-    uint256 diff = a > b ? a - b : b - a;
-    assertLe(diff, 1);
-  }
-}
-
-interface IERC20 {
-  function balanceOf(address account) external view returns (uint256);
 }
