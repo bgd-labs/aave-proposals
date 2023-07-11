@@ -1,3 +1,14 @@
+export const AVAILABLE_CHAINS = [
+  "Ethereum",
+  "Optimism",
+  "Arbitrum",
+  "Polygon",
+  "Avalanche",
+  "Fantom",
+  "Harmony",
+  "Metis",
+];
+
 export const SHORT_CHAINS = {
   Ethereum: "Eth",
   Polygon: "Pol",
@@ -22,7 +33,7 @@ export function getDate() {
 export function generateName(options) {
   return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
-  }_${options.name}_${getDate()}`;
+  }_${options.topic}_${getDate()}`;
 }
 
 export function generateChainName(options, chain) {
@@ -31,4 +42,12 @@ export function generateChainName(options, chain) {
 
 export function getAlias(chain) {
   return chain === "Ethereum" ? "mainnet" : chain.toLowerCase();
+}
+
+export function pascalCase(str) {
+  return str
+    .replace(/(\w)(\w*)/g, function (g0, g1, g2) {
+      return g1.toUpperCase() + g2;
+    })
+    .replace(/ /g, "");
 }
