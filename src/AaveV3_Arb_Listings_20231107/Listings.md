@@ -48,8 +48,8 @@ Chainlink Oracle GMX/USD [`0xdb98056fecfff59d032ab628337a4887110df3db`](https://
 | eMode                              | No            |
 | Reserve Factor                     | 20.00%        |
 | Stable Borrowing                   | Disabled      |
-| Stable Slope1                      | 0.00%         |
-| Stable Slope2                      | 0.00%         |
+| Stable Slope1                      | 13.00%        |
+| Stable Slope2                      | 300.00%       |
 | Base Stable Rate Offset            | 0.00%         |
 | Stable Rate Excess Offset          | 13.00%        |
 | Optimal Stable To Total Debt Ratio | 20.00%        |
@@ -60,8 +60,8 @@ A list of relevant links like for this proposal:
 
 - [Governance Forum Discussion](https://governance.aave.com/t/arfc-add-gmx-to-arbitrum-v3/13768)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x1751d8de3c549ee99fbc9c1286d9575c482c3e639500dcc027455c8742d48bc9)
-- [Test Cases](XXX)
-- [Payload Implementation](XXX)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Arb_Listings_20231107/AaveV3_Arb_Listings_20231107_Test.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Arb_Listings_20231107/AaveV3_Arb_Listings_20231107_Payload.sol)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
