@@ -13,11 +13,9 @@ import {AaveV3_Eth_AaveV3USDTRiskParams_20231107} from './AaveV3_Eth_AaveV3USDTR
  * command: make test-contract filter=AaveV3_Eth_AaveV3USDTRiskParams_20231107
  */
 contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
-
   uint256 public constant USDT_UNDERLYING_LTV = 74_00; // 74.0%
   uint256 public constant USDT_UNDERLYING_LIQ_THRESHOLD = 76_00; // 76.0%
   uint256 public constant USDT_UNDERLYING_LIQ_BONUS = 10450; // 4.5%
-  
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17669523);
@@ -31,11 +29,7 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
       AaveV3Ethereum.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Eth_AaveV3USDTRiskParams_20231107',
@@ -56,7 +50,10 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
     USDT_UNDERLYING_CONFIG.usageAsCollateralEnabled = true;
 
     _validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
-    
-    diffReports('preAaveV3_Eth_AaveV3USDTRiskParams_20231107', 'postAaveV3_Eth_AaveV3USDTRiskParams_20231107');
+
+    diffReports(
+      'preAaveV3_Eth_AaveV3USDTRiskParams_20231107',
+      'postAaveV3_Eth_AaveV3USDTRiskParams_20231107'
+    );
   }
 }

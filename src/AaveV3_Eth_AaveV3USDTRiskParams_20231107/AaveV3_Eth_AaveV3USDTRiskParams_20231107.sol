@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
-
 /**
  * @title Make USDT a collateral for Aave V3 ETH Pool
  * @author Marc Zeller (@marczeller - Aave Chan Initiative)
