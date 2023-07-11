@@ -13,21 +13,23 @@ import {ICollector} from 'aave-address-book/common/ICollector.sol';
  */
 contract AaveV3_Eth_BugBounty_20230710 {
   ICollector public constant COLLECTOR = AaveV3Ethereum.COLLECTOR;
-  address public constant FIRST_RECIPIENT = 0xb91F64b7CD46e5cF5C0735d42D8292576aD45FAb; // Kankodu
-  address public constant SECOND_RECIPIENT = 0x7dF98A6e1895fd247aD4e75B8EDa59889fa7310b; // Emanuele
-  address public constant THIRD_RECIPIENT = 0x7Ac71b1944869C13b36Bfb25D7623723d288e6B2; // cmichel
-  address public constant FOURTH_RECIPIENT = 0x192bDD30D272AabC2B1c3c719c518F0f2d10cc60; // Watchpug
+  address public constant KANKODU = 0xb91F64b7CD46e5cF5C0735d42D8292576aD45FAb;
+  uint256 public constant KANKODU_AMOUNT = 20_000e6;
 
-  uint256 public constant FIRST_AMOUNT = 20_000e6;
-  uint256 public constant SECOND_AMOUNT = 35_000e6;
-  uint256 public constant THIRD_AMOUNT = 20_000e6;
-  uint256 public constant FOURTH_AMOUNT = 10_000e6;
+  address public constant EMANUELE = 0x7dF98A6e1895fd247aD4e75B8EDa59889fa7310b;
+  uint256 public constant EMANUELE_AMOUNT = 35_000e6;
+
+  address public constant CMICHEL = 0x7Ac71b1944869C13b36Bfb25D7623723d288e6B2;
+  uint256 public constant CMICHEL_AMOUNT = 20_000e6;
+
+  address public constant WATCHPUG = 0x192bDD30D272AabC2B1c3c719c518F0f2d10cc60;
+  uint256 public constant WATCHPUG_AMOUNT = 10_000e6;
 
   function execute() external {
     // Transfer bug bounties
-    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, FIRST_RECIPIENT, FIRST_AMOUNT);
-    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, SECOND_RECIPIENT, SECOND_AMOUNT);
-    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, THIRD_RECIPIENT, THIRD_AMOUNT);
-    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, FOURTH_RECIPIENT, FOURTH_AMOUNT);
+    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, KANKODU, KANKODU_AMOUNT);
+    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, EMANUELE, EMANUELE_AMOUNT);
+    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, CMICHEL, CMICHEL_AMOUNT);
+    COLLECTOR.transfer(AaveV2EthereumAssets.USDT_A_TOKEN, WATCHPUG, WATCHPUG_AMOUNT);
   }
 }

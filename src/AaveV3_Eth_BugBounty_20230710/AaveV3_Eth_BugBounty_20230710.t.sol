@@ -22,10 +22,10 @@ contract AaveV3_Eth_BugBounty_20230710_Test is ProtocolV3TestBase {
     AaveV3_Eth_BugBounty_20230710 proposal = new AaveV3_Eth_BugBounty_20230710();
     IERC20 aUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN);
 
-    uint256 totalAmountToDisburse = proposal.FIRST_AMOUNT() +
-      proposal.SECOND_AMOUNT() +
-      proposal.THIRD_AMOUNT() +
-      proposal.FOURTH_AMOUNT();
+    uint256 totalAmountToDisburse = proposal.KANKODU_AMOUNT() +
+      proposal.EMANUELE_AMOUNT() +
+      proposal.CMICHEL_AMOUNT() +
+      proposal.WATCHPUG_AMOUNT();
 
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Eth_BugBounty_20230710',
@@ -33,24 +33,24 @@ contract AaveV3_Eth_BugBounty_20230710_Test is ProtocolV3TestBase {
     );
 
     uint256 amountCollectorBefore = aUSDT.balanceOf(address(AaveV3Ethereum.COLLECTOR));
-    uint256 amountRecipientOneBefore = aUSDT.balanceOf(proposal.FIRST_RECIPIENT());
-    uint256 amountRecipientTwoBefore = aUSDT.balanceOf(proposal.SECOND_RECIPIENT());
-    uint256 amountRecipientThreeBefore = aUSDT.balanceOf(proposal.THIRD_RECIPIENT());
-    uint256 amountRecipientFourBefore = aUSDT.balanceOf(proposal.FOURTH_RECIPIENT());
+    uint256 amountKankoduBefore = aUSDT.balanceOf(proposal.KANKODU());
+    uint256 amountEmanueleBefore = aUSDT.balanceOf(proposal.EMANUELE());
+    uint256 amountCmichelBefore = aUSDT.balanceOf(proposal.CMICHEL());
+    uint256 amountWatchpugBefore = aUSDT.balanceOf(proposal.WATCHPUG());
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     uint256 amountCollectorAfter = aUSDT.balanceOf(address(AaveV3Ethereum.COLLECTOR));
-    uint256 amountRecipientOneAfter = aUSDT.balanceOf(proposal.FIRST_RECIPIENT());
-    uint256 amountRecipientTwoAfter = aUSDT.balanceOf(proposal.SECOND_RECIPIENT());
-    uint256 amountRecipientThreeAfter = aUSDT.balanceOf(proposal.THIRD_RECIPIENT());
-    uint256 amountRecipientFourAfter = aUSDT.balanceOf(proposal.FOURTH_RECIPIENT());
+    uint256 amountKankoduAfter = aUSDT.balanceOf(proposal.KANKODU());
+    uint256 amountEmanueleAfter = aUSDT.balanceOf(proposal.EMANUELE());
+    uint256 amountCmichelAfter = aUSDT.balanceOf(proposal.CMICHEL());
+    uint256 amountWatchpugAfter = aUSDT.balanceOf(proposal.WATCHPUG());
 
     assertAlmostEq(amountCollectorBefore, amountCollectorAfter + totalAmountToDisburse);
-    assertAlmostEq(amountRecipientOneBefore, amountRecipientOneAfter - proposal.FIRST_AMOUNT());
-    assertAlmostEq(amountRecipientTwoBefore, amountRecipientTwoAfter - proposal.SECOND_AMOUNT());
-    assertAlmostEq(amountRecipientThreeBefore, amountRecipientThreeAfter - proposal.THIRD_AMOUNT());
-    assertAlmostEq(amountRecipientFourBefore, amountRecipientFourAfter - proposal.FOURTH_AMOUNT());
+    assertAlmostEq(amountKankoduBefore, amountKankoduAfter - proposal.KANKODU_AMOUNT());
+    assertAlmostEq(amountEmanueleBefore, amountEmanueleAfter - proposal.EMANUELE_AMOUNT());
+    assertAlmostEq(amountCmichelBefore, amountCmichelAfter - proposal.CMICHEL_AMOUNT());
+    assertAlmostEq(amountWatchpugBefore, amountWatchpugAfter - proposal.WATCHPUG_AMOUNT());
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Eth_BugBounty_20230710',
