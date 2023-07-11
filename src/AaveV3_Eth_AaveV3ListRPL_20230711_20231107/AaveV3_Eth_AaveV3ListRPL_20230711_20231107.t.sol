@@ -64,7 +64,7 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_20231107_Test is ProtocolV3TestBase {
       eModeCategory: 0
     });
 
-    _validateReserveConfig(RPL, allConfigsAfter);
+    _validateReserveConfig(RPL_ASSET, allConfigsAfter);
 
     diffReports(
       'preAaveV3_Eth_AaveV3ListRPL_20230711_20231107',
