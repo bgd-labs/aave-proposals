@@ -70,7 +70,7 @@ A list of relevant links like for this proposal:
 
 - [Governance Forum Discussion](https://governance.aave.com/t/arfc-add-reth-aave-v3-optimism/13795)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0xb112684943ef900f2918ccbc4de3bb3091869eaeb6b3c15cc26805c17cb6a9f6)
-- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Listings_20230710/AaveV3OPListings_20230710_PayloadTest.sol)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Listings_20230710/AaveV3OPListings_20230710_Payload_Test.t.sol)
 - [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Listings_20230710/AaveV3OPListings_20230710_Payload.sol)
 
 The proposal Payload was reviewed by [Bored Ghosts Developing](https://bgdlabs.com/).
