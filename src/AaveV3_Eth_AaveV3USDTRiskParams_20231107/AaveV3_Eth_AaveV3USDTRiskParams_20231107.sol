@@ -21,7 +21,7 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107 is AaveV3PayloadEthereum {
       liqThreshold: 76_00,
       liqBonus: 4_50,
       debtCeiling: EngineFlags.KEEP_CURRENT,
-      liqProtocolFee: EngineFlags.KEEP_CURRENT,
+      liqProtocolFee: 10_00,
       eModeCategory: EngineFlags.KEEP_CURRENT
     });
     return collateralUpdate;
