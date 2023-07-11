@@ -13,7 +13,7 @@
 | borrowCap | 105,000 RPL |
 | debtCeiling | 0 $ |
 | isSiloed | false |
-| isFlashloanable | false |
+| isFlashloanable | true |
 | eModeCategory | 0 |
 | oracle | [0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d](https://etherscan.io/address/0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d) |
 | oracleDecimals | 8 |
@@ -74,7 +74,7 @@
         "interestRateStrategy": "0xD87974E8ED49AB16d5053ba793F4e17078Be0426",
         "isActive": true,
         "isBorrowableInIsolation": false,
-        "isFlashloanable": false,
+        "isFlashloanable": true,
         "isFrozen": false,
         "isPaused": false,
         "isSiloed": false,
