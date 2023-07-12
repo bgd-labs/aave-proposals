@@ -1,12 +1,18 @@
 ---
-title: Bug Bounty 2023_07_10
-author: BGD labs
+title: Bug Bounty May 2023
+author: BGD labs (@bgdlabs)
 discussions: https://governance.aave.com/t/bgd-bug-bounties-proposal/13077
 ---
 
 ## Simple Summary
 
-This proposal executes the bug bounty payout for recent findings.
+This proposal executes the bug bounty payout for recent findings. It consists of four transers to bug bounty recipients.
+
+## Motivation
+
+In order to ensure the security of the Aave protocol, it is imperative that the Aave DAO fairly rewards bug bounty hunters for their contribution.
+
+## Specification
 
 According to the discussion on the governance forum and the passing Snapshot vote, the amounts to transfer are as follows:
 
@@ -16,14 +22,6 @@ According to the discussion on the governance forum and the passing Snapshot vot
 - Watchpug ([0x192bDD30D272AabC2B1c3c719c518F0f2d10cc60](https://etherscan.io/address/0x192bDD30D272AabC2B1c3c719c518F0f2d10cc60)): 10,000 USD
 
 The bounties will be paid out in Aave V2 aUSDT ([0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811](https://etherscan.io/address/0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811)) from the Collector ([0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c](https://etherscan.io/address/0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)).
-
-## Motivation
-
-In order to ensure the security of the Aave protocol, it is imperative that the Aave DAO fairly rewards bug bounty hunters for their contribution.
-
-## Specification
-
-Transfer outlined amounts to specified addresses.
 
 ## References
 
