@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
@@ -23,7 +22,7 @@ contract AaveV3_Arb_ARBListing_20231207_Test is ProtocolV3TestBase {
   function testProposalExecution() public {
     AaveV3_Arb_ARBListing_20231207 proposal = new AaveV3_Arb_ARBListing_20231207();
 
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Arb_ARBListing_20231207',
       AaveV3Arbitrum.POOL
     );
