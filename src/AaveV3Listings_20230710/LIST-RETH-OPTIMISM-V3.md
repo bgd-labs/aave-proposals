@@ -32,7 +32,7 @@ rETH/ETH exchange rate: `Optimism: 0x22F3727be377781d1579B7C9222382b21c9d1a8f`
 | Borrowable                         | Yes         |
 | Collateral Enabled                 | Yes         |
 | Supply Cap                         | 6,000 units |
-| Borrow Cap                         | 5,000 units |
+| Borrow Cap                         | 720 units   |
 | LTV                                | 67.00%      |
 | LT                                 | 74.00%      |
 | Liquidation Bonus                  | 7.50%       |
