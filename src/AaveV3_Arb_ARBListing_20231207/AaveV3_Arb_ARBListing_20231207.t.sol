@@ -67,6 +67,12 @@ contract AaveV3_Arb_ARBListing_20231207_Test is ProtocolV3TestBase {
 
     _validateReserveConfig(ARB_ASSET, allConfigsAfter);
 
+    e2eTestAsset(
+      AaveV3Arbitrum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3ArbitrumAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, ARB)
+    );
+
     diffReports('preAaveV3_Arb_ARBListing_20231207', 'postAaveV3_Arb_ARBListing_20231207');
   }
 }

@@ -10,14 +10,21 @@ import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbi
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x308439517ffc8faa8709db0b4a1d131d2402ee8a3282cb79adf890de6135ec98
  * - Discussion: https://governance.aave.com/t/arfc-add-arb-to-arbitrum-aave-v3/13225
  */
+
 contract AaveV3_Arb_ARBListing_20231207 is AaveV3PayloadArbitrum {
   address public constant ARB_USD_FEED = 0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6;
   address public constant ARB = 0x912CE59144191C1204E64559FE8253a0e49E6548;
 
-  function newListings() public pure override returns (IEngine.Listing[] memory) {
-    IEngine.Listing[] memory listings = new IEngine.Listing[](1);
+  function newListingsCustom()
+    public
+    pure
+    override
+    returns (IEngine.ListingWithCustomImpl[] memory)
+  {
+    IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](1);
 
-    listings[0] = IEngine.Listing({
+    listings[0] = IEngine.ListingWithCustomImpl(
+      IEngine.Listing({
       asset: ARB,
       assetSymbol: 'ARB',
       priceFeed: ARB_USD_FEED,
@@ -46,7 +53,13 @@ contract AaveV3_Arb_ARBListing_20231207 is AaveV3PayloadArbitrum {
       debtCeiling: 14_000_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
-    });
+    }),
+    IEngine.TokenImplementations({
+        aToken: AaveV3Arbitrum.DEFAULT_A_TOKEN_IMPL_REV_2,
+        vToken: AaveV3Arbitrum.DEFAULT_VARIABLE_DEBT_TOKEN_IMPL_REV_2,
+        sToken: AaveV3Arbitrum.DEFAULT_STABLE_DEBT_TOKEN_IMPL_REV_2
+      })
+    );
 
     return listings;
   }

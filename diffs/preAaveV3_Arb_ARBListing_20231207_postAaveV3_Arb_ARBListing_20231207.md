@@ -26,11 +26,11 @@
 | liquidationProtocolFee | 10 % |
 | reserveFactor | 20 % |
 | aToken | [0x6533afac2E7BCCB20dca161449A13A32D391fb00](https://arbiscan.io/address/0x6533afac2E7BCCB20dca161449A13A32D391fb00) |
-| aTokenImpl | [0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B](https://arbiscan.io/address/0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B) |
+| aTokenImpl | [0x1Be1798b70aEe431c2986f7ff48d9D1fa350786a](https://arbiscan.io/address/0x1Be1798b70aEe431c2986f7ff48d9D1fa350786a) |
 | variableDebtToken | [0x44705f578135cC5d703b4c9c122528C73Eb87145](https://arbiscan.io/address/0x44705f578135cC5d703b4c9c122528C73Eb87145) |
-| variableDebtTokenImpl | [0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3](https://arbiscan.io/address/0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3) |
+| variableDebtTokenImpl | [0x5E76E98E0963EcDC6A065d1435F84065b7523f39](https://arbiscan.io/address/0x5E76E98E0963EcDC6A065d1435F84065b7523f39) |
 | stableDebtToken | [0x6B4b37618D85Db2a7b469983C888040F7F05Ea3D](https://arbiscan.io/address/0x6B4b37618D85Db2a7b469983C888040F7F05Ea3D) |
-| stableDebtTokenImpl | [0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e](https://arbiscan.io/address/0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e) |
+| stableDebtTokenImpl | [0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7](https://arbiscan.io/address/0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7) |
 | borrowingEnabled | true |
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
@@ -63,7 +63,7 @@
       "from": null,
       "to": {
         "aToken": "0x6533afac2E7BCCB20dca161449A13A32D391fb00",
-        "aTokenImpl": "0xa5ba6E5EC19a1Bf23C857991c857dB62b2Aa187B",
+        "aTokenImpl": "0x1Be1798b70aEe431c2986f7ff48d9D1fa350786a",
         "aTokenName": "Aave Arbitrum ARB",
         "aTokenSymbol": "aArbARB",
         "borrowCap": 16000000,
@@ -89,7 +89,7 @@
         "reserveFactor": 2000,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x6B4b37618D85Db2a7b469983C888040F7F05Ea3D",
-        "stableDebtTokenImpl": "0x52A1CeB68Ee6b7B5D13E0376A1E0E4423A8cE26e",
+        "stableDebtTokenImpl": "0x0c2C95b24529664fE55D4437D7A31175CFE6c4f7",
         "stableDebtTokenName": "Aave Arbitrum Stable Debt ARB",
         "stableDebtTokenSymbol": "stableDebtArbARB",
         "supplyCap": 20000000,
@@ -97,7 +97,7 @@
         "underlying": "0x912CE59144191C1204E64559FE8253a0e49E6548",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0x44705f578135cC5d703b4c9c122528C73Eb87145",
-        "variableDebtTokenImpl": "0x81387c40EB75acB02757C1Ae55D5936E78c9dEd3",
+        "variableDebtTokenImpl": "0x5E76E98E0963EcDC6A065d1435F84065b7523f39",
         "variableDebtTokenName": "Aave Arbitrum Variable Debt ARB",
         "variableDebtTokenSymbol": "variableDebtArbARB"
       }
