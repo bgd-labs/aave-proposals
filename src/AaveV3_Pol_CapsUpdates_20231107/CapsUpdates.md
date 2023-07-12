@@ -34,8 +34,8 @@ Contract: polygon: 0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6 1
 
 ## References
 
-- Implementation: [Polygon](src/AaveV3_Pol_CapsUpdates_20231107/AaveV3_Pol_CapsUpdates_20231107.sol)
-- Tests: [Polygon](src/AaveV3_Pol_CapsUpdates_20231107/AaveV3_Pol_CapsUpdates_20231107.t.sol)
+- Implementation: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Pol_CapsUpdates_20231107/AaveV3_Pol_CapsUpdates_20231107.sol)
+- Tests: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Pol_CapsUpdates_20231107/AaveV3_Pol_CapsUpdates_20231107.t.sol)
 - [Discussion](https://governance.aave.com/t/arfc-polygon-supply-cap-update-07-07-2023/13928)
 
 ## Copyright
