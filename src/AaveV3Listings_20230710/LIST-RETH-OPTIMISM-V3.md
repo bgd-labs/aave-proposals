@@ -77,7 +77,7 @@ The proposal Payload was reviewed by [Bored Ghosts Developing](https://bgdlabs.c
 
 # Disclaimer
 
-Llama is a service provider to the Aave DAO and does not receive anything outside of this aggreement for the publication of this proposal.
+Llama is a service provider to the Aave DAO and does not receive anything outside of this agreement for the publication of this proposal.
 
 # Copyright
 

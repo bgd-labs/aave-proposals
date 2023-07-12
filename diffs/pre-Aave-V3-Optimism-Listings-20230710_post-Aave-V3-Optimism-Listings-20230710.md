@@ -10,7 +10,7 @@
 | isActive | true |
 | isFrozen | false |
 | supplyCap | 6,000 rETH |
-| borrowCap | 5,000 rETH |
+| borrowCap | 720 rETH |
 | debtCeiling | 0 $ |
 | isSiloed | false |
 | isFlashloanable | true |
@@ -66,7 +66,7 @@
         "aTokenImpl": "0xbCb167bDCF14a8F791d6f4A6EDd964aed2F8813B",
         "aTokenName": "Aave Optimism rETH",
         "aTokenSymbol": "aOptrETH",
-        "borrowCap": 5000,
+        "borrowCap": 720,
         "borrowingEnabled": true,
         "debtCeiling": 0,
         "decimals": 18,

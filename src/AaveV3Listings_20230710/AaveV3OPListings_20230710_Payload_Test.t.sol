@@ -50,7 +50,7 @@ contract AaveV3OPListings_20230710_PayloadTest is ProtocolV3TestBase {
       isBorrowableInIsolation: false,
       isFlashloanable: true,
       supplyCap: 6_000,
-      borrowCap: 5_000,
+      borrowCap: 720,
       debtCeiling: 0,
       eModeCategory: 2
     });

@@ -50,7 +50,7 @@ contract AaveV3OPListings_20230710_Payload is AaveV3PayloadOptimism {
         liqBonus: 7_50,
         reserveFactor: 15_00,
         supplyCap: 6_000,
-        borrowCap: 5_000,
+        borrowCap: 720,
         debtCeiling: 0,
         liqProtocolFee: 10_00,
         eModeCategory: 2
