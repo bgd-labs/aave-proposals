@@ -42,7 +42,7 @@ jobs:
       - name: Run step if any *.md file(s) change
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          cat .github/outputs/added_files.json
+          cat .github/outputs/all_changed_files.json
 
       - name: Upload
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -50,7 +50,7 @@ jobs:
           PINATA_KEY: ${{ secrets.PINATA_KEY }}
           PINATA_SECRET: ${{ secrets.PINATA_SECRET }}
         run: |
-          json_array=($(jq -r '.[]' ".github/outputs/added_files.json"))
+          json_array=($(jq -r '.[]' ".github/outputs/all_changed_files.json"))
           for i in "${json_array[@]}"
           do
             npx aave-cli ipfs $i -u ${{ github.event_name != 'pull_request'}}
