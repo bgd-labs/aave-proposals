@@ -60,7 +60,7 @@ contract AaveV3_Arb_ARBListing_20231207_Test is ProtocolV3TestBase {
       isBorrowableInIsolation: false,
       isFlashloanable: true,
       supplyCap: 20_000_000,
-      borrowCap: 16_000_000,
+      borrowCap: 16_500_000,
       debtCeiling: 14_000_000_00,
       eModeCategory: 0
     });

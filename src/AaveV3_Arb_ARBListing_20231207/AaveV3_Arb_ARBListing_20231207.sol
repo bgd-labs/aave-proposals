@@ -49,7 +49,7 @@ contract AaveV3_Arb_ARBListing_20231207 is AaveV3PayloadArbitrum {
       liqBonus: 10_00,
       reserveFactor: 20_00,
       supplyCap: 20_000_000,
-      borrowCap: 16_000_000,
+      borrowCap: 16_500_000,
       debtCeiling: 14_000_000,
       liqProtocolFee: 10_00,
       eModeCategory: 0
