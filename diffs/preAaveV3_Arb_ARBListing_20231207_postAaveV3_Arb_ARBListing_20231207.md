@@ -10,7 +10,7 @@
 | isActive | true |
 | isFrozen | false |
 | supplyCap | 20,000,000 ARB |
-| borrowCap | 16,000,000 ARB |
+| borrowCap | 16,500,000 ARB |
 | debtCeiling | 14,000,000 $ |
 | isSiloed | false |
 | isFlashloanable | true |
@@ -66,7 +66,7 @@
         "aTokenImpl": "0x1Be1798b70aEe431c2986f7ff48d9D1fa350786a",
         "aTokenName": "Aave Arbitrum ARB",
         "aTokenSymbol": "aArbARB",
-        "borrowCap": 16000000,
+        "borrowCap": 16500000,
         "borrowingEnabled": true,
         "debtCeiling": 1400000000,
         "decimals": 18,
