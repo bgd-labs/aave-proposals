@@ -27,8 +27,8 @@ Transfer outlined amounts to specified addresses.
 
 ## References
 
-- Implementation: [Ethereum](src/AaveV3_Eth_BugBounty_20230710/AaveV3_Eth_BugBounty_20230710.sol)
-- Tests: [Ethereum](src/AaveV3_Eth_BugBounty_20230710/AaveV3_Eth_BugBounty_20230710.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_BugBounty_20230710/AaveV3_Eth_BugBounty_20230710.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Eth_BugBounty_20230710/AaveV3_Eth_BugBounty_20230710.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x6f70e60abd398e1ff04ff6a78cd313b69d47df84e42b790c14c273dc5ab31674)
 - [Discussion](https://governance.aave.com/t/bgd-bug-bounties-proposal/13077)
 
