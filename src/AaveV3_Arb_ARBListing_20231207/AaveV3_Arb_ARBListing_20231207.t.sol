@@ -23,7 +23,7 @@ contract AaveV3_Arb_ARBListing_20231207_Test is ProtocolV3TestBase {
   function testProposalExecution() public {
     AaveV3_Arb_ARBListing_20231207 proposal = new AaveV3_Arb_ARBListing_20231207();
 
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Arb_ARBListing_20231207',
       AaveV3Arbitrum.POOL
     );
