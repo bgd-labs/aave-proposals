@@ -54,6 +54,7 @@
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/eda3aded0333ece535adb2c0df7f1b16add284a2.svg) |
 
+
 #### MKR ([0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2](https://etherscan.io/address/0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2))
 
 | description | value |
@@ -105,6 +106,7 @@
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/eda3aded0333ece535adb2c0df7f1b16add284a2.svg) |
+
 
 #### SNX ([0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F](https://etherscan.io/address/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F))
 
@@ -158,6 +160,7 @@
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/ff9e4fbc62a514b26930a610b56fc551c9a85e5d.svg) |
 
+
 #### BAL ([0xba100000625a3754423978a60c9317c58a424e3D](https://etherscan.io/address/0xba100000625a3754423978a60c9317c58a424e3D))
 
 | description | value |
@@ -209,6 +212,7 @@
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/9b76f4d701a0fb8c25bd52913ac796d725cc2e09.svg) |
+
 
 ## Raw diff
 
