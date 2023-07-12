@@ -29,7 +29,7 @@ contract AaveV3_Arb_ARBListing_20231207 is AaveV3PayloadArbitrum {
       assetSymbol: 'ARB',
       priceFeed: ARB_USD_FEED,
       rateStrategyParams: Rates.RateStrategyParams({
-        optimalUsageRatio: _bpsToRay(80_00),
+        optimalUsageRatio: _bpsToRay(45_00),
         baseVariableBorrowRate: 0,
         variableRateSlope1: _bpsToRay(7_00),
         variableRateSlope2: _bpsToRay(300_00),

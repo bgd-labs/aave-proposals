@@ -42,8 +42,8 @@
 | stableDebtTokenSymbol | stableDebtArbARB |
 | variableDebtTokenName | Aave Arbitrum Variable Debt ARB |
 | variableDebtTokenSymbol | variableDebtArbARB |
-| optimalUsageRatio | 80 % |
-| maxExcessUsageRatio | 20 % |
+| optimalUsageRatio | 45 % |
+| maxExcessUsageRatio | 55 % |
 | baseVariableBorrowRate | 0 % |
 | variableRateSlope1 | 7 % |
 | variableRateSlope2 | 300 % |
@@ -52,7 +52,7 @@
 | stableRateSlope2 | 300 % |
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
-| interestRate | ![ir](/.assets/2908218e2631bf80179cc58adc4994bd0757572d.svg) |
+| interestRate | ![ir](/.assets/11fa722c8174e6a8b33a6ba1b49f3d0138f692a3.svg) |
 
 ## Raw diff
 
@@ -110,9 +110,9 @@
         "baseStableBorrowRate": "80000000000000000000000000",
         "baseVariableBorrowRate": 0,
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
-        "maxExcessUsageRatio": "200000000000000000000000000",
+        "maxExcessUsageRatio": "550000000000000000000000000",
         "optimalStableToTotalDebtRatio": "200000000000000000000000000",
-        "optimalUsageRatio": "800000000000000000000000000",
+        "optimalUsageRatio": "450000000000000000000000000",
         "stableRateSlope1": "70000000000000000000000000",
         "stableRateSlope2": "3000000000000000000000000000",
         "variableRateSlope1": "70000000000000000000000000",

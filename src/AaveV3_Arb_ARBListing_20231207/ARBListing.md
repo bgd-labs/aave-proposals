@@ -50,7 +50,8 @@ Contract Address: [0x912CE59144191C1204E64559FE8253a0e49E6548](https://arbiscan.
 - Implementation: [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Arb_ARBListing_20231207/AaveV3_Arb_ARBListing_20231207.sol)
 - Tests: [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Arb_ARBListing_20231207/AaveV3_Arb_ARBListing_20231207.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x308439517ffc8faa8709db0b4a1d131d2402ee8a3282cb79adf890de6135ec98)
-- [Discussion](https://governance.aave.com/t/arfc-add-arb-to-arbitrum-aave-v3/13225)
+- [ARFC Discussion](https://governance.aave.com/t/arfc-add-arb-to-arbitrum-aave-v3/13225)
+- [TEMP CHECK Discussion](https://governance.aave.com/t/temp-check-add-arb-to-arbitrum-aave-v3/12915)
 
 ## Copyright
 
