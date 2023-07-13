@@ -53,6 +53,12 @@
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/eda3aded0333ece535adb2c0df7f1b16add284a2.svg) |
+| eMode.label | ETH correlated |
+| eMode.ltv | 90 % |
+| eMode.liquidationThreshold | 93 % |
+| eMode.liquidationBonus | 1 % |
+| eMode.priceSource | 0x0000000000000000000000000000000000000000 |
+
 
 ## Raw diff
 
