@@ -5,19 +5,18 @@ import 'forge-std/Test.sol';
 
 import {IPoolConfigurator, ConfiguratorInputTypes} from 'aave-address-book/AaveV3.sol';
 import {AaveV3Avalanche} from 'aave-address-book/AaveAddressBook.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {ProtocolV3LegacyTestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
 import {AaveV3AvaRatesUpdatesSteward_20230331} from './AaveV3AvaxRatesUpdatesSteward_20230331.sol';
 
-contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase, TestWithExecutor {
+contract AaveV3AvaCapsByGuardian is ProtocolV3LegacyTestBase {
   using stdStorage for StdStorage;
 
   address public constant GUARDIAN_AVALANCHE = 0xa35b76E4935449E33C56aB24b23fcd3246f13470;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('avalanche'), 28120569);
-    _selectPayloadExecutor(GUARDIAN_AVALANCHE);
   }
 
   function testUpdatesRatesAndReserveFactors() public {
@@ -47,7 +46,7 @@ contract AaveV3AvaCapsByGuardian is ProtocolV3TestBase, TestWithExecutor {
     );
 
     AaveV3AvaRatesUpdatesSteward_20230331 rateSteward = new AaveV3AvaRatesUpdatesSteward_20230331();
-    _executePayload(address(rateSteward));
+    GovHelpers.executePayload(vm, address(rateSteward), GUARDIAN_AVALANCHE);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postTestAvaRatesUpdateMar31',

@@ -5,28 +5,29 @@ pragma solidity 0.8.17;
 import 'forge-std/Test.sol';
 import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
-import {ProtocolV3_0_1TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, InterestStrategyValues, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {TestWithExecutor} from 'aave-helpers/GovHelpers.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3Listings_20230403_Payload} from './AaveV3Listings_20230403_Payload.sol';
 
-contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWithExecutor {
+contract AaveV3Listings_20230403_PayloadTest is ProtocolV3TestBase {
   uint256 internal constant RAY = 1e27;
   AaveV3Listings_20230403_Payload public payload;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 16991341);
-    _selectPayloadExecutor(AaveGovernanceV2.SHORT_EXECUTOR);
-
     payload = new AaveV3Listings_20230403_Payload();
   }
 
   function testPoolActivation() public {
     createConfigurationSnapshot('pre-Aave-V3-Ethereum-LDO-Listing', AaveV3Ethereum.POOL);
 
-    _executePayload(address(payload));
+    GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
-    ReserveConfig[] memory allConfigs = _getReservesConfigs(AaveV3Ethereum.POOL);
+    ReserveConfig[] memory allConfigs = createConfigurationSnapshot(
+      'post-Aave-V3-Ethereum-LDO-Listing',
+      AaveV3Ethereum.POOL
+    );
 
     ReserveConfig memory ldo = ReserveConfig({
       symbol: 'LDO',
@@ -79,8 +80,6 @@ contract AaveV3Listings_20230403_PayloadTest is ProtocolV3_0_1TestBase, TestWith
       payload.LDO(),
       payload.LDO_PRICE_FEED()
     );
-
-    createConfigurationSnapshot('post-Aave-V3-Ethereum-LDO-Listing', AaveV3Ethereum.POOL);
 
     diffReports('pre-Aave-V3-Ethereum-LDO-Listing', 'post-Aave-V3-Ethereum-LDO-Listing');
   }

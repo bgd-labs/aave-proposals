@@ -26,6 +26,34 @@ forge install
 yarn
 ```
 
+### Create an aip
+
+This repository includes a generator to help you bootstrap the required files for an `AIP`.
+To generate a proposal you need to run: `yarn generate -a "BGD labs" --chains Ethereum Polygon -pv V3 --name TestProposal --configEngine`
+
+To get a full list of available commands run `yarn generate --help`
+
+```sh
+Usage: proposal-generator [options]
+
+CLI to generate aave proposals
+
+Options:
+  -V, --version                    output the version number
+  -f, --force                      force creation (might overwrite existing files)
+  -cfg, --configEngine             extends config engine
+  -name, --name <string>           name of the proposal (e.g. CapsIncrease)
+  -ch, --chains <letters...>        (choices: "Ethereum", "Optimism", "Arbitrum", "Polygon", "Avalanche", "Fantom", "Harmony", "Metis")
+  -pv, --protocolVersion <string>   (choices: "V2", "V3")
+  -t, --title <string>             aip title
+  -a, --author <string>            author
+  -d, --discussion <string>        forum link
+  -s, --snapshot <string>          snapshot link
+  -h, --help                       display help for command
+```
+
+If you have any feedback regarding the generator (bugs, improvements, features), don't hesitate and put it [here](https://github.com/bgd-labs/aave-proposals/issues/200)!
+
 ### Test
 
 ```sh
@@ -34,6 +62,20 @@ yarn
 forge test
 # We also provide a script with sensible defaults to just test a single contract matching a filter
 make test-contract filter=ENS
+```
+
+### Deploy
+
+The makefile contains some generic templates for proposal deployments.
+To deploy a contract you can run `make deploy-ledger contract=pathToContract:Contract chain=chainAlias`.
+
+```sh
+# example
+make deploy-ledger contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet
+make deploy-pk contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet
+# both targets also expose a `dry` option you can run via
+make deploy-ledger contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet dry=true
+make deploy-pk contract=script/CreateProposals.s.sol:MultiPayloadProposal chain=mainnet dry=true
 ```
 
 ### Simulate

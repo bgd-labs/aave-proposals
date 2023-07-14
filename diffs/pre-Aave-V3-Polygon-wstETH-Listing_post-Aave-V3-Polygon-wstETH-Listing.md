@@ -53,6 +53,12 @@
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/6c6aa53c31467fe6d6e1e00491cf89ca125ee373.svg) |
+| eMode.label | ETH correlated |
+| eMode.ltv | 90 % |
+| eMode.liquidationThreshold | 93 % |
+| eMode.liquidationBonus | 1 % |
+| eMode.priceSource | 0x0000000000000000000000000000000000000000 |
+
 
 ### Reserves altered
 
@@ -61,6 +67,11 @@
 | description | value before | value after |
 | --- | --- | --- |
 | eModeCategory | 0 | 3 |
+| eMode.label | - | ETH correlated |
+| eMode.ltv | - | 90 % |
+| eMode.liquidationThreshold | - | 93 % |
+| eMode.liquidationBonus | - | 1 % |
+| eMode.priceSource | - | 0x0000000000000000000000000000000000000000 |
 
 
 ## Raw diff
