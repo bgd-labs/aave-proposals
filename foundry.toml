@@ -6,6 +6,7 @@ libs = ['lib']
 ffi = true
 fs_permissions = [{access = "write", path = "./reports"}]
 
+auto_detect_remappings = false
 
 [rpc_endpoints]
 mainnet = "${RPC_MAINNET}"

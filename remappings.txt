@@ -1,3 +1,4 @@
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
 aave-address-book/=lib/aave-address-book/src/
 aave-helpers/=lib/aave-helpers/src/
 ds-test/=lib/forge-std/lib/ds-test/src/
@@ -5,3 +6,5 @@ forge-std/=lib/forge-std/src/
 solidity-utils/=lib/solidity-utils/src/
 aave-v3-periphery/=lib/aave-v3-periphery/contracts/
 aave-v3-core/=lib/aave-address-book/lib/aave-v3-core/
+@aave/core-v3/=lib/aave-address-book/lib/aave-v3-core/
+gho-core/=lib/gho-core/src/
