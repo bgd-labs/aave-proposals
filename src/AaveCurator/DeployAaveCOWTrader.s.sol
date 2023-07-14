@@ -11,3 +11,7 @@ contract DeployAaveCuratorScript is EthereumScript {
     new AaveCurator();
   }
 }
+
+contract CreateAaveCuratorProposal is EthereumScript {
+  function run() external broadcast {}
+}
