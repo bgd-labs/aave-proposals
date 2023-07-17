@@ -71,6 +71,57 @@ if (!options.configEngine) {
   });
 }
 
+export const ENGINE_FEATURES = {
+  preHook: {
+    name: "PreHook",
+    value: "PreHook",
+  },
+  postHook: {
+    name: "PostHook",
+    value: "PostHook",
+  },
+  rateStrategiesUpdates: {
+    name: "RateStrategyUpdates",
+    value: "RateStrategyUpdates",
+  },
+  capsUpdate: {
+    name: "CapsUpdate",
+    value: "CapsUpdate",
+  },
+};
+
+if (options.configEngine) {
+  if (options.protocolVersion === "V2") {
+    options.features = await checkbox({
+      message: "What do you want to do?",
+      choices: [
+        ENGINE_FEATURES.rateStrategiesUpdates,
+        ENGINE_FEATURES.preHook,
+        ENGINE_FEATURES.postHook,
+      ],
+    });
+
+    // TODO: collect more info regarding certain features
+    // if (options.features) {
+    // }
+  }
+  if (options.protocolVersion === "V3") {
+    options.features = await checkbox({
+      message: "What do you want to do?",
+      choices: [
+        ENGINE_FEATURES.rateStrategiesUpdates,
+        ENGINE_FEATURES.preHook,
+        ENGINE_FEATURES.postHook,
+        ENGINE_FEATURES.capsUpdate,
+      ],
+    });
+
+    // TODO: collect more info regarding certain features
+    // if (options.features) {
+    // }
+  }
+}
+
 if (!options.title) {
   options.title = await input({
     message: "Title of your proposal",
@@ -114,6 +165,8 @@ if (!options.force && fs.existsSync(baseFolder)) {
     default: false,
   });
 }
+
+console.log(options);
 
 // create files
 if (fs.existsSync(baseFolder) && !options.force) {

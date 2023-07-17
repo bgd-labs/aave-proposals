@@ -1,6 +1,6 @@
 ---
-title: Test
-author: BGD
+title: test
+author: BGD labs
 discussions: TODO
 ---
 

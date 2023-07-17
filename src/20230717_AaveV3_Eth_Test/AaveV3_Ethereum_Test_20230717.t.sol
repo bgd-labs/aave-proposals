@@ -14,7 +14,7 @@ import {AaveV3_Ethereum_Test_20230717} from './AaveV3_Ethereum_Test_20230717.sol
  */
 contract AaveV3_Ethereum_Test_20230717_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17712611);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17713929);
   }
 
   function testProposalExecution() public {
