@@ -7,6 +7,11 @@
 | description | value before | value after |
 | --- | --- | --- |
 | eModeCategory | 0 | 2 |
+| eMode.label | - | ETH correlated |
+| eMode.ltv | - | 90 % |
+| eMode.liquidationThreshold | - | 93 % |
+| eMode.liquidationBonus | - | 1 % |
+| eMode.priceSource | - | 0x0000000000000000000000000000000000000000 |
 
 
 #### WETH ([0x4200000000000000000000000000000000000006](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000006))
@@ -14,6 +19,11 @@
 | description | value before | value after |
 | --- | --- | --- |
 | eModeCategory | 0 | 2 |
+| eMode.label | - | ETH correlated |
+| eMode.ltv | - | 90 % |
+| eMode.liquidationThreshold | - | 93 % |
+| eMode.liquidationBonus | - | 1 % |
+| eMode.priceSource | - | 0x0000000000000000000000000000000000000000 |
 
 
 ## Raw diff
