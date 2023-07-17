@@ -19,6 +19,8 @@ contract AaveCurator is VersionedInitializable {
   using SafeERC20 for IERC20;
 
   event AdminChanged(address indexed oldAdmin, address indexed newAdmin);
+  event DepositedIntoV2(address indexed token, uint256 amount);
+  event DepositedIntoV3(address indexed token, uint256 amount);
   event ManagerChanged(address indexed oldAdmin, address indexed newAdmin);
   event SwapCanceled(address fromToken, address toToken, uint256 amount);
   event SwapRequested(address fromToken, address toToken, uint256 amount);
@@ -166,24 +168,18 @@ contract AaveCurator is VersionedInitializable {
     );
   }
 
-  function depositTokenIntoV2(address token) external onlyAdminOrManager {
-    if (!allowedToTokens[token]) revert InvalidToken();
-    AaveV2Ethereum.POOL.deposit(
-      token,
-      IERC20(token).balanceOf(address(this)),
-      address(AaveV3Ethereum.COLLECTOR),
-      0
-    );
+  function depositTokenIntoV2(address token, uint256 amount) external onlyAdminOrManager {
+    if (!allowedFromTokens[token]) revert InvalidToken();
+    IERC20(token).approve(address(AaveV2Ethereum.POOL), amount);
+    AaveV2Ethereum.POOL.deposit(token, amount, address(AaveV3Ethereum.COLLECTOR), 0);
+    emit DepositedIntoV2(token, amount);
   }
 
-  function depositTokenIntoV3(address token) external onlyAdminOrManager {
-    if (!allowedToTokens[token]) revert InvalidToken();
-    AaveV3Ethereum.POOL.deposit(
-      token,
-      IERC20(token).balanceOf(address(this)),
-      address(AaveV3Ethereum.COLLECTOR),
-      0
-    );
+  function depositTokenIntoV3(address token, uint256 amount) external onlyAdminOrManager {
+    if (!allowedFromTokens[token]) revert InvalidToken();
+    IERC20(token).approve(address(AaveV3Ethereum.POOL), amount);
+    AaveV3Ethereum.POOL.deposit(token, amount, address(AaveV3Ethereum.COLLECTOR), 0);
+    emit DepositedIntoV3(token, amount);
   }
 
   function setAdmin(address _admin) external onlyAdmin {
