@@ -6,12 +6,12 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
 
 
 /**
- * @title test
+ * @title Test
  * @author BGD
  * - Snapshot: TODO
  * - Discussion: TODO
  */
-contract AaveV3_Eth_Test_20230717 is AaveV3PayloadEthereum {
+contract AaveV3_Ethereum_Test_20230717 is AaveV3PayloadEthereum {
 
 
 }

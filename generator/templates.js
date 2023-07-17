@@ -1,4 +1,8 @@
-import { generateChainName, generateName, getAlias } from "./common.js";
+import {
+  generateContractName,
+  generateFolderName,
+  getAlias,
+} from "./common.js";
 
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
@@ -15,7 +19,7 @@ export function generateScript(options, baseName) {
     .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
     .map((chain) => {
-      const name = generateChainName(options, chain);
+      const name = generateContractName(options, chain);
       return `import {${name}} from './${name}.sol';`;
     })
     .join("\n");
@@ -24,7 +28,7 @@ export function generateScript(options, baseName) {
   // generate chain scripts
   template += options.chains
     .map((chain) => {
-      const name = generateChainName(options, chain);
+      const name = generateContractName(options, chain);
 
       return `/**
  * @dev Deploy ${name}
@@ -59,7 +63,7 @@ ${options.chains
       }(address(0));`
   )
   .join("\n")}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateName(
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateFolderName(
       options
     )}/${options.shortName}.md'));
   }
@@ -85,17 +89,17 @@ discussions: ${options.discussion || "TODO"}
 - Implementation: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateChainName(options, chain)}.sol)`
+        )}/${generateContractName(options, chain)}.sol)`
     )
     .join(", ")}
 - Tests: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateChainName(options, chain)}.t.sol)`
+        )}/${generateContractName(options, chain)}.t.sol)`
     )
     .join(", ")}
 - [Snapshot](${options.snapshot || "TODO"})

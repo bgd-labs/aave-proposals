@@ -32,14 +32,29 @@ export function getDate() {
   }${day}`;
 }
 
-export function generateName(options) {
-  return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
+/**
+ * Prefix with the date for proper sorting
+ * @param {*} options
+ * @returns
+ */
+export function generateFolderName(options) {
+  return `${getDate()}_${
+    options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"
+  }_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
-  }_${options.shortName}_${getDate()}`;
+  }_${options.shortName}`;
 }
 
-export function generateChainName(options, chain) {
-  return generateName({ ...options, chains: [chain] });
+/**
+ * Suffix with the date as prefixing would generate invalid contract names
+ * @param {*} options
+ * @param {*} chain
+ * @returns
+ */
+export function generateContractName(options, chain) {
+  return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${chain}_${
+    options.shortName
+  }_${getDate()}`;
 }
 
 export function getAlias(chain) {

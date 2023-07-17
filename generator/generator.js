@@ -5,8 +5,8 @@ import { generateAIP, generateScript } from "./templates.js";
 import {
   AVAILABLE_CHAINS,
   AVAILABLE_VERSIONS,
-  generateChainName,
-  generateName,
+  generateContractName,
+  generateFolderName,
   pascalCase,
 } from "./common.js";
 import { engineProposalTemplate } from "./templates/engineProposal.template.js";
@@ -104,7 +104,7 @@ if (!options.snapshot) {
   });
 }
 
-const baseName = generateName(options);
+const baseName = generateFolderName(options);
 const baseFolder = path.join(process.cwd(), "src", baseName);
 
 if (!options.force && fs.existsSync(baseFolder)) {
@@ -123,7 +123,7 @@ if (fs.existsSync(baseFolder) && !options.force) {
   fs.mkdirSync(baseFolder, { recursive: true });
 
   async function createFiles(options, chain) {
-    const contractName = generateChainName(options, chain);
+    const contractName = generateContractName(options, chain);
     if (options.configEngine) {
       fs.writeFileSync(
         path.join(baseFolder, `${contractName}.sol`),
