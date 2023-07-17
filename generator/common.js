@@ -35,7 +35,7 @@ export function getDate() {
 export function generateName(options) {
   return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
-  }_${options.topic}_${getDate()}`;
+  }_${options.shortName}_${getDate()}`;
 }
 
 export function generateChainName(options, chain) {

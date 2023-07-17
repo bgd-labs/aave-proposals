@@ -61,7 +61,7 @@ ${options.chains
   .join("\n")}
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateName(
       options
-    )}/${options.name}.md'));
+    )}/${options.shortName}.md'));
   }
 }`;
   return template;

@@ -80,8 +80,7 @@ if (!options.title) {
     },
   });
 }
-// topic name is a bit arbitrary
-options.topic = pascalCase(options.title);
+options.shortName = pascalCase(options.title);
 
 if (!options.author) {
   options.author = await input({
@@ -161,7 +160,7 @@ if (fs.existsSync(baseFolder) && !options.force) {
     generateScript(options, baseName)
   );
   fs.writeFileSync(
-    path.join(baseFolder, `${options.topic}.md`),
+    path.join(baseFolder, `${options.shortName}.md`),
     generateAIP(options)
   );
 }
