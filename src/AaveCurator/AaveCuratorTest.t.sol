@@ -283,17 +283,17 @@ contract SetAllowedFromToken is AaveCuratorTest {}
 
 contract SetAllowedToToken is AaveCuratorTest {}
 
-contract RescueTokens is AaveCuratorTest {
+contract WithdrawToCollector is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     address[] memory tokens = new address[](2);
     tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
     tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
 
     vm.expectRevert(AaveCurator.InvalidCaller.selector);
-    curator.rescueTokens(tokens);
+    curator.withdrawToCollector(tokens);
   }
 
-  function test_RescueTokens_allowedCaller() public {
+  function test_successful_allowedCaller() public {
     address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
     address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
@@ -330,7 +330,7 @@ contract RescueTokens is AaveCuratorTest {
     tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
     tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
     vm.startPrank(newManager);
-    curator.rescueTokens(tokens);
+    curator.withdrawToCollector(tokens);
     vm.stopPrank();
 
     assertEq(
@@ -345,7 +345,7 @@ contract RescueTokens is AaveCuratorTest {
     assertEq(IERC20(AaveV2EthereumAssets.AAVE_UNDERLYING).balanceOf(address(curator)), 0);
   }
 
-  function test_RescueTokens_governanceCaller() public {
+  function test_successful_governanceCaller() public {
     address AAVE_WHALE = 0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8;
     address BAL_WHALE = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
@@ -377,7 +377,7 @@ contract RescueTokens is AaveCuratorTest {
     tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
     tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.rescueTokens(tokens);
+    curator.withdrawToCollector(tokens);
     vm.stopPrank();
 
     assertEq(

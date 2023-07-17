@@ -226,9 +226,9 @@ contract AaveCurator is VersionedInitializable {
     milkman = _milkman;
   }
 
-  /// @notice Transfer any tokens accidentally sent to this contract to Aave V3 Collector
+  /// @notice Transfer any tokens on this contract to Aave V3 Collector
   /// @param tokens List of token addresses
-  function rescueTokens(address[] calldata tokens) external onlyAdminOrManager {
+  function withdrawToCollector(address[] calldata tokens) external onlyAdminOrManager {
     for (uint256 i = 0; i < tokens.length; ++i) {
       IERC20(tokens[i]).safeTransfer(
         address(AaveV3Ethereum.COLLECTOR),
