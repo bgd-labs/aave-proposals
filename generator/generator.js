@@ -4,6 +4,7 @@ import { Command, Option } from "commander";
 import { generateAIP, generateScript } from "./templates.js";
 import {
   AVAILABLE_CHAINS,
+  AVAILABLE_VERSIONS,
   generateChainName,
   generateName,
   pascalCase,
@@ -11,9 +12,8 @@ import {
 import { engineProposalTemplate } from "./templates/engineProposal.template.js";
 import { rawProposalTemplate } from "./templates/rawProposal.template.js";
 import { testTemplate } from "./templates/test.template.js";
-import Enquirer from "enquirer";
+import { input, checkbox, select, confirm } from "@inquirer/prompts";
 
-// prepare cli
 const program = new Command();
 
 program
@@ -24,65 +24,97 @@ program
     new Option("-f, --force", "force creation (might overwrite existing files)")
   )
   .addOption(new Option("-cfg, --configEngine", "extends config engine"))
-  .addOption(
-    new Option("--topic <string>", "name of the proposal (e.g. CapsIncrease)")
-  )
   .addOption(new Option("-ch, --chains <letters...>").choices(AVAILABLE_CHAINS))
   .addOption(
-    new Option("-pv, --protocolVersion <string>")
-      .choices(["V2", "V3"])
-      .makeOptionMandatory()
+    new Option("-pv, --protocolVersion <string>").choices(AVAILABLE_VERSIONS)
   )
   .addOption(new Option("-t, --title <string>", "aip title"))
   .addOption(new Option("-a, --author <string>", "author"))
   .addOption(new Option("-d, --discussion <string>", "forum link"))
   .addOption(new Option("-s, --snapshot <string>", "snapshot link"))
-  .allowExcessArguments(false);
+  .allowExcessArguments(false)
+  .parse(process.argv);
 
-program.parse();
+const options = program.opts();
 
-const rawOptions = program.opts();
-
-const enquirer = new Enquirer({});
-const answers = await enquirer.prompt([
-  {
-    type: "input",
-    name: "topic",
-    message: "Topic of your proposal",
-    result: (input) => pascalCase(input),
-    skip() {
-      return rawOptions.topic != undefined;
-    },
-  },
-  {
-    type: "multiselect",
-    name: "chains",
+// workaround as there's validate is not currently supported on checkbox
+// https://github.com/SBoudrias/Inquirer.js/issues/1257
+while (!options.chains?.length === true) {
+  options.chains = await checkbox({
     message: "Chains this proposal targets",
-    choices: AVAILABLE_CHAINS,
-    skip() {
-      // workaround for https://github.com/enquirer/enquirer/issues/298
-      this.state._choices = this.state.choices;
-      return rawOptions.chains?.length >= 1;
+    choices: AVAILABLE_CHAINS.map((v) => ({ name: v, value: v })),
+    validate(input) {
+      // currently ignored due to a bug
+      if (input.length == 0)
+        return "You must target at least one chain in your proposal!";
+      return true;
     },
-  },
-  {
-    type: "confirm",
-    name: "force",
-    message: "Are you sure you want to overwrite existing files?",
-    skip() {
-      return rawOptions.force != undefined; // !fs.existsSync(baseFolder) ||
-    },
-  },
-]);
+  });
+}
 
-const options = {
-  ...answers,
-  ...rawOptions,
-  topic: pascalCase(rawOptions.topic || answers.topic),
-};
-console.log(options);
+if (!options.protocolVersion) {
+  options.protocolVersion = await select({
+    message: "Protocol version this proposal targets",
+    choices: AVAILABLE_VERSIONS.map((v) => ({ name: v, value: v })).reverse(),
+    default: "V3", // default on select not currently supported which is why we reverse
+  });
+}
+
+/**
+ * TODO: config engine flag is a bit arbitrary.
+ * Would be better to ask for specific features & inline proper tests and boilerplate
+ */
+if (!options.configEngine) {
+  options.configEngine = await confirm({
+    message: "To you plan to use the config engine?",
+    default: true,
+  });
+}
+
+if (!options.title) {
+  options.title = await input({
+    message: "Title of your proposal",
+    validate(input) {
+      if (input.length == 0) return "Your title can't be empty";
+      return true;
+    },
+  });
+}
+// topic name is a bit arbitrary
+options.topic = pascalCase(options.title);
+
+if (!options.author) {
+  options.author = await input({
+    message: "Author of your proposal",
+    validate(input) {
+      if (input.length == 0) return "Your author can't be empty";
+      return true;
+    },
+  });
+}
+
+if (!options.discussion) {
+  options.discussion = await input({
+    message: "Link to forum discussion",
+  });
+}
+
+if (!options.snapshot) {
+  options.snapshot = await input({
+    message: "Link to snapshot",
+  });
+}
+
 const baseName = generateName(options);
 const baseFolder = path.join(process.cwd(), "src", baseName);
+
+if (!options.force && fs.existsSync(baseFolder)) {
+  options.force = await confirm({
+    message:
+      "A proposal already exists at that location, do you want to override?",
+    default: false,
+  });
+}
 
 // create files
 if (fs.existsSync(baseFolder) && !options.force) {

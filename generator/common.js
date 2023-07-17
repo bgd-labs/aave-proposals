@@ -1,3 +1,5 @@
+export const AVAILABLE_VERSIONS = ["V1", "V2", "V3"];
+
 export const AVAILABLE_CHAINS = [
   "Ethereum",
   "Optimism",
