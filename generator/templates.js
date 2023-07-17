@@ -7,7 +7,10 @@ export function generateScript(options, baseName) {
   let template = pragma;
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
-  template += `import {${options.chains
+  template += `import {${[
+    "Ethereum",
+    ...options.chains.filter((c) => c !== "Ethereum"),
+  ]
     .map((chain) => `${chain}Script`)
     .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
@@ -82,19 +85,17 @@ discussions: ${options.discussion || "TODO"}
 - Implementation: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](src/${generateName(options)}/${generateChainName(
-          options,
-          chain
-        )}.sol)`
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+          options
+        )}/${generateChainName(options, chain)}.sol)`
     )
     .join(", ")}
 - Tests: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](src/${generateName(options)}/${generateChainName(
-          options,
-          chain
-        )}.t.sol)`
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+          options
+        )}/${generateChainName(options, chain)}.t.sol)`
     )
     .join(", ")}
 - [Snapshot](${options.snapshot || "TODO"})
