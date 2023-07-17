@@ -43,9 +43,13 @@ The following parameters are to be updated as follows:
 # References
 
 [Forum Post](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937)
+
 [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.sol)
+
 [Test](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.t.sol)
+
 [Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
+
 [Deployed Payload Address](TODO)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
