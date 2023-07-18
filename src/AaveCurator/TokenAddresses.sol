@@ -6,7 +6,6 @@ import {AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 library TokenAddresses {
-  address public constant ARC_aUSDC = 0xd35f648C3C7f17cd1Ba92e5eac991E3EfcD4566d;
   address public constant RWA_aUSDC = 0x9Bc94a6A0D99fe559fA4DC5354ce3B96B210c210;
 
   struct TokenToSwap {
@@ -18,7 +17,7 @@ library TokenAddresses {
   }
 
   function getTokensTotalBalance() public pure returns (TokenToSwap[] memory) {
-    TokenToSwap[] memory tokens = new TokenToSwap[](15);
+    TokenToSwap[] memory tokens = new TokenToSwap[](14);
     tokens[0] = TokenToSwap(
       AaveV2EthereumAssets.sUSD_A_TOKEN,
       AaveV2EthereumAssets.sUSD_ORACLE,
@@ -111,7 +110,6 @@ library TokenAddresses {
       0,
       100
     );
-    tokens[14] = TokenToSwap(ARC_aUSDC, AaveV2EthereumAssets.USDC_ORACLE, true, 0, 100);
 
     return tokens;
   }

@@ -148,7 +148,7 @@ contract AaveCurator is Initializable, Ownable {
     IERC20(STETH).approve(AaveV3EthereumAssets.wstETH_UNDERLYING, amount);
     IWstEth(AaveV3EthereumAssets.wstETH_UNDERLYING).wrap(amount);
 
-    IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).transfer(
+    IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).safeTransfer(
       address(AaveV3Ethereum.COLLECTOR),
       IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(this))
     );
@@ -159,7 +159,7 @@ contract AaveCurator is Initializable, Ownable {
     WETH.withdraw(amount);
     ROCKET_POOL.deposit{value: amount}();
 
-    IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).transfer(
+    IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).safeTransfer(
       address(AaveV3Ethereum.COLLECTOR),
       IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(this))
     );
@@ -192,7 +192,12 @@ contract AaveCurator is Initializable, Ownable {
     emit ManagerChanged(oldManager, manager);
   }
 
-  function setAllowedFromToken(address token, address oracle, bool isEthBased, bool allowed) external onlyOwner {
+  function setAllowedFromToken(
+    address token,
+    address oracle,
+    bool isEthBased,
+    bool allowed
+  ) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedFromTokens[token] = allowed;
@@ -200,7 +205,12 @@ contract AaveCurator is Initializable, Ownable {
     emit TokenUpdated(token, allowed);
   }
 
-  function setAllowedToToken(address token, address oracle, bool isEthBased, bool allowed) external onlyOwner {
+  function setAllowedToToken(
+    address token,
+    address oracle,
+    bool isEthBased,
+    bool allowed
+  ) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedToTokens[token] = allowed;
@@ -233,16 +243,18 @@ contract AaveCurator is Initializable, Ownable {
     address toToken
   ) internal returns (address, bytes memory) {
     if (_tokenType == TokenType.Standard) {
-      return (CHAINLINK_PRICE_CHECKER, _getChainlinkCheckerData(slippage, fromToken, toToken));
+      return (
+        CHAINLINK_PRICE_CHECKER,
+        abi.encode(slippage, _getChainlinkCheckerData(fromToken, toToken))
+      );
     } else if (_tokenType == TokenType.BPT8020) {
-      return (BPT_PRICE_CHECKER, _getBPTCheckerData(slippage, fromToken, toToken));
+      return (BPT_PRICE_CHECKER, abi.encode(slippage, _getBPTCheckerData(fromToken, toToken)));
     } else {
       revert InvalidOracleType();
     }
   }
 
   function _getChainlinkCheckerData(
-    uint256 slippage,
     address fromToken,
     address toToken
   ) internal view returns (bytes memory) {
@@ -253,31 +265,34 @@ contract AaveCurator is Initializable, Ownable {
 
     bytes memory data;
     if (oracleOne.isEthBased != oracleTwo.isEthBased) {
-        address[] memory paths = new address[](3);
-        paths[0] = oracleOne.oracle;
-        paths[1] = AaveV3EthereumAssets.WETH_ORACLE;
-        paths[2] = oracleTwo.oracle;
+      address[] memory paths = new address[](3);
+      paths[0] = oracleOne.oracle;
+      paths[1] = AaveV3EthereumAssets.WETH_ORACLE;
+      paths[2] = oracleTwo.oracle;
 
-        bool[] memory reverses = new bool[](3);
-        reverses[2] = true;
+      bool[] memory reverses = new bool[](3);
+      reverses[2] = true;
 
-        data = abi.encode(paths, reverses);
-    } else {
-        address[] memory paths = new address[](2);
-        paths[0] = oracleOne.oracle;
-        paths[1] = oracleTwo.oracle;
-
-        bool[] memory reverses = new bool[](2);
+      if (!oracleOne.isEthBased) {
         reverses[1] = true;
+      }
 
-        data = abi.encode(paths, reverses);
+      data = abi.encode(paths, reverses);
+    } else {
+      address[] memory paths = new address[](2);
+      paths[0] = oracleOne.oracle;
+      paths[1] = oracleTwo.oracle;
+
+      bool[] memory reverses = new bool[](2);
+      reverses[1] = true;
+
+      data = abi.encode(paths, reverses);
     }
 
-    return abi.encode(slippage, data);
+    return data;
   }
 
   function _getBPTCheckerData(
-    uint256 slippage,
     address fromToken,
     address toToken
   ) internal view returns (bytes memory) {

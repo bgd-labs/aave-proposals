@@ -14,7 +14,7 @@ import {AaveV3CuratorPayload} from './AaveV3CuratorPayload.sol';
 import {TokenAddresses} from './TokenAddresses.sol';
 
 contract AaveV3CuratorPayload_Test is Test {
-    function setUp() public {
+  function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17708493);
   }
 
@@ -26,25 +26,35 @@ contract AaveV3CuratorPayload_Test is Test {
 
     TokenAddresses.TokenToSwap[] memory tokens = TokenAddresses.getTokensTotalBalance();
     for (uint256 i = 0; i < tokens.length; i++) {
-        assertGt(IERC20(tokens[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
+      assertGt(IERC20(tokens[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
     }
 
-    uint256 balanceBeforeAUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
-    uint256 balanceBeforeADAI = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 balanceBeforeAUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 balanceBeforeADAI = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
 
     TokenAddresses.TokenToSwap[] memory tokensQty = TokenAddresses.getTokensTotalBalance();
     for (uint256 i = 0; i < tokensQty.length; i++) {
-        assertGt(IERC20(tokensQty[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
+      assertGt(IERC20(tokensQty[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
     }
 
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     TokenAddresses.TokenToSwap[] memory tokensAfter = TokenAddresses.getTokensTotalBalance();
     for (uint256 i = 0; i < tokensAfter.length; i++) {
-        assertEq(IERC20(tokensAfter[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
+      assertEq(IERC20(tokensAfter[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
     }
 
-    assertEq(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)), balanceBeforeAUSDT - withdrawAUSDT);
-    assertEq(IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)), balanceBeforeADAI - withdrawADAI);
+    assertEq(
+      IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      balanceBeforeAUSDT - withdrawAUSDT
+    );
+    assertEq(
+      IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      balanceBeforeADAI - withdrawADAI
+    );
   }
 }
