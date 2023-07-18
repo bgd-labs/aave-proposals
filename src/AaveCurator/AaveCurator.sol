@@ -2,6 +2,8 @@
 
 pragma solidity 0.8.19;
 
+import {console2} from 'forge-std/Test.sol';
+
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
@@ -39,6 +41,11 @@ contract AaveCurator is VersionedInitializable {
     BPT8020
   }
 
+  struct TokenChailinkOracleData {
+    address oracle;
+    bool isEthBased;
+  }
+
   modifier onlyAdmin() {
     if (msg.sender != admin) revert InvalidCaller();
     _;
@@ -63,9 +70,9 @@ contract AaveCurator is VersionedInitializable {
   address public milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public manager;
 
-  mapping(address => bool) public allowedFromTokens;
-  mapping(address => bool) public allowedToTokens;
-  mapping(address => address) public tokenChainlinkOracle;
+  mapping(address tokenAddress => bool) public allowedFromTokens;
+  mapping(address tokenAddress => bool) public allowedToTokens;
+  mapping(address tokenAddress => TokenChailinkOracleData) public tokenChainlinkOracle;
 
   /// @notice Current revision of the contract.
   uint256 public constant REVISION = 1;
@@ -90,7 +97,10 @@ contract AaveCurator is VersionedInitializable {
       revert InvalidRecipient();
     }
 
+    console2.log('before');
+    IERC20(fromToken).allowance(address(this), milkman);
     IERC20(fromToken).approve(milkman, amount);
+    console2.log('after');
 
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       _tokenType,
@@ -201,19 +211,19 @@ contract AaveCurator is VersionedInitializable {
     emit ManagerChanged(oldManager, manager);
   }
 
-  function setAllowedFromToken(address token, address oracle, bool allowed) external onlyAdmin {
+  function setAllowedFromToken(address token, address oracle, bool isEthBased, bool allowed) external onlyAdmin {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedFromTokens[token] = allowed;
-    tokenChainlinkOracle[token] = oracle;
+    tokenChainlinkOracle[token] = TokenChailinkOracleData(oracle, isEthBased);
     emit TokenUpdated(token, allowed);
   }
 
-  function setAllowedToToken(address token, address oracle, bool allowed) external onlyAdmin {
+  function setAllowedToToken(address token, address oracle, bool isEthBased, bool allowed) external onlyAdmin {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedToTokens[token] = allowed;
-    tokenChainlinkOracle[token] = oracle;
+    tokenChainlinkOracle[token] = TokenChailinkOracleData(oracle, isEthBased);
     emit TokenUpdated(token, allowed);
   }
 
@@ -260,18 +270,33 @@ contract AaveCurator is VersionedInitializable {
     address fromToken,
     address toToken
   ) internal view returns (bytes memory) {
-    address oracleOne = tokenChainlinkOracle[fromToken];
-    address oracleTwo = tokenChainlinkOracle[toToken];
+    TokenChailinkOracleData memory oracleOne = tokenChainlinkOracle[fromToken];
+    TokenChailinkOracleData memory oracleTwo = tokenChainlinkOracle[toToken];
 
-    if (oracleOne == address(0) || oracleTwo == address(0)) revert OracleNotSet();
+    if (oracleOne.oracle == address(0) || oracleTwo.oracle == address(0)) revert OracleNotSet();
 
-    address[] memory paths = new address[](2);
-    paths[0] = oracleOne;
-    paths[1] = oracleTwo;
+    bytes memory data;
+    if (oracleOne.isEthBased != oracleTwo.isEthBased) {
+        address[] memory paths = new address[](3);
+        paths[0] = oracleOne.oracle;
+        paths[1] = AaveV3EthereumAssets.WETH_ORACLE;
+        paths[2] = oracleTwo.oracle;
 
-    bool[] memory reverses = new bool[](2);
+        bool[] memory reverses = new bool[](3);
+        reverses[2] = true;
 
-    bytes memory data = abi.encode(paths, reverses);
+        data = abi.encode(paths, reverses);
+    } else {
+        address[] memory paths = new address[](2);
+        paths[0] = oracleOne.oracle;
+        paths[1] = oracleTwo.oracle;
+
+        bool[] memory reverses = new bool[](2);
+        reverses[1] = true;
+
+        data = abi.encode(paths, reverses);
+    }
+
     return abi.encode(slippage, data);
   }
 

@@ -143,6 +143,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     vm.expectRevert(AaveCurator.InvalidToken.selector);
@@ -162,11 +163,13 @@ contract AaveCuratorSwap is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       AaveV2EthereumAssets.USDC_ORACLE,
+      true,
       true
     );
     vm.expectRevert(AaveCurator.InvalidRecipient.selector);
@@ -187,11 +190,13 @@ contract AaveCuratorSwap is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       AaveV2EthereumAssets.USDC_ORACLE,
+      true,
       true
     );
 
@@ -234,11 +239,13 @@ contract CancelSwap is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       AaveV2EthereumAssets.USDC_ORACLE,
+      true,
       true
     );
 
@@ -270,11 +277,13 @@ contract CancelSwap is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       AaveV2EthereumAssets.USDC_ORACLE,
+      true,
       true
     );
 
@@ -342,6 +351,7 @@ contract DepositIntoAaveV2 is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
 
@@ -388,6 +398,7 @@ contract DepositIntoAaveV3 is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV3EthereumAssets.AAVE_UNDERLYING,
       AaveV3EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
 
@@ -472,6 +483,7 @@ contract SetAllowedFromToken is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
   }
@@ -479,14 +491,14 @@ contract SetAllowedFromToken is AaveCuratorTest {
   function test_revertsIf_fromTokenIsAddressZero() public {
     vm.expectRevert(AaveCurator.Invalid0xAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setAllowedFromToken(address(0), AaveV2EthereumAssets.AAVE_ORACLE, true);
+    curator.setAllowedFromToken(address(0), AaveV2EthereumAssets.AAVE_ORACLE, true, true);
     vm.stopPrank();
   }
 
   function test_revertsIf_oracleIsAddressZero() public {
     vm.expectRevert(AaveCurator.Invalid0xAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setAllowedFromToken(AaveV2EthereumAssets.AAVE_UNDERLYING, address(0), true);
+    curator.setAllowedFromToken(AaveV2EthereumAssets.AAVE_UNDERLYING, address(0), true, true);
     vm.stopPrank();
   }
 
@@ -498,6 +510,7 @@ contract SetAllowedFromToken is AaveCuratorTest {
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     vm.stopPrank();
@@ -512,6 +525,7 @@ contract SetAllowedToToken is AaveCuratorTest {
     curator.setAllowedToToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
   }
@@ -519,14 +533,14 @@ contract SetAllowedToToken is AaveCuratorTest {
   function test_revertsIf_fromTokenIsAddressZero() public {
     vm.expectRevert(AaveCurator.Invalid0xAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setAllowedToToken(address(0), AaveV2EthereumAssets.AAVE_ORACLE, true);
+    curator.setAllowedToToken(address(0), AaveV2EthereumAssets.AAVE_ORACLE, true, true);
     vm.stopPrank();
   }
 
   function test_revertsIf_oracleIsAddressZero() public {
     vm.expectRevert(AaveCurator.Invalid0xAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setAllowedToToken(AaveV2EthereumAssets.AAVE_UNDERLYING, address(0), true);
+    curator.setAllowedToToken(AaveV2EthereumAssets.AAVE_UNDERLYING, address(0), true, true);
     vm.stopPrank();
   }
 
@@ -538,6 +552,7 @@ contract SetAllowedToToken is AaveCuratorTest {
     curator.setAllowedToToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
+      true,
       true
     );
     vm.stopPrank();
