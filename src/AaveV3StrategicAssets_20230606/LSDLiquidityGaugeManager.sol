@@ -18,7 +18,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   error SameController();
 
   /// @notice Address of LSD to address of gauge controller mapping
-  mapping(address => address) public gaugeControllers;
+  mapping(address tokenAddress => address) public gaugeControllers;
 
   /// @notice Set the gauge controller used for gauge weight voting
   /// @param token Address of the LSD token

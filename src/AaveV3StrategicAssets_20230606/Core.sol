@@ -21,7 +21,7 @@ abstract contract Core {
   }
 
   /// @notice One week, in seconds. Vote-locking is rounded down to weeks.
-  uint256 internal constant WEEK = 7 * 86400;
+  uint256 internal constant WEEK = 7 days;
 
   address public admin;
   address public manager;
