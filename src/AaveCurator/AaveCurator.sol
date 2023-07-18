@@ -5,25 +5,25 @@ pragma solidity 0.8.19;
 import {console2} from 'forge-std/Test.sol';
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
+import {Ownable} from 'solidity-utils/contracts/oz-common/Ownable.sol';
+import {Initializable} from 'solidity-utils/contracts/transparent-proxy/Initializable.sol';
 import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
-import {VersionedInitializable} from './libs/VersionedInitializable.sol';
 import {IWeth} from './interfaces/IWeth.sol';
 import {IWstEth} from './interfaces/IWstEth.sol';
 import {ILido} from './interfaces/ILido.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 import {IRocketPoolDeposit} from './interfaces/IRocketPoolDeposit.sol';
 
-contract AaveCurator is VersionedInitializable {
+contract AaveCurator is Initializable, Ownable {
   using SafeERC20 for IERC20;
 
-  event AdminChanged(address indexed oldAdmin, address indexed newAdmin);
   event DepositedIntoV2(address indexed token, uint256 amount);
   event DepositedIntoV3(address indexed token, uint256 amount);
-  event ManagerChanged(address indexed oldAdmin, address indexed newAdmin);
+  event ManagerChanged(address indexed oldManager, address indexed newManager);
   event SwapCanceled(address fromToken, address toToken, uint256 amount);
   event SwapRequested(address fromToken, address toToken, uint256 amount);
   event TokenUpdated(address indexed token, bool allowed);
@@ -46,13 +46,8 @@ contract AaveCurator is VersionedInitializable {
     bool isEthBased;
   }
 
-  modifier onlyAdmin() {
-    if (msg.sender != admin) revert InvalidCaller();
-    _;
-  }
-
-  modifier onlyAdminOrManager() {
-    if (msg.sender != admin && msg.sender != manager) {
+  modifier onlyOwnerOrManager() {
+    if (msg.sender != owner() && msg.sender != manager) {
       revert InvalidCaller();
     }
     _;
@@ -66,7 +61,6 @@ contract AaveCurator is VersionedInitializable {
   address public constant BPT_PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404; // TODO: Update with new one
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
-  address public admin = AaveGovernanceV2.SHORT_EXECUTOR;
   address public milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public manager;
 
@@ -74,13 +68,9 @@ contract AaveCurator is VersionedInitializable {
   mapping(address tokenAddress => bool) public allowedToTokens;
   mapping(address tokenAddress => TokenChailinkOracleData) public tokenChainlinkOracle;
 
-  /// @notice Current revision of the contract.
-  uint256 public constant REVISION = 1;
+  constructor() Ownable() {}
 
-  function initialize() external initializer {
-    admin = AaveGovernanceV2.SHORT_EXECUTOR;
-    emit AdminChanged(address(0), admin);
-  }
+  function initialize() external initializer {}
 
   function swap(
     address fromToken,
@@ -89,7 +79,7 @@ contract AaveCurator is VersionedInitializable {
     uint256 amount,
     uint256 slippage,
     TokenType _tokenType
-  ) external onlyAdminOrManager {
+  ) external onlyOwnerOrManager {
     if (amount == 0) revert InvalidAmount();
     if (!allowedFromTokens[fromToken]) revert InvalidToken();
     if (!allowedToTokens[toToken]) revert InvalidToken();
@@ -97,10 +87,7 @@ contract AaveCurator is VersionedInitializable {
       revert InvalidRecipient();
     }
 
-    console2.log('before');
-    IERC20(fromToken).allowance(address(this), milkman);
-    IERC20(fromToken).approve(milkman, amount);
-    console2.log('after');
+    IERC20(fromToken).safeApprove(milkman, amount);
 
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       _tokenType,
@@ -129,7 +116,7 @@ contract AaveCurator is VersionedInitializable {
     uint256 amount,
     uint256 slippage,
     TokenType _tokenType
-  ) external onlyAdminOrManager {
+  ) external onlyOwnerOrManager {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       _tokenType,
       slippage,
@@ -155,7 +142,7 @@ contract AaveCurator is VersionedInitializable {
   }
 
   /// @notice Withdraws wETH into ETH, then deposits for wstETH
-  function depositWstETH(uint256 amount) external onlyAdmin {
+  function depositWstETH(uint256 amount) external onlyOwnerOrManager {
     WETH.withdraw(amount);
     ILido(STETH).submit{value: amount}(address(0));
     IERC20(STETH).approve(AaveV3EthereumAssets.wstETH_UNDERLYING, amount);
@@ -168,7 +155,7 @@ contract AaveCurator is VersionedInitializable {
   }
 
   /// @notice Withdraws wETH into ETH, then deposits for rETH
-  function depositRETH(uint256 amount) external onlyAdmin {
+  function depositRETH(uint256 amount) external onlyOwnerOrManager {
     WETH.withdraw(amount);
     ROCKET_POOL.deposit{value: amount}();
 
@@ -178,40 +165,34 @@ contract AaveCurator is VersionedInitializable {
     );
   }
 
-  function depositTokenIntoV2(address token, uint256 amount) external onlyAdminOrManager {
+  function depositTokenIntoV2(address token, uint256 amount) external onlyOwnerOrManager {
     if (!allowedFromTokens[token]) revert InvalidToken();
     IERC20(token).approve(address(AaveV2Ethereum.POOL), amount);
     AaveV2Ethereum.POOL.deposit(token, amount, address(AaveV3Ethereum.COLLECTOR), 0);
     emit DepositedIntoV2(token, amount);
   }
 
-  function depositTokenIntoV3(address token, uint256 amount) external onlyAdminOrManager {
+  function depositTokenIntoV3(address token, uint256 amount) external onlyOwnerOrManager {
     if (!allowedFromTokens[token]) revert InvalidToken();
     IERC20(token).approve(address(AaveV3Ethereum.POOL), amount);
     AaveV3Ethereum.POOL.deposit(token, amount, address(AaveV3Ethereum.COLLECTOR), 0);
     emit DepositedIntoV3(token, amount);
   }
 
-  function setAdmin(address _admin) external onlyAdmin {
-    address oldAdmin = admin;
-    admin = _admin;
-    emit AdminChanged(oldAdmin, admin);
-  }
-
-  function setManager(address _manager) external onlyAdmin {
+  function setManager(address _manager) external onlyOwner {
     if (_manager == address(0)) revert Invalid0xAddress();
     address oldManager = manager;
     manager = _manager;
     emit ManagerChanged(oldManager, manager);
   }
 
-  function removeManager() external onlyAdmin {
+  function removeManager() external onlyOwner {
     address oldManager = manager;
     manager = address(0);
     emit ManagerChanged(oldManager, manager);
   }
 
-  function setAllowedFromToken(address token, address oracle, bool isEthBased, bool allowed) external onlyAdmin {
+  function setAllowedFromToken(address token, address oracle, bool isEthBased, bool allowed) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedFromTokens[token] = allowed;
@@ -219,7 +200,7 @@ contract AaveCurator is VersionedInitializable {
     emit TokenUpdated(token, allowed);
   }
 
-  function setAllowedToToken(address token, address oracle, bool isEthBased, bool allowed) external onlyAdmin {
+  function setAllowedToToken(address token, address oracle, bool isEthBased, bool allowed) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedToTokens[token] = allowed;
@@ -227,14 +208,14 @@ contract AaveCurator is VersionedInitializable {
     emit TokenUpdated(token, allowed);
   }
 
-  function setMilkmanAddress(address _milkman) external onlyAdmin {
+  function setMilkmanAddress(address _milkman) external onlyOwner {
     if (_milkman == address(0)) revert Invalid0xAddress();
     milkman = _milkman;
   }
 
   /// @notice Transfer any tokens on this contract to Aave V3 Collector
   /// @param tokens List of token addresses
-  function withdrawToCollector(address[] calldata tokens) external onlyAdminOrManager {
+  function withdrawToCollector(address[] calldata tokens) external onlyOwnerOrManager {
     for (uint256 i = 0; i < tokens.length; ++i) {
       IERC20(tokens[i]).safeTransfer(
         address(AaveV3Ethereum.COLLECTOR),
@@ -244,11 +225,6 @@ contract AaveCurator is VersionedInitializable {
   }
 
   receive() external payable {}
-
-  /// @inheritdoc VersionedInitializable
-  function getRevision() internal pure override returns (uint256) {
-    return REVISION;
-  }
 
   function _getPriceCheckerAndData(
     TokenType _tokenType,

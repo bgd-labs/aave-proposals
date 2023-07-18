@@ -11,10 +11,9 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveCurator} from './AaveCurator.sol';
 
 contract AaveCuratorTest is Test {
-  event AdminChanged(address indexed oldAdmin, address indexed newAdmin);
   event DepositedIntoV2(address indexed token, uint256 amount);
   event DepositedIntoV3(address indexed token, uint256 amount);
-  event ManagerChanged(address indexed oldAdmin, address indexed newAdmin);
+  event ManagerChanged(address indexed oldManager, address indexed newManager);
   event SwapCanceled(address fromToken, address toToken, uint256 amount);
   event SwapRequested(address fromToken, address toToken, uint256 amount);
   event TokenUpdated(address indexed token, bool allowed);
@@ -24,39 +23,38 @@ contract AaveCuratorTest is Test {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17708493);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     curator = new AaveCurator();
-    curator.initialize();
+    vm.stopPrank();
   }
 }
 
 contract Initialize is AaveCuratorTest {
   function test_revertsIf_alreadyInitialized() public {
-    vm.expectRevert('Contract instance has already been initialized');
+    vm.expectRevert('Initializable: contract is already initialized');
     curator.initialize();
   }
 }
 
-contract SetAdmin is AaveCuratorTest {
+contract TransferOwnership is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
-    curator.setAdmin(makeAddr('new-admin'));
+    vm.expectRevert('Ownable: caller is not the owner');
+    curator.transferOwnership(makeAddr('new-admin'));
   }
 
   function test_successful() public {
     address newAdmin = makeAddr('new-admin');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    vm.expectEmit();
-    emit AdminChanged(AaveGovernanceV2.SHORT_EXECUTOR, newAdmin);
-    curator.setAdmin(newAdmin);
+    curator.transferOwnership(newAdmin);
     vm.stopPrank();
 
-    assertEq(newAdmin, curator.admin());
+    assertEq(newAdmin, curator.owner());
   }
 }
 
 contract SetManager is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     curator.setManager(makeAddr('new-admin'));
   }
 
@@ -81,7 +79,7 @@ contract SetManager is AaveCuratorTest {
 
 contract RemoveManager is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     curator.removeManager();
   }
 
@@ -479,7 +477,7 @@ contract DepositRETH is AaveCuratorTest {
 
 contract SetAllowedFromToken is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     curator.setAllowedFromToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
@@ -521,7 +519,7 @@ contract SetAllowedFromToken is AaveCuratorTest {
 
 contract SetAllowedToToken is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     curator.setAllowedToToken(
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       AaveV2EthereumAssets.AAVE_ORACLE,
