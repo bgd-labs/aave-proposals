@@ -40,21 +40,22 @@ contract StrategicAssetsManagerTest is Test {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17523941);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets = new StrategicAssetsManager();
-    strategicAssets.initialize();
+    vm.stopPrank();
   }
 }
 
 contract Initialize is StrategicAssetsManagerTest {
   function test_revertsIf_alreadyInitialized() public {
-    vm.expectRevert('Contract instance has already been initialized');
+    vm.expectRevert('Initializable: contract is already initialized');
     strategicAssets.initialize();
   }
 }
 
 contract AddVeTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.addVeToken(
       B_80BAL_20WETH,
       VE_BAL,
@@ -124,7 +125,7 @@ contract AddVeTokens is StrategicAssetsManagerTest {
 
 contract RemoveVeTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.removeVeToken(B_80BAL_20WETH);
   }
 
@@ -174,7 +175,7 @@ contract RemoveVeTokens is StrategicAssetsManagerTest {
 
 contract AddSdTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.addSdToken(CRV, SD_CRV, SD_CRV_DEPOSITOR);
   }
 
@@ -207,7 +208,7 @@ contract AddSdTokens is StrategicAssetsManagerTest {
 
 contract RemoveSdTokens is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.removeSdToken(CRV);
   }
 
@@ -232,25 +233,25 @@ contract RemoveSdTokens is StrategicAssetsManagerTest {
   }
 }
 
-contract SetAdmin is StrategicAssetsManagerTest {
+contract TransferOwnership is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
-    strategicAssets.setAdmin(makeAddr('new-admin'));
+    vm.expectRevert('Ownable: caller is not the owner');
+    strategicAssets.transferOwnership(makeAddr('new-admin'));
   }
 
   function test_successful() public {
     address newAdmin = makeAddr('new-admin');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setAdmin(newAdmin);
+    strategicAssets.transferOwnership(newAdmin);
     vm.stopPrank();
 
-    assertEq(newAdmin, strategicAssets.admin());
+    assertEq(newAdmin, strategicAssets.owner());
   }
 }
 
 contract SetStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.setStrategicAssetsManager(makeAddr('new-admin'));
   }
 
@@ -275,7 +276,7 @@ contract SetStrategicAssetManager is StrategicAssetsManagerTest {
 
 contract RemoveStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.removeStrategicAssetManager();
   }
 
@@ -292,7 +293,7 @@ contract RemoveStrategicAssetManager is StrategicAssetsManagerTest {
 
 contract WithdrawERC20 is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('Ownable: caller is not the owner');
     strategicAssets.withdrawERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), 1e18);
   }
 

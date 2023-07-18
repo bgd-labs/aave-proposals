@@ -52,8 +52,9 @@ contract VeTokenManagerTest is Test {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17523941);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets = new StrategicAssetsManager();
-    strategicAssets.initialize();
+    vm.stopPrank();
   }
 
   function _addVeToken(

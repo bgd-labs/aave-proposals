@@ -23,7 +23,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   /// @notice Set the gauge controller used for gauge weight voting
   /// @param token Address of the LSD token
   /// @param gaugeController The gauge controller address
-  function setGaugeController(address token, address gaugeController) public onlyAdminOrManager {
+  function setGaugeController(address token, address gaugeController) public onlyOwnerOrManager {
     if (gaugeController == address(0)) revert Invalid0xAddress();
 
     address oldController = gaugeControllers[token];
@@ -42,7 +42,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
     address token,
     address gauge,
     uint256 weight
-  ) external onlyAdminOrManager {
+  ) external onlyOwnerOrManager {
     if (gauge == address(0)) revert Invalid0xAddress();
 
     ILiquidityGaugeController(gaugeControllers[token]).vote_for_gauge_weights(gauge, weight);
