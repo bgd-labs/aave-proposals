@@ -10,13 +10,13 @@ This publication presents the community an opportunity to add GMX to the Arbitru
 
 # Motivation
 
-GMX Protocol is the largest DEX offering derivatives and one of the most popular DeFi's today. GMX Token is also one of the highest traded assets on Arbiturm.
+GMX Protocol is the largest DEX offering derivatives and one of the most popular DeFi's today. GMX Token is also one of the highest traded assets on Arbitrum.
 
 The GMX token is the utility, governance, and fee accrual token for the GMX protocol. The GMX value accrual mechanism is unique to the GMX protocol. GMX is a highly staked asset, with approximately 78% of circulating GMX staked earning an APR of [2.94%](https://app.gmx.io/#/earn). This staking yield may generate borrowing demand for GMX, noting the yield is volatile.
 
 Adding the GMX token to Arbitrum Aave v3 support greater asset diversification. Users will be able to deposit GMX as collateral and borrow GMX leading to additional revenue opportunities for Aave.
 
-This publication contains risk paramters provided by Chaos Labs and Gauntlet. The initial forum discussion can be found [here](https://governance.aave.com/t/temp-check-add-gmx-to-arbitrum-v3/12307/8).
+This publication contains risk parameters provided by Chaos Labs and Gauntlet. The initial forum discussion can be found [here](https://governance.aave.com/t/temp-check-add-gmx-to-arbitrum-v3/12307/8).
 
 # Specification
 
