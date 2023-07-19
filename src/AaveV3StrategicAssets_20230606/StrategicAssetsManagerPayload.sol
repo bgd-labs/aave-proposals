@@ -14,7 +14,7 @@ contract StrategicAssetsManagerPayload is IProposalGenericExecutor {
     TransparentProxyFactory(AaveMisc.TRANSPARENT_PROXY_FACTORY_ETHEREUM).create(
       strategicAssetsManager,
       AaveMisc.PROXY_ADMIN_ETHEREUM,
-      ''
+      abi.encodeWithSelector(StrategicAssetsManager.initialize.selector)
     );
   }
 }

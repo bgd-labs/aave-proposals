@@ -60,7 +60,7 @@ abstract contract VeTokenManager is Core {
 
     IERC20 feeToken = IWardenBoost(token.warden).feeToken();
     uint256 maxFee = IWardenBoost(token.warden).estimateFees(delegator, amount, duration);
-    feeToken.safeApprove(token.warden, maxFee);
+    feeToken.approve(token.warden, maxFee);
     IWardenBoost(token.warden).buyDelegationBoost(delegator, receiver, amount, duration, maxFee);
 
     emit BuyBoost(delegator, receiver, amount, duration);

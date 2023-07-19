@@ -455,6 +455,8 @@ contract SetVotingContract is VeTokenManagerTest {
 
   function test_successful() public {
     _addVeToken(CRV, VE_CRV, address(0), LOCK_DURATION_ONE_YEAR, address(0), '');
+    vm.expectEmit();
+    emit VotingContractUpdate(CRV, CRV_VOTING);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.setVotingContract(CRV, CRV_VOTING);
     vm.stopPrank();

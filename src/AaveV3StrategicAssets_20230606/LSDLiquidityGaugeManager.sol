@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
-import {ILiquidityGauge, ILiquidityGaugeController} from './interfaces/ILiquidityGauge.sol';
+import {ILiquidityGaugeController} from './interfaces/ILiquidityGauge.sol';
 import {Core} from './Core.sol';
 
 abstract contract LSDLiquidityGaugeManager is Core {

@@ -6,7 +6,6 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {Ownable} from 'solidity-utils/contracts/oz-common/Ownable.sol';
 import {Initializable} from 'solidity-utils/contracts/transparent-proxy/Initializable.sol';
 import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
-import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
 import {SdTokenManager} from './SdTokenManager.sol';
 import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
@@ -27,9 +26,9 @@ contract StrategicAssetsManager is
   event VeTokenRemoved(address indexed underlying, address veToken);
   event WithdrawalERC20(address indexed _token, address _to, uint256 _amount);
 
-  constructor() Ownable() {}
-
-  function initialize() external initializer {}
+  function initialize() external initializer {
+    _transferOwnership(_msgSender());
+  }
 
   function addVeToken(
     address underlying,
