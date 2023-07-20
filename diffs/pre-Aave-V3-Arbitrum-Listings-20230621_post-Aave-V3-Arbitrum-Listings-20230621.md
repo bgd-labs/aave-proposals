@@ -53,6 +53,12 @@
 | optimalStableToTotalDebtRatio | 20 % |
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/26fe9d5b1f609d3f149edb1d9d48db7c8ef3a63d.svg) |
+| eMode.label | Stablecoins |
+| eMode.ltv | 93 % |
+| eMode.liquidationThreshold | 95 % |
+| eMode.liquidationBonus | 1 % |
+| eMode.priceSource | 0x0000000000000000000000000000000000000000 |
+
 
 ## Raw diff
 

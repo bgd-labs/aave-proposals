@@ -54,6 +54,7 @@
 | maxExcessStableToTotalDebtRatio | 80 % |
 | interestRate | ![ir](/.assets/6328b8017499aaa1d67053e893c4dc04fca7def7.svg) |
 
+
 ## Raw diff
 
 ```json
