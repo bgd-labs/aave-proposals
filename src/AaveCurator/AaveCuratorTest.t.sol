@@ -13,7 +13,7 @@ import {AaveCurator} from './AaveCurator.sol';
 contract AaveCuratorTest is Test {
   event DepositedIntoV2(address indexed token, uint256 amount);
   event DepositedIntoV3(address indexed token, uint256 amount);
-  event ManagerChanged(address indexed oldManager, address indexed newManager);
+  event GuardianUpdated(address oldGuardian, address newGuardian);
   event SwapCanceled(address fromToken, address toToken, uint256 amount);
   event SwapRequested(address fromToken, address toToken, uint256 amount);
   event TokenUpdated(address indexed token, bool allowed);
@@ -52,52 +52,45 @@ contract TransferOwnership is AaveCuratorTest {
   }
 }
 
-contract SetManager is AaveCuratorTest {
+contract UpdateGuardian is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert('Ownable: caller is not the owner');
-    curator.setManager(makeAddr('new-admin'));
-  }
-
-  function test_revertsIf_managerIs0xAddress() public {
-    vm.expectRevert(AaveCurator.Invalid0xAddress.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setManager(address(0));
-    vm.stopPrank();
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
+    curator.updateGuardian(makeAddr('new-admin'));
   }
 
   function test_successful() public {
     address newManager = makeAddr('new-admin');
     vm.expectEmit();
-    emit ManagerChanged(curator.manager(), newManager);
+    emit GuardianUpdated(curator.guardian(), newManager);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setManager(newManager);
+    curator.updateGuardian(newManager);
     vm.stopPrank();
 
-    assertEq(newManager, curator.manager());
+    assertEq(newManager, curator.guardian());
   }
 }
 
-contract RemoveManager is AaveCuratorTest {
+contract RemoveGuardian is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert('Ownable: caller is not the owner');
-    curator.removeManager();
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
+    curator.updateGuardian(address(0));
   }
 
   function test_successful() public {
     vm.expectEmit();
-    emit ManagerChanged(curator.manager(), address(0));
+    emit GuardianUpdated(curator.guardian(), address(0));
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.removeManager();
+    curator.updateGuardian(address(0));
     vm.stopPrank();
 
-    assertEq(address(0), curator.manager());
+    assertEq(address(0), curator.guardian());
   }
 }
 
 contract AaveCuratorSwap is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     curator.swap(
       AaveV2EthereumAssets.WETH_UNDERLYING,
       AaveV2EthereumAssets.AAVE_UNDERLYING,
@@ -219,7 +212,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
 contract CancelSwap is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     curator.cancelSwap(
       makeAddr('milkman-instance'),
       AaveV2EthereumAssets.WETH_UNDERLYING,
@@ -322,7 +315,7 @@ contract CancelSwap is AaveCuratorTest {
 contract DepositIntoAaveV2 is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     curator.depositTokenIntoV2(AaveV2EthereumAssets.AAVE_UNDERLYING, amount);
   }
 
@@ -369,7 +362,7 @@ contract DepositIntoAaveV2 is AaveCuratorTest {
 contract DepositIntoAaveV3 is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     curator.depositTokenIntoV3(AaveV3EthereumAssets.AAVE_UNDERLYING, amount);
   }
 
@@ -503,7 +496,7 @@ contract WithdrawToCollector is AaveCuratorTest {
     tokens[0] = AaveV2EthereumAssets.BAL_UNDERLYING;
     tokens[1] = AaveV2EthereumAssets.AAVE_UNDERLYING;
 
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     curator.withdrawToCollector(tokens);
   }
 
@@ -537,7 +530,7 @@ contract WithdrawToCollector is AaveCuratorTest {
 
     address newManager = makeAddr('new-manager');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.setManager(newManager);
+    curator.updateGuardian(newManager);
     vm.stopPrank();
 
     address[] memory tokens = new address[](2);
