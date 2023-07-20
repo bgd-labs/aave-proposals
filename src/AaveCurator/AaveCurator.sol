@@ -2,8 +2,6 @@
 
 pragma solidity 0.8.19;
 
-import {console2} from 'forge-std/Test.sol';
-
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {Ownable} from 'solidity-utils/contracts/oz-common/Ownable.sol';
 import {Initializable} from 'solidity-utils/contracts/transparent-proxy/Initializable.sol';
@@ -12,11 +10,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
-import {IWeth} from './interfaces/IWeth.sol';
-import {IWstEth} from './interfaces/IWstEth.sol';
-import {ILido} from './interfaces/ILido.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
-import {IRocketPoolDeposit} from './interfaces/IRocketPoolDeposit.sol';
 
 contract AaveCurator is Initializable, Ownable {
   using SafeERC20 for IERC20;
@@ -53,11 +47,6 @@ contract AaveCurator is Initializable, Ownable {
     _;
   }
 
-  IRocketPoolDeposit private constant ROCKET_POOL =
-    IRocketPoolDeposit(0xDD3f50F8A6CafbE9b31a427582963f465E745AF8);
-  IWeth private constant WETH = IWeth(AaveV2EthereumAssets.WETH_UNDERLYING);
-
-  address public constant STETH = AaveV2EthereumAssets.stETH_UNDERLYING;
   address public constant BPT_PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404; // TODO: Update with new one
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
@@ -68,9 +57,9 @@ contract AaveCurator is Initializable, Ownable {
   mapping(address tokenAddress => bool) public allowedToTokens;
   mapping(address tokenAddress => TokenChailinkOracleData) public tokenChainlinkOracle;
 
-  constructor() Ownable() {}
-
-  function initialize() external initializer {}
+  function initialize() external initializer {
+    _transferOwnership(_msgSender());
+  }
 
   function swap(
     address fromToken,
@@ -139,30 +128,6 @@ contract AaveCurator is Initializable, Ownable {
     );
 
     emit SwapCanceled(fromToken, toToken, amount);
-  }
-
-  /// @notice Withdraws wETH into ETH, then deposits for wstETH
-  function depositWstETH(uint256 amount) external onlyOwnerOrManager {
-    WETH.withdraw(amount);
-    ILido(STETH).submit{value: amount}(address(0));
-    IERC20(STETH).approve(AaveV3EthereumAssets.wstETH_UNDERLYING, amount);
-    IWstEth(AaveV3EthereumAssets.wstETH_UNDERLYING).wrap(amount);
-
-    IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).safeTransfer(
-      address(AaveV3Ethereum.COLLECTOR),
-      IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(this))
-    );
-  }
-
-  /// @notice Withdraws wETH into ETH, then deposits for rETH
-  function depositRETH(uint256 amount) external onlyOwnerOrManager {
-    WETH.withdraw(amount);
-    ROCKET_POOL.deposit{value: amount}();
-
-    IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).safeTransfer(
-      address(AaveV3Ethereum.COLLECTOR),
-      IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(this))
-    );
   }
 
   function depositTokenIntoV2(address token, uint256 amount) external onlyOwnerOrManager {

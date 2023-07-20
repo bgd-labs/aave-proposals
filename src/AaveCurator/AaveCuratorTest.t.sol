@@ -413,68 +413,6 @@ contract DepositIntoAaveV3 is AaveCuratorTest {
   }
 }
 
-contract DepositWstEth is AaveCuratorTest {
-  function test_revertsIf_invalidCaller() public {
-    uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
-    curator.depositWstETH(amount);
-  }
-
-  function test_successful() public {
-    uint256 amount = 1_000e18;
-    deal(AaveV2EthereumAssets.WETH_UNDERLYING, address(curator), 1_000e18);
-
-    assertEq(IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(curator)), amount);
-    assertEq(IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(curator)), 0);
-
-    uint256 balanceCollectorBefore = IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.depositWstETH(amount);
-    vm.stopPrank();
-
-    assertGt(
-      IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      balanceCollectorBefore
-    );
-    assertEq(IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(curator)), 0);
-    assertEq(IERC20(AaveV3EthereumAssets.wstETH_UNDERLYING).balanceOf(address(curator)), 0);
-  }
-}
-
-contract DepositRETH is AaveCuratorTest {
-  function test_revertsIf_invalidCaller() public {
-    uint256 amount = 1_000e18;
-    vm.expectRevert(AaveCurator.InvalidCaller.selector);
-    curator.depositRETH(amount);
-  }
-
-  function test_successful() public {
-    uint256 amount = 1_000e18;
-    deal(AaveV2EthereumAssets.WETH_UNDERLYING, address(curator), 1_000e18);
-
-    assertEq(IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(curator)), amount);
-    assertEq(IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(curator)), 0);
-
-    uint256 balanceCollectorBefore = IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    curator.depositRETH(amount);
-    vm.stopPrank();
-
-    assertGt(
-      IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      balanceCollectorBefore
-    );
-    assertEq(IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(curator)), 0);
-    assertEq(IERC20(AaveV3EthereumAssets.rETH_UNDERLYING).balanceOf(address(curator)), 0);
-  }
-}
-
 contract SetAllowedFromToken is AaveCuratorTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('Ownable: caller is not the owner');

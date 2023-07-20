@@ -6,6 +6,8 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {AaveV2EthereumArc} from 'aave-address-book/AaveV2EthereumArc.sol';
+import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
+import {TransparentProxyFactory} from 'solidity-utils/contracts/transparent-proxy/TransparentProxyFactory.sol';
 
 import {AaveCurator} from './AaveCurator.sol';
 import {TokenAddresses} from './TokenAddresses.sol';
@@ -45,6 +47,11 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
     );
 
     AaveCurator curator = new AaveCurator();
+    TransparentProxyFactory(AaveMisc.TRANSPARENT_PROXY_FACTORY_ETHEREUM).create(
+      address(curator),
+      AaveMisc.PROXY_ADMIN_ETHEREUM,
+      abi.encodeWithSelector(AaveCurator.initialize.selector)
+    );
 
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_A_TOKEN,
