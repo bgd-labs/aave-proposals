@@ -3,7 +3,6 @@
 pragma solidity 0.8.19;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-import {Ownable} from 'solidity-utils/contracts/oz-common/Ownable.sol';
 import {Initializable} from 'solidity-utils/contracts/transparent-proxy/Initializable.sol';
 import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 
@@ -21,13 +20,13 @@ contract StrategicAssetsManager is
 
   event SdTokenAdded(address indexed underlying, address sdToken);
   event SdTokenRemoved(address indexed underlying, address sdToken);
-  event StrategicAssetsManagerChanged(address indexed oldManager, address indexed newManager);
   event VeTokenAdded(address indexed underlying, address veToken);
   event VeTokenRemoved(address indexed underlying, address veToken);
   event WithdrawalERC20(address indexed _token, address _to, uint256 _amount);
 
   function initialize() external initializer {
     _transferOwnership(_msgSender());
+    _updateGuardian(_msgSender());
   }
 
   function addVeToken(
@@ -89,18 +88,5 @@ contract StrategicAssetsManager is
 
     IERC20(token).safeTransfer(to, amount);
     emit WithdrawalERC20(token, to, amount);
-  }
-
-  function setStrategicAssetsManager(address _manager) external onlyOwner {
-    if (_manager == address(0)) revert Invalid0xAddress();
-    address oldManager = manager;
-    manager = _manager;
-    emit StrategicAssetsManagerChanged(oldManager, manager);
-  }
-
-  function removeStrategicAssetManager() external onlyOwner {
-    address oldManager = manager;
-    manager = address(0);
-    emit StrategicAssetsManagerChanged(oldManager, manager);
   }
 }

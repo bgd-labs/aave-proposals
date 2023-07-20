@@ -58,7 +58,7 @@ contract LSDLiquidityGaugeManagerTest is Test {
 
 contract SetGaugeController is LSDLiquidityGaugeManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setGaugeController(B_80BAL_20WETH, BALANCER_GAUGE_CONTROLLER);
   }
 
@@ -92,7 +92,7 @@ contract SetGaugeController is LSDLiquidityGaugeManagerTest {
 
 contract VoteForGaugeWeight is LSDLiquidityGaugeManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.voteForGaugeWeight(B_80BAL_20WETH, VE_BAL_GAUGE, 100);
   }
 

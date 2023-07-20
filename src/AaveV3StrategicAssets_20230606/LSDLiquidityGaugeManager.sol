@@ -2,8 +2,6 @@
 
 pragma solidity 0.8.19;
 
-import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-
 import {ILiquidityGaugeController} from './interfaces/ILiquidityGauge.sol';
 import {Core} from './Core.sol';
 
@@ -23,7 +21,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
   /// @notice Set the gauge controller used for gauge weight voting
   /// @param token Address of the LSD token
   /// @param gaugeController The gauge controller address
-  function setGaugeController(address token, address gaugeController) public onlyOwnerOrManager {
+  function setGaugeController(address token, address gaugeController) public onlyOwnerOrGuardian {
     if (gaugeController == address(0)) revert Invalid0xAddress();
 
     address oldController = gaugeControllers[token];
@@ -42,7 +40,7 @@ abstract contract LSDLiquidityGaugeManager is Core {
     address token,
     address gauge,
     uint256 weight
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     if (gauge == address(0)) revert Invalid0xAddress();
 
     ILiquidityGaugeController(gaugeControllers[token]).vote_for_gauge_weights(gauge, weight);

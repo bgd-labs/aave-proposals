@@ -42,8 +42,8 @@ contract VeTokenManagerTest is Test {
   address public constant VE_CRV = 0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2;
   address public constant CRV_VOTING = 0xBCfF8B0b9419b9A88c44546519b1e909cF330399;
 
-  uint256 public constant LOCK_DURATION_ONE_YEAR = 365 * 86400;
-  uint256 public constant WEEK = 7 * 86400;
+  uint256 public constant LOCK_DURATION_ONE_YEAR = 365 days;
+  uint256 public constant WEEK = 7 days;
 
   address public immutable initialDelegate = makeAddr('initial-delegate');
 
@@ -73,7 +73,7 @@ contract VeTokenManagerTest is Test {
 
 contract BuyBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.buyBoost(
       B_80BAL_20WETH,
       makeAddr('delegator'),
@@ -110,7 +110,7 @@ contract BuyBoostTest is VeTokenManagerTest {
 contract SellBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     uint64 expiration = uint64(block.timestamp + 10000);
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
   }
 
@@ -146,7 +146,7 @@ contract SellBoostTest is VeTokenManagerTest {
 contract UpdateBoostOfferTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     uint64 expiration = uint64(block.timestamp + 10000);
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.updateBoostOffer(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
   }
 
@@ -210,7 +210,7 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
 
 contract RemoveBoostOfferTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.removeBoostOffer(B_80BAL_20WETH);
   }
 
@@ -266,7 +266,7 @@ contract RemoveBoostOfferTest is VeTokenManagerTest {
 
 contract Claim is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.claim(B_80BAL_20WETH);
   }
 
@@ -336,7 +336,7 @@ contract Claim is VeTokenManagerTest {
 
 contract SetSpaceId is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setSpaceId(B_80BAL_20WETH, BALANCER_SPACE_ID);
   }
 
@@ -363,7 +363,7 @@ contract SetSpaceId is VeTokenManagerTest {
 
 contract SetDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setDelegateSnapshot(B_80BAL_20WETH, makeAddr('another-delegate'));
   }
 
@@ -398,7 +398,7 @@ contract SetDelegationSnapshot is VeTokenManagerTest {
 
 contract ClearDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.clearDelegateSnapshot(B_80BAL_20WETH);
   }
 
@@ -434,7 +434,7 @@ contract ClearDelegationSnapshot is VeTokenManagerTest {
 
 contract SetVotingContract is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setVotingContract(CRV, CRV_VOTING);
   }
 
@@ -465,7 +465,7 @@ contract SetVotingContract is VeTokenManagerTest {
 
 contract SetLockDuration is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setLockDuration(B_80BAL_20WETH, LOCK_DURATION_ONE_YEAR);
   }
 
@@ -494,7 +494,7 @@ contract SetLockDuration is VeTokenManagerTest {
 
 contract LockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.lock(B_80BAL_20WETH);
   }
 
@@ -608,7 +608,7 @@ contract LockTest is VeTokenManagerTest {
 
 contract UnlockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.unlock(B_80BAL_20WETH);
   }
 

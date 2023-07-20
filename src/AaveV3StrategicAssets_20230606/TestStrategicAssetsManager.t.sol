@@ -12,6 +12,7 @@ import {VeTokenManager} from './VeTokenManager.sol';
 import {Core} from './Core.sol';
 
 contract StrategicAssetsManagerTest is Test {
+  event GuardianUpdated(address oldGuardian, address newGuardian);
   event SdTokenAdded(address indexed underlying, address sdToken);
   event SdTokenRemoved(address indexed underlying, address sdToken);
   event StrategicAssetsManagerChanged(address indexed oldManager, address indexed newManager);
@@ -251,43 +252,36 @@ contract TransferOwnership is StrategicAssetsManagerTest {
 
 contract SetStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert('Ownable: caller is not the owner');
-    strategicAssets.setStrategicAssetsManager(makeAddr('new-admin'));
-  }
-
-  function test_revertsIf_managerIs0xAddress() public {
-    vm.expectRevert(Core.Invalid0xAddress.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setStrategicAssetsManager(address(0));
-    vm.stopPrank();
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
+    strategicAssets.updateGuardian(makeAddr('new-admin'));
   }
 
   function test_successful() public {
     address newManager = makeAddr('new-admin');
     vm.expectEmit();
-    emit StrategicAssetsManagerChanged(strategicAssets.manager(), newManager);
+    emit GuardianUpdated(strategicAssets.guardian(), newManager);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setStrategicAssetsManager(newManager);
+    strategicAssets.updateGuardian(newManager);
     vm.stopPrank();
 
-    assertEq(newManager, strategicAssets.manager());
+    assertEq(newManager, strategicAssets.guardian());
   }
 }
 
 contract RemoveStrategicAssetManager is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert('Ownable: caller is not the owner');
-    strategicAssets.removeStrategicAssetManager();
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
+    strategicAssets.updateGuardian(address(0));
   }
 
   function test_successful() public {
     vm.expectEmit();
-    emit StrategicAssetsManagerChanged(strategicAssets.manager(), address(0));
+    emit GuardianUpdated(strategicAssets.guardian(), address(0));
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.removeStrategicAssetManager();
+    strategicAssets.updateGuardian(address(0));
     vm.stopPrank();
 
-    assertEq(address(0), strategicAssets.manager());
+    assertEq(address(0), strategicAssets.guardian());
   }
 }
 

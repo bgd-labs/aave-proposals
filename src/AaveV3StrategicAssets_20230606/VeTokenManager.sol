@@ -54,7 +54,7 @@ abstract contract VeTokenManager is Core {
     address receiver,
     uint256 amount,
     uint256 duration
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
@@ -82,7 +82,7 @@ abstract contract VeTokenManager is Core {
     uint16 minPerc,
     uint16 maxPerc,
     bool useAdvicePrice
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
@@ -109,7 +109,7 @@ abstract contract VeTokenManager is Core {
     uint16 minPerc,
     uint16 maxPerc,
     bool useAdvicePrice
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
@@ -124,7 +124,7 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Removes an existing boost offer
-  function removeBoostOffer(address underlying) external onlyOwnerOrManager {
+  function removeBoostOffer(address underlying) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
@@ -133,7 +133,7 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Claim fee token rewards accrued by selling veBoost
-  function claim(address underlying) external onlyOwnerOrManager {
+  function claim(address underlying) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
@@ -142,7 +142,7 @@ abstract contract VeTokenManager is Core {
 
   /// @notice sets the snapshot space ID
   /// @notice delegate must previously have been set or reverts
-  function setSpaceId(address underlying, bytes32 _spaceId) external onlyOwnerOrManager {
+  function setSpaceId(address underlying, bytes32 _spaceId) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
 
@@ -153,7 +153,7 @@ abstract contract VeTokenManager is Core {
   function setDelegateSnapshot(
     address underlying,
     address newDelegate
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
 
@@ -161,7 +161,7 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice clears the delegate from snapshot
-  function clearDelegateSnapshot(address underlying) external onlyOwnerOrManager {
+  function clearDelegateSnapshot(address underlying) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
 
@@ -175,7 +175,7 @@ abstract contract VeTokenManager is Core {
     address underlying,
     uint256 voteData,
     bool support
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     address voting = veTokenToVotingContract[underlying];
     if (voting == address(0)) revert VotingContractNotRegistered();
     // TODO: Finish Curve.fi Voting Parameter: 0xBCfF8B0b9419b9A88c44546519b1e909cF330399
@@ -184,7 +184,7 @@ abstract contract VeTokenManager is Core {
     emit VoteCast(voteData, support);
   }
 
-  function setVotingContract(address underlying, address voting) external onlyOwnerOrManager {
+  function setVotingContract(address underlying, address voting) external onlyOwnerOrGuardian {
     if (veTokens[underlying].veToken == address(0)) revert TokenNotRegistered();
     if (voting == address(0)) revert Invalid0xAddress();
 
@@ -196,7 +196,7 @@ abstract contract VeTokenManager is Core {
   function setLockDuration(
     address underlying,
     uint256 newLockDuration
-  ) external onlyOwnerOrManager {
+  ) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
     if (newLockDuration < token.lockDuration) revert InvalidNewDuration();
@@ -206,7 +206,7 @@ abstract contract VeTokenManager is Core {
 
   /// @notice Locks underlying token into veToken until lockDuration
   /// @notice Increases amount or lock duration if lock already exists
-  function lock(address underlying) external onlyOwnerOrManager {
+  function lock(address underlying) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
 
@@ -237,7 +237,7 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Reverts if lockDuration has not passed
-  function unlock(address underlying) external onlyOwnerOrManager {
+  function unlock(address underlying) external onlyOwnerOrGuardian {
     VeToken storage token = veTokens[underlying];
     if (token.veToken == address(0)) revert TokenNotRegistered();
 

@@ -21,7 +21,7 @@ abstract contract SdTokenManager is Core {
   mapping(address => SdToken) public sdTokens;
 
   /// @notice Locks underlying token into sdToken and stakes into gauge
-  function lock(address underlying, uint256 amount) external onlyOwnerOrManager {
+  function lock(address underlying, uint256 amount) external onlyOwnerOrGuardian {
     SdToken storage token = sdTokens[underlying];
     if (token.sdToken == address(0)) revert Invalid0xAddress();
 
@@ -29,7 +29,7 @@ abstract contract SdTokenManager is Core {
     ISdDepositor(token.depositor).deposit(amount, true, true, address(this));
   }
 
-  function retrieveUnderlying(address token) external onlyOwnerOrManager {
+  function retrieveUnderlying(address token) external onlyOwnerOrGuardian {
     // TODO: Add curve swap? or COW? Nothing?
   }
 }

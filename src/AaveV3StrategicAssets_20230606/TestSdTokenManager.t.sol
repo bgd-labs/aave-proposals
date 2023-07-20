@@ -18,11 +18,6 @@ contract SdTokenManagerTest is Test {
   address public constant CRV_VOTING = 0xBCfF8B0b9419b9A88c44546519b1e909cF330399;
   address public constant SD_CRV_DEPOSITOR = 0xc1e3Ca8A3921719bE0aE3690A0e036feB4f69191;
 
-  uint256 public constant LOCK_DURATION_ONE_YEAR = 365 * 86400;
-  uint256 public constant WEEK = 7 * 86400;
-
-  address public immutable initialDelegate = makeAddr('initial-delegate');
-
   StrategicAssetsManager public strategicAssets;
 
   function setUp() public {
@@ -46,7 +41,7 @@ contract SdTokenManagerTest is Test {
 
 contract LockTestSdToken is SdTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
-    vm.expectRevert(Core.InvalidCaller.selector);
+    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.lock(CRV, 100e18);
   }
 
