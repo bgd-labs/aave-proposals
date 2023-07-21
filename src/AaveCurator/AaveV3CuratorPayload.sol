@@ -19,7 +19,7 @@ import {TokenAddresses} from './TokenAddresses.sol';
  * Snapshot: https://snapshot.org/#/aave.eth/proposal/0xb4141f12f7ec8e037e6320912b5673fcc5909457d9f6201c018d5c15e5aa5083
  */
 contract AaveV3CuratorPayload is IProposalGenericExecutor {
-    address public constant ARC_aUSDC = 0xd35f648C3C7f17cd1Ba92e5eac991E3EfcD4566d;
+  address public constant ARC_aUSDC = 0xd35f648C3C7f17cd1Ba92e5eac991E3EfcD4566d;
 
   function execute() external {
     // TODO: How to withdraw from ARC?
@@ -56,7 +56,6 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
     curator.setAllowedToToken(
       AaveV2EthereumAssets.USDC_A_TOKEN,
       AaveV2EthereumAssets.USDC_ORACLE,
-      true,
       true
     );
 
@@ -73,7 +72,6 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
       curator.setAllowedFromToken(
         tokenToSwap.token,
         tokenToSwap.oracle,
-        tokenToSwap.isEthFeed,
         true
       );
 
@@ -100,7 +98,6 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
       curator.setAllowedFromToken(
         tokenToSwap.token,
         tokenToSwap.oracle,
-        tokenToSwap.isEthFeed,
         true
       );
 

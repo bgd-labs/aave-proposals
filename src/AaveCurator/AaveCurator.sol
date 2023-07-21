@@ -33,11 +33,6 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     BPT8020
   }
 
-  struct TokenChailinkOracleData {
-    address oracle;
-    bool isEthBased;
-  }
-
   address public constant BPT_PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404; // TODO: Update with new one
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
@@ -45,7 +40,8 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
 
   mapping(address tokenAddress => bool) public allowedFromTokens;
   mapping(address tokenAddress => bool) public allowedToTokens;
-  mapping(address tokenAddress => TokenChailinkOracleData) public tokenChainlinkOracle;
+  /// @notice Chainlink Oracle address for given token (supports only USD bases)
+  mapping(address tokenAddress => address) public tokenChainlinkOracle;
 
   function initialize() external initializer {
     _transferOwnership(_msgSender());
@@ -135,29 +131,19 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     emit DepositedIntoV3(token, amount);
   }
 
-  function setAllowedFromToken(
-    address token,
-    address oracle,
-    bool isEthBased,
-    bool allowed
-  ) external onlyOwner {
+  function setAllowedFromToken(address token, address oracle, bool allowed) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedFromTokens[token] = allowed;
-    tokenChainlinkOracle[token] = TokenChailinkOracleData(oracle, isEthBased);
+    tokenChainlinkOracle[token] = oracle;
     emit TokenUpdated(token, allowed);
   }
 
-  function setAllowedToToken(
-    address token,
-    address oracle,
-    bool isEthBased,
-    bool allowed
-  ) external onlyOwner {
+  function setAllowedToToken(address token, address oracle, bool allowed) external onlyOwner {
     if (token == address(0)) revert Invalid0xAddress();
     if (oracle == address(0)) revert Invalid0xAddress();
     allowedToTokens[token] = allowed;
-    tokenChainlinkOracle[token] = TokenChailinkOracleData(oracle, isEthBased);
+    tokenChainlinkOracle[token] = oracle;
     emit TokenUpdated(token, allowed);
   }
 
@@ -184,7 +170,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     uint256 slippage,
     address fromToken,
     address toToken
-  ) internal returns (address, bytes memory) {
+  ) internal view returns (address, bytes memory) {
     if (_tokenType == TokenType.Standard) {
       return (
         CHAINLINK_PRICE_CHECKER,
@@ -201,38 +187,19 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     address fromToken,
     address toToken
   ) internal view returns (bytes memory) {
-    TokenChailinkOracleData memory oracleOne = tokenChainlinkOracle[fromToken];
-    TokenChailinkOracleData memory oracleTwo = tokenChainlinkOracle[toToken];
+    address oracleOne = tokenChainlinkOracle[fromToken];
+    address oracleTwo = tokenChainlinkOracle[toToken];
 
-    if (oracleOne.oracle == address(0) || oracleTwo.oracle == address(0)) revert OracleNotSet();
+    if (oracleOne == address(0) || oracleTwo == address(0)) revert OracleNotSet();
 
-    bytes memory data;
-    if (oracleOne.isEthBased != oracleTwo.isEthBased) {
-      address[] memory paths = new address[](3);
-      paths[0] = oracleOne.oracle;
-      paths[1] = AaveV3EthereumAssets.WETH_ORACLE;
-      paths[2] = oracleTwo.oracle;
+    address[] memory paths = new address[](3);
+    paths[0] = oracleOne;
+    paths[1] = oracleTwo;
 
-      bool[] memory reverses = new bool[](3);
-      reverses[2] = true;
+    bool[] memory reverses = new bool[](2);
+    reverses[1] = true;
 
-      if (!oracleOne.isEthBased) {
-        reverses[1] = true;
-      }
-
-      data = abi.encode(paths, reverses);
-    } else {
-      address[] memory paths = new address[](2);
-      paths[0] = oracleOne.oracle;
-      paths[1] = oracleTwo.oracle;
-
-      bool[] memory reverses = new bool[](2);
-      reverses[1] = true;
-
-      data = abi.encode(paths, reverses);
-    }
-
-    return data;
+    return abi.encode(paths, reverses);
   }
 
   function _getBPTCheckerData(
