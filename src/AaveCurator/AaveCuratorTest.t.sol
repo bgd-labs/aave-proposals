@@ -97,7 +97,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       amount,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
   }
 
@@ -110,7 +111,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       0,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -124,7 +126,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -143,7 +146,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -167,7 +171,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       makeAddr('new-recipient'),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -198,7 +203,8 @@ contract AaveCuratorSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -215,7 +221,8 @@ contract CancelSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       amount,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
   }
 
@@ -239,7 +246,8 @@ contract CancelSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
 
     vm.expectRevert();
@@ -250,7 +258,8 @@ contract CancelSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }
@@ -281,7 +290,8 @@ contract CancelSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
 
     vm.expectEmit();
@@ -297,7 +307,8 @@ contract CancelSwap is AaveCuratorTest {
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
       200,
-      AaveCurator.TokenType.Standard
+      0,
+      address(0)
     );
     vm.stopPrank();
   }

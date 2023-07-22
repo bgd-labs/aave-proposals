@@ -69,11 +69,7 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         IERC20(tokenToSwap.token).balanceOf(address(AaveV2Ethereum.COLLECTOR))
       );
 
-      curator.setAllowedFromToken(
-        tokenToSwap.token,
-        tokenToSwap.oracle,
-        true
-      );
+      curator.setAllowedFromToken(tokenToSwap.token, tokenToSwap.oracle, true);
 
       curator.swap(
         tokenToSwap.token,
@@ -81,7 +77,8 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         address(AaveV2Ethereum.COLLECTOR),
         IERC20(tokenToSwap.token).balanceOf(address(curator)),
         tokenToSwap.slippage,
-        AaveCurator.TokenType.Standard
+        0,
+      address(0)
       );
     }
 
@@ -95,11 +92,7 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         IERC20(tokenToSwap.token).balanceOf(address(AaveV2Ethereum.COLLECTOR))
       );
 
-      curator.setAllowedFromToken(
-        tokenToSwap.token,
-        tokenToSwap.oracle,
-        true
-      );
+      curator.setAllowedFromToken(tokenToSwap.token, tokenToSwap.oracle, true);
 
       curator.swap(
         tokenToSwap.token,
@@ -107,7 +100,8 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         address(AaveV2Ethereum.COLLECTOR),
         IERC20(tokenToSwap.token).balanceOf(address(curator)),
         tokenToSwap.slippage,
-        AaveCurator.TokenType.Standard
+        0,
+      address(0)
       );
     }
   }

@@ -10,6 +10,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
+import {IExpectedOutCalculator, IPriceChecker} from './interfaces/IExpectedOutCalculator.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 
 contract AaveCurator is Initializable, OwnableWithGuardian {
@@ -23,15 +24,13 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
 
   error Invalid0xAddress();
   error InvalidAmount();
-  error InvalidOracleType();
   error InvalidRecipient();
   error InvalidToken();
   error OracleNotSet();
 
-  enum TokenType {
-    Standard,
-    BPT8020
-  }
+  uint256 public constant ZERO_POINT_EIGHT = 8e17;
+  uint256 public constant ZERO_POINT_FIVE = 5e17;
+  uint256 public constant ZERO_POINT_TWO = 2e17;
 
   address public constant BPT_PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404; // TODO: Update with new one
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
@@ -54,7 +53,8 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     address recipient,
     uint256 amount,
     uint256 slippage,
-    TokenType _tokenType
+    uint256 tokenWeight,
+    address tokenTwo
   ) external onlyOwnerOrGuardian {
     if (amount == 0) revert InvalidAmount();
     if (!allowedFromTokens[fromToken]) revert InvalidToken();
@@ -66,10 +66,11 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     IERC20(fromToken).safeApprove(milkman, amount);
 
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
-      _tokenType,
-      slippage,
       fromToken,
-      toToken
+      toToken,
+      slippage,
+      tokenWeight,
+      tokenTwo
     );
 
     IMilkman(milkman).requestSwapExactTokensForTokens(
@@ -91,13 +92,15 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     address recipient,
     uint256 amount,
     uint256 slippage,
-    TokenType _tokenType
+    uint256 tokenWeight,
+    address tokenTwo
   ) external onlyOwnerOrGuardian {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
-      _tokenType,
-      slippage,
       fromToken,
-      toToken
+      toToken,
+      slippage,
+      tokenWeight,
+      tokenTwo
     );
 
     IMilkman(tradeMilkman).cancelSwap(
@@ -163,23 +166,50 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     }
   }
 
+  function getExpectedOut(
+    uint256 amount,
+    address fromToken,
+    address toToken,
+    uint256 slippage,
+    uint256 tokenWeight,
+    address tokenTwo
+  ) public view returns (uint256) {
+    (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
+      fromToken,
+      toToken,
+      slippage,
+      tokenWeight,
+      tokenTwo
+    );
+
+    return
+      IPriceChecker(priceChecker).EXPECTED_OUT_CALCULATOR().getExpectedOut(
+        amount,
+        fromToken,
+        toToken,
+        data
+      );
+  }
+
   receive() external payable {}
 
   function _getPriceCheckerAndData(
-    TokenType _tokenType,
-    uint256 slippage,
     address fromToken,
-    address toToken
+    address toToken,
+    uint256 slippage,
+    uint256 tokenWeight,
+    address tokenTwo
   ) internal view returns (address, bytes memory) {
-    if (_tokenType == TokenType.Standard) {
+    if (tokenWeight == 0) {
       return (
         CHAINLINK_PRICE_CHECKER,
         abi.encode(slippage, _getChainlinkCheckerData(fromToken, toToken))
       );
-    } else if (_tokenType == TokenType.BPT8020) {
-      return (BPT_PRICE_CHECKER, abi.encode(slippage, _getBPTCheckerData(fromToken, toToken)));
     } else {
-      revert InvalidOracleType();
+      return (
+        BPT_PRICE_CHECKER,
+        abi.encode(slippage, _getBPTCheckerData(fromToken, tokenWeight, tokenTwo))
+      );
     }
   }
 
@@ -192,7 +222,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
 
     if (oracleOne == address(0) || oracleTwo == address(0)) revert OracleNotSet();
 
-    address[] memory paths = new address[](3);
+    address[] memory paths = new address[](2);
     paths[0] = oracleOne;
     paths[1] = oracleTwo;
 
@@ -204,8 +234,14 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
 
   function _getBPTCheckerData(
     address fromToken,
-    address toToken
+    uint256 tokenWeight,
+    address tokenTwo
   ) internal view returns (bytes memory) {
-    // TODO: Generic checker for 80/20 tokens in development
+    address oracleOne = tokenChainlinkOracle[fromToken];
+    address oracleTwo = tokenChainlinkOracle[tokenTwo];
+
+    if (oracleOne == address(0) || oracleTwo == address(0)) revert OracleNotSet();
+
+    return abi.encode(tokenWeight, oracleOne, oracleTwo);
   }
 }
