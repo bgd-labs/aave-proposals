@@ -20,8 +20,6 @@ Of the assets that are currently frozen, with the exception of BAL, the RF is to
 
 The remaining assets are to receive an incremental 5% increase in the RF. After implementing this publication, user elasticity shall be assessed and the impact of the updates before moving forward with additional increases.
 
-There shall be a minimum gap of 2 weeks between each subsequent update. Target AIP submission date is week commencing 31st July, ain 3 weeks time.
-
 # Specification
 
 The following parameters are to be updated as follows:
@@ -40,17 +38,19 @@ The following parameters are to be updated as follows:
 |LINK|99.99%|
 
 
-# References
+# Implementation
 
-[Forum Post](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937)
+A list of relevant links like for this proposal:
 
-[Payload Implementation](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.sol)
+* [Governance Forum Discussion](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937)
 
-[Test](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.t.sol)
+* [Test Cases](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.t.sol)
 
-[Pre-Post Payload Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
+* [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.sol)
 
-[Deployed Payload Address](TODO)
+[Pre-Post Payload Protocol Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
+
+* [Deployed Contracts](TODO)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
