@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+
 import {GovHelpers, AaveGovernanceV2} from 'aave-helpers/GovHelpers.sol';
 import {AaveV3ArbMAICapsUpdates_20230724} from './AaveV3ArbMAICapsUpdates_20230724.sol';
 import {AaveV3AvaxMAICapsUpdates_20230724} from './AaveV3AvaxMAICapsUpdates_20230724.sol';
@@ -17,7 +18,7 @@ contract CreateProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV3PolCRVRiskParams_20230702/CHAOS-LABS-RISK-PARAMETERS-UPDATE-CRV-AAVE-V3-POLYGON.md'
+        'src/AaveV3MAICapsUpdates_20230724/CHAOS-LABS-RISK-PARAMETERS-UPDATE-MAI-AAVE-V3.md'
       )
     );
   }
