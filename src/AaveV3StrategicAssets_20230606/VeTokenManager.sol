@@ -3,7 +3,6 @@
 pragma solidity 0.8.19;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 
 import {DelegateRegistry} from './interfaces/IDelegateRegistry.sol';
 import {IVeToken} from './interfaces/IVeToken.sol';
@@ -12,8 +11,6 @@ import {IAragonVoting} from './interfaces/IAragonVoting.sol';
 import {Core} from './Core.sol';
 
 abstract contract VeTokenManager is Core {
-  using SafeERC20 for IERC20;
-
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
   event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
@@ -86,7 +83,7 @@ abstract contract VeTokenManager is Core {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
-    IERC20(IWardenBoost(token.warden).delegationBoost()).safeApprove(
+    IERC20(IWardenBoost(token.warden).delegationBoost()).approve(
       token.warden,
       type(uint256).max // Per Boost docs, approve uint256 max
     );
@@ -128,7 +125,7 @@ abstract contract VeTokenManager is Core {
     VeToken storage token = veTokens[underlying];
     if (token.warden == address(0)) revert TokenNotRegistered();
 
-    IERC20(IWardenBoost(token.warden).delegationBoost()).safeApprove(token.warden, 0);
+    IERC20(IWardenBoost(token.warden).delegationBoost()).approve(token.warden, 0);
     IWardenBoost(token.warden).quit();
   }
 
