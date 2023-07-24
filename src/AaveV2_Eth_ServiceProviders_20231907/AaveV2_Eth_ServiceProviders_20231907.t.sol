@@ -42,25 +42,25 @@ contract AaveV3CuratorPayload_Test is Test {
       0
     );
 
-    assertEq(
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(payload)),
-      0
-    );
+    assertEq(IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(payload)), 0);
 
-    assertEq(
-      IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(payload)),
-      0
-    );
+    assertEq(IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(payload)), 0);
 
     assertGt(
       IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       balanceBeforeAUSDC
     );
 
-    assertApproxEqAbs(IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      balanceBeforeAUSDT - payload.AMOUNT_USDT(), 1);
+    assertApproxEqAbs(
+      IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      balanceBeforeAUSDT - payload.AMOUNT_USDT(),
+      1
+    );
 
-    assertApproxEqAbs(IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      balanceBeforeADAI - payload.AMOUNT_DAI(), 1);
+    assertApproxEqAbs(
+      IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
+      balanceBeforeADAI - payload.AMOUNT_DAI(),
+      1
+    );
   }
 }
