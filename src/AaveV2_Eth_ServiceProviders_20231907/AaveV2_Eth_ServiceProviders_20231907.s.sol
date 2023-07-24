@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
-import {AaveV3_Eth_ServiceProviders_20231907} from './AaveV3_Eth_ServiceProviders_20231907.sol';
+import {AaveV2_Eth_ServiceProviders_20231907} from './AaveV2_Eth_ServiceProviders_20231907.sol';
 
 /**
  * @dev Deploy AaveV3_Eth_ServiceProviders_20231907
@@ -11,7 +11,7 @@ import {AaveV3_Eth_ServiceProviders_20231907} from './AaveV3_Eth_ServiceProvider
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
-    new AaveV3_Eth_ServiceProviders_20231907();
+    new AaveV2_Eth_ServiceProviders_20231907();
   }
 }
 
