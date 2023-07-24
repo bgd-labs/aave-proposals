@@ -6,7 +6,7 @@ discussions: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-update
 
 ## Simple Summary
 
-A proposal to reduce the Supply and Borrow Caps and Debt Ceiling for MAI on Aave V3 Polygon, Avalanche, Arbitrum and Optimism
+A proposal to reduce the Supply and Borrow Caps and Debt Ceiling for MAI on Aave V3 Polygon, Arbitrum and Optimism
 
 ## Motivation
 
@@ -20,12 +20,11 @@ Note: Final recommendations will be rounded for simplicity
 
 ### Recommendations
 
-| Chain     | Current Supply Cap | Recommended Supply Cap | Current Borrow Cap | Recommended Borrow Cap | Current Debt Ceiling ($) | Recommended Debt Ceiling ($) |
-| --------- | ------------------ | ---------------------- | ------------------ | ---------------------- | ------------------------ | ---------------------------- |
-| Arbitrum  | 4,800,000          | 325,000                | 2,400,000          | 250,000                | 1,200,000                | 100,000                      |
-| Avalanche | 700,000            | 20,000                 | 460,000            | 10,000                 | 2,000,000                | 10,000                       |
-| Optimism  | 7,600,000          | 650,000                | 2,500,000          | 525,000                | 1,900,000                | 130,000                      |
-| Polygon   | 2,200,000          | 900,000                | 1,200,000          | 700,000                | 2,000,000                | 180,000                      |
+| Chain    | Current Supply Cap | Recommended Supply Cap | Current Borrow Cap | Recommended Borrow Cap | Current Debt Ceiling ($) | Recommended Debt Ceiling ($) |
+| -------- | ------------------ | ---------------------- | ------------------ | ---------------------- | ------------------------ | ---------------------------- |
+| Arbitrum | 4,800,000          | 325,000                | 2,400,000          | 250,000                | 1,200,000                | 100,000                      |
+| Optimism | 7,600,000          | 650,000                | 2,500,000          | 525,000                | 1,900,000                | 130,000                      |
+| Polygon  | 2,200,000          | 900,000                | 1,200,000          | 700,000                | 2,000,000                | 180,000                      |
 
 Note: Given the current usage on Polygon, these recommendations effectively disable further usage of MAI as collateral.
 
@@ -36,8 +35,6 @@ Tests: [Tests](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3MA
 Proposal payload implementations:
 
 [Arbitrum Payload](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3MAICapsUpdates_20230724/AaveV3ArbMAICapsUpdates_20230724.sol)
-
-[Avalanche Payload](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3MAICapsUpdates_20230724/AaveV3AvaxMAICapsUpdates_20230724.sol)
 
 [Optimism Payload](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3MAICapsUpdates_20230724/AaveV3OptMAICapsUpdates_20230724.sol)
 
