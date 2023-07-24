@@ -10,7 +10,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
-import {IExpectedOutCalculator, IPriceChecker} from './interfaces/IExpectedOutCalculator.sol';
+import {IPriceChecker} from './interfaces/IExpectedOutCalculator.sol';
 import {IMilkman} from './interfaces/IMilkman.sol';
 
 contract AaveCurator is Initializable, OwnableWithGuardian {
@@ -32,7 +32,8 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
   uint256 public constant ZERO_POINT_FIVE = 5e17;
   uint256 public constant ZERO_POINT_TWO = 2e17;
 
-  address public constant BPT_PRICE_CHECKER = 0x7961bBC81352F26d073aA795EED51290C350D404; // TODO: Update with new one
+  address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
+  address public constant BPT_PRICE_CHECKER = 0xBeA6AAC5bDCe0206A9f909d80a467C93A7D6Da7c;
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
   address public milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
@@ -52,9 +53,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     address toToken,
     address recipient,
     uint256 amount,
-    uint256 slippage,
-    uint256 tokenWeight,
-    address tokenTwo
+    uint256 slippage
   ) external onlyOwnerOrGuardian {
     if (amount == 0) revert InvalidAmount();
     if (!allowedFromTokens[fromToken]) revert InvalidToken();
@@ -68,9 +67,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       fromToken,
       toToken,
-      slippage,
-      tokenWeight,
-      tokenTwo
+      slippage
     );
 
     IMilkman(milkman).requestSwapExactTokensForTokens(
@@ -91,16 +88,12 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     address toToken,
     address recipient,
     uint256 amount,
-    uint256 slippage,
-    uint256 tokenWeight,
-    address tokenTwo
+    uint256 slippage
   ) external onlyOwnerOrGuardian {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       fromToken,
       toToken,
-      slippage,
-      tokenWeight,
-      tokenTwo
+      slippage
     );
 
     IMilkman(tradeMilkman).cancelSwap(
@@ -170,16 +163,12 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     uint256 amount,
     address fromToken,
     address toToken,
-    uint256 slippage,
-    uint256 tokenWeight,
-    address tokenTwo
+    uint256 slippage
   ) public view returns (uint256) {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       fromToken,
       toToken,
-      slippage,
-      tokenWeight,
-      tokenTwo
+      slippage
     );
 
     return
@@ -196,19 +185,17 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
   function _getPriceCheckerAndData(
     address fromToken,
     address toToken,
-    uint256 slippage,
-    uint256 tokenWeight,
-    address tokenTwo
+    uint256 slippage
   ) internal view returns (address, bytes memory) {
-    if (tokenWeight == 0) {
+    if (toToken == BAL80WETH20) {
       return (
-        CHAINLINK_PRICE_CHECKER,
-        abi.encode(slippage, _getChainlinkCheckerData(fromToken, toToken))
+        BPT_PRICE_CHECKER,
+        abi.encode(slippage, '')
       );
     } else {
       return (
-        BPT_PRICE_CHECKER,
-        abi.encode(slippage, _getBPTCheckerData(fromToken, tokenWeight, tokenTwo))
+        CHAINLINK_PRICE_CHECKER,
+        abi.encode(slippage, _getChainlinkCheckerData(fromToken, toToken))
       );
     }
   }
@@ -230,18 +217,5 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     reverses[1] = true;
 
     return abi.encode(paths, reverses);
-  }
-
-  function _getBPTCheckerData(
-    address fromToken,
-    uint256 tokenWeight,
-    address tokenTwo
-  ) internal view returns (bytes memory) {
-    address oracleOne = tokenChainlinkOracle[fromToken];
-    address oracleTwo = tokenChainlinkOracle[tokenTwo];
-
-    if (oracleOne == address(0) || oracleTwo == address(0)) revert OracleNotSet();
-
-    return abi.encode(tokenWeight, oracleOne, oracleTwo);
   }
 }

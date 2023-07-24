@@ -76,9 +76,7 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         AaveV2EthereumAssets.USDC_A_TOKEN,
         address(AaveV2Ethereum.COLLECTOR),
         IERC20(tokenToSwap.token).balanceOf(address(curator)),
-        tokenToSwap.slippage,
-        0,
-      address(0)
+        tokenToSwap.slippage
       );
     }
 
@@ -99,9 +97,7 @@ contract AaveV3CuratorPayload is IProposalGenericExecutor {
         AaveV2EthereumAssets.USDC_A_TOKEN,
         address(AaveV2Ethereum.COLLECTOR),
         IERC20(tokenToSwap.token).balanceOf(address(curator)),
-        tokenToSwap.slippage,
-        0,
-      address(0)
+        tokenToSwap.slippage
       );
     }
   }

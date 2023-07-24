@@ -96,9 +96,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       amount,
-      200,
-      0,
-      address(0)
+      200
     );
   }
 
@@ -110,9 +108,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       0,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -125,9 +121,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -145,9 +139,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -170,9 +162,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       makeAddr('new-recipient'),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -202,9 +192,7 @@ contract AaveCuratorSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -220,9 +208,7 @@ contract CancelSwap is AaveCuratorTest {
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       amount,
-      200,
-      0,
-      address(0)
+      200
     );
   }
 
@@ -245,9 +231,7 @@ contract CancelSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
 
     vm.expectRevert();
@@ -257,9 +241,7 @@ contract CancelSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
@@ -289,9 +271,7 @@ contract CancelSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
 
     vm.expectEmit();
@@ -306,9 +286,7 @@ contract CancelSwap is AaveCuratorTest {
       AaveV2EthereumAssets.USDC_UNDERLYING,
       address(AaveV2Ethereum.COLLECTOR),
       1_000e18,
-      200,
-      0,
-      address(0)
+      200
     );
     vm.stopPrank();
   }
