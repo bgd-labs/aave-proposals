@@ -19,7 +19,7 @@ contract AaveV3ArbMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
   uint256 public constant ARB_NEW_DEBT_CEILING_MAI = 100_000_00;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 114309462);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 113932316);
   }
 
   function testPayload() public {
@@ -67,6 +67,13 @@ contract AaveV3ArbMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
       allConfigsAfter,
       AaveV3ArbitrumAssets.MAI_UNDERLYING
     );
+
+    // 6. e2e
+    e2eTestAsset(
+      AaveV3Arbitrum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3ArbitrumAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3ArbitrumAssets.MAI_UNDERLYING)
+    );
   }
 }
 
@@ -76,7 +83,7 @@ contract AaveV3PolMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
   uint256 public constant POL_NEW_DEBT_CEILING_MAI = 180_000_00;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 45448999);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 45505017);
   }
 
   function testPayload() public {
@@ -123,6 +130,13 @@ contract AaveV3PolMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
       allConfigsBefore,
       allConfigsAfter,
       AaveV3PolygonAssets.miMATIC_UNDERLYING
+    );
+
+    // 6. e2e
+    e2eTestAsset(
+      AaveV3Polygon.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.miMATIC_UNDERLYING)
     );
   }
 }
@@ -181,6 +195,13 @@ contract AaveV3OptMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
       allConfigsAfter,
       AaveV3OptimismAssets.MAI_UNDERLYING
     );
+
+    // 6. e2e
+    e2eTestAsset(
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.DAI_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.MAI_UNDERLYING)
+    );
   }
 }
 
@@ -190,7 +211,7 @@ contract AaveV3AvaxMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
   uint256 public constant AVAX_NEW_DEBT_CEILING_MAI = 10_000_00;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('avalanche'), 33000743);
+    vm.createSelectFork(vm.rpcUrl('avalanche'), 33064566);
   }
 
   function testPayload() public {
@@ -237,6 +258,13 @@ contract AaveV3AvaxMAICapsUpdates_20230724_Test is ProtocolV3TestBase {
       allConfigsBefore,
       allConfigsAfter,
       AaveV3AvalancheAssets.MAI_UNDERLYING
+    );
+
+    // 6. e2e
+    e2eTestAsset(
+      AaveV3Avalanche.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3AvalancheAssets.DAIe_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3AvalancheAssets.MAI_UNDERLYING)
     );
   }
 }
