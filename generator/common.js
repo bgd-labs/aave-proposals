@@ -20,7 +20,7 @@ export function getDate() {
 }
 
 export function generateName(options) {
-  return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${
+  return `${options.protocolVersion === "V2" ? "AaveV2" : "AaveV3"}_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
   }_${options.name}_${getDate()}`;
 }
