@@ -162,21 +162,22 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
   function getExpectedOut(
     uint256 amount,
     address fromToken,
-    address toToken,
-    uint256 slippage
+    address toToken
   ) public view returns (uint256) {
     (address priceChecker, bytes memory data) = _getPriceCheckerAndData(
       fromToken,
       toToken,
-      slippage
+      0
     );
+
+    (, bytes memory _data) = abi.decode(data, (uint256, bytes));
 
     return
       IPriceChecker(priceChecker).EXPECTED_OUT_CALCULATOR().getExpectedOut(
         amount,
         fromToken,
         toToken,
-        data
+        _data
       );
   }
 
@@ -188,10 +189,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     uint256 slippage
   ) internal view returns (address, bytes memory) {
     if (toToken == BAL80WETH20) {
-      return (
-        BPT_PRICE_CHECKER,
-        abi.encode(slippage, '')
-      );
+      return (BPT_PRICE_CHECKER, abi.encode(slippage, ''));
     } else {
       return (
         CHAINLINK_PRICE_CHECKER,
