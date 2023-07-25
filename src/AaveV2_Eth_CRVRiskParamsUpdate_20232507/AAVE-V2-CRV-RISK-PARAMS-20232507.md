@@ -10,15 +10,7 @@ A proposal to reduce Liquidation Threshold (LT) and Loan-To-Value (LTV), for CRV
 
 ## Motivation
 
-Following our recommendations to decrease Aave’s exposure to CRV on V2 Ethereum [here](
-
-[https://governance.aave.com/t/gauntlet-recommendation-to-freeze-crv-and-set-crv-ltv-0-on-aave-v2/13644/31](https://l.workplace.com/l.php?u=https%3A%2F%2Fgovernance.aave.com%2Ft%2Fgauntlet-recommendation-to-freeze-crv-and-set-crv-ltv-0-on-aave-v2%2F13644%2F31&h=AT3OyDcb0c5K9wEcQvZIM7Szv3xkrWJRVkuuwNgjVxTyCEW6-sReZKHJoESl6PnAvauzfrCyR8IP60qst62BNduWkYbg_5uFhwDafK8LZu-f1PrRQEvl7R_yZ_uHygeN4am54Wr7bukQWMFJurvEU5c)
-
-), we propose a series of LT and LTV reductions. The [first reduction](
-
-[https://app.aave.com/governance/proposal/255/](https://l.workplace.com/l.php?u=https%3A%2F%2Fapp.aave.com%2Fgovernance%2Fproposal%2F255%2F&h=AT3OyDcb0c5K9wEcQvZIM7Szv3xkrWJRVkuuwNgjVxTyCEW6-sReZKHJoESl6PnAvauzfrCyR8IP60qst62BNduWkYbg_5uFhwDafK8LZu-f1PrRQEvl7R_yZ_uHygeN4am54Wr7bukQWMFJurvEU5c)
-
-) in this cycle of LT updates was executed on July 3rd, 2023. Since the initial post proposing to reduce the LTs for CRV, we’ve observed over 12M CRV withdrawn from V2 Ethereum.
+Following our recommendations to decrease Aave’s exposure to CRV on V2 Ethereum [here](https://governance.aave.com/t/gauntlet-recommendation-to-freeze-crv-and-set-crv-ltv-0-on-aave-v2/13644/31), we propose a series of LT and LTV reductions. The [first reduction](https://app.aave.com/governance/proposal/255/) in this cycle of LT updates was executed on July 3rd, 2023. Since the initial post proposing to reduce the LTs for CRV, we’ve observed over 12M CRV withdrawn from V2 Ethereum.
 
 In the Snapshot for this proposal , the community has voted on the "Aggressive" option:
 
