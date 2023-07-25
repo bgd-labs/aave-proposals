@@ -12,7 +12,19 @@ This publication intends to swap several assets via Cowswap to USDC. The USDC is
 
 ## Motivation
 
+There are a number of Service Providers requiring payment in aUSDC. Details of each Service Providers funding can be found [here](https://community.llama.xyz/aave/runway) by hovering the cursor over the respective Service Providers contract. Similar applies for the contract start and finish dates.
+
+In order to provide sufficient funding, assets need to be converted to aUSDC. This publication proposes swapping assets to USDC and then depositing the USDC into Aave v2. The amount of aUSDC held post swap is estimated to be $4.5M which is sufficient to sustain the DAO in the short term.
+
+During the next 6 months several Service Providers funding will expire and require re-approval from the DAO. Llama anticipates Service Providers migrating from aUSDC to aethUSDC. ie: from v2 to v3 aToken funding. Our next proposal will include transferring funds from Aave v2 to v3 which is an enabler for new funding requests to use aethTokens.
+
 ## Specification
+
+Perform the following:
+
+- Deposit USDC in Collector into aUSDC v2
+- Swap 974,000 aUSDT v2 for aUSDC v2
+- Swap 974,000 aDAI v2 for aUSDC v2
 
 ## References
 

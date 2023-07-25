@@ -11,7 +11,7 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {AaveV2_Eth_ServiceProviders_20231907} from './AaveV2_Eth_ServiceProviders_20231907.sol';
 
-contract AaveV3CuratorPayload_Test is Test {
+contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17765420);
   }
@@ -20,6 +20,10 @@ contract AaveV3CuratorPayload_Test is Test {
     AaveV2_Eth_ServiceProviders_20231907 payload = new AaveV2_Eth_ServiceProviders_20231907();
 
     uint256 balanceBeforeAUSDC = IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+
+    uint256 balanceBeforeUSDC = IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
 
@@ -46,9 +50,10 @@ contract AaveV3CuratorPayload_Test is Test {
 
     assertEq(IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(payload)), 0);
 
-    assertGt(
+    assertApproxEqAbs(
       IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
-      balanceBeforeAUSDC
+      balanceBeforeAUSDC + balanceBeforeUSDC,
+      1e18
     );
 
     assertApproxEqAbs(

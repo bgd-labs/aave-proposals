@@ -12,15 +12,12 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 /**
  * @title Acquire more aUSDC to pay service providers
  * @author Llama
- * - Snapshot: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205
- * - Discussion: https://snapshot.org/#/aave.eth/proposal/0xb4141f12f7ec8e037e6320912b5673fcc5909457d9f6201c018d5c15e5aa5083
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xb4141f12f7ec8e037e6320912b5673fcc5909457d9f6201c018d5c15e5aa5083
+ * - Discussion: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205
  */
 contract AaveV2_Eth_ServiceProviders_20231907 is IProposalGenericExecutor {
   using SafeERC20 for IERC20;
 
-  error InvalidCaller();
-
-  address public constant ALLOWED_CALLER = 0xA519a7cE7B24333055781133B13532AEabfAC81b;
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
