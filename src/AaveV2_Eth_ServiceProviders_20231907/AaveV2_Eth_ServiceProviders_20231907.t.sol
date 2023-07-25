@@ -53,7 +53,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     assertApproxEqAbs(
       IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       balanceBeforeAUSDC + balanceBeforeUSDC,
-      1e18
+      200e6
     );
 
     assertApproxEqAbs(

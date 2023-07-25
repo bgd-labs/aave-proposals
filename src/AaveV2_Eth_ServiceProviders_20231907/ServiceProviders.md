@@ -1,5 +1,5 @@
 ---
-title: Acquire more aUSDC to pay service providers
+title: Acquire More aUSDC on Aave Ethereum Collector
 author: Llama
 discussions: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205
 ---
