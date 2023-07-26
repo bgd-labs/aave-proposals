@@ -34,8 +34,8 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
 
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant BPT_PRICE_CHECKER = 0xBeA6AAC5bDCe0206A9f909d80a467C93A7D6Da7c;
-  address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
 
+  address public chainlinkPriceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
   address public milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
 
   mapping(address tokenAddress => bool) public allowedFromTokens;
@@ -148,6 +148,11 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
     milkman = _milkman;
   }
 
+  function setChainlinkPriceChecker(address _priceChecker) external onlyOwner {
+    if (_priceChecker == address(0)) revert Invalid0xAddress();
+    chainlinkPriceChecker = _priceChecker;
+  }
+
   /// @notice Transfer any tokens on this contract to Aave V3 Collector
   /// @param tokens List of token addresses
   function withdrawToCollector(address[] calldata tokens) external onlyOwnerOrGuardian {
@@ -192,7 +197,7 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
       return (BPT_PRICE_CHECKER, abi.encode(slippage, ''));
     } else {
       return (
-        CHAINLINK_PRICE_CHECKER,
+        chainlinkPriceChecker,
         abi.encode(slippage, _getChainlinkCheckerData(fromToken, toToken))
       );
     }
