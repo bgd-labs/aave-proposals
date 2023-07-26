@@ -12,10 +12,12 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 /*
  * We used this script to conduct a test transaction for a small amount in order to validate the swap.
  * This file can be ignored and deleted or used for a test transaction.
+ * 
+ * Test TX: 
  */
 contract TestTrade is Script {
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-  address public constant CHAINLINK_PRICE_CHECKER = 0x4D2c3773E69cB69963bFd376e538eC754409ACFa;
+  address public constant CHAINLINK_PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
 
   function run() external {
     vm.startBroadcast();
@@ -48,6 +50,6 @@ contract TestTrade is Script {
 
     data = abi.encode(paths, reverses);
 
-    return abi.encode(2000, data); // 2000 = 20% slippage just cause it's a super small amount
+    return abi.encode(3500, data); // 2000 = 20% slippage just cause it's a super small amount
   }
 }
