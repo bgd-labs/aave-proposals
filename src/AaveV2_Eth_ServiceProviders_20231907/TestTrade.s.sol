@@ -50,6 +50,6 @@ contract TestTrade is Script {
 
     data = abi.encode(paths, reverses);
 
-    return abi.encode(3500, data); // 2000 = 20% slippage just cause it's a super small amount
+    return abi.encode(3500, data); // 3500 = 35% slippage just cause it's a super small amount
   }
 }
