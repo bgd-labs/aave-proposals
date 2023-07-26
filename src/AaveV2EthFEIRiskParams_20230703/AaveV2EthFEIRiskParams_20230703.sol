@@ -15,6 +15,7 @@ contract AaveV2EthFEIRiskParams_20230703 is AaveV2PayloadEthereum {
   uint256 public constant FEI_LIQUIDATION_THRESHOLD = 1_00; // 75 -> 1
   uint256 public constant FEI_LIQUIDATION_BONUS = 11000; // 6.5 -> 10
   uint256 public constant FEI_UOPTIMAL = 1_00; // 80 -> 1
+  address public constant NEW_FEI_ORACLE = 0xac3AF0f4A52C577Cc2C241dF51a01FDe3D06D93B;
 
   function _postExecute() internal override {
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
