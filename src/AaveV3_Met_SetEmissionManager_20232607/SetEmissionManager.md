@@ -18,7 +18,7 @@ The Metis Foundation wallet address is as follows:
 
 Emission Admin Wallet (Metis Foundation): `0x97177cD80475f8b38945c1E77e12F0c9d50Ac84D`
 
-The AIP call setEmissionAdmin() method in the emission_manager contract.
+The AIP calls the setEmissionAdmin() method in the emission_manager contract.
 
 EMISSION_MANAGER.setEmissionAdmin(METIS, EMISSION_ADMIN);
 
