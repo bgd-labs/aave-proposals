@@ -16,7 +16,7 @@ contract AaveV2EthFEIRiskParams_20230703_Test is ProtocolV2TestBase {
   uint256 public constant FEI_UOPTIMAL = 1_00; // 1%
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17618386);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17778245);
   }
 
   function testPayload() public {
