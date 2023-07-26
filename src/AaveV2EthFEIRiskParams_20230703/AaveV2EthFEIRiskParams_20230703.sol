@@ -23,6 +23,12 @@ contract AaveV2EthFEIRiskParams_20230703 is AaveV2PayloadEthereum {
       FEI_LIQUIDATION_THRESHOLD,
       FEI_LIQUIDATION_BONUS
     );
+  
+    address[] memory assets = new address[](1);
+    assets[0] = AaveV2EthereumAssets.FEI_UNDERLYING;
+    address[] memory sources = new address[](1);
+    sources[0] = NEW_FEI_ORACLE;
+    AaveV2Ethereum.ORACLE.setAssetSources(assets, sources);
   }
 
   function rateStrategiesUpdates()
