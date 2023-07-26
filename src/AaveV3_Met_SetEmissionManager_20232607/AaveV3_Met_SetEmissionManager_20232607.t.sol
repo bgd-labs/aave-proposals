@@ -32,7 +32,7 @@ contract AaveV3_Met_SetEmissionManager_20232607_Test is ProtocolV3TestBase {
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.METIS_BRIDGE_EXECUTOR);
 
-    assertEq(IEmissionManager(AaveV3Metis.EMISSION_MANAGER).getEmissionAdmin(METIS), EMISSION_ADMIN);
+    assertEq(IEmissionManager(AaveV3Metis.EMISSION_MANAGER).getEmissionAdmin(proposal.METIS()), proposal.EMISSION_ADMIN());
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Met_SetEmissionManager_20232607',
