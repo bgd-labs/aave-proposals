@@ -70,7 +70,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     );
   }
 
-   function test_swapperevertsIf_invalidCaller() public {
+  function test_swapperevertsIf_invalidCaller() public {
     COWSwapper swapper = new COWSwapper();
 
     vm.expectRevert(COWSwapper.InvalidCaller.selector);
@@ -114,7 +114,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.prank(swapper.ALLOWED_CALLER());
     swapper.cancelSwap(
       0xd5e77e96702694039D6E269cC116cc308806f48A, // These are created when running tests and emitted via log
-      0xd0B587b7712a495499d45F761e234839d7E8D026  // Addresses were retrieved from there
+      0xd0B587b7712a495499d45F761e234839d7E8D026 // Addresses were retrieved from there
     );
   }
 
@@ -136,7 +136,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.prank(AaveGovernanceV2.SHORT_EXECUTOR);
     swapper.cancelSwap(
       0xd5e77e96702694039D6E269cC116cc308806f48A, // These are created when running tests and emitted via log
-      0xd0B587b7712a495499d45F761e234839d7E8D026  // Addresses were retrieved from there
+      0xd0B587b7712a495499d45F761e234839d7E8D026 // Addresses were retrieved from there
     );
   }
 
