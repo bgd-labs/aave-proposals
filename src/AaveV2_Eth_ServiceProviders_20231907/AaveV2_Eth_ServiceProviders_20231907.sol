@@ -40,13 +40,25 @@ contract AaveV2_Eth_ServiceProviders_20231907 is IProposalGenericExecutor {
 
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.USDT_A_TOKEN,
-      address(swapper),
+      address(this),
       AMOUNT_USDT
     );
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.DAI_A_TOKEN,
-      address(swapper),
+      address(this),
       AMOUNT_DAI
+    );
+
+    AaveV2Ethereum.POOL.withdraw(
+      AaveV2EthereumAssets.USDT_UNDERLYING,
+      type(uint256).max,
+      address(swapper)
+    );
+
+    AaveV2Ethereum.POOL.withdraw(
+      AaveV2EthereumAssets.DAI_UNDERLYING,
+      type(uint256).max,
+      address(swapper)
     );
 
     swapper.swap();

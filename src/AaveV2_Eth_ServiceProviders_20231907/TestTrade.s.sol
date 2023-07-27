@@ -5,6 +5,7 @@ pragma solidity 0.8.19;
 import {Script} from 'forge-std/Script.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 import {IMilkman} from './interfaces/IMilkman.sol';
 
@@ -26,11 +27,11 @@ contract TestTrade is Script {
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       100e6,
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.DAI_A_TOKEN),
       IERC20(AaveV2EthereumAssets.USDC_A_TOKEN),
       0x2fb7d6bEb9AD75c1ffD392681cC68171B8551107, // Replace with caller's address
       CHAINLINK_PRICE_CHECKER,
-      _getEncodedData(AaveV2EthereumAssets.USDC_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
+      _getEncodedData(AaveV3EthereumAssets.DAI_ORACLE, AaveV3EthereumAssets.USDC_ORACLE)
     );
 
     vm.stopBroadcast();
@@ -50,6 +51,6 @@ contract TestTrade is Script {
 
     data = abi.encode(paths, reverses);
 
-    return abi.encode(3500, data); // 3500 = 35% slippage just cause it's a super small amount
+    return abi.encode(1000, data); // 3500 = 35% slippage just cause it's a super small amount
   }
 }

@@ -8,16 +8,19 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
+import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 
 import {AaveV2_Eth_ServiceProviders_20231907} from './AaveV2_Eth_ServiceProviders_20231907.sol';
 import {COWSwapper} from './COWSwapper20230726.sol';
 
 contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
+  using SafeERC20 for IERC20;
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17778611);
   }
 
-  function test_execute() public {
+  function test_execute_wassap() public {
     AaveV2_Eth_ServiceProviders_20231907 payload = new AaveV2_Eth_ServiceProviders_20231907();
 
     uint256 balanceBeforeAUSDC = IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(
@@ -54,19 +57,19 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     assertApproxEqAbs(
       IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       balanceBeforeAUSDC + balanceBeforeUSDC,
-      200e6
+      200e6 // Index updated with withdrawal
     );
 
     assertApproxEqAbs(
       IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       balanceBeforeAUSDT - payload.AMOUNT_USDT(),
-      1
+      600e6 // Index updated with withdrawal
     );
 
     assertApproxEqAbs(
       IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR)),
       balanceBeforeADAI - payload.AMOUNT_DAI(),
-      1
+      50e18 // Index updated with withdrawal
     );
   }
 
@@ -77,7 +80,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     swapper.swap();
   }
 
-  function test_cannotCancelTrade_invalidCaller() public {
+  function test_cannotCancelUsdt_invalidCaller() public {
     COWSwapper swapper = new COWSwapper();
 
     vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
@@ -93,10 +96,29 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.stopPrank();
 
     vm.expectRevert(COWSwapper.InvalidCaller.selector);
-    swapper.cancelSwap(address(0), address(0));
+    swapper.cancelUsdt(address(0));
   }
 
-  function test_cancelTrade_successful_allowedCaller() public {
+  function test_cannotCancelDai_invalidCaller() public {
+    COWSwapper swapper = new COWSwapper();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transfer(address(swapper), 1_000e6);
+    vm.stopPrank();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).transfer(address(swapper), 1_000e18);
+    vm.stopPrank();
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    swapper.swap();
+    vm.stopPrank();
+
+    vm.expectRevert(COWSwapper.InvalidCaller.selector);
+    swapper.cancelDai(address(0));
+  }
+
+  function test_cancelUsdt_successful_allowedCaller() public {
     COWSwapper swapper = new COWSwapper();
 
     vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
@@ -112,8 +134,28 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.stopPrank();
 
     vm.prank(swapper.ALLOWED_CALLER());
-    swapper.cancelSwap(
-      0xd5e77e96702694039D6E269cC116cc308806f48A, // These are created when running tests and emitted via log
+    swapper.cancelUsdt(
+      0xd5e77e96702694039D6E269cC116cc308806f48A // These are created when running tests and emitted via log
+    );
+  }
+
+  function test_cancelDai_successful_allowedCaller() public {
+    COWSwapper swapper = new COWSwapper();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).transfer(address(swapper), 1_000e6);
+    vm.stopPrank();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).transfer(address(swapper), 1_000e18);
+    vm.stopPrank();
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    swapper.swap();
+    vm.stopPrank();
+
+    vm.prank(swapper.ALLOWED_CALLER());
+    swapper.cancelDai(
       0xd0B587b7712a495499d45F761e234839d7E8D026 // Addresses were retrieved from there
     );
   }
@@ -134,9 +176,8 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.stopPrank();
 
     vm.prank(AaveGovernanceV2.SHORT_EXECUTOR);
-    swapper.cancelSwap(
-      0xd5e77e96702694039D6E269cC116cc308806f48A, // These are created when running tests and emitted via log
-      0xd0B587b7712a495499d45F761e234839d7E8D026 // Addresses were retrieved from there
+    swapper.cancelUsdt(
+      0xd5e77e96702694039D6E269cC116cc308806f48A // These are created when running tests and emitted via log
     );
   }
 
@@ -263,5 +304,30 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
 
     vm.expectRevert(COWSwapper.InvalidCaller.selector);
     swapper.rescueTokens(tokens);
+  }
+
+  function test_depositIntoAave_revertsIfInvalidCaller() public {
+    uint256 amount = 1_000e6;
+    COWSwapper swapper = new COWSwapper();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeTransfer(address(swapper), amount);
+    vm.stopPrank();
+
+    vm.expectRevert(COWSwapper.InvalidCaller.selector);
+    swapper.depositIntoAaveV2(AaveV2EthereumAssets.USDT_UNDERLYING);
+  }
+
+  function test_depositIntoAave_successful() public {
+    uint256 amount = 1_000e6;
+    COWSwapper swapper = new COWSwapper();
+
+    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeTransfer(address(swapper), amount);
+    vm.stopPrank();
+
+    vm.startPrank(swapper.ALLOWED_CALLER());
+    swapper.depositIntoAaveV2(AaveV2EthereumAssets.USDT_UNDERLYING);
+    vm.stopPrank();
   }
 }
