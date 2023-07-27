@@ -12,7 +12,6 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
  */
 contract AaveV3_Eth_DebtSwapFlashBorrower_20232607 {
   function execute() external {
-    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(address(0)); // TODO: Add correct address for ParaswapDebtSwapAdapter
     AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(address(0)); // TODO: Add correct address for ParaswapDebtSwapAdapterV3GHO
   }
 }
