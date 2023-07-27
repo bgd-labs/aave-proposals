@@ -25,7 +25,7 @@ import {AaveV2Polygon, AaveV2PolygonAssets, ILendingPoolConfigurator} from 'aave
 /**
  * @dev Update Reserve Factors (RF) on Polygon v2 to encourage users to migrate funds to v3.
  * @author defijesus.eth - TokenLogic
- * - Snapshot: TODO
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xbe8f3f1df222a53d8ca05f8be0ec56aa9f169e9881f98e6534e078d155854713
  * - Discussion: https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937
  */
 contract AaveV2PolygonReserveFactorUpdate_20230717 is AaveV2PayloadPolygon {
