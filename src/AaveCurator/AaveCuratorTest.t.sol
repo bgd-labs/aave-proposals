@@ -663,7 +663,7 @@ contract GetExpectedOut is AaveCuratorTest {
     );
 
     // July 26, 2023 2:55PM EST AAVE/USD is around $71.20
-    assertEq(expected / 1e4, 7121);
+    assertEq(expected / 1e4, 7121); // USDC is 6 decimals
   }
 
   function test_aaveToUsdc() public {
@@ -688,7 +688,7 @@ contract GetExpectedOut is AaveCuratorTest {
     );
 
     // July 26, 2023 2:55PM EST AAVE/USD is around $71.20
-    assertEq(expected / 1e4, 7167);
+    assertEq(expected / 1e4, 7167); // USDC is 6 decimals
   }
 
   function test_ethToDai() public {
@@ -713,7 +713,7 @@ contract GetExpectedOut is AaveCuratorTest {
     );
 
     // July 26, 2023 2:55PM EST ETH/USD is around $1,870
-    assertEq(expected / 1e18, 1870);
+    assertEq(expected / 1e18, 1870); // WETH is 18 decimals
   }
 
   function test_ethToBal() public {
@@ -739,7 +739,7 @@ contract GetExpectedOut is AaveCuratorTest {
 
     // July 26, 2023 2:55PM EST ETH/USD is around $1,870, BAL/USD $4.50
     // Thus, ETH/BAL should be around 415 BAL tokens
-    assertEq(expected / 1e18, 415);
+    assertEq(expected / 1e18, 415); // WETH and BAL are 18 decimals
   }
 
   function test_balTo80BAL20WETH() public {
@@ -752,6 +752,6 @@ contract GetExpectedOut is AaveCuratorTest {
 
     // July 25, 2023 10:15AM EST BAL/USD is around $4.50 B-80BAL-20WETH $12.50
     // Thus, BAL/BPT should be around 0.35 at 100 units traded, 35 units expected.
-    assertEq(expected / 1e18, 35);
+    assertEq(expected / 1e18, 35); // WETH and BAL are 18 decimals
   }
 }
