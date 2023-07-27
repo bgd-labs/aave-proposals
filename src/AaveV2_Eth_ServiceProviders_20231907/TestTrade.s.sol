@@ -5,7 +5,6 @@ pragma solidity 0.8.19;
 import {Script} from 'forge-std/Script.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 import {IMilkman} from './interfaces/IMilkman.sol';
 
@@ -13,6 +12,8 @@ import {IMilkman} from './interfaces/IMilkman.sol';
 /*
  * We used this script to conduct a test transaction for a small amount in order to validate the swap.
  * This file can be ignored and deleted or used for a test transaction.
+ * 
+ * Test TX: 
  */
 contract TestTrade is Script {
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
@@ -21,7 +22,7 @@ contract TestTrade is Script {
   function run() external {
     vm.startBroadcast();
 
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(MILKMAN, 1000e6);
+    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(MILKMAN, 100e6);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       100e6,
