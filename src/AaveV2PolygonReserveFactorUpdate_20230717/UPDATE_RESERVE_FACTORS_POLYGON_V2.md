@@ -58,7 +58,7 @@ The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.co
 
 The author, TokenLogic, receives payment indirectly from [Aave Grant DAO](https://twitter.com/AaveGrants) via [Butter](https://twitter.com/butterymoney) as part of the [Incentivised Delegate Campaign](https://governance.aave.com/t/temp-check-incentivized-delegate-campaign-3-month/11732). [TokenLogic is a delegate](https://governance.aave.com/t/tokenlogic-delegate-platform/12516) within Aave community. 
 
-Delegate: [0xA06c2e5BB33cd6718b08EC9335081Cbba62861f7](https://app.aave.com/governance/)
+Delegate: [0x2cc1ADE245020FC5AAE66Ad443e1F66e01c54Df1](https://app.aave.com/governance/)
 
 # Copyright
 
