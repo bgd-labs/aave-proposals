@@ -20,7 +20,7 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17778611);
   }
 
-  function test_execute_wassap() public {
+  function test_execute() public {
     AaveV2_Eth_ServiceProviders_20231907 payload = new AaveV2_Eth_ServiceProviders_20231907();
 
     uint256 balanceBeforeAUSDC = IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(
