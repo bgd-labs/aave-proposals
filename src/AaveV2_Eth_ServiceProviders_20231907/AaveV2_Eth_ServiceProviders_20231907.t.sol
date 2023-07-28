@@ -306,18 +306,6 @@ contract AaveV2_Eth_ServiceProviders_20231907_Test is Test {
     swapper.rescueTokens(tokens);
   }
 
-  function test_depositIntoAave_revertsIfInvalidCaller() public {
-    uint256 amount = 1_000e6;
-    COWSwapper swapper = new COWSwapper();
-
-    vm.startPrank(address(AaveV2Ethereum.COLLECTOR));
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeTransfer(address(swapper), amount);
-    vm.stopPrank();
-
-    vm.expectRevert(COWSwapper.InvalidCaller.selector);
-    swapper.depositIntoAaveV2(AaveV2EthereumAssets.USDT_UNDERLYING);
-  }
-
   function test_depositIntoAave_successful() public {
     uint256 amount = 1_000e6;
     COWSwapper swapper = new COWSwapper();

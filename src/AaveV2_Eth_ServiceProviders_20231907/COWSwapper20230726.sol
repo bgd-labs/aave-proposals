@@ -89,10 +89,6 @@ contract COWSwapper {
   }
 
   function depositIntoAaveV2(address token) external {
-    if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) {
-      revert InvalidCaller();
-    }
-
     uint256 amount = IERC20(token).balanceOf(address(this));
     IERC20(token).safeApprove(address(AaveV2Ethereum.POOL), amount);
     AaveV2Ethereum.POOL.deposit(token, amount, address(AaveV2Ethereum.COLLECTOR), 0);
