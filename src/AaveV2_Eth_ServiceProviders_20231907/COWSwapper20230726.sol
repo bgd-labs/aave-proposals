@@ -33,7 +33,7 @@ contract COWSwapper {
       usdtBalance,
       IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(AaveV2Ethereum.COLLECTOR),
+      address(this),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
@@ -42,7 +42,7 @@ contract COWSwapper {
       daiBalance,
       IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(AaveV2Ethereum.COLLECTOR),
+      address(this),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
@@ -57,7 +57,7 @@ contract COWSwapper {
       usdtBalance,
       IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(AaveV2Ethereum.COLLECTOR),
+      address(this),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
@@ -77,7 +77,7 @@ contract COWSwapper {
       daiBalance,
       IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(AaveV2Ethereum.COLLECTOR),
+      address(this),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
