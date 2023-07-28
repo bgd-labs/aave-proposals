@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3_Eth_AaveV3ListRPL_20230711} from './AaveV3_Eth_AaveV3ListRPL_20230711.sol';
 
@@ -22,10 +22,7 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_Test is ProtocolV3TestBase {
   function testProposalExecution() public {
     AaveV3_Eth_AaveV3ListRPL_20230711 proposal = new AaveV3_Eth_AaveV3ListRPL_20230711();
 
-    createConfigurationSnapshot(
-      'preAaveV3_Eth_AaveV3ListRPL_20230711',
-      AaveV3Ethereum.POOL
-    );
+    createConfigurationSnapshot('preAaveV3_Eth_AaveV3ListRPL_20230711', AaveV3Ethereum.POOL);
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
@@ -66,9 +63,12 @@ contract AaveV3_Eth_AaveV3ListRPL_20230711_Test is ProtocolV3TestBase {
 
     _validateReserveConfig(RPL_ASSET, allConfigsAfter);
 
-    diffReports(
-      'preAaveV3_Eth_AaveV3ListRPL_20230711',
-      'PostAaveV3_Eth_AaveV3ListRPL_20230711'
+    e2eTestAsset(
+      AaveV3Ethereum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, RPL)
     );
+
+    diffReports('preAaveV3_Eth_AaveV3ListRPL_20230711', 'PostAaveV3_Eth_AaveV3ListRPL_20230711');
   }
 }

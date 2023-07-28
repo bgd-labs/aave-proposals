@@ -54,6 +54,17 @@ contract AaveV3_Eth_AaveV3USDTRiskParams_20231107_Test is ProtocolV3TestBase {
 
     _validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
 
+    e2eTestAsset(
+      AaveV3Ethereum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDT_UNDERLYING)
+    );
+    e2eTestAsset(
+      AaveV3Ethereum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDT_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING)
+    );
+
     diffReports(
       'preAaveV3_Eth_AaveV3USDTRiskParams_20231107',
       'postAaveV3_Eth_AaveV3USDTRiskParams_20231107'
