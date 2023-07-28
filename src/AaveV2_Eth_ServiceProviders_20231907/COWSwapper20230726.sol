@@ -17,68 +17,81 @@ contract COWSwapper {
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant CHAINLINK_PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
 
-  uint256 ausdtBalance;
-  uint256 adaiBalance;
+  uint256 usdtBalance;
+  uint256 daiBalance;
 
   function swap() external {
     if (msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) revert InvalidCaller();
 
-    ausdtBalance = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(address(this));
-    adaiBalance = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(this));
+    usdtBalance = IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).balanceOf(address(this));
+    daiBalance = IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).balanceOf(address(this));
 
-    IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).safeApprove(MILKMAN, ausdtBalance);
-    IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).safeApprove(MILKMAN, adaiBalance);
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeApprove(MILKMAN, usdtBalance);
+    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).safeApprove(MILKMAN, daiBalance);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      ausdtBalance,
-      IERC20(AaveV2EthereumAssets.USDT_A_TOKEN),
-      IERC20(AaveV2EthereumAssets.USDC_A_TOKEN),
+      usdtBalance,
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(AaveV2Ethereum.COLLECTOR),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      adaiBalance,
-      IERC20(AaveV2EthereumAssets.DAI_A_TOKEN),
-      IERC20(AaveV2EthereumAssets.USDC_A_TOKEN),
+      daiBalance,
+      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(AaveV2Ethereum.COLLECTOR),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
   }
 
-  function cancelSwap(address ausdtMilkman, address adaiMilkman) external {
+  function cancelUsdt(address milkman) external {
     if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) {
       revert InvalidCaller();
     }
 
-    IMilkman(ausdtMilkman).cancelSwap(
-      ausdtBalance,
-      IERC20(AaveV2EthereumAssets.USDT_A_TOKEN),
-      IERC20(AaveV2EthereumAssets.USDC_A_TOKEN),
+    IMilkman(milkman).cancelSwap(
+      usdtBalance,
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(AaveV2Ethereum.COLLECTOR),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
 
-    IMilkman(adaiMilkman).cancelSwap(
-      adaiBalance,
-      IERC20(AaveV2EthereumAssets.DAI_A_TOKEN),
-      IERC20(AaveV2EthereumAssets.USDC_A_TOKEN),
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeTransfer(
+      address(AaveV2Ethereum.COLLECTOR),
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).balanceOf(address(this))
+    );
+  }
+
+  function cancelDai(address milkman) external {
+    if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) {
+      revert InvalidCaller();
+    }
+
+    IMilkman(milkman).cancelSwap(
+      daiBalance,
+      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
+      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(AaveV2Ethereum.COLLECTOR),
       CHAINLINK_PRICE_CHECKER,
       _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
     );
 
-    IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).safeTransfer(
+    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).safeTransfer(
       address(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(address(this))
+      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).balanceOf(address(this))
     );
-    IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).safeTransfer(
-      address(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.BAL_UNDERLYING).balanceOf(address(this))
-    );
+  }
+
+  function depositIntoAaveV2(address token) external {
+    uint256 amount = IERC20(token).balanceOf(address(this));
+    IERC20(token).safeApprove(address(AaveV2Ethereum.POOL), amount);
+    AaveV2Ethereum.POOL.deposit(token, amount, address(AaveV2Ethereum.COLLECTOR), 0);
   }
 
   /// @notice Transfer any tokens accidentally sent to this contract to Aave V2 Collector
