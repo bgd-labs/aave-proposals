@@ -48,7 +48,7 @@ A list of relevant links like for this proposal:
 
 * [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/src/AaveV2PolygonReserveFactorUpdate_20230717/AaveV2PolygonReserveFactorUpdate_20230717.sol)
 
-[Pre-Post Payload Protocol Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
+* [Pre-Post Payload Protocol Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
 
 * [Deployed Contracts](TODO)
 
