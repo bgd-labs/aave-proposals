@@ -3,6 +3,7 @@ pragma solidity ^0.8.16;
 
 
 import {AaveV3Avalanche, AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
+import {AaveV2Avalanche, AaveV2AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 
@@ -15,9 +16,9 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 contract AaveV3AvaxretrofundingPayload is IProposalGenericExecutor {
     address public constant AAVECO_ADDRESS = 0xa8F8E9c54e099c4fADB797f5196E07ce484824aF;
     address public constant aAvaWAVAX = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
-    address public constant avWAVAX = 0xDFE521292EcE2A4f44242efBcD66Bc594CA9714B;
+    address public constant avWAVAX = AaveV2AvalancheAssets.WAVAX_A_TOKEN;
     address public constant aAvaWBTC = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
-    address public constant avWBTC = 0x686bEF2417b6Dc32C50a3cBfbCC3bb60E1e9a15D;
+    address public constant avWBTC = AaveV2AvalancheAssets.WBTCe_A_TOKEN;
     
     uint256 public constant AMOUNT_aAvaWAVAX = 9_584_301837000000000000;
     uint256 public constant AMOUNT_avWAVAX = 19_415_698163000000000000;
