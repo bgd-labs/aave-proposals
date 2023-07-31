@@ -50,7 +50,7 @@ A list of relevant links like for this proposal:
 
 * [Pre-Post Payload Protocol Diff](https://github.com/defijesus/aave-proposals/blob/reserve-factor-polygon-v2/diffs/preTestPolygonReserveFactorUpdate20230717_postTestPolygonReserveFactorUpdate20230717.md)
 
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://polygonscan.com/address/0x812ddad273544754d0672a009c27550899e658aa#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
