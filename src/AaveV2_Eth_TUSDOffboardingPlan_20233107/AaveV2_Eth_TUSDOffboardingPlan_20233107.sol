@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {AaveV2PayloadEthereum, IEngine, EngineFlags} from 'aave-helpers/v2-config-engine/AaveV2PayloadEthereum.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
@@ -11,11 +10,11 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xfd0cdbf58992759f47e6f5a6c07cbeb2b1a02af1c9ebf7d3099b80c33f53c138
  * - Discussion: https://governance.aave.com/t/arfc-tusd-offboarding-plan/14008
  */
-contract AaveV2_Eth_TUSDOffboardingPlan_20233107 is AaveV2PayloadEthereum {
+contract AaveV2_Eth_TUSDOffboardingPlan_20233107 {
   address public constant INTEREST_RATE_STRATEGY = 0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
   uint256 public constant TUSD_LTV = 0; /// 80 -> 0
-  uint256 public constant TUSD_LIQUIDATION_THRESHOLD = 75_00; // 58 -> 55
-  uint256 public constant TUSD_LIQUIDATION_BONUS = 10100; // 5 -> 10
+  uint256 public constant TUSD_LIQUIDATION_THRESHOLD = 75_00; // 77.5 -> 75
+  uint256 public constant TUSD_LIQUIDATION_BONUS = 11000; // 5 -> 10
 
   function execute() external {
     // set LTV to Zero, decrease liquidation threshold and increase liquiditation bonus
