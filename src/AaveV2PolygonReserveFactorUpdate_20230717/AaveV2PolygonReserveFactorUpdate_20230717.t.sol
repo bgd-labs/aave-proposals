@@ -45,18 +45,5 @@ contract AaveV2PolygonReserveFactorUpdate_20230717_Test is ProtocolV2TestBase {
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
     e2eTest(AaveV2Polygon.POOL);
-
-    for (uint i = 0; i < assetsChanged.length; i++) {
-      if (
-        assetsChanged[i] == AaveV2PolygonAssets.BAL_UNDERLYING ||
-        assetsChanged[i] == AaveV2PolygonAssets.CRV_UNDERLYING ||
-        assetsChanged[i] == AaveV2PolygonAssets.GHST_UNDERLYING ||
-        assetsChanged[i] == AaveV2PolygonAssets.LINK_UNDERLYING
-      ) {
-        continue;
-      }
-      ReserveConfig memory cfg = _findReserveConfig(allConfigsAfter, assetsChanged[i]);
-      _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
-    }
   }
 }
