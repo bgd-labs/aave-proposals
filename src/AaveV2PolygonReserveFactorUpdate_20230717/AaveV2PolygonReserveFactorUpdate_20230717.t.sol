@@ -44,6 +44,8 @@ contract AaveV2PolygonReserveFactorUpdate_20230717_Test is ProtocolV2TestBase {
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
+    e2eTest(AaveV2Polygon.POOL);
+
     for (uint i = 0; i < assetsChanged.length; i++) {
       if (
         assetsChanged[i] == AaveV2PolygonAssets.BAL_UNDERLYING ||
