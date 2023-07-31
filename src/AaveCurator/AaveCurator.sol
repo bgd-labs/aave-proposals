@@ -28,10 +28,6 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
   error InvalidToken();
   error OracleNotSet();
 
-  uint256 public constant ZERO_POINT_EIGHT = 8e17;
-  uint256 public constant ZERO_POINT_FIVE = 5e17;
-  uint256 public constant ZERO_POINT_TWO = 2e17;
-
   address public constant BAL80WETH20 = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant BPT_PRICE_CHECKER = 0xBeA6AAC5bDCe0206A9f909d80a467C93A7D6Da7c;
 
@@ -185,8 +181,6 @@ contract AaveCurator is Initializable, OwnableWithGuardian {
         _data
       );
   }
-
-  receive() external payable {}
 
   function _getPriceCheckerAndData(
     address fromToken,
