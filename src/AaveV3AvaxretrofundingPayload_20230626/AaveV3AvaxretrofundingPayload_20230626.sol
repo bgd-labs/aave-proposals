@@ -3,7 +3,7 @@ pragma solidity ^0.8.16;
 
 
 import {AaveV3Avalanche, AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
-import {AaveV2Avalanche, AaveV2AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
+import {AaveV2Avalanche, AaveV2AvalancheAssets} from 'aave-address-book/AaveV2Avalanche.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 
 
