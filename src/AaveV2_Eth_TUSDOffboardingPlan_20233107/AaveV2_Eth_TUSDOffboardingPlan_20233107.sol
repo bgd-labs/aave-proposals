@@ -11,10 +11,11 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
  * - Discussion: https://governance.aave.com/t/arfc-tusd-offboarding-plan/14008
  */
 contract AaveV2_Eth_TUSDOffboardingPlan_20233107 {
-  address public constant INTEREST_RATE_STRATEGY = 0xB28cA2760001c9837430F20c50fD89Ed56A449f0;
+  address public constant INTEREST_RATE_STRATEGY = 0x67a81df2b7FAf4a324D94De9Cc778704F4500478;
   uint256 public constant TUSD_LTV = 0; /// 80 -> 0
   uint256 public constant TUSD_LIQUIDATION_THRESHOLD = 75_00; // 77.5 -> 75
   uint256 public constant TUSD_LIQUIDATION_BONUS = 11000; // 5 -> 10
+  uint256 public constant RESERVE_FACTOR = 95_00; // 10 -> 95
 
   function execute() external {
     // set LTV to Zero, decrease liquidation threshold and increase liquiditation bonus
@@ -24,6 +25,13 @@ contract AaveV2_Eth_TUSDOffboardingPlan_20233107 {
       TUSD_LTV,
       TUSD_LIQUIDATION_THRESHOLD,
       TUSD_LIQUIDATION_BONUS
+    );
+
+    // set reserve factor to 95%
+
+    AaveV2Ethereum.POOL_CONFIGURATOR.setReserveFactor(
+      AaveV2EthereumAssets.TUSD_UNDERLYING,
+      RESERVE_FACTOR
     );
 
     // disable borrowing on TUSD

@@ -14,8 +14,6 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
  * command: make test-contract filter=AaveV2_Eth_TUSDOffboardingPlan_20233107
  */
 contract AaveV2_Eth_TUSDOffboardingPlan_20233107_Test is ProtocolV2TestBase {
-
-  address public constant TUSD = AaveV2EthereumAssets.TUSD_UNDERLYING;
   string public constant TUSD_SYMBOL = 'TUSD';
 
   function setUp() public {
@@ -42,11 +40,7 @@ contract AaveV2_Eth_TUSDOffboardingPlan_20233107_Test is ProtocolV2TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // check balances are correct
     uint256 aTUSDBalanceAfter = IERC20(AaveV2EthereumAssets.TUSD_A_TOKEN).balanceOf(
@@ -57,6 +51,7 @@ contract AaveV2_Eth_TUSDOffboardingPlan_20233107_Test is ProtocolV2TestBase {
     );
     assertApproxEqAbs(aTUSDBalanceAfter, 0, 1500 ether, 'aTUSD_LEFTOVER');
     assertEq(TUSDBalanceAfter, aTUSDBalanceBefore + TUSDBalanceBefore);
+
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post-TUSD-Payload-activation',
       AaveV2Ethereum.POOL
@@ -80,6 +75,9 @@ contract AaveV2_Eth_TUSDOffboardingPlan_20233107_Test is ProtocolV2TestBase {
 
     e2eTest(AaveV2Ethereum.POOL);
 
-    diffReports('preAaveV2_Eth_TUSDOffboardingPlan_20233107', 'postAaveV2_Eth_TUSDOffboardingPlan_20233107');
+    diffReports(
+      'preAaveV2_Eth_TUSDOffboardingPlan_20233107',
+      'postAaveV2_Eth_TUSDOffboardingPlan_20233107'
+    );
   }
 }

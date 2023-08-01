@@ -22,7 +22,7 @@ The following table outlines the proposed changes to the TUSD risk parameters:
 | Parameter                | Current Value | Proposed Value |
 |--------------------------|---------------|----------------|
 | LTV                      | 75%           | 0%             |
-| Liquidation Threshold    | 80%           | 75%            |
+| Liquidation Threshold    | 77.5%         | 75%            |
 | Liquidation Bonus        | 5%            | 10%            |
 | Reserve Factor           | 25%           | 95%            |
 | Borrowing Enabled        | Yes           | No             |
