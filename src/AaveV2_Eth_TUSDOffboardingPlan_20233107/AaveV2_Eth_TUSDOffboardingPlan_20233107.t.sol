@@ -53,7 +53,7 @@ contract AaveV2_Eth_TUSDOffboardingPlan_20233107_Test is ProtocolV2TestBase {
     assertEq(TUSDBalanceAfter, aTUSDBalanceBefore + TUSDBalanceBefore);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'post-TUSD-Payload-activation',
+      'postAaveV2_Eth_TUSDOffboardingPlan_20233107',
       AaveV2Ethereum.POOL
     );
 
