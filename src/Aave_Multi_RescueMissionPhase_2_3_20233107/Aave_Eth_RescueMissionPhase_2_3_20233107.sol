@@ -25,7 +25,6 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
 
   address public constant V1_POOL = 0x398eC7346DcD622eDc5ae82352F02bE94C62d119;
   address public constant V1_BTC_A_TOKEN = 0xFC4B8ED459e00e5400be803A9BB3954234FD50e3;
-  address public constant HOT_TOKEN = 0x6c6EE5e31d828De241282B9606C8e98Ea48526E2;
 
   ILendingPoolAddressesProvider public constant V1_POOL_ADDRESSES_PROVIDER =
     ILendingPoolAddressesProvider(0x24a42fD28C976A61Df5D00D0599C34c4f90748c8);
@@ -48,9 +47,6 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
   bytes32 public constant LINK_MERKLE_ROOT =
     0xdce06a9eace958878e687245785c4e81f49ea8d0f48f4b8a491eedc67cd2e3ba;
 
-  bytes32 public constant HOT_MERKLE_ROOT =
-    0x88c3cca89fd60d12d1bbb174584eebf65a4013fa6d32a0e8e1578393740af3c9;
-
   bytes32 public constant USDC_MERKLE_ROOT =
     0x55bd519868fb1519bfe6229b6a662a61401ecd8a4ef45254ed692a5a2ee29560;
 
@@ -67,8 +63,6 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
   uint256 public constant GUSD_RESCUE_AMOUNT = 19_994_86;
 
   uint256 public constant LINK_RESCUE_AMOUNT = 4_084e18;
-
-  uint256 public constant HOT_RESCUE_AMOUNT = 1_046_391e18;
 
   uint256 public constant USDC_RESCUE_AMOUNT = 1_089_889717;
 
@@ -112,8 +106,7 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
     tokens[3] = AaveV2EthereumAssets.DAI_UNDERLYING;
     tokens[4] = AaveV2EthereumAssets.GUSD_UNDERLYING;
     tokens[5] = AaveV2EthereumAssets.LINK_UNDERLYING;
-    tokens[6] = HOT_TOKEN;
-    tokens[7] = AaveV2EthereumAssets.USDC_UNDERLYING;
+    tokens[6] = AaveV2EthereumAssets.USDC_UNDERLYING;
 
     bytes32[] memory merkleRoots = new bytes32[](8);
     merkleRoots[0] = A_RAI_MERKLE_ROOT;
@@ -122,8 +115,7 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
     merkleRoots[3] = DAI_MERKLE_ROOT;
     merkleRoots[4] = GUSD_MERKLE_ROOT;
     merkleRoots[5] = LINK_MERKLE_ROOT;
-    merkleRoots[6] = HOT_MERKLE_ROOT;
-    merkleRoots[7] = USDC_MERKLE_ROOT;
+    merkleRoots[6] = USDC_MERKLE_ROOT;
 
     AAVE_MERKLE_DISTRIBUTOR.addDistributions(tokens, merkleRoots);
   }
@@ -166,11 +158,6 @@ contract Aave_Eth_RescueMissionPhase_2_3_20233107 is IProposalGenericExecutor {
       AaveV2EthereumAssets.GUSD_UNDERLYING,
       address(AAVE_MERKLE_DISTRIBUTOR),
       GUSD_RESCUE_AMOUNT
-    );
-    IRescue(address(AaveV2Ethereum.POOL)).rescueTokens(
-      HOT_TOKEN,
-      address(AAVE_MERKLE_DISTRIBUTOR),
-      HOT_RESCUE_AMOUNT
     );
     IRescue(address(AaveV2Ethereum.POOL)).rescueTokens(
       AaveV2EthereumAssets.USDC_UNDERLYING,
