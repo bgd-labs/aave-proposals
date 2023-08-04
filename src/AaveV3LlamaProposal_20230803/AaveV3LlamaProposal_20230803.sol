@@ -12,26 +12,28 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * - Discussion: https://governance.aave.com/t/arfc-cancel-llama-service-provider-stream/14137
  */
 contract AaveV3LlamaProposal_20230803 is IProposalGenericExecutor {
-  address public constant ECOSYSTEM_RESERVE = 0x25F2226B597E8F9514B3F68F00f494cF4f286491;
   address public constant LLAMA_RECIPIENT = 0xb428C6812E53F843185986472bb7c1E25632e0f7;
   uint256 public constant ER_AAVE_STREAM = 100001;
   uint256 public constant COLLECTOR_aUSDC_STREAM = 100003;
-  // TODO: actual amount probably lower, will redo maths before payload publication but payload can ve review anyway
 
+  // TODO: actual amount probably lower, will redo maths before payload publication but payload can ve reviewed anyway
   uint256 public constant AAVE_STREAM_AMOUNT = 283230000000000000000;
   uint256 public constant AUSDC_STREAM_AMOUNT = 546596100000;
   uint256 public constant STREAM_DURATION = 57 days;
-  uint256 public constant ACTUAL_AMOUNT_AUSDC = (AUSDC_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
-  uint256 public constant ACTUAL_AMOUNT_AAVE = (AAVE_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
+  uint256 public constant ACTUAL_AMOUNT_AUSDC =
+    (AUSDC_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
+  uint256 public constant ACTUAL_AMOUNT_AAVE =
+    (AAVE_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
   function execute() external {
-
     // cancel old streams
     AaveV2Ethereum.COLLECTOR.cancelStream(COLLECTOR_aUSDC_STREAM);
-    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.cancelStream(AaveMisc.ECOSYSTEM_RESERVE, ER_AAVE_STREAM);
+    AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.cancelStream(
+      AaveMisc.ECOSYSTEM_RESERVE,
+      ER_AAVE_STREAM
+    );
 
     // create new streams
-    
     AaveV2Ethereum.COLLECTOR.createStream(
       LLAMA_RECIPIENT,
       ACTUAL_AMOUNT_AUSDC,
@@ -41,7 +43,7 @@ contract AaveV3LlamaProposal_20230803 is IProposalGenericExecutor {
     );
 
     AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.createStream(
-      ECOSYSTEM_RESERVE,
+      AaveMisc.ECOSYSTEM_RESERVE,
       LLAMA_RECIPIENT,
       ACTUAL_AMOUNT_AAVE,
       AaveV2EthereumAssets.AAVE_UNDERLYING,
