@@ -19,7 +19,7 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
   string public constant BUSD_SYMBOL = 'BUSD';
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17842592);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17844191);
   }
 
   function testBUSD() public {

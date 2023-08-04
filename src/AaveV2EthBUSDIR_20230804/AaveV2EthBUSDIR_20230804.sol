@@ -12,7 +12,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Discussion: https://governance.aave.com/t/arfc-busd-offboarding-plan-part-iii/14136
  */
 contract AaveV2EthBUSDIR_20230804 is IProposalGenericExecutor {
-  address public constant INTEREST_RATE_STRATEGY = 0x1ffC5d6AA8D46423e45550afeCf8D075DD489C92;
+  address public constant INTEREST_RATE_STRATEGY = 0xF1AafF9a4Da6Bf4Fb8fc18d39C8ffdafbAACce69;
 
   function execute() external {
     uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
