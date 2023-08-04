@@ -15,12 +15,14 @@ Llama has historically been a service provider for the Aave DAO and has made num
 For instance:
 
 Llama’s handling of the crucial CRV AIP was a clear demonstration of their inability to deliver a much-needed payload in a timely manner. The delay in execution resulted in an additional cost of approximately $1 million for the DAO due to the increased valuation of CRV. This incident underscores the need for service providers who can reliably deliver on their commitments and highlights Llama’s underqualification for the task at hand.
+
 Despite receiving $1.5 million from the DAO, Llama charged third parties for consulting services related to Aave, including teams seeking asset listings.
+
 As treasury managers, Llama failed to ensure that the collector contract had an adequate aUSDC balance. This oversight resulted in several service providers going unpaid for weeks, tarnishing the DAO’s brand and reputation.
+
 Given these circumstances, we believe that the most beneficial course of action for the Aave DAO is to end our relationship with Llama. This will allow the DAO to reassess its needs and budget for a new service provider.
 
 following snapshot vote decision, Llama will not be considered as a Service provider for the Aave DAO in the future and will finish its current engagement at a reduced stream 
-The ACI and other service providers will complete any outstanding tasks from Llama’s engagement at no additional cost to the DAO.
 
 ## Specification
 
