@@ -22,7 +22,7 @@ contract AaveV3LlamaProposal_20230803Test is Test {
   IStreamable public immutable STREAMABLE_ER = IStreamable(address(AaveMisc.ECOSYSTEM_RESERVE));
 
   uint256 public constant AAVE_STREAM_AMOUNT = 283230000000000000000;
-  uint256 public constant AUSDC_STREAM_AMOUNT = 546596100000;
+  uint256 public constant AUSDC_STREAM_AMOUNT = 54659610000;
   uint256 public constant STREAM_DURATION = 57 days;
   uint256 public constant ACTUAL_AMOUNT_AUSDC =
     (AUSDC_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
