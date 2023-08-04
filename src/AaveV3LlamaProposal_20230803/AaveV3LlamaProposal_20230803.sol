@@ -17,7 +17,7 @@ contract AaveV3LlamaProposal_20230803 is IProposalGenericExecutor {
   uint256 public constant COLLECTOR_aUSDC_STREAM = 100003;
 
   uint256 public constant AAVE_STREAM_AMOUNT = 283230000000000000000;
-  uint256 public constant AUSDC_STREAM_AMOUNT = 546596100000;
+  uint256 public constant AUSDC_STREAM_AMOUNT = 54659610000;
   uint256 public constant STREAM_DURATION = 57 days;
   uint256 public constant ACTUAL_AMOUNT_AUSDC =
     (AUSDC_STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
