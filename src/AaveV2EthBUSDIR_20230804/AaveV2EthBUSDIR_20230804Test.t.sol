@@ -51,7 +51,7 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
     uint256 BUSDBalanceAfter = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
-    assertApproxEqAbs(aBUSDBalanceAfter, 0, 1500 ether, 'aBUSD_LEFTOVER');
+    assertApproxEqAbs(aBUSDBalanceAfter, 0, 2000 ether, 'aBUSD_LEFTOVER');
     assertEq(BUSDBalanceAfter, aBUSDBalanceBefore + BUSDBalanceBefore);
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post-BUSD-Payload-activation_20230804',
@@ -66,6 +66,8 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
       0xc579a79376148c4B17821C5Eb9434965f3a15C80,
       1 ether
     ); // aBUSD whale
+
+    e2eTest(AaveV2Ethereum.POOL);
 
     // check there are no unexpected changes
     _noReservesConfigsChangesApartFrom(

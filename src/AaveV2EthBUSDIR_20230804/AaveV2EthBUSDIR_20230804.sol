@@ -15,11 +15,6 @@ contract AaveV2EthBUSDIR_20230804 is IProposalGenericExecutor {
   address public constant INTEREST_RATE_STRATEGY = 0x1ffC5d6AA8D46423e45550afeCf8D075DD489C92;
 
   function execute() external {
-    AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
-      AaveV2EthereumAssets.BUSD_UNDERLYING,
-      INTEREST_RATE_STRATEGY
-    );
-
     uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -35,6 +30,11 @@ contract AaveV2EthBUSDIR_20230804 is IProposalGenericExecutor {
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       type(uint256).max,
       address(AaveV2Ethereum.COLLECTOR)
+    );
+
+    AaveV2Ethereum.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
+      AaveV2EthereumAssets.BUSD_UNDERLYING,
+      INTEREST_RATE_STRATEGY
     );
   }
 }
