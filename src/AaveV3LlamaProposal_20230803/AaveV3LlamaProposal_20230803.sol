@@ -16,7 +16,6 @@ contract AaveV3LlamaProposal_20230803 is IProposalGenericExecutor {
   address public constant LLAMA_RECIPIENT = 0xb428C6812E53F843185986472bb7c1E25632e0f7;
   uint256 public constant ER_AAVE_STREAM = 100001;
   uint256 public constant COLLECTOR_aUSDC_STREAM = 100003;
-
   // TODO: actual amount probably lower, will redo maths before payload publication but payload can ve review anyway
 
   uint256 public constant AAVE_STREAM_AMOUNT = 283230000000000000000;

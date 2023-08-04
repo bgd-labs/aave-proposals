@@ -22,13 +22,15 @@ contract AaveV3LlamaProposal_20230803Test is Test {
 
   // 0x464
   ICollector public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
+  address public constant ECOSYSTEM_RESERVE = 0x25F2226B597E8F9514B3F68F00f494cF4f286491;
+
   address public constant LLAMA_RECIPIENT = 0xb428C6812E53F843185986472bb7c1E25632e0f7;
 
   IStreamable public immutable STREAMABLE_AAVE_COLLECTOR =
     IStreamable(address(AaveV2Ethereum.COLLECTOR));
   
-  IStreamable public immutable STREAMABLE_ER =
-    IStreamable(address(AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER));
+  // IStreamable public immutable STREAMABLE_ER =
+  //   IStreamable(address(AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER));
 
   uint256 public constant AAVE_STREAM_AMOUNT = 283230000000000000000;
   uint256 public constant AUSDC_STREAM_AMOUNT = 546596100000;
@@ -38,7 +40,7 @@ contract AaveV3LlamaProposal_20230803Test is Test {
 
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17833759);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17839863);
   }
 
   // Full Vesting Test
@@ -46,8 +48,8 @@ contract AaveV3LlamaProposal_20230803Test is Test {
     // Capturing next Stream IDs before proposal is executed
     uint256 nextCollectorStreamID = STREAMABLE_AAVE_COLLECTOR.getNextStreamId();
     uint256 INITIAL_LLAMA_AUSDC_BALANCE = AUSDC.balanceOf(LLAMA_RECIPIENT);
-    uint256 nextEcosystemStreamID = AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.getNextStreamId();
-    uint256 initialLLAMAAaveBalance = AAVE.balanceOf(LLAMA_RECIPIENT);
+    // uint256 nextEcosystemStreamID = ECOSYSTEM_RESERVE.getNextStreamId();
+    // uint256 initialLLAMAAaveBalance = AAVE.balanceOf(LLAMA_RECIPIENT);
 
     // execute proposal
     GovHelpers.executePayload(
@@ -71,44 +73,49 @@ contract AaveV3LlamaProposal_20230803Test is Test {
 
       ) = STREAMABLE_AAVE_COLLECTOR.getStream(nextCollectorStreamID);
 
-      (
-        address senderAAVE,
-        address recipientAAVE,
-        uint256 depositAAVE,
-        address tokenAddressAAVE,
-        uint256 startTimeAAVE,
-        uint256 stopTimeAAVE,
-        uint256 remainingBalanceAAVE,
+      // (
+      //   address senderAAVE,
+      //   address recipientAAVE,
+      //   uint256 depositAAVE,
+      //   address tokenAddressAAVE,
+      //   uint256 startTimeAAVE,
+      //   uint256 stopTimeAAVE,
+      //   uint256 remainingBalanceAAVE,
 
-      ) = AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.getStream(nextEcosystemStreamID);
+      // ) = AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.getStream(nextEcosystemStreamID);
 
-      // assertEq(senderUSDC, address(AAVE_COLLECTOR));
-      // assertEq(recipientUSDC, LLAMA_RECIPIENT);
-      // assertEq(depositUSDC, ACTUAL_AMOUNT_AUSDC);
-      // assertEq(tokenAddressUSDC, address(AUSDC));
-      // assertEq(stopTimeUSDC - startTimeUSDC, STREAM_DURATION);
-      // assertEq(remainingBalanceUSDC, ACTUAL_AMOUNT_AUSDC);
+      assertEq(senderUSDC, address(AAVE_COLLECTOR));
+      assertEq(recipientUSDC, LLAMA_RECIPIENT);
+      assertEq(depositUSDC, ACTUAL_AMOUNT_AUSDC);
+      assertEq(tokenAddressUSDC, address(AUSDC));
+      assertEq(stopTimeUSDC - startTimeUSDC, STREAM_DURATION);
+      assertEq(remainingBalanceUSDC, ACTUAL_AMOUNT_AUSDC);
 
-      assertEq(senderAAVE, address(AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER));
-      assertEq(recipientAAVE, LLAMA_RECIPIENT);
-      assertEq(depositAAVE, ACTUAL_AMOUNT_AAVE);
-      assertEq(tokenAddressAAVE, address(AAVE));
-      assertEq(stopTimeAAVE - startTimeAAVE, STREAM_DURATION);
-      assertEq(remainingBalanceAAVE, ACTUAL_AMOUNT_AAVE);
-    }
+    //   assertEq(senderAAVE, address(AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER));
+    //   assertEq(recipientAAVE, LLAMA_RECIPIENT);
+    //   assertEq(depositAAVE, ACTUAL_AMOUNT_AAVE);
+    //   assertEq(tokenAddressAAVE, address(AAVE));
+    //   assertEq(stopTimeAAVE - startTimeAAVE, STREAM_DURATION);
+    //   assertEq(remainingBalanceAAVE, ACTUAL_AMOUNT_AAVE);
+    // }
 
     // Checking if LLAMA can withdraw from streams
 
     vm.startPrank(LLAMA_RECIPIENT);
     vm.warp(block.timestamp + STREAM_DURATION + 1 days);
 
-    STREAMABLE_ER.withdrawFromStream(nextEcosystemStreamID, ACTUAL_AMOUNT_AAVE);
-    uint256 nextLLAMAAaveBalance = AAVE.balanceOf(LLAMA_RECIPIENT);
-    assertEq(initialLLAMAAaveBalance, nextLLAMAAaveBalance - ACTUAL_AMOUNT_AAVE);
+    // STREAMABLE_ER.withdrawFromStream(nextEcosystemStreamID, ACTUAL_AMOUNT_AAVE);
+    // uint256 nextLLAMAAaveBalance = AAVE.balanceOf(LLAMA_RECIPIENT);
+    // assertEq(initialLLAMAAaveBalance, nextLLAMAAaveBalance - ACTUAL_AMOUNT_AAVE);
 
-    // STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, ACTUAL_AMOUNT_AUSDC);
-    // uint256 nextLLAMAUSDCBalance = AUSDC.balanceOf(LLAMA_RECIPIENT);
-    // assertEq(INITIAL_LLAMA_AUSDC_BALANCE, nextLLAMAUSDCBalance - ACTUAL_AMOUNT_AUSDC);
+    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, ACTUAL_AMOUNT_AUSDC);
+    uint256 nextLLAMAUSDCBalance = AUSDC.balanceOf(LLAMA_RECIPIENT);
+
+    // this fails
+
+    assertEq(INITIAL_LLAMA_AUSDC_BALANCE, nextLLAMAUSDCBalance - ACTUAL_AMOUNT_AUSDC);
+    
     vm.stopPrank();
   }
+}
 }
