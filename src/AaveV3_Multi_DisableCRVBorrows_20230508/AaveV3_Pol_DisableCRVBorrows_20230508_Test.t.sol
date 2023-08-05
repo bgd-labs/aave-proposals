@@ -29,7 +29,7 @@ contract AaveV3_Pol_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
 
         // 3. create snapshot after payload execution
         ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-            'pre-Aave-V3-Polygon-CRV-Updates-20230805',
+            'post-Aave-V3-Polygon-CRV-Updates-20230805',
             AaveV3Polygon.POOL
         );
 
@@ -43,7 +43,7 @@ contract AaveV3_Pol_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
         // 5. compare snapshots
         diffReports(
             'pre-Aave-V3-Polygon-CRV-Updates-20230805',
-            'pre-Aave-V3-Polygon-CRV-Updates-20230805'
+            'post-Aave-V3-Polygon-CRV-Updates-20230805'
         );
 
         // 6. e2e
