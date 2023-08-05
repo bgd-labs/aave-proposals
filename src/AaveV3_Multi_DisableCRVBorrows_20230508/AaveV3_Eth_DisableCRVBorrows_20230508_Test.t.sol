@@ -39,6 +39,7 @@ contract AaveV3_Eth_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
             AaveV3EthereumAssets.CRV_UNDERLYING
         );
         CRV_UNDERLYING_CONFIG.borrowingEnabled = false;
+        _validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
 
         // 5. compare snapshots
         diffReports(
@@ -53,6 +54,5 @@ contract AaveV3_Eth_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
             _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.CRV_UNDERLYING)
         );
 
-        ProtocolV3TestBase._validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
     }
 }
