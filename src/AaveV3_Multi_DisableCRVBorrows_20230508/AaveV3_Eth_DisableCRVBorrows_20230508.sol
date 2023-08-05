@@ -6,7 +6,7 @@ import {IPoolConfigurator, AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-addr
 
 
 /**
- * @title TODO
+ * @title Disable CRV Borrowing For Ethereum V3
  * @author Chaos Labs
  * - Snapshot: N/A Urgent Risk Update 
  * - Discussion: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42 

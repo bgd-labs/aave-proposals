@@ -6,7 +6,7 @@ import {IPoolConfigurator, AaveV3Polygon, AaveV3PolygonAssets} from 'aave-addres
 
 
 /**
- * @title TODO
+ * @title Disable CRV Borrowing For Polygon V3
  * @author Chaos Labs
  * - Snapshot: N/A Urgent Risk Update 
  * - Discussion: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42 
