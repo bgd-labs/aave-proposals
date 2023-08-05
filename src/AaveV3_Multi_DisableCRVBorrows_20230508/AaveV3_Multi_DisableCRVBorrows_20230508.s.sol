@@ -8,7 +8,7 @@ import {AaveV3_Pol_DisableCRVBorrows_20230508} from './AaveV3_Pol_DisableCRVBorr
 
 /**
  * @dev Deploy AaveV3_Eth_DisableCRVBorrows_20230508
- * command: make deploy-ledger contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:DeployEthereum chain=mainnet
+ * command: make deploy-pk contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:DeployEthereum chain=mainnet
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
@@ -18,7 +18,7 @@ contract DeployEthereum is EthereumScript {
 
 /**
  * @dev Deploy AaveV3_Pol_DisableCRVBorrows_20230508
- * command: make deploy-ledger contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:DeployPolygon chain=polygon
+ * command: make deploy-pk contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:DeployPolygon chain=polygon
  */
 contract DeployPolygon is PolygonScript {
   function run() external broadcast {
@@ -28,7 +28,7 @@ contract DeployPolygon is PolygonScript {
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-pk contract=src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Multi_DisableCRVBorrows_20230508.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
