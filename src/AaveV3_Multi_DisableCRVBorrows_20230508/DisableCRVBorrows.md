@@ -30,8 +30,7 @@ Contract Address Polygon: [0x172370d5Cd63279eFa6d502DAB29171933a610AF](https://e
 
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Eth_DisableCRVBorrows_20230508.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Pol_DisableCRVBorrows_20230508.sol)
 - Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Eth_DisableCRVBorrows_20230508.t.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Multi_DisableCRVBorrows_20230508/AaveV3_Pol_DisableCRVBorrows_20230508.t.sol)
-- [Snapshot](TODO)
-- [Discussion](TODO)
+- [Discussion](https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42)
 
 ## Copyright
 

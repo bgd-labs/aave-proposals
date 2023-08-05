@@ -13,31 +13,46 @@ contract AaveV3_Pol_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
 
     function setUp() public {
         vm.createSelectFork(vm.rpcUrl('polygon'), 45916841);
-        proposalPayload = new AaveV3_Pol_DisableCRVBorrows_20230508();
     }
 
     function testBorrowingEnabled() public {
+        proposalPayload = new AaveV3_Pol_DisableCRVBorrows_20230508();
+
+        // 1. create snapshot before payload execution
         ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
             'pre-Aave-V3-Polygon-CRV-Updates-20230805',
             AaveV3Polygon.POOL
         );
 
-        ReserveConfig memory crvConfig = ProtocolV3TestBase._findReserveConfig(
-            allConfigsBefore,
-            AaveV3PolygonAssets.CRV_UNDERLYING
-        );
-        crvConfig.borrowingEnabled = false;
-
-        // 1. deploy l2 payload
-        proposalPayload = new AaveV3_Pol_DisableCRVBorrows_20230508();
-
-        // 2. execute l2 payload
+        // 2. execute payload
         GovHelpers.executePayload(vm, address(proposalPayload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
-        ReserveConfig[] memory allConfigsAfter = ProtocolV3TestBase._getReservesConfigs(
+        // 3. create snapshot after payload execution
+        ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+            'pre-Aave-V3-Polygon-CRV-Updates-20230805',
             AaveV3Polygon.POOL
         );
 
-        ProtocolV3TestBase._validateReserveConfig(crvConfig, allConfigsAfter);
+        // 4. Verify payload:
+        ReserveConfig memory CRV_UNDERLYING_CONFIG = _findReserveConfig(
+            allConfigsBefore,
+            AaveV3PolygonAssets.CRV_UNDERLYING
+        );
+        CRV_UNDERLYING_CONFIG.borrowingEnabled = false;
+
+        // 5. compare snapshots
+        diffReports(
+            'pre-Aave-V3-Polygon-CRV-Updates-20230805',
+            'pre-Aave-V3-Polygon-CRV-Updates-20230805'
+        );
+
+        // 6. e2e
+        e2eTestAsset(
+            AaveV3Polygon.POOL,
+            _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.WETH_UNDERLYING),
+            _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.CRV_UNDERLYING)
+        );
+
+        ProtocolV3TestBase._validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
     }
 }
