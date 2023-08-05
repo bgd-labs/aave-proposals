@@ -6,6 +6,9 @@
 
 | description | value before | value after |
 | --- | --- | --- |
+| oracle | [0x7F0D2c2838c6AC24443d13e23d99490017bDe370](https://etherscan.io/address/0x7F0D2c2838c6AC24443d13e23d99490017bDe370) | [0xac3AF0f4A52C577Cc2C241dF51a01FDe3D06D93B](https://etherscan.io/address/0xac3AF0f4A52C577Cc2C241dF51a01FDe3D06D93B) |
+| oracleDescription | FEI / ETH | 0.95/USD/ETH |
+| oracleLatestAnswer | 0.000517109648660012 | 0.000511505150749182 |
 | ltv | 65 % | 0 % |
 | liquidationThreshold | 75 % | 1 % |
 | liquidationBonus | 6.5 % | 10 % |
@@ -35,6 +38,18 @@
       "ltv": {
         "from": 6500,
         "to": 0
+      },
+      "oracle": {
+        "from": "0x7F0D2c2838c6AC24443d13e23d99490017bDe370",
+        "to": "0xac3AF0f4A52C577Cc2C241dF51a01FDe3D06D93B"
+      },
+      "oracleDescription": {
+        "from": "FEI / ETH",
+        "to": "0.95/USD/ETH"
+      },
+      "oracleLatestAnswer": {
+        "from": 517109648660012,
+        "to": 511505150749182
       }
     }
   },
