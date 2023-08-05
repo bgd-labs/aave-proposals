@@ -1,14 +1,30 @@
 ---
-title: TODO
-author: Chaos Labs
-discussions: TODO
+title: Disable CRV Borrowing For Ethereum and Polygon V3
+author: Omer Goldberg (@omeragoldberg - Chaos Labs)
+discussions: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42
 ---
 
 ## Simple Summary
 
+An AIP to disable borrowing of CRV on Ethereum and Polygon V3.
+
 ## Motivation
 
+We'd like to disable the ability to short CRV via the Aave protocol.
+
 ## Specification
+
+Ticker: CRV
+
+Contract Address Ethereum: [0xD533a949740bb3306d119CC777fa900bA034cd52](https://etherscan.io/address/0xD533a949740bb3306d119CC777fa900bA034cd52)`
+
+Contract Address Polygon: [0x172370d5Cd63279eFa6d502DAB29171933a610AF](https://etherscan.io/address/0x172370d5Cd63279eFa6d502DAB29171933a610AF)`
+
+### new Risk Parameters
+
+| Parameter         | Value    |
+| :---------------- | :------- |
+| Enabled to Borrow | DISABLED |
 
 ## References
 

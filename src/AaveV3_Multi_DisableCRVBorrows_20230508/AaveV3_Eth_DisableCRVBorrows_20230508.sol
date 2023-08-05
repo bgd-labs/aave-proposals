@@ -8,8 +8,8 @@ import {IPoolConfigurator, AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-addr
 /**
  * @title TODO
  * @author Chaos Labs
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Snapshot: N/A Urgent Risk Update 
+ * - Discussion: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42 
  */
 contract AaveV3_Eth_DisableCRVBorrows_20230508 is AaveV3PayloadEthereum {
     function borrowsUpdates() public pure override returns (IEngine.BorrowUpdate[] memory) {

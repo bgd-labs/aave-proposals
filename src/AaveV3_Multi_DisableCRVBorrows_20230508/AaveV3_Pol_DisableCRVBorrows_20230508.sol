@@ -8,8 +8,8 @@ import {IPoolConfigurator, AaveV3Polygon, AaveV3PolygonAssets} from 'aave-addres
 /**
  * @title TODO
  * @author Chaos Labs
- * - Snapshot: N/A Urgent Update
- * - Discussion: TODO
+ * - Snapshot: N/A Urgent Risk Update 
+ * - Discussion: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/42 
  */
 contract AaveV3_Pol_DisableCRVBorrows_20230508 is AaveV3PayloadPolygon {
     function borrowsUpdates() public pure override returns (IEngine.BorrowUpdate[] memory) {
