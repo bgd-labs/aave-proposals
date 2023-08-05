@@ -16,7 +16,7 @@ contract AaveV3_Pol_DisableCRVBorrows_20230508_Test is ProtocolV3TestBase {
         proposalPayload = new AaveV3_Pol_DisableCRVBorrows_20230508();
     }
 
-    function testCapsPol() public {
+    function testBorrowingEnabled() public {
         ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
             'pre-Aave-V3-Polygon-CRV-Updates-20230805',
             AaveV3Polygon.POOL
