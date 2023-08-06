@@ -43,18 +43,16 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
       address(this)
     );
 
-    // reset approval then approve LendingPool to spend USDT_AMOUNT
-
     if (
       IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).allowance(
         address(this),
         address(AaveV2Ethereum.POOL)
       ) != 0
     ) {
-     IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), 0);
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeApprove(address(AaveV2Ethereum.POOL), 0);
     }
 
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), USDT_AMOUNT);
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeApprove(address(AaveV2Ethereum.POOL), USDT_AMOUNT);
 
     // repay mich debt with USDT
 
