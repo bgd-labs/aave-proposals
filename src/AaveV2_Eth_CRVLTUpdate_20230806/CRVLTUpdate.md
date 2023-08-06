@@ -1,7 +1,7 @@
 ---
 title: Reduce CRV LT by 6%
 author: Chaos Labs (@omeragoldberg)
-discussions:
+discussions: https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/43
 ---
 
 ## Simple Summary
@@ -20,10 +20,10 @@ _As Liquidation Threshold reductions may lead to user accounts being eligible fo
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRVLTUpdate_20230806/AaveV2_Eth_CRVLTUpdate_20230806.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRVLTUpdate_20230806/AaveV2_Eth_CRVLTUpdate_20230806.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x8b992ee05d9e87ef0dab2cb7178c24f7b4b6f5d79561ad33298550b3c8d9fe89)
-- [Discussion](TODO)
+- [Discussion](https://governance.aave.com/t/post-vyper-exploit-crv-market-update-and-recommendations/14214/43)
 
 ## Copyright
 
