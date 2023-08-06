@@ -40,7 +40,7 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.USDT_UNDERLYING,
       type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
+      address(this)
     );
 
     // reset approval then approve LendingPool to spend USDT_AMOUNT
@@ -51,7 +51,7 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
         address(AaveV2Ethereum.POOL)
       ) != 0
     ) {
-      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), 0);
+     IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), 0);
     }
 
     IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), USDT_AMOUNT);
