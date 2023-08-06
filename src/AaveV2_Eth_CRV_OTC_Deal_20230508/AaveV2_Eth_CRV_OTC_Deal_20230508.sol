@@ -13,9 +13,8 @@ import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
  */
 contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
   using SafeERC20 for IERC20;
+
   address public constant MICH_ADDRESS = 0x7a16fF8270133F063aAb6C9977183D9e72835428;
-  address public constant COLLECTOR_ADDRESS = 0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c;
-  address public constant AAVE_V2_LENDING_POOL = 0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9;
   uint256 public constant aCRV_AMOUNT = 5_000_000e18; // 5M aCRV
   uint256 public constant USDT_AMOUNT = 2_000_000e6; // 2M USDT
 
@@ -46,7 +45,14 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
 
     // reset approval then approve LendingPool to spend USDT_AMOUNT
 
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), 0);
+    if (
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).allowance(
+        address(this),
+        address(AaveV2Ethereum.POOL)
+      ) != 0
+    ) {
+      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), 0);
+    }
 
     IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).approve(address(AaveV2Ethereum.POOL), USDT_AMOUNT);
 
