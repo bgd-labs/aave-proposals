@@ -22,13 +22,13 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508 {
   function execute() external {
     // pull aCRV from mich to collector will fail if no approval
 
-    IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).transferFrom(
+    IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).safeTransferFrom(
       MICH_ADDRESS,
       address(AaveV2Ethereum.COLLECTOR),
       aCRV_AMOUNT
     );
 
-    // transfer aUSDT from COLLECTOR to short_executor
+    // Transfer aUSDT from COLLECTOR to short_executor
 
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.USDT_A_TOKEN,
