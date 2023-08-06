@@ -15,12 +15,9 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
  */
 contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
   uint256 public constant USDT_AMOUNT = 2_000_000e6;
-  uint256 public constant CRV_AMOUNT = 5_000_000e18;
-
-  // for testing purpose rm after
-
-  address public constant MOCK_ADDRESS = 0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4;
-  uint256 public constant MOCK_AMOUNT = 1e18;
+  uint256 public constant ACRV_AMOUNT = 5_000_000e18;
+  address public constant MICH_ADDRESS = 0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4;
+  address public constant SHORT_EXECUTOR = 0xEE56e2B3D491590B5b31738cC34d5232F378a8D5;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17851065);
@@ -42,6 +39,10 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
+    vm.startPrank(MICH_ADDRESS);
+    IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).approve(SHORT_EXECUTOR, ACRV_AMOUNT);
+    vm.stopPrank();
+
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     uint256 aUSDTBalanceAfter = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(
@@ -58,7 +59,7 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       1500 ether,
       'aUSDT_LEFTOVER'
     );
-    assertEq(aCRVBalanceAfter, aCRVBalanceBefore + MOCK_AMOUNT);
+    assertEq(aCRVBalanceAfter, aCRVBalanceBefore + ACRV_AMOUNT);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV2_Eth_CRV_OTC_Deal_20230508',
