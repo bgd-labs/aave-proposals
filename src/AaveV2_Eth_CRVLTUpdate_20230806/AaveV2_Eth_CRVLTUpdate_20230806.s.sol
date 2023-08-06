@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
-import {AaveV2_Eth_CRVLTUpdate_20230608} from './AaveV2_Eth_CRVLTUpdate_20230608.sol';
+import {AaveV2_Eth_CRVLTUpdate_20230806} from './AaveV2_Eth_CRVLTUpdate_20230806.sol';
 
 /**
  * @dev Deploy AaveV2_Eth_CRVLTUpdate_20230608
@@ -11,13 +11,13 @@ import {AaveV2_Eth_CRVLTUpdate_20230608} from './AaveV2_Eth_CRVLTUpdate_20230608
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
-    new AaveV2_Eth_CRVLTUpdate_20230608();
+    new AaveV2_Eth_CRVLTUpdate_20230806();
   }
 }
 
 /**
  * @dev Create Proposal
- * command: make deploy-pk contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-pk  contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
