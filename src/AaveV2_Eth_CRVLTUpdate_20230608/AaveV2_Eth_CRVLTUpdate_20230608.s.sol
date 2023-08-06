@@ -7,7 +7,7 @@ import {AaveV2_Eth_CRVLTUpdate_20230608} from './AaveV2_Eth_CRVLTUpdate_20230608
 
 /**
  * @dev Deploy AaveV2_Eth_CRVLTUpdate_20230608
- * command: make deploy-ledger contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:DeployEthereum chain=mainnet
+ * command: make deploy-pk contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:DeployEthereum chain=mainnet
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
@@ -17,7 +17,7 @@ contract DeployEthereum is EthereumScript {
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-pk contract=src/AaveV2_Eth_CRVLTUpdate_20230608/AaveV2_Eth_CRVLTUpdate_20230608.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
