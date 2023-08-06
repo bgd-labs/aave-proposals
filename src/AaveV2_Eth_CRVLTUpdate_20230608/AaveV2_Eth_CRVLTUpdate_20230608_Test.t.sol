@@ -45,6 +45,10 @@ contract AaveV2_Eth_CRVLTUpdate_20230608_Test is ProtocolV2TestBase {
       'postAaveV2_Eth_CRVLTUpdate_20230608_Test'
     );
 
-    e2eTest(AaveV2Ethereum.POOL);
+    e2eTestAsset(
+      AaveV2Ethereum.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.WETH_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.CRV_UNDERLYING)
+    );
   }
 }
