@@ -5,12 +5,21 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
+  pull_request_target:
   push:
     branches:
       - main
 
 jobs:
+  authorize:
+    environment: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && 'external' || 'internal' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: true
+
   test:
-    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main
+    needs: authorize
+    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@6291d917b9578fce5e83403c73019838d314970b
+    with:
+      ref: ${{ github.event.pull_request.head.sha || github.ref }}
     secrets: inherit
