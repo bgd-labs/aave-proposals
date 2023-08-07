@@ -17,7 +17,6 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
   uint256 public constant USDT_AMOUNT = 2_000_000e6;
   uint256 public constant ACRV_AMOUNT = 5_000_000e18;
   address public constant MICH_ADDRESS = 0x7a16fF8270133F063aAb6C9977183D9e72835428;
-  address public constant SHORT_EXECUTOR = 0xEE56e2B3D491590B5b31738cC34d5232F378a8D5;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17851065);
@@ -39,7 +38,7 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
     );
 
     vm.startPrank(MICH_ADDRESS);
-    IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).approve(SHORT_EXECUTOR, ACRV_AMOUNT);
+    IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).approve(AaveGovernanceV2.SHORT_EXECUTOR, ACRV_AMOUNT);
     vm.stopPrank();
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
