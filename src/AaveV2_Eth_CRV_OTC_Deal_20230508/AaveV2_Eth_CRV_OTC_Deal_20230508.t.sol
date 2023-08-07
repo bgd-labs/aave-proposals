@@ -26,11 +26,6 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
   function testProposalExecution() public {
     AaveV2_Eth_CRV_OTC_Deal_20230508 proposal = new AaveV2_Eth_CRV_OTC_Deal_20230508();
 
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV2_Eth_CRV_OTC_Deal_20230508',
-      AaveV2Ethereum.POOL
-    );
-
     uint256 aUSDTBalanceBefore = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -76,13 +71,6 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       'Debt_LEFTOVER'
     );
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV2_Eth_CRV_OTC_Deal_20230508',
-      AaveV2Ethereum.POOL
-    );
-
     e2eTest(AaveV2Ethereum.POOL);
-
-    diffReports('preAaveV2_Eth_CRV_OTC_Deal_20230508', 'postAaveV2_Eth_CRV_OTC_Deal_20230508');
   }
 }
