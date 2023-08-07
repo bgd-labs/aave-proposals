@@ -22,7 +22,7 @@ The proposal suggests using 2M aUSDT from the Aave DAO treasury to acquire 5M aC
 
 In terms of implementation, this AIP initiates a transferFrom() on the aCRV token contract to the Aave Collector, leveraging a previous approval() from `0x7a16ff8270133f063aab6c9977183d9e72835428` of 5M aCRV tokens to the Aave DAO treasury (collector contract).
 
-then, 2M aUSDT are withdrawn for the collector constract and mobilized to repay part of `0x7a16ff8270133f063aab6c9977183d9e72835428` USDT debt.
+Then, 2M aUSDT are withdrawn from the collector contract and mobilized to repay part of `0x7a16ff8270133f063aab6c9977183d9e72835428` USDT debt.
 
 In case of lack of approval on aCRV tokens, the proposal will fail.
 
