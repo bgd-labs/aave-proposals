@@ -39,6 +39,10 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
+    uint256 MichDebtBalanceBefore = IERC20(AaveV2EthereumAssets.USDT_V_TOKEN).balanceOf(
+      MICH_ADDRESS
+    );
+
     vm.startPrank(MICH_ADDRESS);
     IERC20(AaveV2EthereumAssets.CRV_A_TOKEN).approve(SHORT_EXECUTOR, ACRV_AMOUNT);
     vm.stopPrank();
@@ -53,6 +57,10 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       address(AaveV2Ethereum.COLLECTOR)
     );
 
+    uint256 MichDebtBalanceAfter = IERC20(AaveV2EthereumAssets.USDT_V_TOKEN).balanceOf(
+      MICH_ADDRESS
+    );
+
     assertApproxEqAbs(
       aUSDTBalanceAfter,
       aUSDTBalanceBefore - USDT_AMOUNT,
@@ -60,6 +68,13 @@ contract AaveV2_Eth_CRV_OTC_Deal_20230508_Test is ProtocolV2TestBase {
       'aUSDT_LEFTOVER'
     );
     assertEq(aCRVBalanceAfter, aCRVBalanceBefore + ACRV_AMOUNT);
+
+    assertApproxEqAbs(
+      MichDebtBalanceAfter,
+      MichDebtBalanceBefore - USDT_AMOUNT,
+      1500 ether,
+      'Debt_LEFTOVER'
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV2_Eth_CRV_OTC_Deal_20230508',
