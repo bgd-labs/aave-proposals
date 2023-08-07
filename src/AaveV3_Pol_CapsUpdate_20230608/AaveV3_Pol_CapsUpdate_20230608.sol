@@ -8,7 +8,7 @@ import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygo
 /**
  * @title Increase MaticX supply cap
  * @author Alice Rozengarden (@Rozengarden - Aave-chan initiative)
- * - Snapshot: TODO
+ * - Snapshot: Direct-to-AIP Framework
  * - Discussion: https://governance.aave.com/t/arfc-increase-maticx-supply-cap/14341
  */
 contract AaveV3_Pol_CapsUpdate_20230608 is AaveV3PayloadPolygon {
