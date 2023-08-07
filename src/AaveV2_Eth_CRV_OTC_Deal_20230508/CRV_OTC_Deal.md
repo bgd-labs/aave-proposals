@@ -20,7 +20,7 @@ The treasury balance and the predicted lower costs for service providers for the
 
 The proposal suggests using 2M aUSDT from the Aave DAO treasury to acquire 5M aCRV tokens from `0x7a16ff8270133f063aab6c9977183d9e72835428`
 
-in terms of implementation this AIP initiate a transferfrom() on the aCRV token contract leveraging a previous approval() from `0x7a16ff8270133f063aab6c9977183d9e72835428` of 5M aCRV tokens to the Aave DAO treasury (collector contract).
+In terms of implementation, this AIP initiates a transferFrom() on the aCRV token contract to the Aave Collector, leveraging a previous approval() from `0x7a16ff8270133f063aab6c9977183d9e72835428` of 5M aCRV tokens to the Aave DAO treasury (collector contract).
 
 then, 2M aUSDT are withdrawn for the collector constract and mobilized to repay part of `0x7a16ff8270133f063aab6c9977183d9e72835428` USDT debt.
 
