@@ -18,6 +18,10 @@ _As Liquidation Threshold reductions may lead to user accounts being eligible fo
 
 ## Specification
 
+| Asset | Parameter | Current Value | Recommendation | Change |
+| ----- | --------- | ------------- | -------------- | ------ |
+| CRV   | LT        | 55            | 49             | -6%    |
+
 ## References
 
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRVLTUpdate_20230806/AaveV2_Eth_CRVLTUpdate_20230806.sol)
