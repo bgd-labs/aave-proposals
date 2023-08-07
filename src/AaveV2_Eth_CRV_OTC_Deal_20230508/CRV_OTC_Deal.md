@@ -24,7 +24,7 @@ In terms of implementation, this AIP initiates a transferFrom() on the aCRV toke
 
 then, 2M aUSDT are withdrawn for the collector constract and mobilized to repay part of `0x7a16ff8270133f063aab6c9977183d9e72835428` USDT debt.
 
-in case of lack of approval on aCRV tokens, the proposal will fail.
+In case of lack of approval on aCRV tokens, the proposal will fail.
 
 
 ## References
