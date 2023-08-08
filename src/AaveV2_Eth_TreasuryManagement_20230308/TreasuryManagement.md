@@ -12,8 +12,6 @@ The purpose of this proposal is to hold increase USDC on v2 mainnet and begin de
 
 This publication presents a proposal for Aave to deploy its Ethereum Collector Contract holdings to earn yield.
 
-There are a number of Service Providers requiring payment in aUSDC. In order to provide sufficient funding, assets need to be converted to aUSDC. This publication proposes swapping assets to USDC and then depositing the USDC into Aave v2. The amount of aUSDC held post swap will be sufficient to sustain the DAO in the short term. We plan to do a follow up proposal to ensure the DAO has sufficient aUSDC runway.
-
 ## Specification
 
 Withdraw the following aTokens:
