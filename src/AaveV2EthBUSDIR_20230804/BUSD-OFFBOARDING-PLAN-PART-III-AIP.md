@@ -35,6 +35,8 @@ The offboarding plan will be carried out With the current AIP with the following
 
 Withdrawal of aBUSD from the collector contract. The BUSD will be kept as such in the collector contract, and a separate AIP will organize the swap of BUSD into other assets at a later stage.
 
+Alongside this AIP, a correction of the TUSD slope2 stable parameters is proposed to match what was expected from [AIP-285](https://app.aave.com/governance/proposal/285/). 
+
 ## References
 
 - [Tests](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2EthBUSDIR_20230804/AaveV2EthBUSDIR_20230602Test.t.sol)
