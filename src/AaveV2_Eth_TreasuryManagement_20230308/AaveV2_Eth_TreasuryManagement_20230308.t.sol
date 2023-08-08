@@ -33,6 +33,10 @@ contract AaveV2_Eth_TreasuryManagement_20230308_Test is ProtocolV2TestBase {
       assertGt(IERC20(aTokens[i].aToken).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
     }
 
+    uint256 balanceRWA = IERC20(payload.RWA_aUSDC()).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+
+    assertEq(IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
+
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
     // All tokens removed from Collector for full balance
@@ -40,6 +44,8 @@ contract AaveV2_Eth_TreasuryManagement_20230308_Test is ProtocolV2TestBase {
     for (uint256 i = 0; i < tokensAfter.length; i++) {
       assertEq(IERC20(tokensAfter[i].token).balanceOf(address(AaveV2Ethereum.COLLECTOR)), 0);
     }
+
+    assertLt(IERC20(payload.RWA_aUSDC()).balanceOf(address(AaveV2Ethereum.COLLECTOR)), balanceRWA);
   }
 
   function test_swapperevertsIf_invalidCaller() public {
