@@ -209,7 +209,7 @@ if (fs.existsSync(baseFolder) && !options.force) {
   options.chains.forEach((chain) => createFiles(options, chain));
 
   fs.writeFileSync(
-    path.join(baseFolder, `${baseName}.s.sol`),
+    path.join(baseFolder, `${generateContractName(options)}.s.sol`),
     generateScript(options, baseName)
   );
   fs.writeFileSync(

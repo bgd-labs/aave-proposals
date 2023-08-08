@@ -52,9 +52,11 @@ export function generateFolderName(options) {
  * @returns
  */
 export function generateContractName(options, chain) {
-  return `${options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"}_${chain}_${
-    options.shortName
-  }_${getDate()}`;
+  let name = options.protocolVersion === "v2" ? "AaveV2" : "AaveV3";
+  if (chain) name += `_${chain}`;
+  name += `_${options.shortName}`;
+  name += `_${getDate()}`;
+  return name;
 }
 
 export function getAlias(chain) {

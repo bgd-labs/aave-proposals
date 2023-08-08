@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadEthereum.sol';
-import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV3PayloadOptimism, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
+import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
+
 
 /**
- * @title test
+ * @title Generator
  * @author BGD labs
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Snapshot: https://notarealsnapshot
+ * - Discussion: https://notarealproposal
  */
-contract AaveV3_Ethereum_Test_20230717 is AaveV3PayloadEthereum {
-  function _postExecute() internal override {}
-
-  function rateStrategiesUpdates()
+contract AaveV3_Optimism_Generator_20230808 is AaveV3PayloadOptimism {function rateStrategiesUpdates()
     public
     pure
     override
@@ -39,15 +37,4 @@ contract AaveV3_Ethereum_Test_20230717 is AaveV3PayloadEthereum {
     return rateStrategies;
   }
 
-  function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
-    IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
-
-    // capsUpdate[0] = IEngine.CapsUpdate({
-    //   asset: AaveV3PolygonAssets.EURS_UNDERLYING,
-    //   supplyCap: EngineFlags.KEEP_CURRENT,
-    //   borrowCap: 1_500_000
-    // });
-
-    return capsUpdate;
-  }
 }
