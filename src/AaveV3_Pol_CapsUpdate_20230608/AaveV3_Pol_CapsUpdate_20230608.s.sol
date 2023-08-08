@@ -22,7 +22,7 @@ contract DeployPolygon is PolygonScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildPolygon(address(0));
+    payloads[0] = GovHelpers.buildPolygon(0x5C748a7Ac5390ee6C9E0511bafd4Ec95183E496a);
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV3_Pol_CapsUpdate_20230608/CapsUpdate.md'));
   }
 }
