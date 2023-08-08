@@ -67,20 +67,15 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
       1 ether
     ); // aBUSD whale
 
+    _repay(
+      configBUSDAfter,
+      AaveV2Ethereum.POOL,
+      0x0929fAf2032890183Bc7cD6BA37B6c268B4BcD87,
+      1 ether,
+      false
+    ); // aBUSD whale
+
     e2eTest(AaveV2Ethereum.POOL);
-
-    // e2eTestAsset(
-    //   AaveV2Ethereum.POOL,
-    //   _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.DAI_UNDERLYING),
-    //   _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.TUSD_UNDERLYING)
-    // );
-
-    // check there are no unexpected changes
-    // _noReservesConfigsChangesApartFrom(
-    //   allConfigsBefore,
-    //   allConfigsAfter,
-    //   configBUSDBefore.underlying
-    // );
 
     diffReports('pre-BUSD-Payload-activation_20230804', 'post-BUSD-Payload-activation_20230804');
   }
