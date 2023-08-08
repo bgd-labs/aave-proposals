@@ -17,6 +17,7 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
 contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
   address public constant BUSD = AaveV2EthereumAssets.BUSD_UNDERLYING;
   string public constant BUSD_SYMBOL = 'BUSD';
+  string public constant TUSD_SYMBOL = 'TUSD';
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17844191);
@@ -74,6 +75,31 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
       1 ether,
       false
     ); // aBUSD whale
+
+    ReserveConfig memory configTUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, TUSD_SYMBOL);
+
+    _withdraw(
+      configTUSDAfter,
+      AaveV2Ethereum.POOL,
+      0x9FCc67D7DB763787BB1c7f3bC7f34d3C548c19Fe,
+      1 ether
+    ); // aTUSD whale
+
+    _repay(
+      configTUSDAfter,
+      AaveV2Ethereum.POOL,
+      0x9D5Bf49Ef9090Fe9475bf438Eed2329BD12E992d,
+      1 ether,
+      false
+    ); // VTUSD whale variable debt
+
+    _repay(
+      configTUSDAfter,
+      AaveV2Ethereum.POOL,
+      0xbab2051A457AD7338D8CfE142089E4062DE48Bd0,
+      1 ether,
+      true
+    ); // sTUSD whale stable debt
 
     e2eTest(AaveV2Ethereum.POOL);
 
