@@ -1,7 +1,7 @@
 ---
-title: [ARFC] Increase MaticX supply cap
-author: Alice Rozengarden (@Rozengarden - Aave-chan initiative)
-discussions: https://governance.aave.com/t/arfc-increase-maticx-supply-cap/14341
+title: "[ARFC] Increase MaticX supply cap"
+author: "Alice Rozengarden (@Rozengarden - Aave-chan initiative)"
+discussions: "https://governance.aave.com/t/arfc-increase-maticx-supply-cap/14341"
 ---
 
 ## Simple Summary
