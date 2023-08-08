@@ -3,7 +3,9 @@ pragma solidity ^0.8.16;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
+import {AaveV2PayloadEthereum, IEngine, EngineFlags} from 'lib/aave-helpers/src/v2-config-engine/AaveV2PayloadEthereum.sol';
+import {IV2RateStrategyFactory} from 'lib/aave-helpers/src/v2-config-engine/IV2RateStrategyFactory.sol';
+
 
 /**
  * @title [ARFC] BUSD Offboarding Plan part III
@@ -11,10 +13,10 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x389c0cd79720fd9853ca6714f4597484dd25cc3a5e34955bf6144f0ba1888a3a
  * - Discussion: https://governance.aave.com/t/arfc-busd-offboarding-plan-part-iii/14136
  */
-contract AaveV2EthBUSDIR_20230804 is IProposalGenericExecutor {
+contract AaveV2EthBUSDIR_20230804 is AaveV2PayloadEthereum {
   address public constant INTEREST_RATE_STRATEGY = 0xF1AafF9a4Da6Bf4Fb8fc18d39C8ffdafbAACce69;
 
-  function execute() external {
+  function _preExecute() internal override {
     uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -36,5 +38,28 @@ contract AaveV2EthBUSDIR_20230804 is IProposalGenericExecutor {
       AaveV2EthereumAssets.BUSD_UNDERLYING,
       INTEREST_RATE_STRATEGY
     );
+  }
+
+  function rateStrategiesUpdates()
+    public
+    pure
+    override
+    returns (IEngine.RateStrategyUpdate[] memory)
+  {
+    IEngine.RateStrategyUpdate[] memory rateStrategy = new IEngine.RateStrategyUpdate[](1);
+
+    rateStrategy[0] = IEngine.RateStrategyUpdate({
+      asset: AaveV2EthereumAssets.TUSD_UNDERLYING,
+      params: IV2RateStrategyFactory.RateStrategyParams({
+        optimalUtilizationRate: EngineFlags.KEEP_CURRENT,
+        baseVariableBorrowRate: EngineFlags.KEEP_CURRENT,
+        variableRateSlope1: EngineFlags.KEEP_CURRENT,
+        variableRateSlope2: EngineFlags.KEEP_CURRENT,
+        stableRateSlope1: EngineFlags.KEEP_CURRENT,
+        stableRateSlope2: _bpsToRay(200_00)
+      })
+    });
+
+    return rateStrategy;
   }
 }
