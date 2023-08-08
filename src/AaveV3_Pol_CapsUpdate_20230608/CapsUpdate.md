@@ -36,7 +36,7 @@ This would be a bit less than 75% of the current total supply (83.31M)
 - Implementation: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Pol_CapsUpdate_20230608/AaveV3_Pol_CapsUpdate_20230608.sol)
 - Tests: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3_Pol_CapsUpdate_20230608/AaveV3_Pol_CapsUpdate_20230608.t.sol)
 - [Snapshot] No snapshot for Direct-to-AIP
-- [Discussion] https://governance.aave.com/t/arfc-increase-maticx-supply-cap/14341
+- [Discussion](https://governance.aave.com/t/arfc-increase-maticx-supply-cap/14341)
 
 # Disclaimer:
 
