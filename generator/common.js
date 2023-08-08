@@ -39,7 +39,7 @@ export function getDate() {
  */
 export function generateFolderName(options) {
   return `${getDate()}_${
-    options.protocolVersion === "v2" ? "AaveV2" : "AaveV3"
+    options.protocolVersion === "V2" ? "AaveV2" : "AaveV3"
   }_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : "Multi"
   }_${options.shortName}`;
@@ -52,7 +52,7 @@ export function generateFolderName(options) {
  * @returns
  */
 export function generateContractName(options, chain) {
-  let name = options.protocolVersion === "v2" ? "AaveV2" : "AaveV3";
+  let name = options.protocolVersion === "V2" ? "AaveV2" : "AaveV3";
   if (chain) name += `_${chain}`;
   name += `_${options.shortName}`;
   name += `_${getDate()}`;
