@@ -1,4 +1,3 @@
-
 ---
 title: [ARFC] Increase MaticX supply cap
 author: Alice Rozengarden (@Rozengarden - Aave-chan initiative)
