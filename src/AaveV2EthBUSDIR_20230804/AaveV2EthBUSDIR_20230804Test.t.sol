@@ -103,6 +103,11 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
 
     e2eTest(AaveV2Ethereum.POOL);
 
+    address[] memory assetsChanged = new address[](2);
+    assetsChanged[0] = AaveV2EthereumAssets.BUSD_UNDERLYING;
+    assetsChanged[1] = AaveV2EthereumAssets.TUSD_UNDERLYING;
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
     diffReports('pre-BUSD-Payload-activation_20230804', 'post-BUSD-Payload-activation_20230804');
   }
 }
