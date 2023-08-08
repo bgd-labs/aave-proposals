@@ -1,5 +1,5 @@
 ---
-title: BUSD Offboarding Plan Part II
+title: BUSD Offboarding Plan Part III
 author: Marc Zeller (@marczeller), Aave-Chan initiative
 discussions: https://governance.aave.com/t/arfc-busd-offboarding-plan-part-iii/14136
 ---
