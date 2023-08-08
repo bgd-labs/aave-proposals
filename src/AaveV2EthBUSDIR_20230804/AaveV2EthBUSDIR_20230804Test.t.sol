@@ -20,7 +20,7 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
   string public constant TUSD_SYMBOL = 'TUSD';
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17871557);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17871723);
   }
 
   function testBUSD() public {
@@ -71,7 +71,7 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
     _repay(
       configBUSDAfter,
       AaveV2Ethereum.POOL,
-      0x0929fAf2032890183Bc7cD6BA37B6c268B4BcD87,
+      0xc3B6BE246524F5dcA0f335109E5F4F6544c3E789,
       1 ether,
       false
     ); // aBUSD whale
@@ -88,11 +88,11 @@ contract AaveV2EthBUSDIR_20230804_Test is ProtocolV2TestBase {
     _repay(
       configTUSDAfter,
       AaveV2Ethereum.POOL,
-      0x9D5Bf49Ef9090Fe9475bf438Eed2329BD12E992d,
+      0xf29f1b1aD90BB0CB35cb8A6aa02690016604AeD4,
       1 ether,
       false
     ); // VTUSD whale variable debt
-
+    //
     _repay(
       configTUSDAfter,
       AaveV2Ethereum.POOL,
