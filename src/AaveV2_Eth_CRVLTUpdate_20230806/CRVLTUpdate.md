@@ -12,7 +12,7 @@ A proposal to reduce Liquidation Threshold (LT) by 6%, for CRV on Aave V2 Ethere
 
 Following our recommendations to decrease Aave’s exposure to CRV on V2 Ethereum [here](https://governance.aave.com/t/gauntlet-recommendation-to-freeze-crv-and-set-crv-ltv-0-on-aave-v2/13644/31), we propose a series of LT reductions. The [first reduction](https://app.aave.com/governance/proposal/255/) in this cycle of LT updates was executed on July 3rd, 2023.
 
-This proposal was previously accepted by the community. However, after passing AIP, the change was [cancelled](https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-crv-aave-v2-ethereum-2023-07-10/13952/8), as market environments were extremely unstable following the Vyper exploit.
+This proposal was previously accepted by the community. However, after passing AIP, the change was [cancelled](https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-crv-aave-v2-ethereum-2023-07-10/13952/12), as market environments were extremely unstable following the Vyper exploit.
 
 _As Liquidation Threshold reductions may lead to user accounts being eligible for liquidations upon their approval, we want to clarify the full implications to the community at each step. Chaos Labs will publicly communicate the planned amendments and list of affected accounts leading to the on-chain execution._
 
