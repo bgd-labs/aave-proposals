@@ -73,9 +73,9 @@ ${options.chains
 
 export function generateAIP(options) {
   return `---
-title: ${options.title || "TODO"}
-author: ${options.author || "TODO"}
-discussions: ${options.discussion || "TODO"}
+title: ${`"${options.title}"` || "TODO"}
+author: ${`"${options.author}"` || "TODO"}
+discussions: ${`"${options.discussion}"` || "TODO"}
 ---
 
 ## Simple Summary
