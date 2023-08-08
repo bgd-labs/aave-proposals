@@ -19,7 +19,7 @@ jobs:
 
   test:
     needs: authorize
-    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@6291d917b9578fce5e83403c73019838d314970b
+    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main
     with:
       ref: ${{ github.event.pull_request.head.sha || github.ref }}
     secrets: inherit
