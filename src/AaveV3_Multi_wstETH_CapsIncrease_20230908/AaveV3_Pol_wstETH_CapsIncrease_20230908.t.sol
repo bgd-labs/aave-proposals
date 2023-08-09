@@ -14,7 +14,7 @@ import {AaveV3_Pol_wstETH_CapsIncrease_20230908} from './AaveV3_Pol_wstETH_CapsI
  */
 contract AaveV3_Pol_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 46099482);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 46109994);
   }
 
   function testProposalExecution() public {
@@ -35,6 +35,26 @@ contract AaveV3_Pol_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
       'postAaveV3_Pol_wstETH_CapsIncrease_20230908',
       AaveV3Polygon.POOL
     );
+
+    ReserveConfig memory wstETH = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3PolygonAssets.wstETH_UNDERLYING
+    );
+
+    wstETH.supplyCap = proposal.NEW_SUPPLY_CAP();
+
+    address[] memory assetsChanged = new address[](1);
+    assetsChanged[0] = AaveV3PolygonAssets.wstETH_UNDERLYING;
+
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
+    _validateReserveConfig(wstETH, allConfigsAfter);
+
+    e2eTestAsset(
+        AaveV3Polygon.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.WETH_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.wstETH_UNDERLYING)
+        );
 
     diffReports('preAaveV3_Pol_wstETH_CapsIncrease_20230908', 'postAaveV3_Pol_wstETH_CapsIncrease_20230908');
   }
