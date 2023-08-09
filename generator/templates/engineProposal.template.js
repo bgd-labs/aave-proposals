@@ -96,7 +96,7 @@ import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} fr
  * - Snapshot: ${snapshot || "TODO"}
  * - Discussion: ${discussion || "TODO"}
  */
-contract ${contractName} is Aave${protocolVersion}Payload${chain} {`;
+contract ${contractName} is Aave${protocolVersion}Payload${chain} {\n`;
 
   if (options.features.includes(ENGINE_FEATURES.postHook.value))
     template += renderPostHook();

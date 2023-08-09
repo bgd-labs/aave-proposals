@@ -66,7 +66,7 @@ if (!options.protocolVersion) {
  */
 if (!options.configEngine) {
   options.configEngine = await confirm({
-    message: "To you plan to use the config engine?",
+    message: "Do you plan to use the config engine?",
     default: true,
   });
 }
