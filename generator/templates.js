@@ -1,4 +1,5 @@
 import {
+  CHAINS_WITH_GOV_SUPPORT,
   generateContractName,
   generateFolderName,
   getAlias,
@@ -45,6 +46,10 @@ contract Deploy${chain} is ${chain}Script {
     .join("\n\n");
   template += "\n\n";
 
+  const supportedChains = options.chains.filter((chain) =>
+    CHAINS_WITH_GOV_SUPPORT.includes(chain)
+  );
+
   // generate proposal creation script
   template += `/**
  * @dev Create Proposal
@@ -53,9 +58,9 @@ contract Deploy${chain} is ${chain}Script {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${
-      options.chains.length
+      supportedChains.length
     });
-${options.chains
+${supportedChains
   .map(
     (chain, ix) =>
       `    payloads[${ix}] = GovHelpers.build${
