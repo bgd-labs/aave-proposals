@@ -5,10 +5,27 @@ discussions: ""
 ---
 
 ## Simple Summary
+This AIP aims to set the `ParaswapDebtSwapAdapterV3GHO` as a flashBorrower on the ACLManager to provide users with
+fee-less debt swaps.
 
 ## Motivation
+Swapping debt is a convenient and useful feature that users of the Aave protocol should be able to enjoy without needing to pay extra fees. In particular, the use of a flashloan here is more akin to a debt-bearing flashloan, which is already fee-less. The adapter does not use debt-bearing flashloans in order to allow repaying the new debt with unused flashloaned funds as the debt is accrued at the end of the flashloan.
+
+Furthermore, debt swap users are already paying interest for their debt, unlike atomic flashloan consumers, the use case is fundamentally different and charging a premium does not make sense.
 
 ## Specification
+
+Set the `ParaswapDebtSwapAdapterV3GHO` as a flashBorrower on the `ACLManager` contract on Ethereum, Optimism, Arbitrum, Polygon, and Avalanche.
+
+On Ethereum, the adapter address is [TODO]() and the ACLManager address is [0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0.](https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
+
+On Optimism, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://optimistic.etherscan.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
+
+On Arbitrum, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://arbiscan.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
+
+On Polygon, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://polygonscan.com/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
+
+On Avalanche, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://snowtrace.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
 
 ## References
 
