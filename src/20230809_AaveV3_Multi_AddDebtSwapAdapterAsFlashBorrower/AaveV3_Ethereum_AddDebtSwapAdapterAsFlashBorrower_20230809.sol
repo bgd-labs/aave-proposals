@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
-
 /**
  * @title Add DebtSwapAdapter as FlashBorrower
  * @author BGD labs
@@ -15,6 +14,6 @@ contract AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposal
   address public constant NEW_FLASH_BORROWER = address(0);
 
   function execute() external {
+    AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);
   }
-
 }

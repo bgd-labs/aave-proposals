@@ -70,6 +70,12 @@ contract CreateProposal is EthereumScript {
     payloads[1] = GovHelpers.buildOptimism(address(0));
     payloads[2] = GovHelpers.buildArbitrum(address(0));
     payloads[3] = GovHelpers.buildPolygon(address(0));
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/20230809_AaveV3_Multi_AddDebtSwapAdapterAsFlashBorrower/AddDebtSwapAdapterAsFlashBorrower.md'));
+    GovHelpers.createProposal(
+      payloads,
+      GovHelpers.ipfsHashFile(
+        vm,
+        'src/20230809_AaveV3_Multi_AddDebtSwapAdapterAsFlashBorrower/AddDebtSwapAdapterAsFlashBorrower.md'
+      )
+    );
   }
 }
