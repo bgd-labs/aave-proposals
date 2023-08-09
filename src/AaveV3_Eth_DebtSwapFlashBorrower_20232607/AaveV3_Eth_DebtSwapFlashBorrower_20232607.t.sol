@@ -25,17 +25,18 @@ contract AaveV3_Eth_DebtSwapFlashBorrower_20232607_Test is ProtocolV3TestBase {
       AaveV3Ethereum.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Eth_DebtSwapFlashBorrower_20232607',
       AaveV3Ethereum.POOL
     );
 
-    diffReports('preAaveV3_Eth_DebtSwapFlashBorrower_20232607', 'postAaveV3_Eth_DebtSwapFlashBorrower_20232607');
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, new address[](0));
+
+    diffReports(
+      'preAaveV3_Eth_DebtSwapFlashBorrower_20232607',
+      'postAaveV3_Eth_DebtSwapFlashBorrower_20232607'
+    );
   }
 }

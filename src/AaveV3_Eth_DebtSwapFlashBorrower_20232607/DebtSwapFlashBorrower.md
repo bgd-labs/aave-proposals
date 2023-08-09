@@ -15,7 +15,7 @@ Furthermore, debt swap users are already paying interest for their debt, unlike 
 
 ## Specification
 
-Set the `ParaswapDebtSwapAdapterV3GHO` at [address]() as a flashBorrower on the `ACLManager` contract at [address]().
+Set the `ParaswapDebtSwapAdapterV3GHO` at [address]() as a flashBorrower on the `ACLManager` contract at [0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0](https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0).
 
 ## References
 
