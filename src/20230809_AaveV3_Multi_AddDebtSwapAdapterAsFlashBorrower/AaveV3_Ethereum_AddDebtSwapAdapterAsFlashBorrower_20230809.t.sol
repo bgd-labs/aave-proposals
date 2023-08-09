@@ -17,27 +17,29 @@ contract AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Prot
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17879754);
-   proposal = new AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809();
+    proposal = new AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809();
   }
 
   function testProposalExecution() public {
-
-
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Ethereum.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
+    assertFalse(AaveV3Ethereum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
+
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
+
+    assertTrue(AaveV3Ethereum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Ethereum.POOL
     );
 
-    diffReports('preAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809', 'postAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809');
-  }}
+    diffReports(
+      'preAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809',
+      'postAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809'
+    );
+  }
+}

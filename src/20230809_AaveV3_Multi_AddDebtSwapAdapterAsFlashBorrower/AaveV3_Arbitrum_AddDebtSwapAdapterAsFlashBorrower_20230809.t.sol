@@ -28,11 +28,15 @@ contract AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Prot
       AaveV3Arbitrum.POOL
     );
 
+    assertFalse(AaveV3Arbitrum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
+
     GovHelpers.executePayload(
       vm,
       address(proposal),
       AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
     );
+
+    assertTrue(AaveV3Arbitrum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809',

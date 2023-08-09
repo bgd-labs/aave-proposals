@@ -17,27 +17,29 @@ contract AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Proto
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 46111118);
-   proposal = new AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809();
+    proposal = new AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809();
   }
 
   function testProposalExecution() public {
-
-
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Polygon.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
-    );
+    assertFalse(AaveV3Polygon.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
+
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
+
+    assertTrue(AaveV3Polygon.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Polygon.POOL
     );
 
-    diffReports('preAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809', 'postAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809');
-  }}
+    diffReports(
+      'preAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809',
+      'postAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809'
+    );
+  }
+}
