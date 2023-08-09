@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import {AaveV3PayloadArbitrum, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadArbitrum.sol';
+import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbitrum.sol';
+
+
+/**
+ * @title Supply Cap increase - wstETH
+ * @author Alice Rozengarden (@Rozengarden - Aave-chan initiative)
+ * - Snapshot: TODO
+ * - Discussion: https://governance.aave.com/t/arfc-supply-cap-increase-wsteth/14376/1
+ */
+contract AaveV3_Arb_wstETH_CapsIncrease_20230908 is AaveV3PayloadArbitrum {
+
+
+}
