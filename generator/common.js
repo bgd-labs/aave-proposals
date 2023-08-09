@@ -11,6 +11,14 @@ export const AVAILABLE_CHAINS = [
   "Metis",
 ];
 
+export const CHAINS_WITH_GOV_SUPPORT = [
+  "Ethereum",
+  "Optimism",
+  "Arbitrum",
+  "Polygon",
+  "Metis",
+];
+
 export const SHORT_CHAINS = {
   Ethereum: "Eth",
   Polygon: "Pol",

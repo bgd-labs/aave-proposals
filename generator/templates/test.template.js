@@ -36,13 +36,14 @@ export const getBlock = async (chain) => {
 };
 
 function renderFlashBorrowerTest({ chain, protocolVersion }) {
-  return `function test_isFlashBorrower() {
+  return `function test_isFlashBorrower() external {
     GovHelpers.executePayload(
       vm,
       address(proposal),
       ${CHAIN_TO_EXECUTOR[chain]}
     );
-    Aave${protocolVersion}${chain}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
+    bool isFlashBorrower = Aave${protocolVersion}${chain}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
+    assertEq(isFlashBorrower, true);
   }`;
 }
 

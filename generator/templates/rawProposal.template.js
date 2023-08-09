@@ -1,3 +1,5 @@
+import { NON_ENGINE_FEATURES } from "../generator.js";
+
 export const rawProposalTemplate = ({
   protocolVersion,
   chain,
@@ -25,7 +27,7 @@ contract ${contractName} is IProposalGenericExecutor {
   address public constant NEW_FLASH_BORROWER = address(0);
 
   function execute() external {\n`;
-  if (features.flashBorrower) {
+  if (features.includes(NON_ENGINE_FEATURES.flashBorrower.value)) {
     template += `Aave${protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`;
   }
   template += `  }
