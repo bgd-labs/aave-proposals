@@ -6,7 +6,9 @@ export const rawProposalTemplate = ({
   snapshot,
   discussion,
   contractName,
-}) => `// SPDX-License-Identifier: MIT
+  features,
+}) => {
+  let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
@@ -20,9 +22,14 @@ import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} fr
  * - Discussion: ${discussion || "TODO"}
  */
 contract ${contractName} is IProposalGenericExecutor {
+  address public constant NEW_FLASH_BORROWER = address(0);
 
-  function execute() external {
-
+  function execute() external {\n`;
+  if (features.flashBorrower) {
+    template += `Aave${protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`;
   }
+  template += `  }
 
 }`;
+  return template;
+};

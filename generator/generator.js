@@ -90,6 +90,13 @@ export const ENGINE_FEATURES = {
   },
 };
 
+export const NON_ENGINE_FEATURES = {
+  flashBorrower: {
+    name: "Add an address as flash borrower",
+    value: "flashBorrower",
+  },
+};
+
 if (options.configEngine) {
   if (options.protocolVersion === "V2") {
     options.features = await checkbox({
@@ -113,12 +120,20 @@ if (options.configEngine) {
         ENGINE_FEATURES.preHook,
         ENGINE_FEATURES.postHook,
         ENGINE_FEATURES.capsUpdate,
+        NON_ENGINE_FEATURES.flashBorrower,
       ],
     });
 
     // TODO: collect more info regarding certain features
     // if (options.features) {
     // }
+  }
+} else {
+  if (options.protocolVersion === "V3") {
+    options.features = await checkbox({
+      message: "What do you want to do?",
+      choices: [NON_ENGINE_FEATURES.flashBorrower],
+    });
   }
 }
 
