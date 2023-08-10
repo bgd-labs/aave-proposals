@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
@@ -25,11 +24,7 @@ contract AaveV3_Pol_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
       AaveV3Polygon.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Pol_wstETH_CapsIncrease_20230908',
@@ -51,11 +46,14 @@ contract AaveV3_Pol_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
     _validateReserveConfig(wstETH, allConfigsAfter);
 
     e2eTestAsset(
-        AaveV3Polygon.POOL,
-        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.WETH_UNDERLYING),
-        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.wstETH_UNDERLYING)
-        );
+      AaveV3Polygon.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.WETH_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.wstETH_UNDERLYING)
+    );
 
-    diffReports('preAaveV3_Pol_wstETH_CapsIncrease_20230908', 'postAaveV3_Pol_wstETH_CapsIncrease_20230908');
+    diffReports(
+      'preAaveV3_Pol_wstETH_CapsIncrease_20230908',
+      'postAaveV3_Pol_wstETH_CapsIncrease_20230908'
+    );
   }
 }
