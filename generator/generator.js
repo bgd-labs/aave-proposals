@@ -13,6 +13,7 @@ import { engineProposalTemplate } from "./templates/engineProposal.template.js";
 import { rawProposalTemplate } from "./templates/rawProposal.template.js";
 import { testTemplate } from "./templates/test.template.js";
 import { input, checkbox, select, confirm } from "@inquirer/prompts";
+import * as capUpdate from "./features/capUpdate.js";
 
 const program = new Command();
 
@@ -35,7 +36,7 @@ program
   .allowExcessArguments(false)
   .parse(process.argv);
 
-const options = program.opts();
+let options = program.opts();
 
 // workaround as there's validate is not currently supported on checkbox
 // https://github.com/SBoudrias/Inquirer.js/issues/1257
@@ -135,6 +136,10 @@ if (options.configEngine) {
       choices: [NON_ENGINE_FEATURES.flashBorrower],
     });
   }
+}
+
+if (options.features.includes(ENGINE_FEATURES.capsUpdate.value)) {
+  options = await capUpdate.cli(options);
 }
 
 if (!options.title) {
