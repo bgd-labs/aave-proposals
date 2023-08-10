@@ -29,14 +29,13 @@ import {AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
  * - Discussion: https://governance.aave.com/t/arfc-supply-cap-stmatic-polygon/14355
  */
 contract AaveV3PolygonSupplyCapStmatic_20230810 is AaveV3PayloadPolygon {
-    uint256 public constant NEW_SUPPLY_CAP = 57_000_000;
 
     function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
         IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
 
         capsUpdate[0] = IEngine.CapsUpdate({
             asset: AaveV3PolygonAssets.stMATIC_UNDERLYING,
-            supplyCap: NEW_SUPPLY_CAP,
+            supplyCap: 57_000_000,
             borrowCap: EngineFlags.KEEP_CURRENT
         });
 

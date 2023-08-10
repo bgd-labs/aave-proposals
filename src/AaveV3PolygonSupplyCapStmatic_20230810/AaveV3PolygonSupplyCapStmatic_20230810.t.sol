@@ -36,19 +36,19 @@ contract AaveV3PolygonSupplyCapStmatic_20230810_Test is ProtocolV3TestBase {
       AaveV3Polygon.POOL
     );
 
-    ReserveConfig memory stMatic = _findReserveConfig(
+    ReserveConfig memory stMaticConfig = _findReserveConfig(
       allConfigsBefore,
       AaveV3PolygonAssets.stMATIC_UNDERLYING
     );
 
-    stMatic.supplyCap = proposal.NEW_SUPPLY_CAP();
+    stMaticConfig.supplyCap = 57_000_000;
 
     address[] memory assetsChanged = new address[](1);
     assetsChanged[0] = AaveV3PolygonAssets.stMATIC_UNDERLYING;
 
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
-    _validateReserveConfig(stMatic, allConfigsAfter);
+    _validateReserveConfig(stMaticConfig, allConfigsAfter);
 
     e2eTestAsset(
         AaveV3Polygon.POOL,
