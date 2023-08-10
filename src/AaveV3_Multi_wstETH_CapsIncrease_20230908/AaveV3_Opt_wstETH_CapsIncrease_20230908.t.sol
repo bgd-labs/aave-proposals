@@ -25,11 +25,7 @@ contract AaveV3_Opt_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
       AaveV3Optimism.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Opt_wstETH_CapsIncrease_20230908',
@@ -51,11 +47,14 @@ contract AaveV3_Opt_wstETH_CapsIncrease_20230908_Test is ProtocolV3TestBase {
     _validateReserveConfig(wstETH, allConfigsAfter);
 
     e2eTestAsset(
-        AaveV3Optimism.POOL,
-        _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WETH_UNDERLYING),
-        _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.wstETH_UNDERLYING)
-        );
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WETH_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.wstETH_UNDERLYING)
+    );
 
-    diffReports('preAaveV3_Opt_wstETH_CapsIncrease_20230908', 'postAaveV3_Opt_wstETH_CapsIncrease_20230908');
+    diffReports(
+      'preAaveV3_Opt_wstETH_CapsIncrease_20230908',
+      'postAaveV3_Opt_wstETH_CapsIncrease_20230908'
+    );
   }
 }

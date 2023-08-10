@@ -9,6 +9,7 @@ import {AaveV3_Pol_wstETH_CapsIncrease_20230908} from './AaveV3_Pol_wstETH_CapsI
 
 /**
  * @dev Deploy AaveV3_Opt_wstETH_CapsIncrease_20230908
+ 
  * command: make deploy-ledger contract=src/AaveV3_Multi_wstETH_CapsIncrease_20230908/AaveV3_Multi_wstETH_CapsIncrease_20230908.s.sol:DeployOptimism chain=optimism
  */
 contract DeployOptimism is OptimismScript {
@@ -19,6 +20,7 @@ contract DeployOptimism is OptimismScript {
 
 /**
  * @dev Deploy AaveV3_Arb_wstETH_CapsIncrease_20230908
+
  * command: make deploy-ledger contract=src/AaveV3_Multi_wstETH_CapsIncrease_20230908/AaveV3_Multi_wstETH_CapsIncrease_20230908.s.sol:DeployArbitrum chain=arbitrum
  */
 contract DeployArbitrum is ArbitrumScript {
@@ -47,6 +49,12 @@ contract CreateProposal is EthereumScript {
     payloads[0] = GovHelpers.buildOptimism(address(0));
     payloads[1] = GovHelpers.buildArbitrum(address(0));
     payloads[2] = GovHelpers.buildPolygon(address(0));
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV3_Multi_wstETH_CapsIncrease_20230908/wstETH_CapsIncrease.md'));
+    GovHelpers.createProposal(
+      payloads,
+      GovHelpers.ipfsHashFile(
+        vm,
+        'src/AaveV3_Multi_wstETH_CapsIncrease_20230908/wstETH_CapsIncrease.md'
+      )
+    );
   }
 }
