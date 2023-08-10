@@ -79,7 +79,7 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
     vm.createSelectFork(vm.rpcUrl('${getAlias(chain)}'), ${await getBlock(
     chain
   )});
-   proposal = new ${contractName}();
+    proposal = new ${contractName}();
   }
 
   function testProposalExecution() public {
