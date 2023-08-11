@@ -7,7 +7,7 @@ import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
-import {ProtocolV2TestBase, ReserveConfig} from 'aave-helpers/ProtocolV2TestBase.sol';
+import {ProtocolV2TestBase} from 'aave-helpers/ProtocolV2TestBase.sol';
 
 import {COWSwapper} from './COWSwapper20230801.sol';
 import {TokenAddresses} from './TokenAddresses.sol';
@@ -48,7 +48,7 @@ contract AaveV2_Eth_TreasuryManagement_20230308_Test is ProtocolV2TestBase {
     assertLt(IERC20(payload.RWA_aUSDC()).balanceOf(address(AaveV2Ethereum.COLLECTOR)), balanceRWA);
   }
 
-  function test_swapperevertsIf_invalidCaller() public {
+  function test_swappeRevertsIf_invalidCaller() public {
     COWSwapper swapper = new COWSwapper();
 
     vm.expectRevert(COWSwapper.InvalidCaller.selector);

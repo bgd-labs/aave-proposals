@@ -21,6 +21,7 @@ Withdraw the following aTokens:
 MKR
 GUSD
 FRAX
+sUSD
 UST
 LUSD
 YFI
