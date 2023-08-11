@@ -7,7 +7,7 @@ import {AaveV3_Ethereum_LUSDCollateralActivation_20230811} from './AaveV3_Ethere
 
 /**
  * @dev Deploy AaveV3_Ethereum_LUSDCollateralActivation_20230811
- * command: make deploy-ledger contract=src/20230811_AaveV3_Eth_LUSDCollateralActivation/20230811_AaveV3_Eth_LUSDCollateralActivation.s.sol:DeployEthereum chain=mainnet
+ * command: make deploy-ledger contract=src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_LUSDCollateralActivation_20230811.s.sol:DeployEthereum chain=mainnet
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
@@ -17,12 +17,12 @@ contract DeployEthereum is EthereumScript {
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/20230811_AaveV3_Eth_LUSDCollateralActivation/20230811_AaveV3_Eth_LUSDCollateralActivation.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_LUSDCollateralActivation_20230811.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0x96b3Fe1bcc88903BcdB032b09fbb16Ee0F908B43);
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/20230811_AaveV3_Eth_LUSDCollateralActivation/LUSDCollateralActivation.md'));
   }
 }
