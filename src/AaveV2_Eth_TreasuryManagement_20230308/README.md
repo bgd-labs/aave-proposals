@@ -1,3 +1,9 @@
+---
+title: Swap assets to aUSDC
+author: Llama
+discussions: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contract/12205
+---
+
 ## Treasury Management Swaps
 
 This payload does 11 swaps total which are listed below as per the test logs. Once Aave Curator is released, all these payloads will
