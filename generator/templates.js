@@ -1,4 +1,9 @@
-import { generateChainName, generateName, getAlias } from "./common.js";
+import {
+  CHAINS_WITH_GOV_SUPPORT,
+  generateContractName,
+  generateFolderName,
+  getAlias,
+} from "./common.js";
 
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
@@ -15,7 +20,7 @@ export function generateScript(options, baseName) {
     .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
     .map((chain) => {
-      const name = generateChainName(options, chain);
+      const name = generateContractName(options, chain);
       return `import {${name}} from './${name}.sol';`;
     })
     .join("\n");
@@ -24,7 +29,7 @@ export function generateScript(options, baseName) {
   // generate chain scripts
   template += options.chains
     .map((chain) => {
-      const name = generateChainName(options, chain);
+      const name = generateContractName(options, chain);
 
       return `/**
  * @dev Deploy ${name}
@@ -41,6 +46,10 @@ contract Deploy${chain} is ${chain}Script {
     .join("\n\n");
   template += "\n\n";
 
+  const supportedChains = options.chains.filter((chain) =>
+    CHAINS_WITH_GOV_SUPPORT.includes(chain)
+  );
+
   // generate proposal creation script
   template += `/**
  * @dev Create Proposal
@@ -49,9 +58,9 @@ contract Deploy${chain} is ${chain}Script {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${
-      options.chains.length
+      supportedChains.length
     });
-${options.chains
+${supportedChains
   .map(
     (chain, ix) =>
       `    payloads[${ix}] = GovHelpers.build${
@@ -59,9 +68,9 @@ ${options.chains
       }(address(0));`
   )
   .join("\n")}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateName(
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateFolderName(
       options
-    )}/${options.name}.md'));
+    )}/${options.shortName}.md'));
   }
 }`;
   return template;
@@ -69,9 +78,9 @@ ${options.chains
 
 export function generateAIP(options) {
   return `---
-title: ${options.title || "TODO"}
-author: ${options.author || "TODO"}
-discussions: ${options.discussion || "TODO"}
+title: ${`"${options.title}"` || "TODO"}
+author: ${`"${options.author}"` || "TODO"}
+discussions: ${`"${options.discussion}"` || "TODO"}
 ---
 
 ## Simple Summary
@@ -85,17 +94,17 @@ discussions: ${options.discussion || "TODO"}
 - Implementation: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateChainName(options, chain)}.sol)`
+        )}/${generateContractName(options, chain)}.sol)`
     )
     .join(", ")}
 - Tests: ${options.chains
     .map(
       (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateName(
+        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateChainName(options, chain)}.t.sol)`
+        )}/${generateContractName(options, chain)}.t.sol)`
     )
     .join(", ")}
 - [Snapshot](${options.snapshot || "TODO"})
