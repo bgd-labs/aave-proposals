@@ -20,6 +20,7 @@ The proposed risk parameters for LUSD on the Aave V3 ETH pool are as follows:
 | Loan-to-Value (LTV) | 77% |
 | Liquidation Threshold (LT) | 80% |
 | Liquidation Penalty | 4.5% |
+| Liquidation Protocol Fee | 10% |
 
 These parameters are identical to those currently in place for USDC on the Aave V3 ETH pool.
 
