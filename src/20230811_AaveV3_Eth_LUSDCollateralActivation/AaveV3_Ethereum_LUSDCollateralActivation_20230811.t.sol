@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
@@ -17,8 +16,7 @@ contract AaveV3_Ethereum_LUSDCollateralActivation_20230811_Test is ProtocolV3Tes
   uint256 public constant LUSD_UNDERLYING_LIQ_THRESHOLD = 80_00; // 80.0%
   uint256 public constant LUSD_UNDERLYING_LIQ_BONUS = 10450; // 4.5%
   uint256 public constant LUSD_LIQUIDATION_PROTOCOL_FEE = 10_00; // 10.0%
-  // AaveV3_Ethereum_LUSDCollateralActivation_20230811 public proposal;
-
+  
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17890465);
   }
@@ -27,7 +25,7 @@ contract AaveV3_Ethereum_LUSDCollateralActivation_20230811_Test is ProtocolV3Tes
 
     AaveV3_Ethereum_LUSDCollateralActivation_20230811 proposal = new AaveV3_Ethereum_LUSDCollateralActivation_20230811();
 
-    
+
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Ethereum_LUSDCollateralActivation_20230811',
       AaveV3Ethereum.POOL
@@ -58,8 +56,6 @@ contract AaveV3_Ethereum_LUSDCollateralActivation_20230811_Test is ProtocolV3Tes
       _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
       _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.LUSD_UNDERLYING)
     );
-
-    // e2eTest(AaveV3Ethereum.POOL);
 
     diffReports(
       'preAaveV3_Ethereum_LUSDCollateralActivation_20230811',
