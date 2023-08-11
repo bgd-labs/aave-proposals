@@ -30,7 +30,7 @@ contract AaveV2_Eth_ServiceProviders_20231907 is IProposalGenericExecutor {
 
     AaveV2Ethereum.COLLECTOR.transfer(AaveV2EthereumAssets.USDC_UNDERLYING, address(this), balance);
 
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).safeApprove(address(AaveV2Ethereum.POOL), balance);
+    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).forceApprove(address(AaveV2Ethereum.POOL), balance);
     AaveV2Ethereum.POOL.deposit(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       balance,
