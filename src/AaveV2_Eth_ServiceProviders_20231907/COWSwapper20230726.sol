@@ -26,8 +26,8 @@ contract COWSwapper {
     usdtBalance = IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).balanceOf(address(this));
     daiBalance = IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).balanceOf(address(this));
 
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeApprove(MILKMAN, usdtBalance);
-    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).safeApprove(MILKMAN, daiBalance);
+    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).forceApprove(MILKMAN, usdtBalance);
+    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).forceApprove(MILKMAN, daiBalance);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       usdtBalance,
@@ -90,7 +90,7 @@ contract COWSwapper {
 
   function depositIntoAaveV2(address token) external {
     uint256 amount = IERC20(token).balanceOf(address(this));
-    IERC20(token).safeApprove(address(AaveV2Ethereum.POOL), amount);
+    IERC20(token).forceApprove(address(AaveV2Ethereum.POOL), amount);
     AaveV2Ethereum.POOL.deposit(token, amount, address(AaveV2Ethereum.COLLECTOR), 0);
   }
 
