@@ -4,6 +4,7 @@ import {
   generateFolderName,
   getAlias,
 } from "./common.js";
+const fileName = generateContractName(options);
 
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
@@ -33,7 +34,7 @@ export function generateScript(options, baseName) {
 
       return `/**
  * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:Deploy${chain} chain=${getAlias(
+ * command: make deploy-ledger contract=src/${baseName}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
         chain
       )}
  */
