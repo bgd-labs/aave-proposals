@@ -6,13 +6,11 @@ discussions: https://governance.aave.com/t/arfc-deploy-ethereum-collector-contra
 
 ## Simple Summary
 
-The purpose of this proposal is to hold sufficient runway in v2 USDC and begin deploying a portion of the funds held in the Ethereum Collector Contract to earn yield.
+The purpose of this proposal is to hold increase USDC on v2 mainnet and begin deploying a portion of the funds held in the Ethereum Collector Contract to earn yield. This is a follow-up proposal to [AIP 282](https://app.aave.com/governance/proposal/282/), which passed.
 
 ## Motivation
 
 This publication presents a proposal for Aave to deploy its Ethereum Collector Contract holdings to earn yield.
-
-There are a number of Service Providers requiring payment in aUSDC. In order to provide sufficient funding, assets need to be converted to aUSDC. This publication proposes swapping assets to USDC and then depositing the USDC into Aave v2. The amount of aUSDC held post swap will be sufficient to sustain the DAO in the short term. We plan to do a follow up proposal to ensure the DAO has sufficient aUSDC runway.
 
 ## Specification
 
