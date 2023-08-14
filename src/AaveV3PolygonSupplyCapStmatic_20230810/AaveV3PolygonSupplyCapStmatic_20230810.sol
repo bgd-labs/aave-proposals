@@ -25,7 +25,7 @@ import {AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 /**
  * @title Increase stMATIC supply cap
  * @author defijesus.eth – TokenLogic
- * - Snapshot: TODO
+ * - Snapshot: Direct-to-AIP Framework
  * - Discussion: https://governance.aave.com/t/arfc-supply-cap-stmatic-polygon/14355
  */
 contract AaveV3PolygonSupplyCapStmatic_20230810 is AaveV3PayloadPolygon {

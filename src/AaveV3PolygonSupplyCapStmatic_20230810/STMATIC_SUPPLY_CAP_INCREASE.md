@@ -39,8 +39,8 @@ This is equivalent to 75% of stMATIC supply on Polygon.
 A list of relevant links like for this proposal:
 
 * [Governance Forum Discussion](https://governance.aave.com/t/arfc-supply-cap-stmatic-polygon/14355)
-* [Test Cases](https://github.com/defijesus/aave-proposals/blob/supply-cap-stmatic-polygon-v3/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.t.sol)
-* [Payload Implementation](https://github.com/defijesus/aave-proposals/blob/supply-cap-stmatic-polygon-v3/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.sol)
+* [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.t.sol)
+* [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.sol)
 * [Deployed Contracts](TODO)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
