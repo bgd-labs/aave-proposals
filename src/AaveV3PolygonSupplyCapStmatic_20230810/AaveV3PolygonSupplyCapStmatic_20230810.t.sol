@@ -13,11 +13,12 @@ import {AaveV3PolygonSupplyCapStmatic_20230810} from './AaveV3PolygonSupplyCapSt
  */
 contract AaveV3PolygonSupplyCapStmatic_20230810_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 46116153);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 46297694);
   }
 
   function testProposalExecution() public {
-    AaveV3PolygonSupplyCapStmatic_20230810 proposal = new AaveV3PolygonSupplyCapStmatic_20230810();
+    AaveV3PolygonSupplyCapStmatic_20230810 proposal = 
+      AaveV3PolygonSupplyCapStmatic_20230810(0xF28E5a2f04B6B74741579DaEE1fc164978D2d646);
 
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3PolygonSupplyCapStmatic_20230810',

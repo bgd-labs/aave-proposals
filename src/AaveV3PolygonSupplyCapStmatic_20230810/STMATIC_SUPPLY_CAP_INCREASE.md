@@ -41,7 +41,7 @@ A list of relevant links like for this proposal:
 * [Governance Forum Discussion](https://governance.aave.com/t/arfc-supply-cap-stmatic-polygon/14355)
 * [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.t.sol)
 * [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV3PolygonSupplyCapStmatic_20230810/AaveV3PolygonSupplyCapStmatic_20230810.sol)
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://polygonscan.com/address/0xf28e5a2f04b6b74741579daee1fc164978d2d646#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
