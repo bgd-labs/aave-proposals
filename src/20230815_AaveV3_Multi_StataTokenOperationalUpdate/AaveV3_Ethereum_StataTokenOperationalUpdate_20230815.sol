@@ -16,6 +16,14 @@ import {IStaticATokenFactory} from './IStaticATokenFactory.sol';
 contract AaveV3_Ethereum_StataTokenOperationalUpdate_20230815 is IProposalGenericExecutor {
   address public constant NEW_ADMIN = 0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f;
 
+  address public constant BB_A_WETH = 0x59463BB67dDD04fe58ED291ba36C26d99A39fbc6;
+
+  address public constant BB_A_USDT = 0xa7E0e66F38b8ad8343CFF67118C1f33e827D1455;
+
+  address public constant BB_A_DAI = 0x098256c06ab24F5655C5506A6488781BD711c14b;
+
+  address public constant BB_A_USDC = 0x57d20c946A7A3812a7225B881CdcD8431D23431C;
+
   function execute() external {
     address[] memory tokens = IStaticATokenFactory(AaveV3Ethereum.STATIC_A_TOKEN_FACTORY)
       .getStaticATokens();
@@ -25,17 +33,9 @@ contract AaveV3_Ethereum_StataTokenOperationalUpdate_20230815 is IProposalGeneri
         NEW_ADMIN
       );
     }
-    TransparentUpgradeableProxy(payable(0x59463BB67dDD04fe58ED291ba36C26d99A39fbc6)).changeAdmin(
-      NEW_ADMIN
-    );
-    TransparentUpgradeableProxy(payable(0x098256c06ab24F5655C5506A6488781BD711c14b)).changeAdmin(
-      NEW_ADMIN
-    );
-    TransparentUpgradeableProxy(payable(0xa7E0e66F38b8ad8343CFF67118C1f33e827D1455)).changeAdmin(
-      NEW_ADMIN
-    );
-    TransparentUpgradeableProxy(payable(0x57d20c946A7A3812a7225B881CdcD8431D23431C)).changeAdmin(
-      NEW_ADMIN
-    );
+    TransparentUpgradeableProxy(payable(BB_A_WETH)).changeAdmin(NEW_ADMIN);
+    TransparentUpgradeableProxy(payable(BB_A_DAI)).changeAdmin(NEW_ADMIN);
+    TransparentUpgradeableProxy(payable(BB_A_USDT)).changeAdmin(NEW_ADMIN);
+    TransparentUpgradeableProxy(payable(BB_A_USDC)).changeAdmin(NEW_ADMIN);
   }
 }
