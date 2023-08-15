@@ -1,5 +1,5 @@
 ---
-title: "BaseActivation"
+title: "Aave v3 Base Activation"
 author: "BGD labs"
 discussions: https://governance.aave.com/t/arfc-aave-v3-deployment-on-base/13708
 ---
