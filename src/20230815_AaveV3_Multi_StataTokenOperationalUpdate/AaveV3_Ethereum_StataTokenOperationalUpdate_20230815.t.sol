@@ -36,10 +36,10 @@ contract AaveV3_Ethereum_StataTokenOperationalUpdate_20230815_Test is ProtocolV3
       assertEq(TransparentUpgradeableProxy(payable(tokens[i])).admin(), newAdmin);
       TransparentUpgradeableProxy(payable(tokens[i])).changeAdmin(AaveMisc.PROXY_ADMIN_ETHEREUM);
     }
-    assertEq(TransparentUpgradeableProxy(payable(proposal.BB_A_WETH())).admin(), newAdmin);
-    assertEq(TransparentUpgradeableProxy(payable(proposal.BB_A_USDT())).admin(), newAdmin);
-    assertEq(TransparentUpgradeableProxy(payable(proposal.BB_A_DAI())).admin(), newAdmin);
-    assertEq(TransparentUpgradeableProxy(payable(proposal.BB_A_USDC())).admin(), newAdmin);
+    assertEq(TransparentUpgradeableProxy(payable(proposal.WAWETH())).admin(), newAdmin);
+    assertEq(TransparentUpgradeableProxy(payable(proposal.WAUSDT())).admin(), newAdmin);
+    assertEq(TransparentUpgradeableProxy(payable(proposal.WADAI())).admin(), newAdmin);
+    assertEq(TransparentUpgradeableProxy(payable(proposal.WAUSDC())).admin(), newAdmin);
     vm.startPrank(AaveMisc.PROXY_ADMIN_ETHEREUM);
     for (uint256 i; i < tokens.length; i++) {
       assertEq(
