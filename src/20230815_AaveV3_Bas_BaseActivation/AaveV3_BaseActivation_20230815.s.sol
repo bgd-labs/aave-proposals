@@ -6,7 +6,7 @@ import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/20230815_AaveV3_Bas_BaseActivation/20230815_AaveV3_Bas_BaseActivation.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/20230815_AaveV3_Bas_BaseActivation/AaveV3_BaseActivation_20230815.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
