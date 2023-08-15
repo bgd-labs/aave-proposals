@@ -35,8 +35,8 @@ The table below illustrates the initial suggested risk parameters for each asset
 | Liquidation Bonus        | 5%             | 5%        | 7.5%           |
 | Reserve Factor           | 15%            | 10%       | 15%            |
 | Liquidation Protocol Fee | 10%            | 10%       | 10%            |
-| Supply Cap               | 200            | 1,000,000 | 100            |
-| Borrow Cap               | 160            | 800,000   | 20             |
+| Supply Cap               | 5,000          | 8,000,000 | 1,000          |
+| Borrow Cap               | 4,000          | 6,500,000 | 100            |
 | Debt Ceiling             | N/A            | N/A       | N/A            |
 | uOptimal                 | 80%            | 90%       | 45%            |
 | Base                     | 0%             | 0%        | 0%             |
