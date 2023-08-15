@@ -9,6 +9,7 @@ export const AVAILABLE_CHAINS = [
   "Fantom",
   "Harmony",
   "Metis",
+  "Base",
 ];
 
 export const CHAINS_WITH_GOV_SUPPORT = [
@@ -17,6 +18,7 @@ export const CHAINS_WITH_GOV_SUPPORT = [
   "Arbitrum",
   "Polygon",
   "Metis",
+  "Base",
 ];
 
 export const SHORT_CHAINS = {
@@ -28,6 +30,7 @@ export const SHORT_CHAINS = {
   Avalanche: "Ava",
   Metis: "Met",
   Harmony: "Har",
+  Base: "Bas",
 };
 
 export function getDate() {

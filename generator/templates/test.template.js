@@ -6,6 +6,7 @@ import {
   metis,
   optimism,
   polygon,
+  base,
 } from "viem/chains";
 import { getAlias } from "../common.js";
 import { NON_ENGINE_FEATURES } from "../generator.js";
@@ -17,6 +18,7 @@ const CHAIN_TO_EXECUTOR = {
   Arbitrum: "AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR",
   Metis: "AaveGovernanceV2.METIS_BRIDGE_EXECUTOR",
   Avalanche: "0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian",
+  Base: "AaveGovernanceV2.BASE_BRIDGE_EXECUTOR",
 };
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -26,6 +28,7 @@ const CHAIN_TO_CHAIN_OBJECT = {
   Arbitrum: arbitrum,
   Avalanche: avalanche,
   Metis: metis,
+  Base: base,
 };
 
 export const getBlock = async (chain) => {
