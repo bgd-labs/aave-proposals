@@ -20,11 +20,11 @@ The proposal will do the following:
 
 - set risk steward as the risk admin by executing `ACL_MANAGER.addRiskAdmin()`
 - set price oracle sentinel with `POOL_ADDRESSES_PROVIDER.setPriceOracleSentinel()`
-- list the following assets on Aave V3 on Base: wETH, cbETH, and USDC.
+- list the following assets on Aave V3 on Base: wETH, cbETH, and USDbC.
 
-The table below illustrates the initial suggested risk parameters for each asset, a combination of reccomendations provided by Gauntlet and ChaosLabs.
+The table below illustrates the initial suggested risk parameters for each asset, a combination of recommendations provided by Gauntlet and ChaosLabs.
 
-|                          | WETH           | USDC      | cbETH          |
+|                          | WETH           | USDbC     | cbETH          |
 | ------------------------ | -------------- | --------- | -------------- |
 | Isolation Mode           | NO             | NO        | NO             |
 | Enable Borrow            | YES            | YES       | YES            |
@@ -43,7 +43,7 @@ The table below illustrates the initial suggested risk parameters for each asset
 | Slope1                   | 3.8%           | 4%        | 7%             |
 | Slope2                   | 80%            | 60%       | 300%           |
 | Stable Borrowing         | Disabled       | Disabled  | Disabled       |
-| Flahloanable             | YES            | YES       | YES            |
+| Flashloanable            | YES            | YES       | YES            |
 | Siloed Borrowing         | NO             | NO        | NO             |
 | Borrowed in Isolation    | NO             | YES       | NO             |
 
@@ -67,7 +67,7 @@ The proposal execution is simulated within the [tests](https://github.com/bgd-la
 
 The deployed pool and other permissions have been programmatically verified.
 
-In addition, we have also checked the code diffs of the deployed metis contracts with the deployed contracts on Ethereum and other networks.
+In addition, we have also checked the code diffs of the deployed base contracts with the deployed contracts on Ethereum and other networks.
 
 As a matter of caution, the POOL_ADMIN role will be given for the first weeks to the Aave Guardian multisig.
 
