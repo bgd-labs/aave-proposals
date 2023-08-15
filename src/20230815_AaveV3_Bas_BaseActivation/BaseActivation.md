@@ -55,8 +55,6 @@ The table below illustrates the initial suggested risk parameters for each asset
 
 cbEth adapter: [0x80f2c02224a2E548FC67c0bF705eBFA825dd5439](https://basescan.org/address/0x80f2c02224a2e548fc67c0bf705ebfa825dd5439)
 
-wstEth adapter: [0x945fD405773973d286De54E44649cc0d9e264F78](https://basescan.org/address/0x945fd405773973d286de54e44649cc0d9e264f78)
-
 Price oracle sentinel: [0xe34949A48cd2E6f5CD41753e449bd2d43993C9AC](https://basescan.org/address/0xe34949A48cd2E6f5CD41753e449bd2d43993C9AC)
 
 Risk Steward: [0x12DEB4025b79f2B43f6aeF079F9D77C3f9a67bb6](https://basescan.org/address/0x12DEB4025b79f2B43f6aeF079F9D77C3f9a67bb6)
