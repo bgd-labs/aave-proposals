@@ -12,6 +12,8 @@ export function generateScript(options, baseName) {
   const fileName = generateContractName(options);
 
   let template = pragma;
+  const fileName = generateContractName(options);
+
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
   template += `import {${[
