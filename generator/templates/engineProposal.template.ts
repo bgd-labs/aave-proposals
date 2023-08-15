@@ -1,5 +1,3 @@
-import { ENGINE_FEATURES } from "../generator.js";
-
 function renderPostHook() {
   return `function _postExecute() internal override {
 
@@ -73,16 +71,8 @@ function renderV3CapsUpdate() {
   }\n\n`;
 }
 
-export const engineProposalTemplate = (options) => {
-  const {
-    protocolVersion,
-    chain,
-    title,
-    author,
-    snapshot,
-    discussion,
-    contractName,
-  } = options;
+export const engineProposalTemplate = (options, artifacts) => {
+  const {protocolVersion, chain, title, author, snapshot, discussion, contractName} = options;
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -90,22 +80,13 @@ import {Aave${protocolVersion}Payload${chain}, IEngine, Rates, EngineFlags} from
 import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} from 'aave-address-book/Aave${protocolVersion}${chain}.sol';
 
 /**
- * @title ${title || "TODO"}
- * @author ${author || "TODO"}
- * - Snapshot: ${snapshot || "TODO"}
- * - Discussion: ${discussion || "TODO"}
+ * @title ${title || 'TODO'}
+ * @author ${author || 'TODO'}
+ * - Snapshot: ${snapshot || 'TODO'}
+ * - Discussion: ${discussion || 'TODO'}
  */
-contract ${contractName} is Aave${protocolVersion}Payload${chain} {\n`;
+contract ${contractName} is Aave${protocolVersion}Payload${chain} {
 
-  if (options.features.includes(ENGINE_FEATURES.postHook.value))
-    template += renderPostHook();
-  if (options.features.includes(ENGINE_FEATURES.rateStrategiesUpdates.value)) {
-    if (options.protocolVersion == "V2") template += renderV2IRUpgrades();
-    else template += renderV3IRUpgrades();
-  }
-  if (options.features.includes(ENGINE_FEATURES.capsUpdate.value)) {
-    template += renderV3CapsUpdate();
-  }
-  template += "}";
-  return template;
+
+}`;
 };

@@ -3,29 +3,26 @@ import {
   generateContractName,
   generateFolderName,
   getAlias,
-} from "./common.js";
-const fileName = generateContractName(options);
+} from './common';
 
 const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
 
 export function generateScript(options, baseName) {
+  const fileName = generateContractName(options);
   let template = pragma;
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
-  template += `import {${[
-    "Ethereum",
-    ...options.chains.filter((c) => c !== "Ethereum"),
-  ]
+  template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]
     .map((chain) => `${chain}Script`)
-    .join(", ")}} from 'aave-helpers/ScriptUtils.sol';\n`;
+    .join(', ')}} from 'aave-helpers/ScriptUtils.sol';\n`;
   template += options.chains
     .map((chain) => {
       const name = generateContractName(options, chain);
       return `import {${name}} from './${name}.sol';`;
     })
-    .join("\n");
-  template += "\n\n";
+    .join('\n');
+  template += '\n\n';
 
   // generate chain scripts
   template += options.chains
@@ -44,12 +41,10 @@ contract Deploy${chain} is ${chain}Script {
   }
 }`;
     })
-    .join("\n\n");
-  template += "\n\n";
+    .join('\n\n');
+  template += '\n\n';
 
-  const supportedChains = options.chains.filter((chain) =>
-    CHAINS_WITH_GOV_SUPPORT.includes(chain)
-  );
+  const supportedChains = options.chains.filter((chain) => CHAINS_WITH_GOV_SUPPORT.includes(chain));
 
   // generate proposal creation script
   template += `/**
@@ -58,17 +53,15 @@ contract Deploy${chain} is ${chain}Script {
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${
-      supportedChains.length
-    });
+    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${supportedChains.length});
 ${supportedChains
   .map(
     (chain, ix) =>
       `    payloads[${ix}] = GovHelpers.build${
-        chain == "Ethereum" ? "Mainnet" : chain
+        chain == 'Ethereum' ? 'Mainnet' : chain
       }(address(0));`
   )
-  .join("\n")}
+  .join('\n')}
     GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateFolderName(
       options
     )}/${options.shortName}.md'));
@@ -79,9 +72,9 @@ ${supportedChains
 
 export function generateAIP(options) {
   return `---
-title: ${`"${options.title}"` || "TODO"}
-author: ${`"${options.author}"` || "TODO"}
-discussions: ${`"${options.discussion}"` || "TODO"}
+title: ${`"${options.title}"` || 'TODO'}
+author: ${`"${options.author}"` || 'TODO'}
+discussions: ${`"${options.discussion}"` || 'TODO'}
 ---
 
 ## Simple Summary
@@ -99,7 +92,7 @@ discussions: ${`"${options.discussion}"` || "TODO"}
           options
         )}/${generateContractName(options, chain)}.sol)`
     )
-    .join(", ")}
+    .join(', ')}
 - Tests: ${options.chains
     .map(
       (chain) =>
@@ -107,9 +100,9 @@ discussions: ${`"${options.discussion}"` || "TODO"}
           options
         )}/${generateContractName(options, chain)}.t.sol)`
     )
-    .join(", ")}
-- [Snapshot](${options.snapshot || "TODO"})
-- [Discussion](${options.discussion || "TODO"})
+    .join(', ')}
+- [Snapshot](${options.snapshot || 'TODO'})
+- [Discussion](${options.discussion || 'TODO'})
 
 ## Copyright
 
