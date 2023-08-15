@@ -10,6 +10,17 @@ export const rawProposalTemplate = ({
   contractName,
   features,
 }) => {
+  let contractVars = [];
+  let executeCommands = [];
+  if (features.includes(NON_ENGINE_FEATURES.flashBorrower.value)) {
+    contractVars.push(
+      "address public constant NEW_FLASH_BORROWER = address(0);"
+    );
+    executeCommands.push(
+      `Aave${protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`
+    );
+  }
+
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -23,13 +34,11 @@ import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} fr
  * - Discussion: ${discussion || "TODO"}
  */
 contract ${contractName} is IProposalGenericExecutor {
-  address public constant NEW_FLASH_BORROWER = address(0);
+  ${contractVars.join("\n")}
 
-  function execute() external {\n`;
-  if (features.includes(NON_ENGINE_FEATURES.flashBorrower.value)) {
-    template += `Aave${protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`;
+  function execute() external {
+    ${executeCommands.join("\n")}
   }
-  template += `  }
 
 }`;
   return template;
