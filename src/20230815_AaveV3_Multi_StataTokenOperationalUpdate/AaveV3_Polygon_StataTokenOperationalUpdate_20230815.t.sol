@@ -17,27 +17,10 @@ contract AaveV3_Polygon_StataTokenOperationalUpdate_20230815_Test is ProtocolV3T
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 46328023);
-   proposal = new AaveV3_Polygon_StataTokenOperationalUpdate_20230815();
+    proposal = new AaveV3_Polygon_StataTokenOperationalUpdate_20230815();
   }
 
   function testProposalExecution() public {
-
-
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV3_Polygon_StataTokenOperationalUpdate_20230815',
-      AaveV3Polygon.POOL
-    );
-
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR
-    );
-
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV3_Polygon_StataTokenOperationalUpdate_20230815',
-      AaveV3Polygon.POOL
-    );
-
-    diffReports('preAaveV3_Polygon_StataTokenOperationalUpdate_20230815', 'postAaveV3_Polygon_StataTokenOperationalUpdate_20230815');
-  }}
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
+  }
+}

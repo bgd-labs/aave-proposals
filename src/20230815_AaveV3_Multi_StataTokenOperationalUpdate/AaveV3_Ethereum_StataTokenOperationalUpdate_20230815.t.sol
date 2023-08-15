@@ -17,27 +17,10 @@ contract AaveV3_Ethereum_StataTokenOperationalUpdate_20230815_Test is ProtocolV3
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 17918848);
-   proposal = new AaveV3_Ethereum_StataTokenOperationalUpdate_20230815();
+    proposal = new AaveV3_Ethereum_StataTokenOperationalUpdate_20230815();
   }
 
   function testProposalExecution() public {
-
-
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV3_Ethereum_StataTokenOperationalUpdate_20230815',
-      AaveV3Ethereum.POOL
-    );
-
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.SHORT_EXECUTOR
-    );
-
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV3_Ethereum_StataTokenOperationalUpdate_20230815',
-      AaveV3Ethereum.POOL
-    );
-
-    diffReports('preAaveV3_Ethereum_StataTokenOperationalUpdate_20230815', 'postAaveV3_Ethereum_StataTokenOperationalUpdate_20230815');
-  }}
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
+  }
+}

@@ -25,5 +25,17 @@ contract AaveV3_Ethereum_StataTokenOperationalUpdate_20230815 is IProposalGeneri
         NEW_ADMIN
       );
     }
+    TransparentUpgradeableProxy(payable(0x59463BB67dDD04fe58ED291ba36C26d99A39fbc6)).changeAdmin(
+      NEW_ADMIN
+    );
+    TransparentUpgradeableProxy(payable(0x098256c06ab24F5655C5506A6488781BD711c14b)).changeAdmin(
+      NEW_ADMIN
+    );
+    TransparentUpgradeableProxy(payable(0xa7E0e66F38b8ad8343CFF67118C1f33e827D1455)).changeAdmin(
+      NEW_ADMIN
+    );
+    TransparentUpgradeableProxy(payable(0x57d20c946A7A3812a7225B881CdcD8431D23431C)).changeAdmin(
+      NEW_ADMIN
+    );
   }
 }

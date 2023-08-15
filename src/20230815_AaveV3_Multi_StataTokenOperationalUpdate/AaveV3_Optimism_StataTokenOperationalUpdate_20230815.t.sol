@@ -17,27 +17,10 @@ contract AaveV3_Optimism_StataTokenOperationalUpdate_20230815_Test is ProtocolV3
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('optimism'), 108243444);
-   proposal = new AaveV3_Optimism_StataTokenOperationalUpdate_20230815();
+    proposal = new AaveV3_Optimism_StataTokenOperationalUpdate_20230815();
   }
 
   function testProposalExecution() public {
-
-
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV3_Optimism_StataTokenOperationalUpdate_20230815',
-      AaveV3Optimism.POOL
-    );
-
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
-    );
-
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV3_Optimism_StataTokenOperationalUpdate_20230815',
-      AaveV3Optimism.POOL
-    );
-
-    diffReports('preAaveV3_Optimism_StataTokenOperationalUpdate_20230815', 'postAaveV3_Optimism_StataTokenOperationalUpdate_20230815');
-  }}
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
+  }
+}

@@ -17,27 +17,14 @@ contract AaveV3_Avalanche_StataTokenOperationalUpdate_20230815_Test is ProtocolV
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('avalanche'), 33943199);
-   proposal = new AaveV3_Avalanche_StataTokenOperationalUpdate_20230815();
+    proposal = new AaveV3_Avalanche_StataTokenOperationalUpdate_20230815();
   }
 
   function testProposalExecution() public {
-
-
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV3_Avalanche_StataTokenOperationalUpdate_20230815',
-      AaveV3Avalanche.POOL
-    );
-
     GovHelpers.executePayload(
       vm,
       address(proposal),
       0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian
     );
-
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV3_Avalanche_StataTokenOperationalUpdate_20230815',
-      AaveV3Avalanche.POOL
-    );
-
-    diffReports('preAaveV3_Avalanche_StataTokenOperationalUpdate_20230815', 'postAaveV3_Avalanche_StataTokenOperationalUpdate_20230815');
-  }}
+  }
+}
