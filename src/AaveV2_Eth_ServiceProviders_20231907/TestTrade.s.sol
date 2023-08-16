@@ -26,7 +26,7 @@ contract TestTrade is Script {
 
     uint256 amount = 96797e16;
 
-    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).safeApprove(MILKMAN, amount);
+    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).forceApprove(MILKMAN, amount);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
       amount,

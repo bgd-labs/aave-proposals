@@ -16,7 +16,7 @@ contract DeployEthereum is EthereumScript {
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/AaveV2EthBUSDIR_20230804/AaveV2EthBUSDIR_20230804.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/AaveV2EthBUSDIR_20230804/DeployBUSDOffBoard.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
@@ -26,7 +26,7 @@ contract CreateProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV2_Eth_TUSDOffboardingPlan_20233107/TUSDOffboardingPlan.md'
+        'src/AaveV2EthBUSDIR_20230804/BUSD-OFFBOARDING-PLAN-PART-III-AIP.md'
       )
     );
   }
