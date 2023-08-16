@@ -10,7 +10,8 @@
     "simulate:arbitrum": "env-cmd aave-tenderly-cli --networkId 42161 --keepAlive --artifactPath",
     "simulate:avalanche": "env-cmd aave-tenderly-cli --networkId 43114 --keepAlive --artifactPath",
     "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath",
-    "generate": "node generator/generator.js"
+    "generate": "node generator/generator.js",
+    "generate:bgd": "node generator/generator.js -a 'BGD labs'"
   },
   "type": "module",
   "repository": {
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "@bgd-labs/aave-cli": "^0.0.17",
+    "@inquirer/prompts": "^3.0.0",
     "commander": "^11.0.0",
     "viem": "^1.2.9"
   }

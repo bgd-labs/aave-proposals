@@ -6,8 +6,10 @@ import {
   metis,
   optimism,
   polygon,
+  base,
 } from "viem/chains";
 import { getAlias } from "../common.js";
+import { NON_ENGINE_FEATURES } from "../generator.js";
 
 const CHAIN_TO_EXECUTOR = {
   Ethereum: "AaveGovernanceV2.SHORT_EXECUTOR",
@@ -16,6 +18,7 @@ const CHAIN_TO_EXECUTOR = {
   Arbitrum: "AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR",
   Metis: "AaveGovernanceV2.METIS_BRIDGE_EXECUTOR",
   Avalanche: "0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian",
+  Base: "AaveGovernanceV2.BASE_BRIDGE_EXECUTOR",
 };
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -25,6 +28,7 @@ const CHAIN_TO_CHAIN_OBJECT = {
   Arbitrum: arbitrum,
   Avalanche: avalanche,
   Metis: metis,
+  Base: base,
 };
 
 export const getBlock = async (chain) => {
@@ -34,15 +38,30 @@ export const getBlock = async (chain) => {
   }).getBlockNumber();
 };
 
-export const testTemplate = async ({
-  protocolVersion,
-  chain,
-  title,
-  author,
-  snapshot,
-  discussion,
-  contractName,
-}) => `// SPDX-License-Identifier: MIT
+function renderFlashBorrowerTest({ chain, protocolVersion }) {
+  return `function test_isFlashBorrower() external {
+    GovHelpers.executePayload(
+      vm,
+      address(proposal),
+      ${CHAIN_TO_EXECUTOR[chain]}
+    );
+    bool isFlashBorrower = Aave${protocolVersion}${chain}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
+    assertEq(isFlashBorrower, true);
+  }`;
+}
+
+export const testTemplate = async (options) => {
+  const {
+    protocolVersion,
+    chain,
+    title,
+    author,
+    snapshot,
+    discussion,
+    contractName,
+    features,
+  } = options;
+  let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
@@ -57,14 +76,17 @@ import {${contractName}} from './${contractName}.sol';
  * command: make test-contract filter=${contractName}
  */
 contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
+  ${contractName} internal proposal;
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('${getAlias(chain)}'), ${await getBlock(
-  chain
-)});
+    chain
+  )});
+   proposal = new ${contractName}();
   }
 
   function testProposalExecution() public {
-    ${contractName} proposal = new ${contractName}();
+
 
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'pre${contractName}',
@@ -83,5 +105,9 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
     );
 
     diffReports('pre${contractName}', 'post${contractName}');
-  }
-}`;
+  }`;
+  if (features.includes(NON_ENGINE_FEATURES.flashBorrower.value))
+    template += renderFlashBorrowerTest(options);
+  template += `}`;
+  return template;
+};
