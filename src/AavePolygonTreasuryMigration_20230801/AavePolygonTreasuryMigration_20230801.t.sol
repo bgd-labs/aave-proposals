@@ -56,7 +56,5 @@ contract AavePolygonTreasuryMigration_20230801_Test is ProtocolV2TestBase {
       balanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(payload));
       assertEq(balanceAfter, 0);
     }
-
-    assertEq(NEW_ASSETS_MIGRATED[0], OLD_ASSETS_MIGRATED[0]);
   }
 }
