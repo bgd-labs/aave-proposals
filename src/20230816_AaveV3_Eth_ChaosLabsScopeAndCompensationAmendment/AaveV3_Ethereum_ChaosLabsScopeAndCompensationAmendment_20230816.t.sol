@@ -40,7 +40,6 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
   function testProposalExecution() public {
     // Capturing next Stream IDs before proposal is executed
     uint256 nextCollectorStreamID = STREAMABLE_AAVE_COLLECTOR.getNextStreamId();
-    uint256 initialChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
@@ -67,12 +66,25 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
     }
 
     // Checking if Chaos can withdraw from streams
+    uint256 initialChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
     vm.startPrank(CHAOS_LABS_TREASURY);
-    vm.warp(block.timestamp + STREAM_DURATION + 1 days);
+    vm.warp(block.timestamp + (STREAM_DURATION / 2));
+    uint256 firstPayment = actualAmountaUSDT / 2;
 
-    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, actualAmountaUSDT);
-    uint256 nextChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
-    assertEq(initialChaosUSDTBalance, nextChaosUSDTBalance - actualAmountaUSDT);
+    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, firstPayment);
+
+    uint256 halfChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
+    assertEq(initialChaosUSDTBalance, halfChaosUSDTBalance - (actualAmountaUSDT / 2));
+
+    vm.warp(block.timestamp + (STREAM_DURATION / 2) + 1 days);
+    uint256 midStreamChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
+    uint256 secondPayment = actualAmountaUSDT - firstPayment;
+
+    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, actualAmountaUSDT / 2);
+    uint256 endChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
+
+    assertEq(midStreamChaosUSDTBalance, endChaosUSDTBalance - secondPayment);
+
     vm.stopPrank();
   }
 }
