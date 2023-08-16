@@ -21,9 +21,9 @@ pragma solidity ^0.8.0;
 
 import 'aave-helpers/v2-config-engine/AaveV2PayloadPolygon.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
-import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
+import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-import {IMigrationHelper} from './IMigrationHelper.sol';
+import {IMigrationHelper} from 'aave-address-book/common/IMigrationHelper.sol';
 
 /**
  * @dev Redeem aTokens from Aave v2 Polygon and deposit the underlying assets into Aave v3 Polygon. 
@@ -34,7 +34,7 @@ import {IMigrationHelper} from './IMigrationHelper.sol';
 contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
 
   function _postExecute() internal override {
-    IMigrationHelper helper = IMigrationHelper(AaveV2Polygon.MIGRATION_HELPER);
+    IMigrationHelper MIGRATION_HELPER = IMigrationHelper(AaveV2Polygon.MIGRATION_HELPER);
     address COLLECTOR = address(AaveV2Polygon.COLLECTOR);
 
     address[] memory ASSETS_TO_MIGRATE = new address[](10);
@@ -56,7 +56,7 @@ contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
     uint256 i = 0;
 
     for(;i < ASSETS_TO_MIGRATE.length;) {
-        address aToken = helper.aTokens(ASSETS_TO_MIGRATE[i]);
+        address aToken = MIGRATION_HELPER.aTokens(ASSETS_TO_MIGRATE[i]);
         uint256 amount = IERC20(aToken).balanceOf(COLLECTOR);
         AaveV2Polygon.COLLECTOR.transfer(aToken, address(this), amount);
         IERC20(aToken).approve(AaveV2Polygon.MIGRATION_HELPER, amount);
@@ -65,13 +65,24 @@ contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
         }
     }
 
-    helper.migrate(ASSETS_TO_MIGRATE, POSITIONS_TO_REPAY, PERMITS, CREDIT_DELEGATION_PERMITS);
+    MIGRATION_HELPER.migrate(ASSETS_TO_MIGRATE, POSITIONS_TO_REPAY, PERMITS, CREDIT_DELEGATION_PERMITS);
 
-    for(i = 0; i < ASSETS_TO_MIGRATE.length;) {
-        address aToken = helper.aTokens(ASSETS_TO_MIGRATE[i]);
-        IERC20(aToken).transfer(
+    address[] memory NEW_ASSETS_MIGRATED = new address[](10);
+    NEW_ASSETS_MIGRATED[0] = AaveV3PolygonAssets.DAI_A_TOKEN;
+    NEW_ASSETS_MIGRATED[1] = AaveV3PolygonAssets.USDC_A_TOKEN;
+    NEW_ASSETS_MIGRATED[2] = AaveV3PolygonAssets.USDT_A_TOKEN;
+    NEW_ASSETS_MIGRATED[3] = AaveV3PolygonAssets.WBTC_A_TOKEN;
+    NEW_ASSETS_MIGRATED[4] = AaveV3PolygonAssets.WETH_A_TOKEN;
+    NEW_ASSETS_MIGRATED[5] = AaveV3PolygonAssets.WMATIC_A_TOKEN;
+    NEW_ASSETS_MIGRATED[6] = AaveV3PolygonAssets.BAL_A_TOKEN;
+    NEW_ASSETS_MIGRATED[7] = AaveV3PolygonAssets.CRV_A_TOKEN;
+    NEW_ASSETS_MIGRATED[8] = AaveV3PolygonAssets.GHST_A_TOKEN;
+    NEW_ASSETS_MIGRATED[9] = AaveV3PolygonAssets.LINK_A_TOKEN;
+
+    for(i = 0; i < NEW_ASSETS_MIGRATED.length;) {
+        IERC20(NEW_ASSETS_MIGRATED[i]).transfer(
             COLLECTOR,
-            IERC20(aToken).balanceOf(address(this))
+            IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(this))
         );
         unchecked {
             i++;

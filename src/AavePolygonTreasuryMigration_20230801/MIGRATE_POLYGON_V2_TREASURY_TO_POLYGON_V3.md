@@ -31,11 +31,11 @@ A list of relevant links like for this proposal:
 
 * [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x1b816c12b6f547a1982198ffd0e36412390b05828b560c9edee4e8a6903c4882)
 
-* [Test Cases](XXX)
+* [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AavePolygonTreasuryMigration_20230801/AavePolygonTreasuryMigration_20230801.t.sol)
 
-* [Payload Implementation](XXX)
+* [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AavePolygonTreasuryMigration_20230801/AavePolygonTreasuryMigration_20230801.sol)
 
-* [Deployed Contracts](XXX)
+* [Deployed Contracts](TODO)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

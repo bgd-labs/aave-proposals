@@ -4,12 +4,20 @@ import {PolygonScript, EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AavePolygonTreasuryMigration_20230801} from './AavePolygonTreasuryMigration_20230801.sol';
 
+/**
+ * @dev Deploy AavePolygonTreasuryMigration_20230801
+ * command: make deploy-ledger contract=src/AavePolygonTreasuryMigration_20230801/DeployTreasuryMigration.s.sol:DeployPolygonV2TreasuryMigrationPayload chain=polygon
+ */
 contract DeployPolygonV2TreasuryMigrationPayload is PolygonScript {
   function run() external broadcast {
     new AavePolygonTreasuryMigration_20230801();
   }
 }
 
+/**
+ * @dev Create Proposal
+ * command: make deploy-ledger contract=src/AavePolygonTreasuryMigration_20230801/DeployTreasuryMigration.s.sol:PolygonV2RatesUpdatesPayloadProposal chain=mainnet
+ */
 contract PolygonV2RatesUpdatesPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
