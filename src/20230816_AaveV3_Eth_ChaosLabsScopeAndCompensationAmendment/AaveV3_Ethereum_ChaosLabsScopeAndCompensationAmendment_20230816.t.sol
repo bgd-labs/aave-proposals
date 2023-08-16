@@ -1,0 +1,78 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import 'forge-std/Test.sol';
+import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
+import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
+import {AaveV2Ethereum, AaveV2EthereumAssets, ICollector} from 'aave-address-book/AaveV2Ethereum.sol';
+import {IStreamable} from 'aave-address-book/AaveMisc.sol';
+import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
+import {AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816} from './AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816.sol';
+
+/**
+ * @dev Test for AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816
+ * command: make test-contract filter=AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816
+ */
+contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
+  ProtocolV3TestBase
+{
+  AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816 internal proposal;
+
+  IERC20 public constant AUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN);
+
+  ICollector public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
+  address public constant CHAOS_LABS_TREASURY = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
+
+  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR =
+    IStreamable(address(AaveV2Ethereum.COLLECTOR));
+
+  uint256 public constant STREAM_AMOUNT = 400_000e6;
+  uint256 public constant STREAM_DURATION = 80 days;
+
+  uint256 public constant actualAmountaUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
+
+  function setUp() public {
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17926515);
+    proposal = new AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816();
+  }
+
+  function testProposalExecution() public {
+    // Capturing next Stream IDs before proposal is executed
+    uint256 nextCollectorStreamID = STREAMABLE_AAVE_COLLECTOR.getNextStreamId();
+    uint256 initialChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
+
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
+
+    // Checking if the streams have been created properly
+    // scoping to avoid the "stack too deep" error
+    {
+      (
+        address senderUSDT,
+        address recipientUSDT,
+        uint256 depositUSDT,
+        address tokenAddressUSDT,
+        uint256 startTimeUSDT,
+        uint256 stopTimeUSDT,
+        uint256 remainingBalanceUSDT,
+
+      ) = STREAMABLE_AAVE_COLLECTOR.getStream(nextCollectorStreamID);
+
+      assertEq(senderUSDT, address(AAVE_COLLECTOR));
+      assertEq(recipientUSDT, CHAOS_LABS_TREASURY);
+      assertEq(depositUSDT, actualAmountaUSDT);
+      assertEq(tokenAddressUSDT, address(AUSDT));
+      assertEq(stopTimeUSDT - startTimeUSDT, STREAM_DURATION);
+      assertEq(remainingBalanceUSDT, actualAmountaUSDT);
+    }
+
+    // Checking if Chaos can withdraw from streams
+    vm.startPrank(CHAOS_LABS_TREASURY);
+    vm.warp(block.timestamp + STREAM_DURATION + 1 days);
+
+    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, actualAmountaUSDT);
+    uint256 nextChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
+    assertEq(initialChaosUSDTBalance, nextChaosUSDTBalance - actualAmountaUSDT);
+    vm.stopPrank();
+  }
+}
