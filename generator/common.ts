@@ -9,6 +9,7 @@ export const AVAILABLE_CHAINS = [
   'Fantom',
   'Harmony',
   'Metis',
+  'Base',
 ] as const;
 
 export const CHAIN_TO_EXECUTOR = {
@@ -20,7 +21,14 @@ export const CHAIN_TO_EXECUTOR = {
   Avalanche: '0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian',
 } as const;
 
-export const CHAINS_WITH_GOV_SUPPORT = ['Ethereum', 'Optimism', 'Arbitrum', 'Polygon', 'Metis'];
+export const CHAINS_WITH_GOV_SUPPORT = [
+  'Ethereum',
+  'Optimism',
+  'Arbitrum',
+  'Polygon',
+  'Metis',
+  'Base',
+];
 
 export const SHORT_CHAINS = {
   Ethereum: 'Eth',
@@ -31,6 +39,7 @@ export const SHORT_CHAINS = {
   Avalanche: 'Ava',
   Metis: 'Met',
   Harmony: 'Har',
+  Base: 'Bas',
 };
 
 export function getDate() {

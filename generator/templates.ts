@@ -11,6 +11,7 @@ pragma solidity ^0.8.0;\n\n`;
 export function generateScript(options, baseName) {
   const fileName = generateContractName(options);
   let template = pragma;
+
   // generate imports
   template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
   template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]

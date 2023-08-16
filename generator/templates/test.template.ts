@@ -1,5 +1,5 @@
 import {createPublicClient, http} from 'viem';
-import {arbitrum, avalanche, mainnet, metis, optimism, polygon} from 'viem/chains';
+import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
 import {CHAIN_TO_EXECUTOR, getAlias} from '../common';
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -9,6 +9,7 @@ const CHAIN_TO_CHAIN_OBJECT = {
   Arbitrum: arbitrum,
   Avalanche: avalanche,
   Metis: metis,
+  Base: base,
 };
 
 export const getBlock = async (chain) => {
