@@ -35,7 +35,6 @@ contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
 
   function _postExecute() internal override {
     IMigrationHelper MIGRATION_HELPER = IMigrationHelper(AaveV2Polygon.MIGRATION_HELPER);
-    address COLLECTOR = address(AaveV2Polygon.COLLECTOR);
 
     address[] memory ASSETS_TO_MIGRATE = new address[](10);
     ASSETS_TO_MIGRATE[0] = AaveV2PolygonAssets.DAI_UNDERLYING;
@@ -57,7 +56,7 @@ contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
 
     for(;i < ASSETS_TO_MIGRATE.length;) {
         address aToken = MIGRATION_HELPER.aTokens(ASSETS_TO_MIGRATE[i]);
-        uint256 amount = IERC20(aToken).balanceOf(COLLECTOR);
+        uint256 amount = IERC20(aToken).balanceOf(address(AaveV2Polygon.COLLECTOR));
         AaveV2Polygon.COLLECTOR.transfer(aToken, address(this), amount);
         IERC20(aToken).approve(AaveV2Polygon.MIGRATION_HELPER, amount);
         unchecked {
@@ -81,7 +80,7 @@ contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
 
     for(i = 0; i < NEW_ASSETS_MIGRATED.length;) {
         IERC20(NEW_ASSETS_MIGRATED[i]).transfer(
-            COLLECTOR,
+            address(AaveV3Polygon.COLLECTOR),
             IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(this))
         );
         unchecked {

@@ -13,11 +13,8 @@ This AIP shall redeem aTokens from Aave v2 Polygon and deposit the underlying as
 On Polygon, Aave DAO is currently holding funds on the Aave v2 deployment and also some small unproductive allocations within the Treasury. This AIP will improve DAOs Treasury performance by improving the overall capital efficiency and yield being generated.
 
 As part of broader v2 to v3 migration effort, this AIP shall implement the following:
-* Claim Aave Paraswap fees to Collector via the Aave Paraswap Claimer
 * Redeem Assets from Aave v2
 * Deposit Assets from Aave v2 into v3
-
-There are several small unproductive holdings within the Polygon Treasury. These assets will also be deposited into Aave v3 to earn yield.
 
 * Deposit Assets held in Treasury into Aave v3
 
