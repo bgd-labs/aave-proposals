@@ -5,9 +5,11 @@ discussions: https://governance.aave.com/t/bgd-rescue-mission-phase-2-3/14309
 ---
 
 ## Simple Summary
+
 This proposal outlines the final stages of the "Rescue Mission" for tokens erroneously sent to Aave ecosystem smart contracts. Phase 2 and 3 amalgamates the efforts of both phases into a single proposal, covering tokens locked in Aave v1, v2, v2 amm and v3 contracts (across various networks) provided their aggregated value exceeds $1,000. The proposal aims to release these locked tokens which the users can claim by interacting with the Rescue Mission smart contract, or via the utility interface available on https://rescue.bgdlabs.com/
 
 ## Motivation
+
 As an item part of the Aave <> BGD engagement Phase 1 described here, the rescue mission was created to support users of the Aave ecosystem who sent by mistake the tokens to the wrong smart contract addresses. While Phase 1 of the Rescue Mission has been completed, phases 2 and 3 remained pending. After evaluating the necessary interactions for both phases, it was decided to present them as a unified proposal.
 
 The following table represents the tokens to rescue from various aave ecosystem contracts:
@@ -29,7 +31,6 @@ The following table represents the tokens to rescue from various aave ecosystem 
 | [USDT.e](https://snowtrace.io/address/0xc7198437980c041c805a1edcba50c1ce5db95118)            | [AAVE V2 POOL](https://snowtrace.io/address/0x4F01AeD16D97E3aB5ab2B501154DC9bb0F1A5A2C)            | 1772.206585             | AVALANCHE |
 | [USDC.e](https://snowtrace.io/address/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664)            | [AAVE V2 POOL](https://snowtrace.io/address/0x4F01AeD16D97E3aB5ab2B501154DC9bb0F1A5A2C)            | 2522.408895             | AVALANCHE |
 | [USDC](https://optimistic.etherscan.io/address/0x7f5c764cbc14f9669b88837ca1490cca17c31607)   | [AAVE V3 POOL](https://optimistic.etherscan.io/address/0x794a61358D6845594F94dc1DB02A252b5b4814aD) | 44428.421035            | OPTIMISM  |
-
 
 ## Specification
 

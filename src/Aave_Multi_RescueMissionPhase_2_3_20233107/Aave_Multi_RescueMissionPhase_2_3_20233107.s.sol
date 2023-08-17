@@ -14,6 +14,12 @@ contract CreateProposal is EthereumScript {
     payloads[0] = GovHelpers.buildMainnet(address(0)); // TODO:
     payloads[1] = GovHelpers.buildPolygon(address(0)); // TODO:
     payloads[2] = GovHelpers.buildOptimism(address(0)); // TODO:
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/AaveV2_Multi_RescueMissionPhase_2_3_20233107/RescueMissionPhase_2_3.md'));
+    GovHelpers.createProposal(
+      payloads,
+      GovHelpers.ipfsHashFile(
+        vm,
+        'src/AaveV2_Multi_RescueMissionPhase_2_3_20233107/RescueMissionPhase_2_3.md'
+      )
+    );
   }
 }
