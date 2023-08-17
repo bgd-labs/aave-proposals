@@ -1,6 +1,4 @@
-import {ENGINE_FLAGS} from './types';
-
-export const AVAILABLE_VERSIONS = ['V2', 'V3'] as const;
+import {AVAILABLE_VERSIONS, ENGINE_FLAGS} from './types';
 
 export const AVAILABLE_CHAINS = [
   'Ethereum',
@@ -58,7 +56,7 @@ export function getDate() {
  * @returns
  */
 export function generateFolderName(options) {
-  return `${getDate()}_${options.protocolVersion === 'V2' ? 'AaveV2' : 'AaveV3'}_${
+  return `${getDate()}_${options.protocolVersion === AVAILABLE_VERSIONS.V2 ? 'AaveV2' : 'AaveV3'}_${
     options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : 'Multi'
   }_${options.shortName}`;
 }
@@ -70,7 +68,7 @@ export function generateFolderName(options) {
  * @returns
  */
 export function generateContractName(options, chain?) {
-  let name = options.protocolVersion === 'V2' ? 'AaveV2' : 'AaveV3';
+  let name = options.protocolVersion === AVAILABLE_VERSIONS.V2 ? 'AaveV2' : 'AaveV3';
   if (chain) name += `_${chain}`;
   name += `_${options.shortName}`;
   name += `_${getDate()}`;

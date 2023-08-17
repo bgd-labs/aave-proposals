@@ -39,3 +39,5 @@ export interface FeatureModule<T extends {}> {
 export const ENGINE_FLAGS = {
   KEEP_CURRENT: 'KEEP_CURRENT',
 } as const;
+
+export const AVAILABLE_VERSIONS = {V2: 'V2', V3: 'V3'} as const;

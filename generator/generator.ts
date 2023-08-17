@@ -1,17 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import {Command, Option} from 'commander';
-import {
-  AVAILABLE_CHAINS,
-  AVAILABLE_VERSIONS,
-  generateContractName,
-  generateFolderName,
-  pascalCase,
-} from './common';
+import {AVAILABLE_CHAINS, generateContractName, generateFolderName, pascalCase} from './common';
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
 import {input, checkbox, select, confirm} from '@inquirer/prompts';
-import {CodeArtifacts, DEPENDENCIES, FeatureModule, Options} from './types';
+import {AVAILABLE_VERSIONS, CodeArtifacts, DEPENDENCIES, FeatureModule, Options} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdates';
 import {rateUpdates} from './features/rateUpdates';
@@ -32,7 +26,7 @@ program
   .addOption(new Option('-f, --force', 'force creation (might overwrite existing files)'))
   .addOption(new Option('-cfg, --configEngine', 'extends config engine'))
   .addOption(new Option('-ch, --chains <letters...>').choices(AVAILABLE_CHAINS))
-  .addOption(new Option('-pv, --protocolVersion <string>').choices(AVAILABLE_VERSIONS))
+  .addOption(new Option('-pv, --protocolVersion <string>').choices(Object.keys(AVAILABLE_VERSIONS)))
   .addOption(new Option('-t, --title <string>', 'aip title'))
   .addOption(new Option('-a, --author <string>', 'author'))
   .addOption(new Option('-d, --discussion <string>', 'forum link'))
@@ -59,7 +53,9 @@ while (!options.chains?.length === true) {
 if (!options.protocolVersion) {
   options.protocolVersion = await select({
     message: 'Protocol version this proposal targets',
-    choices: AVAILABLE_VERSIONS.map((v) => ({name: v, value: v})).reverse(),
+    choices: Object.keys(AVAILABLE_VERSIONS)
+      .map((v) => ({name: v, value: v}))
+      .reverse(),
     // default: "V3", // default on select not currently supported which is why we reverse
   });
 }
@@ -143,18 +139,19 @@ export const FEATURES = {
   },
 };
 
-if (options.protocolVersion === 'V2') {
+if (options.protocolVersion === AVAILABLE_VERSIONS.V2) {
   options.features = await checkbox({
     message: 'What do you want to do?',
     choices: [FEATURES.rateStrategiesUpdates, FEATURES.others],
   });
 }
-if (options.protocolVersion === 'V3') {
+if (options.protocolVersion === AVAILABLE_VERSIONS.V3) {
   options.features = await checkbox({
     message: 'What do you want to do?',
     choices: [
       FEATURES.rateStrategiesUpdates,
-      FEATURES.capsUpdate,
+      FEATURES.capsUpdates,
+      FEATURES.collateralUpdates,
       FEATURES.flashBorrower,
       FEATURES.others,
     ],

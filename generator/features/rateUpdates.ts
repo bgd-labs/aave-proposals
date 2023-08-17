@@ -1,5 +1,11 @@
 import {confirm, input} from '@inquirer/prompts';
-import {CodeArtifacts, DEPENDENCIES, ENGINE_FLAGS, FeatureModule} from '../types';
+import {
+  AVAILABLE_VERSIONS,
+  CodeArtifacts,
+  DEPENDENCIES,
+  ENGINE_FLAGS,
+  FeatureModule,
+} from '../types';
 import {jsPercentToSol, numberOrKeepCurrent, transformPercent} from '../common';
 
 type RateUpdate = {
@@ -118,7 +124,7 @@ export const rateUpdates: FeatureModule<RateUpdates> = {
               cfg[chain].length
             });
             ${
-              opt.protocolVersion === 'V2'
+              opt.protocolVersion === AVAILABLE_VERSIONS.V2
                 ? cfg[chain]
                     .map(
                       (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
