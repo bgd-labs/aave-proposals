@@ -3,12 +3,10 @@ import {
   generateContractName,
   generateFolderName,
   getAlias,
-} from './common';
+  pragma,
+} from '../common';
 
-const pragma = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;\n\n`;
-
-export function generateScript(options, baseName) {
+export function generateScript(options, baseFolder) {
   const fileName = generateContractName(options);
   let template = pragma;
 
@@ -32,7 +30,7 @@ export function generateScript(options, baseName) {
 
       return `/**
  * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${baseName}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
+ * command: make deploy-ledger contract=src/${baseFolder}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
         chain
       )}
  */
@@ -69,43 +67,4 @@ ${supportedChains
   }
 }`;
   return template;
-}
-
-export function generateAIP(options) {
-  return `---
-title: ${`"${options.title}"` || 'TODO'}
-author: ${`"${options.author}"` || 'TODO'}
-discussions: ${`"${options.discussion}"` || 'TODO'}
----
-
-## Simple Summary
-
-## Motivation
-
-## Specification
-
-## References
-
-- Implementation: ${options.chains
-    .map(
-      (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
-          options
-        )}/${generateContractName(options, chain)}.sol)`
-    )
-    .join(', ')}
-- Tests: ${options.chains
-    .map(
-      (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
-          options
-        )}/${generateContractName(options, chain)}.t.sol)`
-    )
-    .join(', ')}
-- [Snapshot](${options.snapshot || 'TODO'})
-- [Discussion](${options.discussion || 'TODO'})
-
-## Copyright
-
-Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).\n`;
 }

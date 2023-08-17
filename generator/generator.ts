@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import {Command, Option} from 'commander';
-import {generateAIP, generateScript} from './templates';
 import {
   AVAILABLE_CHAINS,
   AVAILABLE_VERSIONS,
@@ -17,6 +16,8 @@ import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdate';
 import {rateUpdates} from './features/rateUpdates';
 import * as prettier from 'prettier';
+import {generateScript} from './templates/script.template';
+import {generateAIP} from './templates/aip.template';
 
 const configFile = await prettier.resolveConfigFile();
 const program = new Command();

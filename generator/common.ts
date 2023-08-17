@@ -112,3 +112,6 @@ export function jsPercentToSol(value: string) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
   return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
 }
+
+export const pragma = `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;\n\n`;
