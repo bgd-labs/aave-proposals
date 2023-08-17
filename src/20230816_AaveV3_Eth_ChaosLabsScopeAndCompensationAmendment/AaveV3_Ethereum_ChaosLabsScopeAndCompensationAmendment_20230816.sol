@@ -15,7 +15,7 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816 is
 {
   address public constant CHAOS_LABS_TREASURY = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
   uint256 public constant STREAM_AMOUNT = 400_000e6;
-  uint256 public constant STREAM_DURATION = 80 days; // Aug 19th 2023 - Nov 7th 2023
+  uint256 public constant STREAM_DURATION = 77 days; // Aug 22th 2023 - Nov 7th 2023
   uint256 public constant ACTUAL_STREAM_AMOUNT_A_USDT =
     (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
