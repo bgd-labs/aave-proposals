@@ -1,6 +1,7 @@
 import {createPublicClient, http} from 'viem';
 import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
-import {CHAIN_TO_EXECUTOR, getAlias} from '../common';
+import {CHAIN_TO_EXECUTOR, generateContractName, getAlias} from '../common';
+import {Options} from '../types';
 
 const CHAIN_TO_CHAIN_OBJECT = {
   Ethereum: mainnet,
@@ -19,9 +20,9 @@ export const getBlock = async (chain) => {
   }).getBlockNumber();
 };
 
-export const testTemplate = async (options, artifacts) => {
-  const {protocolVersion, chain, title, author, snapshot, discussion, contractName, features} =
-    options;
+export const testTemplate = async (options: Options, chain, artifacts) => {
+  const {protocolVersion, title, author, snapshot, discussion, features} = options;
+  const contractName = generateContractName(options, chain);
 
   const functions = artifacts
     .map((artifact) => artifact[chain].test?.fn)

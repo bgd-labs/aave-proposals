@@ -1,6 +1,7 @@
-import {CodeArtifacts, DEPENDENCIES} from '../types';
+import {generateContractName} from '../common';
+import {CodeArtifacts, DEPENDENCIES, Options} from '../types';
 
-function buildImport(options, chain, dependencies: DEPENDENCIES[]) {
+function buildImport(options: Options, chain, dependencies: DEPENDENCIES[]) {
   let template = '';
   if (dependencies.includes(DEPENDENCIES.Engine)) {
     template += `import {Aave${
@@ -22,9 +23,10 @@ function buildImport(options, chain, dependencies: DEPENDENCIES[]) {
   return template;
 }
 
-export const proposalTemplate = (options, artifacts: CodeArtifacts[]) => {
-  const {protocolVersion, chain, title, author, snapshot, discussion, contractName, features} =
-    options;
+export const proposalTemplate = (options: Options, chain, artifacts: CodeArtifacts[]) => {
+  const {protocolVersion, title, author, snapshot, discussion, features} = options;
+  const contractName = generateContractName(options, chain);
+
   const dependencies = [
     ...new Set(
       artifacts

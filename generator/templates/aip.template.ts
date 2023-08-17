@@ -1,6 +1,7 @@
 import {generateContractName, generateFolderName} from '../common';
+import {Options} from '../types';
 
-export function generateAIP(options) {
+export function generateAIP(options: Options) {
   return `---
 title: ${`"${options.title}"` || 'TODO'}
 author: ${`"${options.author}"` || 'TODO'}

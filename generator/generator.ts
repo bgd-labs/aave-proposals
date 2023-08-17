@@ -163,31 +163,11 @@ if (fs.existsSync(baseFolder) && !options.force) {
     const contractName = generateContractName(options, chain);
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.sol`),
-      prettier.format(
-        proposalTemplate(
-          {
-            ...options,
-            contractName,
-            chain,
-          },
-          artifacts
-        ),
-        configFile
-      )
+      prettier.format(proposalTemplate(options, chain, artifacts), configFile)
     );
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.t.sol`),
-      prettier.format(
-        await testTemplate(
-          {
-            ...options,
-            contractName,
-            chain,
-          },
-          artifacts
-        ),
-        configFile
-      )
+      prettier.format(await testTemplate(options, chain, artifacts), configFile)
     );
   }
 
@@ -195,7 +175,7 @@ if (fs.existsSync(baseFolder) && !options.force) {
 
   fs.writeFileSync(
     path.join(baseFolder, `${generateContractName(options)}.s.sol`),
-    prettier.format(generateScript(options, baseName), configFile)
+    prettier.format(generateScript(options, baseFolder), configFile)
   );
   fs.writeFileSync(
     path.join(baseFolder, `${options.shortName}.md`),

@@ -1,12 +1,7 @@
-import {
-  CHAINS_WITH_GOV_SUPPORT,
-  generateContractName,
-  generateFolderName,
-  getAlias,
-  pragma,
-} from '../common';
+import {CHAINS_WITH_GOV_SUPPORT, generateContractName, getAlias, pragma} from '../common';
+import {Options} from '../types';
 
-export function generateScript(options, baseFolder) {
+export function generateScript(options: Options, baseFolder) {
   const fileName = generateContractName(options);
   let template = pragma;
 
@@ -48,7 +43,7 @@ contract Deploy${chain} is ${chain}Script {
   // generate proposal creation script
   template += `/**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/${baseName}/${baseName}.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/${baseFolder}/${fileName}.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
@@ -61,9 +56,9 @@ ${supportedChains
       }(address(0));`
   )
   .join('\n')}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${generateFolderName(
-      options
-    )}/${options.shortName}.md'));
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${baseFolder}/${
+    options.shortName
+  }.md'));
   }
 }`;
   return template;
