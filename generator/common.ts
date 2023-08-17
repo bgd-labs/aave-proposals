@@ -18,6 +18,7 @@ export const CHAIN_TO_EXECUTOR = {
   Optimism: 'AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR',
   Arbitrum: 'AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR',
   Metis: 'AaveGovernanceV2.METIS_BRIDGE_EXECUTOR',
+  Base: 'AaveGovernanceV2.BASE_BRIDGE_EXECUTOR',
   Avalanche: '0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian',
 } as const;
 
@@ -99,7 +100,7 @@ export function numberOrKeepCurrent(value) {
  */
 export function transformPercent(value: string) {
   if (value && !isNaN(Number(value))) {
-    return value.replace(/(?=(\d{2}$))/g, '.') + ' %';
+    return value.replace(/(?=(\d{2}$)+(?!\d))/g, '.') + ' %';
   }
   return value;
 }
@@ -112,7 +113,7 @@ export function transformPercent(value: string) {
 export function jsPercentToSol(value: string, bpsToRay?: boolean) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
   if (bpsToRay) return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
-  return value.replace(/(?=(\d{2}$))/g, '_');
+  return value.replace(/(?=(\d{2}$)+(?!\d)))/g, '_');
 }
 
 /**
