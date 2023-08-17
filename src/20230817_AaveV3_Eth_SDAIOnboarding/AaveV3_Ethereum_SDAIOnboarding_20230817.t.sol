@@ -33,6 +33,18 @@ contract AaveV3_Ethereum_SDAIOnboarding_20230817_Test is ProtocolV3TestBase {
       AaveV3Ethereum.POOL
     );
 
+    e2eTestAsset(
+        AaveV3Ethereum.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.DAI_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING)
+        );
+
+    e2eTestAsset(
+        AaveV3Ethereum.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.WETH_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING)
+        );
+     
     diffReports(
       'preAaveV3_Ethereum_SDAIOnboarding_20230817',
       'postAaveV3_Ethereum_SDAIOnboarding_20230817'

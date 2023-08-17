@@ -35,15 +35,17 @@ contract AaveV2_Ethereum_DAIParamsUpdates_20230817_Test is ProtocolV2TestBase {
       AaveV2Ethereum.POOL
     );
 
+    e2eTestAsset(
+        AaveV2Ethereum.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.DAI_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV2EthereumAssets.USDC_UNDERLYING)
+        );
+
     diffReports(
       'preTestAaveV2_Ethereum_DAIParamsUpdates_20230817',
       'postTestAaveV2_Ethereum_DAIParamsUpdates_20230817'
     );
 
-    address[] memory assetsChanged = new address[](1);
-    assetsChanged[0] = AaveV2EthereumAssets.DAI_UNDERLYING;
-
-
-    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, AaveV2EthereumAssets.DAI_UNDERLYING);
   }
 }
