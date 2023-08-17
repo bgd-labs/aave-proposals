@@ -1,6 +1,6 @@
 import {input, confirm} from '@inquirer/prompts';
 import {CodeArtifacts, DEPENDENCIES, ENGINE_FLAGS, FeatureModule} from '../types';
-import {numberOrKeepCurrent} from '../common';
+import {jsNumberToSol, numberOrKeepCurrent} from '../common';
 
 async function subCli(chain: string) {
   console.log(`Fetching information for CapsUpdates on ${chain}`);
@@ -9,13 +9,13 @@ async function subCli(chain: string) {
       // TODO: should be select, but npm package needs to be restructured a bit
       message: 'Which asset would you like to amend(type symbol)?',
     }),
-    borrowCap: await input({
-      message: 'New borrow cap',
+    supplyCap: await input({
+      message: 'New supply cap',
       default: ENGINE_FLAGS.KEEP_CURRENT,
       validate: numberOrKeepCurrent,
     }),
-    supplyCap: await input({
-      message: 'New supply cap',
+    borrowCap: await input({
+      message: 'New borrow cap',
       default: ENGINE_FLAGS.KEEP_CURRENT,
       validate: numberOrKeepCurrent,
     }),
@@ -31,8 +31,8 @@ async function subCli(chain: string) {
 type CapsUpdate = {
   [chain: string]: {
     asset: string;
-    borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | number;
-    supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | number;
+    borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
+    supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
   }[];
 };
 
@@ -58,16 +58,8 @@ export const capUpdates: FeatureModule<CapsUpdate> = {
               .map(
                 (cfg) => `capsUpdate[0] = IEngine.CapsUpdate({
                  asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
-                 supplyCap: ${
-                   cfg.supplyCap === ENGINE_FLAGS.KEEP_CURRENT
-                     ? 'EngineFlags.KEEP_CURRENT'
-                     : cfg.supplyCap
-                 },
-                 borrowCap: ${
-                   cfg.borrowCap === ENGINE_FLAGS.KEEP_CURRENT
-                     ? 'EngineFlags.KEEP_CURRENT'
-                     : cfg.borrowCap
-                 }
+                 supplyCap: ${jsNumberToSol(cfg.supplyCap)},
+                 borrowCap: ${jsNumberToSol(cfg.borrowCap)}
                });`
               )
               .join('\n')}

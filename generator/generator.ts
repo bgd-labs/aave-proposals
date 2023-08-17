@@ -11,7 +11,7 @@ import {
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
 import {input, checkbox, select, confirm} from '@inquirer/prompts';
-import {CodeArtifacts, FeatureModule, Options} from './types';
+import {CodeArtifacts, DEPENDENCIES, FeatureModule, Options} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdate';
 import {rateUpdates} from './features/rateUpdates';
@@ -112,8 +112,27 @@ export const FEATURES = {
     value: 'flashBorrower',
     module: flashBorrower,
   },
+  // this module is a workaround as long as we don't support all generator features
+  engine: {
+    name: 'Something different supported by config engine(but not the generator, yet)',
+    value: 'engine',
+    module: {
+      cli: async (opt) => {
+        return {};
+      },
+      build: (opt, cfg) => {
+        const response: CodeArtifacts = {};
+        for (const chain of opt.chains) {
+          response[chain] = {
+            code: {dependencies: [DEPENDENCIES.Engine]},
+          };
+        }
+        return response;
+      },
+    } as FeatureModule<{}>,
+  },
   others: {
-    name: 'Something different',
+    name: 'Something different not supported by configEngine',
     value: 'others',
   },
 };

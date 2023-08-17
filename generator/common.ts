@@ -107,13 +107,23 @@ export function transformPercent(value: string) {
 }
 
 /**
- * Transforms the output for nicer readability in sol: 1000 -> 10_00
+ * Transforms the % js output for nicer readability in sol: 1000 -> 10_00
  * @param value
  * @returns
  */
 export function jsPercentToSol(value: string) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
   return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
+}
+
+/**
+ * Transforms the number js output for nicer readability in sol: 1000000 -> 1_000_000
+ * @param value
+ * @returns
+ */
+export function jsNumberToSol(value: string) {
+  if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, '_');
 }
 
 export const pragma = `// SPDX-License-Identifier: MIT
