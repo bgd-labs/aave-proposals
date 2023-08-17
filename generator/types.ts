@@ -11,10 +11,16 @@ export interface Options {
   features: string[];
 }
 
+export enum DEPENDENCIES {
+  Addresses,
+  Assets,
+  Engine,
+}
+
 export type CodeArtifacts = {
   [chain: string]: {
     code?: {
-      imports?: string[];
+      dependencies?: DEPENDENCIES[];
       constants?: string[];
       fn?: string[];
       execute?: string[];
@@ -29,3 +35,7 @@ export interface FeatureModule<T extends {}> {
   cli: (opt: Options) => Promise<T>;
   build: (opt: Options, cfg: T) => CodeArtifacts;
 }
+
+export const ENGINE_FLAGS = {
+  KEEP_CURRENT: 'KEEP_CURRENT',
+} as const;

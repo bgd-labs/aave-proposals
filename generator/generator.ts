@@ -15,7 +15,10 @@ import {input, checkbox, select, confirm} from '@inquirer/prompts';
 import {CodeArtifacts, FeatureModule, Options} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdate';
+import {rateUpdates} from './features/rateUpdates';
+import * as prettier from 'prettier';
 
+const configFile = await prettier.resolveConfigFile();
 const program = new Command();
 
 program
@@ -94,6 +97,7 @@ export const FEATURES = {
   rateStrategiesUpdates: {
     name: 'RateStrategyUpdates',
     value: 'rateStrategiesUpdates',
+    module: rateUpdates,
   },
   capsUpdate: {
     name: 'CapsUpdate',
@@ -158,24 +162,30 @@ if (fs.existsSync(baseFolder) && !options.force) {
     const contractName = generateContractName(options, chain);
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.sol`),
-      proposalTemplate(
-        {
-          ...options,
-          contractName,
-          chain,
-        },
-        artifacts
+      prettier.format(
+        proposalTemplate(
+          {
+            ...options,
+            contractName,
+            chain,
+          },
+          artifacts
+        ),
+        configFile
       )
     );
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.t.sol`),
-      await testTemplate(
-        {
-          ...options,
-          contractName,
-          chain,
-        },
-        artifacts
+      prettier.format(
+        await testTemplate(
+          {
+            ...options,
+            contractName,
+            chain,
+          },
+          artifacts
+        ),
+        configFile
       )
     );
   }
@@ -184,7 +194,10 @@ if (fs.existsSync(baseFolder) && !options.force) {
 
   fs.writeFileSync(
     path.join(baseFolder, `${generateContractName(options)}.s.sol`),
-    generateScript(options, baseName)
+    prettier.format(generateScript(options, baseName), configFile)
   );
-  fs.writeFileSync(path.join(baseFolder, `${options.shortName}.md`), generateAIP(options));
+  fs.writeFileSync(
+    path.join(baseFolder, `${options.shortName}.md`),
+    prettier.format(generateAIP(options), configFile)
+  );
 }

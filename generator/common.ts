@@ -1,3 +1,5 @@
+import {ENGINE_FLAGS} from './types';
+
 export const AVAILABLE_VERSIONS = ['V2', 'V3'] as const;
 
 export const AVAILABLE_CHAINS = [
@@ -85,4 +87,28 @@ export function pascalCase(str) {
       return g1.toUpperCase() + g2;
     })
     .replace(/ /g, '');
+}
+
+export function numberOrKeepCurrent(value) {
+  if (value != ENGINE_FLAGS.KEEP_CURRENT && isNaN(value)) return 'Must be number or KEEP_CURRENT';
+  return true;
+}
+
+/**
+ * Transforms the input for nicer readability: 1000 -> 10.00 %
+ * @param value
+ * @returns
+ */
+export function transformPercent(value: string) {
+  return value.replace(/(?=(\d{2}$))/g, '.') + ' %';
+}
+
+/**
+ * Transforms the output for nicer readability in sol: 1000 -> 10_00
+ * @param value
+ * @returns
+ */
+export function jsPercentToSol(value: string) {
+  if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
+  return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
 }

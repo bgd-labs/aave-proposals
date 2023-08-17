@@ -1,10 +1,6 @@
 import {input, confirm} from '@inquirer/prompts';
-import {CodeArtifacts, FeatureModule} from '../types';
-
-function numberOrKeepCurrent(value) {
-  if (value != 'KEEP_CURRENT' && isNaN(value)) return 'Must be number or KEEP_CURRENT';
-  return true;
-}
+import {CodeArtifacts, DEPENDENCIES, ENGINE_FLAGS, FeatureModule} from '../types';
+import {numberOrKeepCurrent} from '../common';
 
 async function subCli(chain: string) {
   console.log(`Fetching information for CapsUpdates on ${chain}`);
@@ -15,12 +11,12 @@ async function subCli(chain: string) {
     }),
     borrowCap: await input({
       message: 'New borrow cap',
-      default: 'KEEP_CURRENT',
+      default: ENGINE_FLAGS.KEEP_CURRENT,
       validate: numberOrKeepCurrent,
     }),
     supplyCap: await input({
       message: 'New supply cap',
-      default: 'KEEP_CURRENT',
+      default: ENGINE_FLAGS.KEEP_CURRENT,
       validate: numberOrKeepCurrent,
     }),
   };
@@ -35,8 +31,8 @@ async function subCli(chain: string) {
 type CapsUpdate = {
   [chain: string]: {
     asset: string;
-    borrowCap: 'KEEP_CURRENT' | number;
-    supplyCap: 'KEEP_CURRENT' | number;
+    borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | number;
+    supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | number;
   }[];
 };
 
@@ -53,7 +49,7 @@ export const capUpdates: FeatureModule<CapsUpdate> = {
     for (const chain of opt.chains) {
       response[chain] = {
         code: {
-          imports: ['ASSETS', 'IENGINE'],
+          dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
           fn: [
             `function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
             IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](${cfg[chain].length});
@@ -63,10 +59,14 @@ export const capUpdates: FeatureModule<CapsUpdate> = {
                 (cfg) => `capsUpdate[0] = IEngine.CapsUpdate({
                  asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
                  supplyCap: ${
-                   cfg.supplyCap === 'KEEP_CURRENT' ? 'EngineFlags.KEEP_CURRENT' : cfg.supplyCap
+                   cfg.supplyCap === ENGINE_FLAGS.KEEP_CURRENT
+                     ? 'EngineFlags.KEEP_CURRENT'
+                     : cfg.supplyCap
                  },
                  borrowCap: ${
-                   cfg.borrowCap === 'KEEP_CURRENT' ? 'EngineFlags.KEEP_CURRENT' : cfg.borrowCap
+                   cfg.borrowCap === ENGINE_FLAGS.KEEP_CURRENT
+                     ? 'EngineFlags.KEEP_CURRENT'
+                     : cfg.borrowCap
                  }
                });`
               )

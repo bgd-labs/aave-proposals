@@ -47,12 +47,10 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('${getAlias(chain)}'), ${await getBlock(chain)});
-   proposal = new ${contractName}();
+    proposal = new ${contractName}();
   }
 
   function testProposalExecution() public {
-
-
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'pre${contractName}',
       Aave${protocolVersion}${chain}.POOL

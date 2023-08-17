@@ -1,5 +1,5 @@
 import {input} from '@inquirer/prompts';
-import {CodeArtifacts, FeatureModule} from '../types';
+import {CodeArtifacts, DEPENDENCIES, FeatureModule} from '../types';
 import {CHAIN_TO_EXECUTOR} from '../common';
 
 type FlashBorrower = {
@@ -26,6 +26,7 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
     for (const chain of opt.chains) {
       response[chain] = {
         code: {
+          dependencies: [DEPENDENCIES.Addresses],
           constants: [
             `address public constant NEW_FLASH_BORROWER = address(${cfg[chain].address});`,
           ],

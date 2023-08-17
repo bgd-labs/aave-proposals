@@ -1,9 +1,39 @@
-import {CodeArtifacts} from '../types';
+import {CodeArtifacts, DEPENDENCIES} from '../types';
 
-export const proposalTemplate = (
-  {protocolVersion, chain, title, author, snapshot, discussion, contractName, features},
-  artifacts: CodeArtifacts[]
-) => {
+function buildImport(options, chain, dependencies: DEPENDENCIES[]) {
+  let template = '';
+  if (dependencies.includes(DEPENDENCIES.Engine)) {
+    template += `import {Aave${
+      options.protocolVersion
+    }Payload${chain}, IEngine, Rates, EngineFlags} from 'aave-helpers/${options.protocolVersion.toLowerCase()}-config-engine/Aave${
+      options.protocolVersion
+    }Payload${chain}.sol';`;
+  } else {
+    template += `import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';\n`;
+  }
+  if (dependencies.includes(DEPENDENCIES.Addresses) && dependencies.includes(DEPENDENCIES.Assets)) {
+    template += `import {Aave${options.protocolVersion}${chain}, Aave${options.protocolVersion}${chain}Assets} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+  } else if (dependencies.includes(DEPENDENCIES.Addresses)) {
+    template += `import {Aave${options.protocolVersion}${chain}} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+  } else if (dependencies.includes(DEPENDENCIES.Assets)) {
+    template += `import {Aave${options.protocolVersion}${chain}Assets} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+  }
+
+  return template;
+}
+
+export const proposalTemplate = (options, artifacts: CodeArtifacts[]) => {
+  const {protocolVersion, chain, title, author, snapshot, discussion, contractName, features} =
+    options;
+  const dependencies = [
+    ...new Set(
+      artifacts
+        .map((a) => a[chain].code?.dependencies)
+        .flat()
+        .filter((f) => f)
+    ),
+  ];
+  const imports = buildImport(options, chain, dependencies as DEPENDENCIES[]);
   const constants = artifacts
     .map((artifact) => artifact[chain].code?.constants)
     .flat()
@@ -24,8 +54,7 @@ export const proposalTemplate = (
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
-import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} from 'aave-address-book/Aave${protocolVersion}${chain}.sol';
+${imports}
 
 /**
  * @title ${title || 'TODO'}
@@ -33,10 +62,22 @@ import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} fr
  * - Snapshot: ${snapshot || 'TODO'}
  * - Discussion: ${discussion || 'TODO'}
  */
-contract ${contractName} is IProposalGenericExecutor {
+contract ${contractName} is ${
+    dependencies.includes(DEPENDENCIES.Engine)
+      ? `Aave${options.protocolVersion}Payload${chain}`
+      : 'IProposalGenericExecutor'
+  } {
   ${constants}
 
-  ${innerExecute}
+  ${
+    dependencies.includes(DEPENDENCIES.Engine)
+      ? `function _preExecute() internal override {
+          ${innerExecute}
+         }`
+      : `function execute() external {
+          ${innerExecute}
+         }`
+  }
 
   ${functions}
 }`;
