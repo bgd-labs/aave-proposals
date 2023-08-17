@@ -28,7 +28,7 @@ async function subCli(chain: string) {
   return [answers];
 }
 
-type CapsUpdate = {
+type CapsUpdates = {
   [chain: string]: {
     asset: string;
     borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
@@ -36,9 +36,9 @@ type CapsUpdate = {
   }[];
 };
 
-export const capUpdates: FeatureModule<CapsUpdate> = {
+export const capUpdates: FeatureModule<CapsUpdates> = {
   async cli(opt) {
-    const response: CapsUpdate = {};
+    const response: CapsUpdates = {};
     for (const chain of opt.chains) {
       response[chain] = await subCli(chain);
     }
@@ -56,7 +56,7 @@ export const capUpdates: FeatureModule<CapsUpdate> = {
 
             ${cfg[chain]
               .map(
-                (cfg) => `capsUpdate[0] = IEngine.CapsUpdate({
+                (cfg, ix) => `capsUpdate[${ix}] = IEngine.CapsUpdate({
                  asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
                  supplyCap: ${jsNumberToSol(cfg.supplyCap)},
                  borrowCap: ${jsNumberToSol(cfg.borrowCap)}

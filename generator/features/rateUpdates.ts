@@ -124,31 +124,32 @@ export const rateUpdates: FeatureModule<RateUpdates> = {
                       (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
                   asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
                   params: Rates.RateStrategyParams({
-                    optimalUtilizationRate: ${jsPercentToSol(cfg.optimalUtilizationRate)},
-                    baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate)},
-                    variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1)},
-                    variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2)},
-                    stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1)},
-                    stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2)}
+                    optimalUtilizationRate: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
+                    baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate, true)},
+                    variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1, true)},
+                    variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2, true)},
+                    stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1, true)},
+                    stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)}
                   })
                 });`
                     )
                     .join('\n')
                 : cfg[chain]
                     .map(
-                      (cfg, ix) => `rateStrategies[0] = IEngine.RateStrategyUpdate({
+                      (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
                     asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
                     params: Rates.RateStrategyParams({
-                      optimalUsageRatio: ${jsPercentToSol(cfg.optimalUtilizationRate)},
-                      baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate)},
-                      variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1)},
-                      variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2)},
-                      stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1)},
-                      stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2)},
-                      baseStableRateOffset: ${jsPercentToSol(cfg.baseStableRateOffset!)},
-                      stableRateExcessOffset: ${jsPercentToSol(cfg.stableRateExcessOffset!)},
+                      optimalUsageRatio: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
+                      baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate, true)},
+                      variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1, true)},
+                      variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2, true)},
+                      stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1, true)},
+                      stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)},
+                      baseStableRateOffset: ${jsPercentToSol(cfg.baseStableRateOffset!, true)},
+                      stableRateExcessOffset: ${jsPercentToSol(cfg.stableRateExcessOffset!, true)},
                       optimalStableToTotalDebtRatio: ${jsPercentToSol(
-                        cfg.optimalStableToTotalDebtRatio!
+                        cfg.optimalStableToTotalDebtRatio!,
+                        true
                       )}
                     })
                   });`

@@ -13,11 +13,12 @@ import {testTemplate} from './templates/test.template';
 import {input, checkbox, select, confirm} from '@inquirer/prompts';
 import {CodeArtifacts, DEPENDENCIES, FeatureModule, Options} from './types';
 import {flashBorrower} from './features/flashBorrower';
-import {capUpdates} from './features/capUpdate';
+import {capUpdates} from './features/capUpdates';
 import {rateUpdates} from './features/rateUpdates';
 import prettier from 'prettier';
 import {generateScript} from './templates/script.template';
 import {generateAIP} from './templates/aip.template';
+import {collateralUpdates} from './features/collateralUpdates';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -98,14 +99,19 @@ if (!options.snapshot) {
 
 export const FEATURES = {
   rateStrategiesUpdates: {
-    name: 'RateStrategyUpdates',
+    name: 'Rate Strategy Updates',
     value: 'rateStrategiesUpdates',
     module: rateUpdates,
   },
-  capsUpdate: {
-    name: 'CapsUpdate',
-    value: 'capsUpdate',
+  capsUpdates: {
+    name: 'Caps Updates',
+    value: 'capsUpdates',
     module: capUpdates,
+  },
+  collateralUpdates: {
+    name: 'Collateral Updates',
+    value: 'collateralUpdates',
+    module: collateralUpdates,
   },
   flashBorrower: {
     name: 'Add an address as flash borrower',

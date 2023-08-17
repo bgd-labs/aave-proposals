@@ -111,9 +111,10 @@ export function transformPercent(value: string) {
  * @param value
  * @returns
  */
-export function jsPercentToSol(value: string) {
+export function jsPercentToSol(value: string, bpsToRay?: boolean) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
-  return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
+  if (bpsToRay) return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
+  return value.replace(/(?=(\d{2}$))/g, '_');
 }
 
 /**
