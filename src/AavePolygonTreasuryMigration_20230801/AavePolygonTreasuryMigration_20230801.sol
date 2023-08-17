@@ -19,7 +19,7 @@
 
 pragma solidity ^0.8.0;
 
-import 'aave-helpers/v2-config-engine/AaveV2PayloadPolygon.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
@@ -31,9 +31,9 @@ import {IMigrationHelper} from 'aave-address-book/common/IMigrationHelper.sol';
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x1b816c12b6f547a1982198ffd0e36412390b05828b560c9edee4e8a6903c4882
  * - Discussion: https://governance.aave.com/t/arfc-migrate-consolidate-polygon-treasury/12248
  */
-contract AavePolygonTreasuryMigration_20230801 is AaveV2PayloadPolygon {
+contract AavePolygonTreasuryMigration_20230801 is IProposalGenericExecutor {
 
-  function _postExecute() internal override {
+  function execute() external {
     IMigrationHelper MIGRATION_HELPER = IMigrationHelper(AaveV2Polygon.MIGRATION_HELPER);
 
     address[] memory ASSETS_TO_MIGRATE = new address[](10);
