@@ -7,6 +7,7 @@
 | description | value before | value after |
 | --- | --- | --- |
 | reserveFactor | 15 % | 25 % |
+| stableBorrowRateEnabled | true | false |
 | interestRateStrategy | [0xfffE32106A68aA3eD39CcCE673B646423EEaB62a](https://etherscan.io/address/0xfffE32106A68aA3eD39CcCE673B646423EEaB62a) | [0xc6A068E321C83FEacc25C80118E2B1208c54B6ce](https://etherscan.io/address/0xc6A068E321C83FEacc25C80118E2B1208c54B6ce) |
 | optimalUsageRatio | 80 % | 90 % |
 | maxExcessUsageRatio | 20 % | 10 % |
@@ -26,6 +27,10 @@
       "reserveFactor": {
         "from": 1500,
         "to": 2500
+      },
+      "stableBorrowRateEnabled": {
+        "from": true,
+        "to": false
       }
     }
   },

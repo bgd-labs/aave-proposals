@@ -16,6 +16,8 @@ contract AaveV2_Ethereum_DAIParamsUpdates_20230817 is AaveV2PayloadEthereum {
       AaveV2EthereumAssets.DAI_UNDERLYING,
       25_00
     );
+
+    AaveV2Ethereum.POOL_CONFIGURATOR.disableReserveStableRate(AaveV2EthereumAssets.DAI_UNDERLYING);
   }
 
   function rateStrategiesUpdates()
