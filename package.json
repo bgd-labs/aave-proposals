@@ -33,8 +33,8 @@
     "tsx": "^3.12.7"
   },
   "dependencies": {
-    "@bgd-labs/aave-cli": "^0.0.20",
-    "@inquirer/prompts": "^3.0.0",
+    "@bgd-labs/aave-cli": "^0.0.21",
+    "@inquirer/prompts": "^3.0.2",
     "commander": "^11.0.0",
     "viem": "^1.6.0"
   }

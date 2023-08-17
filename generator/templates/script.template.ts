@@ -1,7 +1,14 @@
-import {CHAINS_WITH_GOV_SUPPORT, generateContractName, getAlias, pragma} from '../common';
+import {
+  CHAINS_WITH_GOV_SUPPORT,
+  generateContractName,
+  generateFolderName,
+  getAlias,
+  pragma,
+} from '../common';
 import {Options} from '../types';
 
-export function generateScript(options: Options, baseFolder) {
+export function generateScript(options: Options) {
+  const folderName = generateFolderName(options);
   const fileName = generateContractName(options);
   let template = pragma;
 
@@ -25,7 +32,7 @@ export function generateScript(options: Options, baseFolder) {
 
       return `/**
  * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${baseFolder}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
+ * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
         chain
       )}
  */
@@ -43,7 +50,7 @@ contract Deploy${chain} is ${chain}Script {
   // generate proposal creation script
   template += `/**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/${baseFolder}/${fileName}.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
@@ -56,7 +63,7 @@ ${supportedChains
       }(address(0));`
   )
   .join('\n')}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${baseFolder}/${
+    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
     options.shortName
   }.md'));
   }

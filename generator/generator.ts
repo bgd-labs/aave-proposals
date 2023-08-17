@@ -15,11 +15,13 @@ import {CodeArtifacts, FeatureModule, Options} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdate';
 import {rateUpdates} from './features/rateUpdates';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
 import {generateScript} from './templates/script.template';
 import {generateAIP} from './templates/aip.template';
 
-const configFile = await prettier.resolveConfigFile();
+const prettierSolCfg = await prettier.resolveConfig('foo.sol');
+const prettierMDCfg = await prettier.resolveConfig('foo.md');
+
 const program = new Command();
 
 program
@@ -163,11 +165,17 @@ if (fs.existsSync(baseFolder) && !options.force) {
     const contractName = generateContractName(options, chain);
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.sol`),
-      prettier.format(proposalTemplate(options, chain, artifacts), configFile)
+      prettier.format(proposalTemplate(options, chain, artifacts), {
+        ...prettierSolCfg,
+        filepath: 'foo.sol',
+      })
     );
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.t.sol`),
-      prettier.format(await testTemplate(options, chain, artifacts), configFile)
+      prettier.format(await testTemplate(options, chain, artifacts), {
+        ...prettierSolCfg,
+        filepath: 'foo.sol',
+      })
     );
   }
 
@@ -175,10 +183,16 @@ if (fs.existsSync(baseFolder) && !options.force) {
 
   fs.writeFileSync(
     path.join(baseFolder, `${generateContractName(options)}.s.sol`),
-    prettier.format(generateScript(options, baseFolder), configFile)
+    prettier.format(generateScript(options), {
+      ...prettierSolCfg,
+      filepath: 'foo.sol',
+    })
   );
   fs.writeFileSync(
     path.join(baseFolder, `${options.shortName}.md`),
-    prettier.format(generateAIP(options), configFile)
+    prettier.format(generateAIP(options), {
+      ...prettierMDCfg,
+      filepath: 'foo.md',
+    })
   );
 }

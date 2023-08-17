@@ -100,7 +100,10 @@ export function numberOrKeepCurrent(value) {
  * @returns
  */
 export function transformPercent(value: string) {
-  return value.replace(/(?=(\d{2}$))/g, '.') + ' %';
+  if (value && !isNaN(Number(value))) {
+    return value.replace(/(?=(\d{2}$))/g, '.') + ' %';
+  }
+  return value;
 }
 
 /**

@@ -27,7 +27,7 @@ export const testTemplate = async (options: Options, chain, artifacts) => {
   const functions = artifacts
     .map((artifact) => artifact[chain].test?.fn)
     .flat()
-    .filter((i) => i)
+    .filter((f) => f !== undefined)
     .join('\n');
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;

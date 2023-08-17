@@ -27,31 +27,33 @@ export const proposalTemplate = (options: Options, chain, artifacts: CodeArtifac
   const {protocolVersion, title, author, snapshot, discussion, features} = options;
   const contractName = generateContractName(options, chain);
 
+  console.log(artifacts.map((a) => a['Ethereum'].code));
   const dependencies = [
     ...new Set(
       artifacts
         .map((a) => a[chain].code?.dependencies)
         .flat()
-        .filter((f) => f)
+        .filter((f) => f !== undefined)
     ),
   ];
+  console.log(dependencies);
   const imports = buildImport(options, chain, dependencies as DEPENDENCIES[]);
   const constants = artifacts
     .map((artifact) => artifact[chain].code?.constants)
     .flat()
-    .filter((i) => i)
+    .filter((f) => f !== undefined)
     .join('\n');
   const functions = artifacts
     .map((artifact) => artifact[chain].code?.fn)
     .flat()
-    .filter((i) => i)
+    .filter((f) => f !== undefined)
     .join('\n');
 
   // need to figure out if execute or pre/post
   const innerExecute = artifacts
     .map((artifact) => artifact[chain].code?.execute)
     .flat()
-    .filter((i) => i)
+    .filter((f) => f !== undefined)
     .join('\n');
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
