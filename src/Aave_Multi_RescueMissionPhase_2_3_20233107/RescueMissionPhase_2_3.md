@@ -36,7 +36,7 @@ The following table represents the tokens to rescue from various aave ecosystem 
 
 For wallets to be able to claim the tokens they sent to the contracts specified on Phase 2 and 3, we have created a different Merkle tree for every claimable token. With the roots and amounts, every wallet will be able to claim by calling the AaveMerkleDistributor contract similar to what was being done in Phase 1. For more details of which wallets are eligible for claims you can check [here](https://github.com/bgd-labs/rescue-mission-phase-2-3/blob/main/js-scripts/maps/usersAmounts.json).
 
-The following Aave contracts will updated by adding a rescue function that can transfer the stuck funds to the Merkle distributor contract by the payloads.
+The following Aave contracts will be updated by adding a rescue function that can transfer the stuck funds to the Merkle distributor contract by the payloads.
 
 - Aave v1 pool
 - Aave v2 amm pool
