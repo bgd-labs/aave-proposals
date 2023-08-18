@@ -7,7 +7,6 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {DelegateRegistry} from './interfaces/IDelegateRegistry.sol';
 import {IVeToken} from './interfaces/IVeToken.sol';
 import {IWardenBoost} from './interfaces/IWardenBoost.sol';
-import {IAragonVoting} from './interfaces/IAragonVoting.sol';
 import {Core} from './Core.sol';
 
 abstract contract VeTokenManager is Core {
@@ -15,50 +14,34 @@ abstract contract VeTokenManager is Core {
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
   event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
   event Unlock(uint256 tokensUnlocked);
-  event VoteCast(uint256 voteData, bool support);
-  event VotingContractUpdate(address indexed token, address voting);
-
-  /// @notice The new lock duration must be greater than the current one
-  error InvalidNewDuration();
-  /// @notice The on-chain voting contract has not been set for this token
-  error VotingContractNotRegistered();
-
-  struct VeToken {
-    /// @notice the keccak encoded spaceId of the snapshot space
-    bytes32 spaceId;
-    /// @notice The lock duration of veToken
-    uint256 lockDuration;
-    /// @notice Address of veToken
-    address veToken;
-    /// @notice the snapshot delegate for the deposit
-    address delegate;
-    /// @notice Warden contract address for veBoost
-    address warden;
-  }
 
   DelegateRegistry public constant DELEGATE_REGISTRY =
     DelegateRegistry(0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446);
 
-  mapping(address => VeToken) public veTokens;
-  mapping(address => address) public veTokenToVotingContract;
+  address public constant BAL = 0xba100000625a3754423978a60c9317c58a424e3D;
+  address public constant B_80BAL_20WETH = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
+  address public constant VE_BAL = 0xC128a9954e6c874eA3d62ce62B468bA073093F25;
+  address public constant WARDEN_VE_BAL = 0x42227bc7D65511a357c43993883c7cef53B25de9;
+
+  /// @notice the snapshot delegate for the deposit
+  address public delegate;
+  /// @notice the keccak encoded spaceId of the snapshot space
+  bytes32 public spaceId;
+  /// @notice The lock duration of veToken
+  uint256 lockDuration;
 
   /// @notice The Buyer will then need to call the user_checkpoint() method on all Curve V4 & Factory Gauges
   /// currently farming, to apply the newly received Boost.
   /// @notice duration in weeks (ie: 1 for 1 Week)
   function buyBoost(
-    address underlying,
     address delegator,
     address receiver,
     uint256 amount,
     uint256 duration
   ) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.warden == address(0)) revert TokenNotRegistered();
-
-    IERC20 feeToken = IWardenBoost(token.warden).feeToken();
-    uint256 maxFee = IWardenBoost(token.warden).estimateFees(delegator, amount, duration);
-    feeToken.approve(token.warden, maxFee);
-    IWardenBoost(token.warden).buyDelegationBoost(delegator, receiver, amount, duration, maxFee);
+    uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, duration);
+    IERC20(BAL).approve(WARDEN_VE_BAL, maxFee);
+    IWardenBoost(WARDEN_VE_BAL).buyDelegationBoost(delegator, receiver, amount, duration, maxFee);
 
     emit BuyBoost(delegator, receiver, amount, duration);
   }
@@ -72,7 +55,6 @@ abstract contract VeTokenManager is Core {
   /// @param maxPerc Maximum percent of users total voting token balance available to delegate (in BPS)
   /// @param useAdvicePrice True to use the advice Price instead of the given pricePerVote
   function sellBoost(
-    address underlying,
     uint256 pricePerVote,
     uint64 maxDuration,
     uint64 expiryTime,
@@ -80,14 +62,11 @@ abstract contract VeTokenManager is Core {
     uint16 maxPerc,
     bool useAdvicePrice
   ) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.warden == address(0)) revert TokenNotRegistered();
-
-    IERC20(IWardenBoost(token.warden).delegationBoost()).approve(
-      token.warden,
+    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).approve(
+      WARDEN_VE_BAL,
       type(uint256).max // Per Boost docs, approve uint256 max
     );
-    IWardenBoost(token.warden).register(
+    IWardenBoost(WARDEN_VE_BAL).register(
       pricePerVote,
       maxDuration,
       expiryTime,
@@ -99,7 +78,6 @@ abstract contract VeTokenManager is Core {
 
   /// @notice Update an existing boost offer
   function updateBoostOffer(
-    address underlying,
     uint256 pricePerVote,
     uint64 maxDuration,
     uint64 expiryTime,
@@ -107,10 +85,7 @@ abstract contract VeTokenManager is Core {
     uint16 maxPerc,
     bool useAdvicePrice
   ) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.warden == address(0)) revert TokenNotRegistered();
-
-    IWardenBoost(token.warden).updateOffer(
+    IWardenBoost(WARDEN_VE_BAL).updateOffer(
       pricePerVote,
       maxDuration,
       expiryTime,
@@ -121,110 +96,62 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Removes an existing boost offer
-  function removeBoostOffer(address underlying) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.warden == address(0)) revert TokenNotRegistered();
-
-    IERC20(IWardenBoost(token.warden).delegationBoost()).approve(token.warden, 0);
-    IWardenBoost(token.warden).quit();
+  function removeBoostOffer() external onlyOwnerOrGuardian {
+    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).approve(WARDEN_VE_BAL, 0);
+    IWardenBoost(WARDEN_VE_BAL).quit();
   }
 
   /// @notice Claim fee token rewards accrued by selling veBoost
-  function claim(address underlying) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.warden == address(0)) revert TokenNotRegistered();
-
-    IWardenBoost(token.warden).claim();
+  function claim() external onlyOwnerOrGuardian {
+    IWardenBoost(WARDEN_VE_BAL).claim();
   }
 
   /// @notice sets the snapshot space ID
-  /// @notice delegate must previously have been set or reverts
-  function setSpaceId(address underlying, bytes32 _spaceId) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-
-    _setSpaceId(token, _spaceId);
+  function setSpaceId(bytes32 _spaceId) external onlyOwnerOrGuardian {
+    DELEGATE_REGISTRY.clearDelegate(spaceId);
+    spaceId = _spaceId;
+    _delegate(delegate);
   }
 
   /// @notice sets the snapshot delegate
-  function setDelegateSnapshot(
-    address underlying,
-    address newDelegate
-  ) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-
-    _delegate(token, newDelegate);
+  function setDelegate(address newDelegate) external onlyOwnerOrGuardian {
+    _delegate(newDelegate);
   }
 
   /// @notice clears the delegate from snapshot
-  function clearDelegateSnapshot(address underlying) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-
-    address oldDelegate = token.delegate;
-    DELEGATE_REGISTRY.clearDelegate(token.spaceId);
+  function clearDelegate() external onlyOwnerOrGuardian {
+    address oldDelegate = delegate;
+    DELEGATE_REGISTRY.clearDelegate(spaceId);
 
     emit DelegateUpdate(oldDelegate, address(0));
   }
 
-  function voteAragon(
-    address underlying,
-    uint256 voteData,
-    bool support
-  ) external onlyOwnerOrGuardian {
-    address voting = veTokenToVotingContract[underlying];
-    if (voting == address(0)) revert VotingContractNotRegistered();
-    // TODO: Finish Curve.fi Voting Parameter: 0xBCfF8B0b9419b9A88c44546519b1e909cF330399
-    // TODO: Delegate?
-    IAragonVoting(voting).vote(voteData, support, false);
-    emit VoteCast(voteData, support);
-  }
-
-  function setVotingContract(address underlying, address voting) external onlyOwnerOrGuardian {
-    if (veTokens[underlying].veToken == address(0)) revert TokenNotRegistered();
-    if (voting == address(0)) revert Invalid0xAddress();
-
-    veTokenToVotingContract[underlying] = voting;
-    emit VotingContractUpdate(underlying, voting);
-  }
-
   /// @notice Increases the lock duration for underlying token
-  function setLockDuration(
-    address underlying,
-    uint256 newLockDuration
-  ) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-    if (newLockDuration < token.lockDuration) revert InvalidNewDuration();
-
-    token.lockDuration = newLockDuration;
+  function setLockDuration(uint256 newLockDuration) external onlyOwnerOrGuardian {
+    lockDuration = newLockDuration;
   }
 
   /// @notice Locks underlying token into veToken until lockDuration
   /// @notice Increases amount or lock duration if lock already exists
-  function lock(address underlying) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-
-    uint256 tokenBalance = IERC20(underlying).balanceOf(address(this));
-    uint256 locked = IVeToken(token.veToken).locked(address(this));
-    uint256 lockHorizon = ((block.timestamp + token.lockDuration) / WEEK) * WEEK;
+  function lock() external onlyOwnerOrGuardian {
+    uint256 tokenBalance = IERC20(B_80BAL_20WETH).balanceOf(address(this));
+    uint256 locked = IVeToken(VE_BAL).locked(address(this));
+    uint256 lockHorizon = ((block.timestamp + lockDuration) / WEEK) * WEEK;
 
     if (tokenBalance != 0 && locked == 0) {
       // First lock
-      IERC20(underlying).approve(token.veToken, tokenBalance);
-      IVeToken(token.veToken).create_lock(tokenBalance, lockHorizon);
+      IERC20(B_80BAL_20WETH).approve(VE_BAL, tokenBalance);
+      IVeToken(VE_BAL).create_lock(tokenBalance, lockHorizon);
     } else if (tokenBalance != 0 && locked != 0) {
       // Increase amount of tokens locked & refresh duration to lockDuration
-      IERC20(underlying).approve(token.veToken, tokenBalance);
-      IVeToken(token.veToken).increase_amount(tokenBalance);
-      if (IVeToken(token.veToken).locked__end(address(this)) != lockHorizon) {
-        IVeToken(token.veToken).increase_unlock_time(lockHorizon);
+      IERC20(B_80BAL_20WETH).approve(VE_BAL, tokenBalance);
+      IVeToken(VE_BAL).increase_amount(tokenBalance);
+      if (IVeToken(VE_BAL).locked__end(address(this)) != lockHorizon) {
+        IVeToken(VE_BAL).increase_unlock_time(lockHorizon);
       }
     } else if (tokenBalance == 0 && locked != 0) {
       // No additional tokens to lock, just refresh duration to lockDuration
-      IVeToken(token.veToken).increase_unlock_time(lockHorizon);
+      IVeToken(VE_BAL).increase_unlock_time(lockHorizon);
     } else {
       // If tokenBalance == 0 and locked == 0, there is nothing to do.
       return;
@@ -234,25 +161,16 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Reverts if lockDuration has not passed
-  function unlock(address underlying) external onlyOwnerOrGuardian {
-    VeToken storage token = veTokens[underlying];
-    if (token.veToken == address(0)) revert TokenNotRegistered();
-
-    IVeToken(token.veToken).withdraw();
-    emit Unlock(IERC20(underlying).balanceOf(address(this)));
+  function unlock() external onlyOwnerOrGuardian {
+    IVeToken(VE_BAL).withdraw();
+    emit Unlock(IERC20(B_80BAL_20WETH).balanceOf(address(this)));
   }
 
-  function _delegate(VeToken storage token, address newDelegate) internal {
-    address oldDelegate = token.delegate;
-    DELEGATE_REGISTRY.setDelegate(token.spaceId, newDelegate);
-    token.delegate = newDelegate;
+  function _delegate(address newDelegate) internal {
+    address oldDelegate = delegate;
+    DELEGATE_REGISTRY.setDelegate(spaceId, newDelegate);
+    delegate = newDelegate;
 
     emit DelegateUpdate(oldDelegate, newDelegate);
-  }
-
-  function _setSpaceId(VeToken storage token, bytes32 _spaceId) internal {
-    DELEGATE_REGISTRY.clearDelegate(token.spaceId);
-    token.spaceId = _spaceId;
-    _delegate(token, token.delegate);
   }
 }

@@ -56,53 +56,24 @@ contract VeTokenManagerTest is Test {
     strategicAssets = new StrategicAssetsManager();
     vm.stopPrank();
   }
-
-  function _addVeToken(
-    address underlying,
-    address veToken,
-    address warden,
-    uint256 lockDuration,
-    address delegate,
-    bytes32 spaceId
-  ) internal {
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.addVeToken(underlying, veToken, warden, lockDuration, delegate, spaceId);
-    vm.stopPrank();
-  }
 }
 
 contract BuyBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.buyBoost(
-      B_80BAL_20WETH,
       makeAddr('delegator'),
       makeAddr('receiver'),
       1e18,
       100000
     );
-  }
-
-  function test_revertsIf_wardenNotRegistered() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, address(0), LOCK_DURATION_ONE_YEAR, address(0), '');
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.buyBoost(
-      B_80BAL_20WETH,
-      makeAddr('delegator'),
-      makeAddr('receiver'),
-      1e18,
-      100000
-    );
-    vm.stopPrank();
   }
 
   function test_successful() public {
     deal(BAL, address(strategicAssets), 100e18);
     address delegator = 0x20EADfcaf91BD98674FF8fc341D148E1731576A4;
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.buyBoost(B_80BAL_20WETH, delegator, address(strategicAssets), 4000e18, 1);
+    strategicAssets.buyBoost(delegator, address(strategicAssets), 4000e18, 1);
     vm.stopPrank();
   }
 }
@@ -111,26 +82,16 @@ contract SellBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     uint64 expiration = uint64(block.timestamp + 10000);
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
-  }
-
-  function test_revertsIf_wardenNotRegistered() public {
-    uint64 expiration = uint64(block.timestamp + 10000);
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
-    vm.stopPrank();
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
   }
 
   function test_successful() public {
     vm.expectRevert();
     IWardenBoost(WARDEN_VE_BAL).offers(7); // ID 7 Doesn't exist yet
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
 
     IWardenBoost.BoostOffer memory offer = IWardenBoost(WARDEN_VE_BAL).offers(7);
@@ -147,25 +108,15 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     uint64 expiration = uint64(block.timestamp + 10000);
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.updateBoostOffer(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
-  }
-
-  function test_revertsIf_wardenNotRegistered() public {
-    uint64 expiration = uint64(block.timestamp + 10000);
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.updateBoostOffer(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
-    vm.stopPrank();
+    strategicAssets.updateBoostOffer(1000, 10, expiration, 1000, 10000, true);
   }
 
   function test_revertsIf_noOfferExists() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     uint64 expiration = uint64(block.timestamp + 10000);
 
     vm.expectRevert();
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.updateBoostOffer(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.updateBoostOffer(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
   }
 
@@ -173,11 +124,9 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
     vm.expectRevert();
     IWardenBoost(WARDEN_VE_BAL).offers(7); // ID 7 Doesn't exist yet
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
 
     IWardenBoost.BoostOffer memory offer = IWardenBoost(WARDEN_VE_BAL).offers(7);
@@ -189,7 +138,6 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.updateBoostOffer(
-      B_80BAL_20WETH,
       1000,
       20,
       uint64(expiration + WEEK),
@@ -211,25 +159,16 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
 contract RemoveBoostOfferTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.removeBoostOffer(B_80BAL_20WETH);
-  }
-
-  function test_revertsIf_wardenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.removeBoostOffer(B_80BAL_20WETH);
-    vm.stopPrank();
+    strategicAssets.removeBoostOffer();
   }
 
   function test_successful() public {
     vm.expectRevert();
     IWardenBoost(WARDEN_VE_BAL).offers(7); // ID 7 Doesn't exist yet
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
 
     IWardenBoost.BoostOffer memory offer = IWardenBoost(WARDEN_VE_BAL).offers(7);
@@ -248,7 +187,7 @@ contract RemoveBoostOfferTest is VeTokenManagerTest {
     assertEq(offer.maxPerc, 10000);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.removeBoostOffer(B_80BAL_20WETH);
+    strategicAssets.removeBoostOffer();
     vm.stopPrank();
 
     vm.expectRevert();
@@ -267,25 +206,16 @@ contract RemoveBoostOfferTest is VeTokenManagerTest {
 contract Claim is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.claim(B_80BAL_20WETH);
-  }
-
-  function test_revertsIf_wardenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.claim(B_80BAL_20WETH);
-    vm.stopPrank();
+    strategicAssets.claim();
   }
 
   function test_revertsIf_noRewardsWereEarned() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
 
     vm.expectRevert(NullClaimAmount.selector);
-    strategicAssets.claim(B_80BAL_20WETH);
+    strategicAssets.claim();
     vm.stopPrank();
   }
 
@@ -294,19 +224,18 @@ contract Claim is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lock();
     vm.stopPrank();
 
     deal(BAL, address(this), 1_000e18);
 
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.sellBoost(B_80BAL_20WETH, 1000, 10, expiration, 1000, 10000, true);
+    strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
 
     IERC20(BAL).approve(WARDEN_VE_BAL, type(uint256).max);
@@ -325,7 +254,7 @@ contract Claim is VeTokenManagerTest {
     uint256 balanceBefore = IERC20(BAL).balanceOf(address(strategicAssets));
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.claim(B_80BAL_20WETH);
+    strategicAssets.claim();
     vm.stopPrank();
 
     uint256 balanceAfter = IERC20(BAL).balanceOf(address(strategicAssets));
@@ -337,21 +266,13 @@ contract Claim is VeTokenManagerTest {
 contract SetSpaceId is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setSpaceId(B_80BAL_20WETH, BALANCER_SPACE_ID);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setSpaceId(B_80BAL_20WETH, BALANCER_SPACE_ID);
-    vm.stopPrank();
+    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
   }
 
   function test_successful() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, initialDelegate, '');
-
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setSpaceId(B_80BAL_20WETH, BALANCER_SPACE_ID);
+    strategicAssets.setDelegate(initialDelegate);
+    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
     vm.stopPrank();
 
     assertEq(
@@ -364,29 +285,14 @@ contract SetSpaceId is VeTokenManagerTest {
 contract SetDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setDelegateSnapshot(B_80BAL_20WETH, makeAddr('another-delegate'));
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setDelegateSnapshot(B_80BAL_20WETH, makeAddr('another-delegate'));
-    vm.stopPrank();
+    strategicAssets.setDelegate(makeAddr('another-delegate'));
   }
 
   function test_successful() public {
     address newDelegate = makeAddr('another-delegate');
-    _addVeToken(
-      B_80BAL_20WETH,
-      VE_BAL,
-      WARDEN_VE_BAL,
-      LOCK_DURATION_ONE_YEAR,
-      initialDelegate,
-      BALANCER_SPACE_ID
-    );
-
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setDelegateSnapshot(B_80BAL_20WETH, newDelegate);
+    strategicAssets.setDelegate(newDelegate);
+    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
     vm.stopPrank();
 
     assertEq(
@@ -399,28 +305,23 @@ contract SetDelegationSnapshot is VeTokenManagerTest {
 contract ClearDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.clearDelegateSnapshot(B_80BAL_20WETH);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.clearDelegateSnapshot(B_80BAL_20WETH);
-    vm.stopPrank();
+    strategicAssets.clearDelegate();
   }
 
   function test_successful() public {
-    _addVeToken(
-      B_80BAL_20WETH,
-      VE_BAL,
-      WARDEN_VE_BAL,
-      LOCK_DURATION_ONE_YEAR,
-      initialDelegate,
-      BALANCER_SPACE_ID
+    address newDelegate = makeAddr('new-delegate');
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.setDelegate(newDelegate);
+    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
+    vm.stopPrank();
+
+    assertEq(
+      strategicAssets.DELEGATE_REGISTRY().delegation(address(strategicAssets), BALANCER_SPACE_ID),
+      newDelegate
     );
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.clearDelegateSnapshot(B_80BAL_20WETH);
+    strategicAssets.clearDelegate();
     vm.stopPrank();
 
     assertEq(
@@ -430,64 +331,15 @@ contract ClearDelegationSnapshot is VeTokenManagerTest {
   }
 }
 
-// TODO: Vote Aragon tests
-
-contract SetVotingContract is VeTokenManagerTest {
-  function test_revertsIf_invalidCaller() public {
-    vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setVotingContract(CRV, CRV_VOTING);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setVotingContract(CRV, CRV_VOTING);
-    vm.stopPrank();
-  }
-
-  function test_revertsIf_votingContractIsAddressZero() public {
-    _addVeToken(CRV, VE_CRV, address(0), LOCK_DURATION_ONE_YEAR, address(0), '');
-    vm.expectRevert(Core.Invalid0xAddress.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setVotingContract(CRV, address(0));
-    vm.stopPrank();
-  }
-
-  function test_successful() public {
-    _addVeToken(CRV, VE_CRV, address(0), LOCK_DURATION_ONE_YEAR, address(0), '');
-    vm.expectEmit();
-    emit VotingContractUpdate(CRV, CRV_VOTING);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setVotingContract(CRV, CRV_VOTING);
-    vm.stopPrank();
-  }
-}
-
 contract SetLockDuration is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setLockDuration(B_80BAL_20WETH, LOCK_DURATION_ONE_YEAR);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(B_80BAL_20WETH, LOCK_DURATION_ONE_YEAR);
-    vm.stopPrank();
-  }
-
-  function test_revertsIf_lockDurationIsLowerThanCurrent() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-    vm.expectRevert(VeTokenManager.InvalidNewDuration.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(B_80BAL_20WETH, LOCK_DURATION_ONE_YEAR - 1);
-    vm.stopPrank();
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
   }
 
   function test_successful() public {
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(B_80BAL_20WETH, LOCK_DURATION_ONE_YEAR + 1);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR + 1);
     vm.stopPrank();
   }
 }
@@ -495,14 +347,7 @@ contract SetLockDuration is VeTokenManagerTest {
 contract LockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.lock(B_80BAL_20WETH);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
-    vm.stopPrank();
+    strategicAssets.lock();
   }
 
   function test_successful_locksFirstTime() public {
@@ -510,18 +355,17 @@ contract LockTest is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 1_000e18);
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+
     vm.expectEmit();
     emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.lock();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -534,18 +378,17 @@ contract LockTest is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 1_000e18);
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+
     vm.expectEmit();
     emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.lock();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -557,7 +400,7 @@ contract LockTest is VeTokenManagerTest {
     deal(B_80BAL_20WETH, address(strategicAssets), 500e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.lock();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -571,18 +414,17 @@ contract LockTest is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 1_000e18);
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+
     vm.expectEmit();
     emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.lock();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -594,7 +436,7 @@ contract LockTest is VeTokenManagerTest {
     vm.warp(block.timestamp + WEEK);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.lock();
     vm.stopPrank();
 
     uint256 newLockEnd = IVeToken(VE_BAL).locked__end(address(strategicAssets));
@@ -609,14 +451,7 @@ contract LockTest is VeTokenManagerTest {
 contract UnlockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.unlock(B_80BAL_20WETH);
-  }
-
-  function test_revertsIf_veTokenNotRegistered() public {
-    vm.expectRevert(Core.TokenNotRegistered.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.unlock(B_80BAL_20WETH);
-    vm.stopPrank();
+    strategicAssets.unlock();
   }
 
   function test_revertsIf_unlockTimeHasNotPassed() public {
@@ -624,15 +459,14 @@ contract UnlockTest is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lock();
 
     vm.expectRevert("The lock didn't expire");
-    strategicAssets.unlock(B_80BAL_20WETH);
+    strategicAssets.unlock();
     vm.stopPrank();
   }
 
@@ -641,12 +475,11 @@ contract UnlockTest is VeTokenManagerTest {
     ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
     vm.stopPrank();
 
-    _addVeToken(B_80BAL_20WETH, VE_BAL, WARDEN_VE_BAL, LOCK_DURATION_ONE_YEAR, address(0), '');
-
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock(B_80BAL_20WETH);
+    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lock();
     vm.stopPrank();
 
     vm.warp(block.timestamp + LOCK_DURATION_ONE_YEAR + 1);
@@ -655,7 +488,7 @@ contract UnlockTest is VeTokenManagerTest {
     emit Unlock(1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.unlock(B_80BAL_20WETH);
+    strategicAssets.unlock();
     vm.stopPrank();
   }
 }

@@ -7,8 +7,6 @@ import {OwnableWithGuardian} from 'solidity-utils/contracts/access-control/Ownab
 abstract contract Core is OwnableWithGuardian {
   /// @notice Provided address is 0x address
   error Invalid0xAddress();
-  /// @notice Token not registered as valid in the system
-  error TokenNotRegistered();
 
   /// @notice One week, in seconds. Vote-locking is rounded down to weeks.
   uint256 internal constant WEEK = 7 days;
