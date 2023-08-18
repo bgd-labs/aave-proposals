@@ -20,7 +20,7 @@
 | usageAsCollateralEnabled | true |
 | ltv | 77 % |
 | liquidationThreshold | 80 % |
-| liquidationBonus | 4 % |
+| liquidationBonus | 4.5 % |
 | liquidationProtocolFee | 10 % |
 | reserveFactor | 20 % |
 | aToken | [0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c](https://etherscan.io/address/0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c) |
@@ -111,7 +111,7 @@
         "isFrozen": false,
         "isPaused": false,
         "isSiloed": false,
-        "liquidationBonus": 10400,
+        "liquidationBonus": 10450,
         "liquidationProtocolFee": 1000,
         "liquidationThreshold": 8000,
         "ltv": 7700,

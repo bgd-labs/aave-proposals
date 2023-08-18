@@ -40,7 +40,7 @@ contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
       flashloanable: EngineFlags.DISABLED,
       ltv: 77_00,
       liqThreshold: 80_00,
-      liqBonus: 4_00,
+      liqBonus: 4_50,
       reserveFactor: 20_00,
       supplyCap: 300_000_000,
       borrowCap: 0,
