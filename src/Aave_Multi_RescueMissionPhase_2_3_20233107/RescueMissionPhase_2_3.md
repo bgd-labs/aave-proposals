@@ -1,6 +1,6 @@
 ---
 title: Rescue Mission Phase 2, 3
-author: BGD labs
+author: BGD Labs (@bgdlabs)
 discussions: https://governance.aave.com/t/bgd-rescue-mission-phase-2-3/14309
 ---
 
