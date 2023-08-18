@@ -49,7 +49,7 @@ The following Aave contracts will be updated by adding a rescue function that ca
 - Aave v2 aUsdc contract on polygon
 - Aave v3 pool on optimism
 
-Once the contracts are updated, the payload will activate the Merkle distributor contract and rescue the stuck funds and send it to the Merkle distributor contract. For ethereum network we will use the same Merkle distributor contract as in Phase 1, while for other networks new ones will be deployed with the owner of the Merkle distributor set as the short executor.
+Once the contracts are updated, the payload will activate the Merkle distributor contract and rescue the stuck funds and send them to the Merkle distributor contract. For ethereum network we will use the same Merkle distributor contract as in Phase 1, while for other networks new ones will be deployed with the owner of the Merkle distributor set as the short executor.
 
 _Note: The payload on avalanche will be executed by the guardian_
 
