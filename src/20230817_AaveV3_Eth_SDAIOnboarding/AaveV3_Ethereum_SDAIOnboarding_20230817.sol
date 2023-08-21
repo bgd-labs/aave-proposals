@@ -42,7 +42,7 @@ contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
       liqThreshold: 80_00,
       liqBonus: 4_50,
       reserveFactor: 20_00,
-      supplyCap: 300_000_000,
+      supplyCap: 340_000_000,
       borrowCap: 0,
       debtCeiling: 0,
       liqProtocolFee: 10_00,
