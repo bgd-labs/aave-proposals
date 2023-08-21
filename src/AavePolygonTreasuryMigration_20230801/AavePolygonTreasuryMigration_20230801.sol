@@ -23,6 +23,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
+import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 import {IMigrationHelper} from 'aave-address-book/common/IMigrationHelper.sol';
 
 /**
@@ -58,7 +59,7 @@ contract AavePolygonTreasuryMigration_20230801 is IProposalGenericExecutor {
         address aToken = MIGRATION_HELPER.aTokens(ASSETS_TO_MIGRATE[i]);
         uint256 amount = IERC20(aToken).balanceOf(address(AaveV2Polygon.COLLECTOR));
         AaveV2Polygon.COLLECTOR.transfer(aToken, address(this), amount);
-        IERC20(aToken).approve(AaveV2Polygon.MIGRATION_HELPER, amount);
+        SafeERC20.forceApprove(IERC20(aToken), AaveV2Polygon.MIGRATION_HELPER, amount);
         unchecked {
             i++;
         }
@@ -79,8 +80,9 @@ contract AavePolygonTreasuryMigration_20230801 is IProposalGenericExecutor {
     NEW_ASSETS_MIGRATED[9] = AaveV3PolygonAssets.LINK_A_TOKEN;
 
     for(i = 0; i < NEW_ASSETS_MIGRATED.length;) {
-        IERC20(NEW_ASSETS_MIGRATED[i]).transfer(
-            address(AaveV3Polygon.COLLECTOR),
+        SafeERC20.safeTransfer(
+            IERC20(NEW_ASSETS_MIGRATED[i]), 
+            address(AaveV3Polygon.COLLECTOR), 
             IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(this))
         );
         unchecked {

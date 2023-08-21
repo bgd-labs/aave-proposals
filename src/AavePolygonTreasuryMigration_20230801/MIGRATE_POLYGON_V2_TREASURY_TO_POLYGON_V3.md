@@ -20,6 +20,23 @@ As part of broader v2 to v3 migration effort, this AIP shall implement the follo
 
 For reference, the Aave Polygon Treasury: [`0xe8599F3cc5D38a9aD6F3684cd5CEa72f10Dbc383`](https://polygonscan.com/address/0xe8599F3cc5D38a9aD6F3684cd5CEa72f10Dbc383)
 
+# Specification
+
+Transfer the following assets from Aave v2 to v3. The quantities in this table will change over time between proposal submission & proposal execution, and should not be taken as exact.
+
+|Network|Instance|Token|Quantity|
+|---|---|---|---|
+|Polygon|Aave V2|AMUSDC|3,775,623.68|
+|Polygon|Aave V2|AMDAI|3,380,138.80|
+|Polygon|Aave V2|AMUSDT|1,379,093.97|
+|Polygon|Aave V2|AMWETH|230.91|
+|Polygon|Aave V2|AMWMATIC|106,528.66|
+|Polygon|Aave V2|AMBAL|1,336.76|
+|Polygon|Aave V2|AMCRV|9,404.00|
+|Polygon|Aave V2|AMWBTC|0.09|
+|Polygon|Aave V2|AMGHST|1,918.59|
+|Polygon|Aave V2|AMLINK|33.56|
+
 # Implementation
 
 A list of relevant links like for this proposal:

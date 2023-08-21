@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV2TestBase} from 'aave-helpers/ProtocolV2TestBase.sol';
@@ -57,12 +56,12 @@ contract AavePolygonTreasuryMigration_20230801_Test is ProtocolV2TestBase {
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     for(i = 0; i < OLD_ASSETS_MIGRATED.length; i++) {
-      payloadBalanceAfter = IERC20(OLD_ASSETS_MIGRATED[i]).balanceOf(address(payload));
+      payloadBalanceAfter = IERC20(OLD_ASSETS_MIGRATED[i]).balanceOf(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
       assertEq(payloadBalanceAfter, 0);
     }
 
     for(i = 0; i < NEW_ASSETS_MIGRATED.length; i++) {
-      payloadBalanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(payload));
+      payloadBalanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR));
       assertEq(payloadBalanceAfter, 0);
       collectorBalanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(AaveV3Polygon.COLLECTOR));
       /// 0.001e18 is 0.1%
