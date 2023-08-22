@@ -49,7 +49,7 @@ A list of relevant links like for this proposal:
 
 * [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AavePolygonTreasuryMigration_20230801/AavePolygonTreasuryMigration_20230801.sol)
 
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://polygonscan.com/address/0xc34a9391c08b64c4a9167d9e1e884b3735ce21b0#code)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

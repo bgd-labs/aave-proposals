@@ -11,7 +11,7 @@ import {AavePolygonTreasuryMigration_20230801} from './AavePolygonTreasuryMigrat
 
 contract AavePolygonTreasuryMigration_20230801_Test is ProtocolV2TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 45864548);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 46619160);
   }
 
   function testpayload() public {
@@ -51,7 +51,7 @@ contract AavePolygonTreasuryMigration_20230801_Test is ProtocolV2TestBase {
       OLD_ASSETS_BEFORE_BALANCE[i] = IERC20(OLD_ASSETS_MIGRATED[i]).balanceOf(address(AaveV2Polygon.COLLECTOR));
     }
 
-    AavePolygonTreasuryMigration_20230801 payload = new AavePolygonTreasuryMigration_20230801();
+    AavePolygonTreasuryMigration_20230801 payload = AavePolygonTreasuryMigration_20230801(0xC34A9391c08b64C4A9167D9e1E884B3735Ce21b0);
 
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
