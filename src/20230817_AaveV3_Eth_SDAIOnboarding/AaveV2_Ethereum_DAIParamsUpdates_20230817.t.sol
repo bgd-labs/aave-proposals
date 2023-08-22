@@ -15,7 +15,7 @@ contract AaveV2_Ethereum_DAIParamsUpdates_20230817_Test is ProtocolV2TestBase {
   AaveV2_Ethereum_DAIParamsUpdates_20230817 public proposalPayload;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 17935112);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 17971411);
   }
 
   function testPayload() public {

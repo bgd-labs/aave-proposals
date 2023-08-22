@@ -13,7 +13,7 @@ import {IV3RateStrategyFactory} from 'lib/aave-helpers/src/v3-config-engine/IV3R
  */
 contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
   address public constant sDAI = 0x83F20F44975D03b1b09e64809B757c47f942BEeA;
-  address public constant SDAI_PRICE_FEED = 0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f; // to be updated for new oracle 
+  address public constant SDAI_PRICE_FEED = 0x29081f7aB5a644716EfcDC10D5c926c5fEe9F72B;
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
     IEngine.Listing[] memory listings = new IEngine.Listing[](1);

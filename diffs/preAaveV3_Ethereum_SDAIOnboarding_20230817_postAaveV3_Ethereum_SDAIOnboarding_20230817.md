@@ -15,8 +15,10 @@
 | isSiloed | false |
 | isFlashloanable | true |
 | eModeCategory | 0 |
-| oracle | [0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f](https://etherscan.io/address/0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f) |
-| oracleLatestAnswer | 103,019,987 |
+| oracle | [0x29081f7aB5a644716EfcDC10D5c926c5fEe9F72B](https://etherscan.io/address/0x29081f7aB5a644716EfcDC10D5c926c5fEe9F72B) |
+| oracleDecimals | 8 |
+| oracleDescription | sDAI/DAI/USD |
+| oracleLatestAnswer | 1.03090201 |
 | usageAsCollateralEnabled | true |
 | ltv | 77 % |
 | liquidationThreshold | 80 % |
@@ -116,8 +118,10 @@
         "liquidationProtocolFee": 1000,
         "liquidationThreshold": 8000,
         "ltv": 7700,
-        "oracle": "0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f",
-        "oracleLatestAnswer": 103019987,
+        "oracle": "0x29081f7aB5a644716EfcDC10D5c926c5fEe9F72B",
+        "oracleDecimals": 8,
+        "oracleDescription": "sDAI/DAI/USD",
+        "oracleLatestAnswer": 103090201,
         "reserveFactor": 2000,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x48Bc45f084988bC01933EA93EeFfEBC0416534f6",
