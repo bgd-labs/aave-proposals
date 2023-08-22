@@ -69,7 +69,7 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
     vm.warp(block.timestamp + (STREAM_DURATION / 2));
     uint256 firstPayment = actualAmountaUSDT / 2;
 
-    STREAMABLE_AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, firstPayment);
+    AAVE_COLLECTOR.withdrawFromStream(nextCollectorStreamID, firstPayment);
 
     uint256 halfChaosUSDTBalance = AUSDT.balanceOf(CHAOS_LABS_TREASURY);
     assertEq(initialChaosUSDTBalance, halfChaosUSDTBalance - (actualAmountaUSDT / 2));
