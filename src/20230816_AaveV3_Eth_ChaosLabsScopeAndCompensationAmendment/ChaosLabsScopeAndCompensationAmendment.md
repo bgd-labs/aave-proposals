@@ -65,7 +65,7 @@ We request an additional $400K for the remainder of our current engagement, brin
 
 ## Specification
 
-If this proposal is approved, a stream of the allocated budget will be activated, with a Chaos Labs-controlled account (0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0) as the recipient.
+If this proposal is approved, a stream of the allocated budget will be activated, with a Chaos Labs-controlled account ([0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0](https://etherscan.io/address/0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0)) as the recipient.
 
 In terms of technical implementation, the AIP will call the `createStream()` method of the `IAaveEcosystemReserveController` interface to create a stream of 400,000 aUSDT. This stream will be scheduled to conclude on November 7th, 2023, coinciding with the termination of our original engagement.
 
