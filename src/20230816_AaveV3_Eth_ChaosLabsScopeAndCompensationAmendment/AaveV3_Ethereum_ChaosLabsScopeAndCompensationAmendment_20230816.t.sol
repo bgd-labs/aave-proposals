@@ -37,7 +37,7 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
 
   function testProposalExecution() public {
     // Capturing next Stream IDs before proposal is executed
-    uint256 nextCollectorStreamID = STREAMABLE_AAVE_COLLECTOR.getNextStreamId();
+    uint256 nextCollectorStreamID = AAVE_COLLECTOR.getNextStreamId();
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
