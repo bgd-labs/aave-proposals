@@ -21,7 +21,7 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
 
   IERC20 public constant AUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN);
 
-  ICollector public immutable AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
+  ICollector public constant AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
   address public constant CHAOS_LABS_TREASURY = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
 
   IStreamable public immutable STREAMABLE_AAVE_COLLECTOR =
