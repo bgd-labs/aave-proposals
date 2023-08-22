@@ -53,7 +53,7 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
         uint256 stopTimeUSDT,
         uint256 remainingBalanceUSDT,
 
-      ) = STREAMABLE_AAVE_COLLECTOR.getStream(nextCollectorStreamID);
+      ) = AAVE_COLLECTOR.getStream(nextCollectorStreamID);
 
       assertEq(senderUSDT, address(AAVE_COLLECTOR));
       assertEq(recipientUSDT, CHAOS_LABS_TREASURY);
