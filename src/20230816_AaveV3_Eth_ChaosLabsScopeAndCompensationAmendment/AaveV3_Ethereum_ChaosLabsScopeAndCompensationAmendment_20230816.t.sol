@@ -24,8 +24,6 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
   ICollector public constant AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
   address public constant CHAOS_LABS_TREASURY = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
 
-  IStreamable public immutable STREAMABLE_AAVE_COLLECTOR =
-    IStreamable(address(AaveV2Ethereum.COLLECTOR));
 
   uint256 public constant STREAM_AMOUNT = 400_000e6;
   uint256 public constant STREAM_DURATION = 80 days;
