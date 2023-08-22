@@ -12,15 +12,15 @@ import {IV3RateStrategyFactory} from 'lib/aave-helpers/src/v3-config-engine/IV3R
  * - Discussion: https://governance.aave.com/t/arfc-sdai-aave-v3-onboarding/14410
  */
 contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
-  address public constant SDAI = 0x83F20F44975D03b1b09e64809B757c47f942BEeA;
-  address public constant SDAI_PRICE_FEED = 0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f;
+  address public constant sDAI = 0x83F20F44975D03b1b09e64809B757c47f942BEeA;
+  address public constant SDAI_PRICE_FEED = 0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f; // to be updated for new oracle 
 
   function newListings() public pure override returns (IEngine.Listing[] memory) {
     IEngine.Listing[] memory listings = new IEngine.Listing[](1);
 
     listings[0] = IEngine.Listing({
-      asset: SDAI,
-      assetSymbol: 'SDAI',
+      asset: sDAI,
+      assetSymbol: 'sDAI',
       priceFeed: SDAI_PRICE_FEED,
       rateStrategyParams: Rates.RateStrategyParams({
         optimalUsageRatio: _bpsToRay(90_00),
@@ -37,7 +37,7 @@ contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
       stableRateModeEnabled: EngineFlags.DISABLED,
       borrowableInIsolation: EngineFlags.DISABLED,
       withSiloedBorrowing: EngineFlags.DISABLED,
-      flashloanable: EngineFlags.DISABLED,
+      flashloanable: EngineFlags.ENABLED,
       ltv: 77_00,
       liqThreshold: 80_00,
       liqBonus: 4_50,
@@ -86,8 +86,8 @@ contract AaveV3_Ethereum_SDAIOnboarding_20230817 is AaveV3PayloadEthereum {
       asset: AaveV3EthereumAssets.WETH_UNDERLYING,
       params: IV3RateStrategyFactory.RateStrategyParams({
         optimalUsageRatio: _bpsToRay(90_00),
-        baseVariableBorrowRate: EngineFlags.KEEP_CURRENT,
-        variableRateSlope1: _bpsToRay(3_80),
+        baseVariableBorrowRate: 0,
+        variableRateSlope1: EngineFlags.KEEP_CURRENT,
         variableRateSlope2: EngineFlags.KEEP_CURRENT,
         stableRateSlope1: EngineFlags.KEEP_CURRENT,
         stableRateSlope2: EngineFlags.KEEP_CURRENT,

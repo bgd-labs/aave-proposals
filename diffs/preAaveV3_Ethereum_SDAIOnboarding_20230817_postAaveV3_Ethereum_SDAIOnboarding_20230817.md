@@ -9,11 +9,11 @@
 | decimals | 18 |
 | isActive | true |
 | isFrozen | false |
-| supplyCap | 300,000,000 sDAI |
+| supplyCap | 340,000,000 sDAI |
 | borrowCap | 0 sDAI |
 | debtCeiling | 0 $ |
 | isSiloed | false |
-| isFlashloanable | false |
+| isFlashloanable | true |
 | eModeCategory | 0 |
 | oracle | [0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f](https://etherscan.io/address/0xb9E6DBFa4De19CCed908BcbFe1d015190678AB5f) |
 | oracleLatestAnswer | 103,019,987 |
@@ -33,13 +33,13 @@
 | stableBorrowRateEnabled | false |
 | isBorrowableInIsolation | false |
 | interestRateStrategy | [0xdef8F50155A6cf21181E29E400E8CffAE2d50968](https://etherscan.io/address/0xdef8F50155A6cf21181E29E400E8CffAE2d50968) |
-| aTokenName | Aave Ethereum SDAI |
-| aTokenSymbol | aEthSDAI |
+| aTokenName | Aave Ethereum sDAI |
+| aTokenSymbol | aEthsDAI |
 | isPaused | false |
-| stableDebtTokenName | Aave Ethereum Stable Debt SDAI |
-| stableDebtTokenSymbol | stableDebtEthSDAI |
-| variableDebtTokenName | Aave Ethereum Variable Debt SDAI |
-| variableDebtTokenSymbol | variableDebtEthSDAI |
+| stableDebtTokenName | Aave Ethereum Stable Debt sDAI |
+| stableDebtTokenSymbol | stableDebtEthsDAI |
+| variableDebtTokenName | Aave Ethereum Variable Debt sDAI |
+| variableDebtTokenSymbol | variableDebtEthsDAI |
 | optimalUsageRatio | 90 % |
 | maxExcessUsageRatio | 10 % |
 | baseVariableBorrowRate | 0 % |
@@ -73,7 +73,8 @@
 | interestRateStrategy | [0x53F57eAAD604307889D87b747Fc67ea9DE430B01](https://etherscan.io/address/0x53F57eAAD604307889D87b747Fc67ea9DE430B01) | [0xb02381b1d27aA9845e5012083CA288c1818884f0](https://etherscan.io/address/0xb02381b1d27aA9845e5012083CA288c1818884f0) |
 | optimalUsageRatio | 80 % | 90 % |
 | maxExcessUsageRatio | 20 % | 10 % |
-| interestRate | ![before](/.assets/25b7cbb97d2012b141455f46ee9b3f7e0e40a4b0.svg) | ![after](/.assets/00a61d85ae33bb1a1a18d11a88d002674c9218bf.svg) |
+| baseVariableBorrowRate | 1 % | 0 % |
+| interestRate | ![before](/.assets/25b7cbb97d2012b141455f46ee9b3f7e0e40a4b0.svg) | ![after](/.assets/36935a8fd1d50a51974d60fcb6323e9bc9a95c16.svg) |
 
 ## Raw diff
 
@@ -97,8 +98,8 @@
       "to": {
         "aToken": "0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c",
         "aTokenImpl": "0x7EfFD7b47Bfd17e52fB7559d3f924201b9DbfF3d",
-        "aTokenName": "Aave Ethereum SDAI",
-        "aTokenSymbol": "aEthSDAI",
+        "aTokenName": "Aave Ethereum sDAI",
+        "aTokenSymbol": "aEthsDAI",
         "borrowCap": 0,
         "borrowingEnabled": false,
         "debtCeiling": 0,
@@ -107,7 +108,7 @@
         "interestRateStrategy": "0xdef8F50155A6cf21181E29E400E8CffAE2d50968",
         "isActive": true,
         "isBorrowableInIsolation": false,
-        "isFlashloanable": false,
+        "isFlashloanable": true,
         "isFrozen": false,
         "isPaused": false,
         "isSiloed": false,
@@ -121,16 +122,16 @@
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0x48Bc45f084988bC01933EA93EeFfEBC0416534f6",
         "stableDebtTokenImpl": "0x15C5620dfFaC7c7366EED66C20Ad222DDbB1eD57",
-        "stableDebtTokenName": "Aave Ethereum Stable Debt SDAI",
-        "stableDebtTokenSymbol": "stableDebtEthSDAI",
-        "supplyCap": 300000000,
+        "stableDebtTokenName": "Aave Ethereum Stable Debt sDAI",
+        "stableDebtTokenSymbol": "stableDebtEthsDAI",
+        "supplyCap": 340000000,
         "symbol": "sDAI",
         "underlying": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
         "usageAsCollateralEnabled": true,
         "variableDebtToken": "0x8Db9D35e117d8b93C6Ca9b644b25BaD5d9908141",
         "variableDebtTokenImpl": "0xaC725CB59D16C81061BDeA61041a8A5e73DA9EC6",
-        "variableDebtTokenName": "Aave Ethereum Variable Debt SDAI",
-        "variableDebtTokenSymbol": "variableDebtEthSDAI"
+        "variableDebtTokenName": "Aave Ethereum Variable Debt sDAI",
+        "variableDebtTokenSymbol": "variableDebtEthsDAI"
       }
     }
   },
@@ -154,7 +155,7 @@
       "from": null,
       "to": {
         "baseStableBorrowRate": "68000000000000000000000000",
-        "baseVariableBorrowRate": "10000000000000000000000000",
+        "baseVariableBorrowRate": 0,
         "maxExcessStableToTotalDebtRatio": "800000000000000000000000000",
         "maxExcessUsageRatio": "100000000000000000000000000",
         "optimalStableToTotalDebtRatio": "200000000000000000000000000",
