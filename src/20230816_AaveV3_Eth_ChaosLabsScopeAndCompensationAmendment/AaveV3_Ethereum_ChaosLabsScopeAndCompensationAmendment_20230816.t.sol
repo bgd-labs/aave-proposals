@@ -4,8 +4,7 @@ pragma solidity ^0.8.0;
 import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV2Ethereum, AaveV2EthereumAssets, ICollector} from 'aave-address-book/AaveV2Ethereum.sol';
-import {IStreamable} from 'aave-address-book/AaveMisc.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets, ICollector} from 'aave-address-book/AaveV3Ethereum.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816} from './AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816.sol';
@@ -19,14 +18,13 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
 {
   AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816 internal proposal;
 
-  IERC20 public constant AUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN);
+  IERC20 public constant AUSDT = IERC20(AaveV3EthereumAssets.USDT_A_TOKEN);
 
-  ICollector public constant AAVE_COLLECTOR = AaveV2Ethereum.COLLECTOR;
+  ICollector public constant AAVE_COLLECTOR = AaveV3Ethereum.COLLECTOR;
   address public constant CHAOS_LABS_TREASURY = 0xbC540e0729B732fb14afA240aA5A047aE9ba7dF0;
 
-
   uint256 public constant STREAM_AMOUNT = 400_000e6;
-  uint256 public constant STREAM_DURATION = 80 days;
+  uint256 public constant STREAM_DURATION = 77 days;
 
   uint256 public constant actualAmountaUSDT = (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
