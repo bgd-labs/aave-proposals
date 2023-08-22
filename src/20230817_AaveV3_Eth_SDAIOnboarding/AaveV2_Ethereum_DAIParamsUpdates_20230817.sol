@@ -31,7 +31,7 @@ contract AaveV2_Ethereum_DAIParamsUpdates_20230817 is AaveV2PayloadEthereum {
     rateStrategy[0] = IEngine.RateStrategyUpdate({
       asset: AaveV2EthereumAssets.DAI_UNDERLYING,
       params: IV2RateStrategyFactory.RateStrategyParams({
-        optimalUtilizationRate: _bpsToRay(90_00),
+        optimalUtilizationRate: EngineFlags.KEEP_CURRENT,
         baseVariableBorrowRate: EngineFlags.KEEP_CURRENT,
         variableRateSlope1: _bpsToRay(5_00),
         variableRateSlope2: EngineFlags.KEEP_CURRENT,
