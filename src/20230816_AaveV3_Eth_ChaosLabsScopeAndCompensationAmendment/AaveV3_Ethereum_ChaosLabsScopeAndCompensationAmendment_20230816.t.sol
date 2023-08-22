@@ -5,6 +5,7 @@ import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets, ICollector} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816} from './AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816.sol';
@@ -36,8 +37,33 @@ contract AaveV3_Ethereum_ChaosLabsScopeAndCompensationAmendment_20230816_Test is
   function testProposalExecution() public {
     // Capturing next Stream IDs before proposal is executed
     uint256 nextCollectorStreamID = AAVE_COLLECTOR.getNextStreamId();
+    uint256 collectorV2aUSDTBalanceBefore = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 collectorV3aUSDTBalanceBefore = IERC20(AaveV3EthereumAssets.USDT_A_TOKEN).balanceOf(
+      address(AaveV3Ethereum.COLLECTOR)
+    );
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
+
+    // Check Funds transfer from V2 to V3 Collector
+    uint256 collectorV2aUSDTBalanceAfter = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+    uint256 collectorV3aUSDTBalanceAfter = IERC20(AaveV3EthereumAssets.USDT_A_TOKEN).balanceOf(
+      address(AaveV3Ethereum.COLLECTOR)
+    );
+
+    assertApproxEqAbs(
+      collectorV2aUSDTBalanceAfter,
+      collectorV2aUSDTBalanceBefore - actualAmountaUSDT,
+      50e6
+    );
+    assertApproxEqAbs(
+      collectorV3aUSDTBalanceAfter,
+      collectorV3aUSDTBalanceBefore + actualAmountaUSDT,
+      50e6
+    );
 
     // Checking if the streams have been created properly
     // scoping to avoid the "stack too deep" error
