@@ -34,8 +34,8 @@ contract DeployEthereumV2 is EthereumScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](2);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
-    payloads[1] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0x5bFB45198eD029443f0d41cA6Ed70789DdD9fD01);
+    payloads[1] = GovHelpers.buildMainnet(0xF2A9129773542686ffa009F29F3AA02ae1c0Edf7);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(vm, 'src/20230817_AaveV3_Eth_SDAIOnboarding/SDAIOnboarding.md')
