@@ -11,7 +11,7 @@ import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbi
  * - Discussion: TODO
  */
 contract AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
-  address public constant NEW_FLASH_BORROWER = address(0);
+  address public constant NEW_FLASH_BORROWER = 0x9E8e9D6b0D24216F59043db68BDda1620892f549;
 
   function execute() external {
     AaveV3Arbitrum.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);

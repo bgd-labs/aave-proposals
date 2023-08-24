@@ -11,7 +11,7 @@ import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygo
  * - Discussion: TODO
  */
 contract AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
-  address public constant NEW_FLASH_BORROWER = address(0);
+  address public constant NEW_FLASH_BORROWER = 0xb58Fd91558fa213D97Ac94C97F831c7289278084;
 
   function execute() external {
     AaveV3Polygon.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);
