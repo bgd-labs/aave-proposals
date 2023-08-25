@@ -1,6 +1,6 @@
 ---
-title: "Gho Freezing"
-author: "TBA"
+title: "Gho unpause and freezing"
+author: "Aave Companies @AaveAave"
 discussions: "https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626"
 ---
 
@@ -27,7 +27,7 @@ The proposal payload does the following:
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230825_AaveV3_Eth_GhoFreezing/AaveV3_Ethereum_GhoFreezing_20230825.sol)
 - Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230825_AaveV3_Eth_GhoFreezing/AaveV3_Ethereum_GhoFreezing_20230825.t.sol)
 - [Discussion](https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626)
-- Freezing Steward: [TBA](TBA)
+- [Freezing Steward](https://etherscan.io/address/0x2eE68ACb6A1319de1b49DC139894644E424fefD6#code)
 
 ## Copyright
 

@@ -23,7 +23,7 @@ contract DeployFreezingSteward is EthereumScript {
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
-    new AaveV3_Ethereum_GhoFreezing_20230825(address(0)); // TODO Add helper
+    new AaveV3_Ethereum_GhoFreezing_20230825(0x2eE68ACb6A1319de1b49DC139894644E424fefD6);
   }
 }
 
@@ -34,7 +34,7 @@ contract DeployEthereum is EthereumScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0)); // TODO
+    payloads[0] = GovHelpers.buildMainnet(0xD13316E4ca8d2f0651Dff3F44F30AA158C6D0c2c);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(vm, 'src/20230825_AaveV3_Eth_GhoFreezing/GhoFreezing.md')
