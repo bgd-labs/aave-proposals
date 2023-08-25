@@ -1,5 +1,5 @@
 {
-  "name": "aave-v3-cross-chain-listing-template",
+  "name": "aave-proposals",
   "version": "1.0.0",
   "scripts": {
     "lint": "prettier ./",
@@ -12,6 +12,9 @@
     "simulate:fantom": "env-cmd aave-tenderly-cli --networkId 250 --keepAlive --artifactPath",
     "generate": "tsx generator/generator",
     "generate:bgd": "tsx generator/generator -a 'BGD labs'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "type": "module",
   "repository": {
