@@ -69,5 +69,7 @@ contract AaveV3_Ethereum_GhoFreezing_20230825_Test is ProtocolV3TestBase {
     );
 
     vm.stopPrank();
+
+    e2eTest(AaveV3Ethereum.POOL);
   }
 }
