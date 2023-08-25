@@ -10,7 +10,7 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'lib/aave-address-book/src/Aa
  * - Discussion: https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626
  */
 contract AaveV3_Ethereum_GhoFreezing_20230825 is IProposalGenericExecutor {
-  address immutable GUARDIAN_FREEZER;
+  address public immutable GUARDIAN_FREEZER;
 
   constructor(address freezingOnlyRiskAdmin) {
     GUARDIAN_FREEZER = freezingOnlyRiskAdmin;
