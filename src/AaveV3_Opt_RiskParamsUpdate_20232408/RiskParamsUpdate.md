@@ -1,5 +1,5 @@
 ---
-title: Chaos Labs Risk Parameter Updates - Aave V3 Optimism - 2023.08.13
+title: Chaos Labs Risk Parameter Updates - Aave V3 Optimism
 author: Chaos Labs
 discussions: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-optimism-2023-08-13/14466
 ---
