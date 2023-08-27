@@ -57,17 +57,8 @@ contract AaveV3_Opt_RiskParamsUpdate_20232408_Test is ProtocolV3TestBase {
     );
     wstETH_UNDERLYING_CONFIG.ltv = wstETH_UNDERLYING_LTV;
     wstETH_UNDERLYING_CONFIG.liquidationThreshold = wstETH_UNDERLYING_LIQ_THRESHOLD;
-
     _validateReserveConfig(wstETH_UNDERLYING_CONFIG, allConfigsAfter);
-    e2eTestAsset(
-      AaveV3Optimism.POOL,
-      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
-      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.wstETH_UNDERLYING)
-    );
-    e2eTestAsset(
-      AaveV3Optimism.POOL,
-      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
-      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WBTC_UNDERLYING)
-    );
+    
+    e2eTest(AaveV3Optimism.POOL);
   }
 }
