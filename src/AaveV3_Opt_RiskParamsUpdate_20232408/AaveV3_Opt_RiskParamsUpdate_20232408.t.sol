@@ -30,18 +30,17 @@ contract AaveV3_Opt_RiskParamsUpdate_20232408_Test is ProtocolV3TestBase {
       AaveV3Optimism.POOL
     );
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Opt_RiskParamsUpdate_20232408',
       AaveV3Optimism.POOL
     );
 
-    diffReports('preAaveV3_Opt_RiskParamsUpdate_20232408', 'postAaveV3_Opt_RiskParamsUpdate_20232408');
+    diffReports(
+      'preAaveV3_Opt_RiskParamsUpdate_20232408',
+      'postAaveV3_Opt_RiskParamsUpdate_20232408'
+    );
 
     // WBTC
     ReserveConfig memory WBTC_UNDERLYING_CONFIG = _findReserveConfig(
@@ -61,14 +60,14 @@ contract AaveV3_Opt_RiskParamsUpdate_20232408_Test is ProtocolV3TestBase {
 
     _validateReserveConfig(wstETH_UNDERLYING_CONFIG, allConfigsAfter);
     e2eTestAsset(
-    AaveV3Optimism.POOL,
-    _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
-    _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.wstETH_UNDERLYING)
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.wstETH_UNDERLYING)
     );
     e2eTestAsset(
-    AaveV3Optimism.POOL,
-    _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
-    _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WBTC_UNDERLYING)
+      AaveV3Optimism.POOL,
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WBTC_UNDERLYING)
     );
   }
 }
