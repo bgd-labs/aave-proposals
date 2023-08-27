@@ -11,7 +11,7 @@ import {AaveV3PayloadOptimism, IEngine, EngineFlags} from 'aave-helpers/v3-confi
  * - Discussion: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-optimism-2023-08-13/14466/1
  */
 contract AaveV3_Opt_RiskParamsUpdate_20232408 is AaveV3PayloadOptimism {
-  function collateralsUpdates() public view virtual override returns (IEngine.CollateralUpdate[] memory) {
+  function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](2);
 
     // WBTC
