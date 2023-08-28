@@ -18,7 +18,13 @@ After a period of testing by BGD Labs, this proposal seeks to fund the operation
 
 ## Specification
 
-This proposal will transfer a total of: 900 aLink (~ $5600) from the collector contract across ethereum, polygon, arbitrum, optimism networks to the short executor / bridge executor. On the short executor / bridge executor, the aLink tokens transferred will be withdrawn to the Link tokens. In case of polygon, as the Link withdrawn from the pool is not an ERC-677, so we swap it one to one using PegSwap to ERC-677 Link token. Out of all the Link tokens received, 300 Link will be used to fund the pre-registered robot using the Aave CL Robot Operator contract by calling the `refillKeeper()` method. Once the keeper is refilled, a total of 600 Link will be transferred to BGD labs for their previous spending on the Aave Robot for operational expenses.
+This proposal will transfer a total of: 900 aLink (~ $5600) from the collector contract across Ethereum, Polygon, Arbitrum, Optimism networks to the short Executor / Bridge Executor.
+
+On the Short Executor / Bridge Executor, the aLINK tokens transferred will be withdrawn to the Link tokens. In the case of Polygon, as the LINK withdrawn from the pool is not an ERC-677, the payload swaps it one-to-one using `PegSwap` to the ERC-677 LINK token.
+
+Out of all the LINK tokens received, 300 LINK will be used to fund the pre-registered robot using the Aave CL Robot Operator contract by calling the `refillKeeper()` method.
+
+Once the keeper is refilled, a total of 600 Link will be transferred to BGD labs for their previous spending on the Aave Robot for operational expenses.
 
 The AaveCLRobotOperator is a contract which is used to perform admin actions on the Aave Robot, a AaveCLRobotOperator is deployed on each network, that will allow for the DAO to have "admin" control on all the underlying robots, in order to register new ones, cancel or funding them with the Link required for execution. To simplify operational complexity the role of robot guardian will have the permissions to set the maximum gas limit of the keeper and to disable automation for certain governance proposals.
 Initially, BGD will keep the Robot Guardian role.
