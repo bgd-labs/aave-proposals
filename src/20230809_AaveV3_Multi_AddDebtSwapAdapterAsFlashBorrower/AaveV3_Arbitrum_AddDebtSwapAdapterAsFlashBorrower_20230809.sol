@@ -7,7 +7,6 @@ import {AaveV3Arbitrum, AaveV3ArbitrumAssets} from 'aave-address-book/AaveV3Arbi
 /**
  * @title Add DebtSwapAdapter as FlashBorrower
  * @author BGD labs
- * - Snapshot: TODO
  * - Discussion: https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debtswapadapter-s/14595
  */
 contract AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
