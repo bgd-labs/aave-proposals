@@ -17,74 +17,46 @@ contract COWSwapper {
   address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
   address public constant CHAINLINK_PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
 
-  uint256 usdtBalance;
-  uint256 daiBalance;
-
-  function swap() external {
+  function swap(address fromToken, address oracleFrom, uint256 slippage) external {
     if (msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) revert InvalidCaller();
 
-    usdtBalance = IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).balanceOf(address(this));
-    daiBalance = IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).balanceOf(address(this));
+    uint256 balance = IERC20(fromToken).balanceOf(address(this));
 
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).forceApprove(MILKMAN, usdtBalance);
-    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).forceApprove(MILKMAN, daiBalance);
+    IERC20(fromToken).forceApprove(MILKMAN, balance);
 
     IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      usdtBalance,
-      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
+      balance,
+      IERC20(fromToken),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(this),
       CHAINLINK_PRICE_CHECKER,
-      _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
-    );
-
-    IMilkman(MILKMAN).requestSwapExactTokensForTokens(
-      daiBalance,
-      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(this),
-      CHAINLINK_PRICE_CHECKER,
-      _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
+      _getEncodedData(oracleFrom, AaveV2EthereumAssets.USDC_ORACLE, slippage)
     );
   }
 
-  function cancelUsdt(address milkman) external {
+  function cancelSwap(
+    address milkman,
+    address fromToken,
+    address oracleFrom,
+    uint256 amount,
+    uint256 slippage
+  ) external {
     if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) {
       revert InvalidCaller();
     }
 
     IMilkman(milkman).cancelSwap(
-      usdtBalance,
-      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING),
+      amount,
+      IERC20(fromToken),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
       address(this),
       CHAINLINK_PRICE_CHECKER,
-      _getEncodedData(AaveV2EthereumAssets.USDT_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
+      _getEncodedData(oracleFrom, AaveV2EthereumAssets.USDC_ORACLE, slippage)
     );
 
-    IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).safeTransfer(
+    IERC20(fromToken).safeTransfer(
       address(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.USDT_UNDERLYING).balanceOf(address(this))
-    );
-  }
-
-  function cancelDai(address milkman) external {
-    if (msg.sender != ALLOWED_CALLER && msg.sender != AaveGovernanceV2.SHORT_EXECUTOR) {
-      revert InvalidCaller();
-    }
-
-    IMilkman(milkman).cancelSwap(
-      daiBalance,
-      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING),
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING),
-      address(this),
-      CHAINLINK_PRICE_CHECKER,
-      _getEncodedData(AaveV2EthereumAssets.DAI_ORACLE, AaveV2EthereumAssets.USDC_ORACLE)
-    );
-
-    IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).safeTransfer(
-      address(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.DAI_UNDERLYING).balanceOf(address(this))
+      IERC20(fromToken).balanceOf(address(this))
     );
   }
 
@@ -109,7 +81,8 @@ contract COWSwapper {
 
   function _getEncodedData(
     address oracleOne,
-    address oracleTwo
+    address oracleTwo,
+    uint256 slippage
   ) internal pure returns (bytes memory) {
     bytes memory data;
     address[] memory paths = new address[](2);
@@ -121,6 +94,6 @@ contract COWSwapper {
 
     data = abi.encode(paths, reverses);
 
-    return abi.encode(100, data); // 100 = 1% slippage
+    return abi.encode(slippage, data);
   }
 }
