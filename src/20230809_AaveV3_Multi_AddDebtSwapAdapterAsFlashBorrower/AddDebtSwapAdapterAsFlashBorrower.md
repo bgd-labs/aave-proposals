@@ -25,7 +25,7 @@ On Arbitrum, the adapter address is [TODO]() and the ACLManager address is [0xa7
 
 On Polygon, the adapter address is [0xb58Fd91558fa213D97Ac94C97F831c7289278084](https://polygonscan.com/address/0xb58Fd91558fa213D97Ac94C97F831c7289278084) and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://polygonscan.com/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
 
-On Avalanche, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://snowtrace.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
+On Avalanche, the adapter address is [0x8A9b2c132EA7676EE267F5b97b622083d6E3a2d4](https://snowtrace.io/address/0x8A9b2c132EA7676EE267F5b97b622083d6E3a2d4) and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://snowtrace.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
 
 ## References
 
