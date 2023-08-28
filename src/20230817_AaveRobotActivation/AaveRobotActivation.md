@@ -1,6 +1,6 @@
 ---
 title: "Funding Aave Robot for Governance V2 Automation"
-author: "BGD labs"
+author: "BGD labs @bgdlabs"
 discussions: "https://governance.aave.com/t/bgd-aave-robot-v1/13091/"
 ---
 
