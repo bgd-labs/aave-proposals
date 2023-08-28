@@ -1,7 +1,7 @@
 ---
 title: "Add DebtSwapAdapter as FlashBorrower"
 author: "BGD labs"
-discussions: ""
+discussions: "https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debtswapadapter-s/14595"
 ---
 
 ## Simple Summary
