@@ -19,7 +19,7 @@ Set the `ParaswapDebtSwapAdapterV3GHO` as a flashBorrower on the `ACLManager` co
 
 On Ethereum, the adapter address is [0x8761e0370f94f68Db8EaA731f4fC581f6AD0Bd68](https://etherscan.io/address/0x8761e0370f94f68Db8EaA731f4fC581f6AD0Bd68) and the ACLManager address is [0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0.](https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
 
-On Optimism, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://optimistic.etherscan.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
+On Optimism, the adapter address is [0xcFaE0D8c5707FCc6478D6a65fFA31efADeF8b8EC](https://optimistic.etherscan.io/address/0xcFaE0D8c5707FCc6478D6a65fFA31efADeF8b8EC) and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://optimistic.etherscan.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
 
 On Arbitrum, the adapter address is [TODO]() and the ACLManager address is [0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B.](https://arbiscan.io/address/0xa72636CbcAa8F5FF95B2cc47F3CDEe83F3294a0B)
 
