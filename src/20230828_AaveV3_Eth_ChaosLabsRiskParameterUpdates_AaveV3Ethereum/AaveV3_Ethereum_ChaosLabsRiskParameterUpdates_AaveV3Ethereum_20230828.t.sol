@@ -75,7 +75,6 @@ contract AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828_T
     _validateReserveConfig(CBETH_UNDERLYING_CONFIG, allConfigsAfter);
     _validateReserveConfig(RETH_UNDERLYING_CONFIG, allConfigsAfter);
 
-
     e2eTestAsset(
       AaveV3Ethereum.POOL,
       _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),

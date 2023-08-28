@@ -10,11 +10,11 @@ A proposal to adjust seven (7) total risk parameters, including Loan-to-Value, L
 
 ## Motivation
 
-Chaos Labs’ Parameter Recommendation Platform runs hundreds of thousands of agent-based off-chain and on-chain simulations to examine how different Aave V3 risk parameters configurations would behave under adverse market conditions - and find the optimal values to maximize protocol borrow usage while minimizing losses from liquidations and bad debt. 
+Chaos Labs’ Parameter Recommendation Platform runs hundreds of thousands of agent-based off-chain and on-chain simulations to examine how different Aave V3 risk parameters configurations would behave under adverse market conditions - and find the optimal values to maximize protocol borrow usage while minimizing losses from liquidations and bad debt.
 
 Please find more information on the parameter recommendation methodology [here](https://community.chaoslabs.xyz/aave/recommendations/methodology).
 
-*Note: As a general guideline, we limit the proposed changes by +-3% for all parameters as a high/low bound for a given proposal. This ensures more controlled changes and allows us to analyze their effect on user behavior before recommending further amendments to the parameters if the optimal configuration is outside this range.*
+_Note: As a general guideline, we limit the proposed changes by +-3% for all parameters as a high/low bound for a given proposal. This ensures more controlled changes and allows us to analyze their effect on user behavior before recommending further amendments to the parameters if the optimal configuration is outside this range._
 
 You can also view the simulation results and breakdown for the different assets by clicking on them on this [page](https://community.chaoslabs.xyz/aave/risk/markets/Ethereum/recommendations).
 
@@ -34,15 +34,15 @@ We have not identified any outsized positions that are actively affecting our re
 
 ### Recommendations
 
-| Asset | Parameter | Current | Recommended | Change |
-| --- | --- | --- | --- | --- |
-| DAI | Liquidation Penalty | 4% | 5% | +1% |
-| WSTETH | Liquidation Threshold | 80% | 81% | +1% |
-| WSTETH | Loan-to-Value | 69% | 78.5% | +9.5% |
-| cbETH | Liquidation Threshold | 74% | 77% | +3% |
-| cbETH | Loan-to-Value | 67% | 74.5% | +7.5% |
-| rETH | Liquidation Threshold | 74% | 77% | +3% |
-| rETH | Loan-to-Value | 67% | 74.5% | +7.5% |
+| Asset  | Parameter             | Current | Recommended | Change |
+| ------ | --------------------- | ------- | ----------- | ------ |
+| DAI    | Liquidation Penalty   | 4%      | 5%          | +1%    |
+| WSTETH | Liquidation Threshold | 80%     | 81%         | +1%    |
+| WSTETH | Loan-to-Value         | 69%     | 78.5%       | +9.5%  |
+| cbETH  | Liquidation Threshold | 74%     | 77%         | +3%    |
+| cbETH  | Loan-to-Value         | 67%     | 74.5%       | +7.5%  |
+| rETH   | Liquidation Threshold | 74%     | 77%         | +3%    |
+| rETH   | Loan-to-Value         | 67%     | 74.5%       | +7.5%  |
 
 ## References
 

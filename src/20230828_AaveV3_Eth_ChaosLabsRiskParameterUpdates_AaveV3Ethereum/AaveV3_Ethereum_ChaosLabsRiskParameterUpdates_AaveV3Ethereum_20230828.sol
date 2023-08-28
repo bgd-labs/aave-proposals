@@ -10,7 +10,8 @@ import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
  * - Snapshot: TODO
  * - Discussion: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-ethereum-2023-08-25/14641
  */
-contract AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828 is AaveV3PayloadEthereum
+contract AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828 is
+  AaveV3PayloadEthereum
 {
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](4);
