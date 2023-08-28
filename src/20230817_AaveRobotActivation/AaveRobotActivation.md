@@ -18,11 +18,11 @@ After a period of testing by BGD Labs, this proposal seeks to fund the operation
 
 ## Specification
 
-This proposal will transfer a total of: 900 aLink (~ $5600) from the collector contract across Ethereum, Polygon, Arbitrum, Optimism networks to the short Executor / Bridge Executor.
+This proposal will transfer a total of: 1275 aLink (~ $7500) from the collector contract across Ethereum, Polygon, Arbitrum, Optimism networks to the short Executor / Bridge Executor.
 
 On the Short Executor / Bridge Executor, the aLINK tokens transferred will be withdrawn to the Link tokens. In the case of Polygon, as the LINK withdrawn from the pool is not an ERC-677, the payload swaps it one-to-one using `PegSwap` to the ERC-677 LINK token.
 
-Out of all the LINK tokens received, 300 LINK will be used to fund the pre-registered robot using the Aave CL Robot Operator contract by calling the `refillKeeper()` method.
+Out of all the LINK tokens received, 675 LINK will be used to fund the pre-registered robot using the Aave CL Robot Operator contract by calling the `refillKeeper()` method.
 
 Once the keeper is refilled, a total of 600 Link will be transferred to BGD labs for their previous spending on the Aave Robot for operational expenses.
 
