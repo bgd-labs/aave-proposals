@@ -7,8 +7,7 @@ import {AaveV3Avalanche, AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Av
 /**
  * @title Add DebtSwapAdapter as FlashBorrower
  * @author BGD labs
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Discussion: https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debtswapadapter-s/14595
  */
 contract AaveV3_Avalanche_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
   address public constant NEW_FLASH_BORROWER = 0x8A9b2c132EA7676EE267F5b97b622083d6E3a2d4;
