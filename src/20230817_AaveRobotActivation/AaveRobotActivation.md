@@ -6,7 +6,7 @@ discussions: "https://governance.aave.com/t/bgd-aave-robot-v1/13091/"
 
 ## Simple Summary
 
-This proposal seeks to fund the operational cost of Aave Robot with Link tokens from the collector contract which will help to perform automation on permissionless actions of Aave Governance v2. This proposal also reimburses BGD Labs with Link spent previously on the Aave Robot.
+This proposal seeks to fund the operational cost of Aave Robot with LINK tokens from the Aave Collector contract which will help to perform automation on permissionless actions of Aave Governance v2. This proposal also reimburses BGD Labs for the LINK spent previously on the Aave Robot.
 
 ## Motivation
 
