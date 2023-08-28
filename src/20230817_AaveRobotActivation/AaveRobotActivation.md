@@ -10,7 +10,11 @@ This proposal seeks to fund the operational cost of Aave Robot with LINK tokens 
 
 ## Motivation
 
-Given the nature of Aave Governance V2, certain actions such as `queue()`, `cancel()`, and `execute()` are completely permissionless and are needed to be called by any address when the conditions are met. Manual initiation of these actions can result in unnecessary delays and expired proposals, especially when proposers is unaware of additional steps beyond proposal submission. To address these issues, and enhance the overall effectiveness of the Aave Governance, the implementation of the Aave Robot presents a solution leveraging chainlink automation to solve it. This proposal seeks to fund the operational cost of the Aave Robot to automate key actions within Aave Governance V2, ultimately streamlining processes, reducing friction.
+Given the nature of Aave Governance V2, certain permissionless actions such as `queue()`, `cancel()`, and `execute()` need to be called by any address when the conditions are met. 
+
+Manual initiation of these actions can result in unnecessary delays and expired proposals, especially when proposers are unaware of additional steps beyond proposal submission. To address these issues, and enhance the overall effectiveness of the Aave Governance, the implementation of the Aave Robot presents a solution leveraging Chainlink Automation to solve it.
+
+After a period of testing by BGD Labs, this proposal seeks to fund the operational cost of the Aave Robot to automate key actions within Aave Governance V2, ultimately streamlining processes, and reducing friction.
 
 ## Specification
 
