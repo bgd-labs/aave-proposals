@@ -6,7 +6,7 @@ discussions: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-update
 
 ## Simple Summary
 
-A proposal to adjust five (3) total risk parameters, including Loan-to-Value, Liquidation Threshold, and Liquidation Bonus, across two (2) Aave V3 Optimism assets.
+A proposal to adjust three (3) total risk parameters, including Loan-to-Value, Liquidation Threshold, and Liquidation Bonus, across two (2) Aave V3 Optimism assets.
 
 ## Motivation
 
