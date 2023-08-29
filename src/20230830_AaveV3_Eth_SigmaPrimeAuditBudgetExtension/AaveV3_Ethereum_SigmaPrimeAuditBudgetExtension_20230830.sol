@@ -11,7 +11,7 @@ import {ICollector} from 'aave-address-book/common/ICollector.sol';
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x099a932f4e11a07b462f91257d2e5e899df25f6f43547644c681ac5addb38a9d
  * - Discussion: https://governance.aave.com/t/bgd-sigma-prime-audit-budget-extension/14357
  */
- contract AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830 is IProposalGenericExecutor {
+ contract AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830 {
 
   ICollector public constant COLLECTOR = AaveV3Ethereum.COLLECTOR;
 
