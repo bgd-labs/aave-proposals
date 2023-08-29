@@ -20,7 +20,7 @@
 pragma solidity ^0.8.0;
 
 import 'aave-helpers/v2-config-engine/AaveV2PayloadPolygon.sol';
-import {AaveV2Polygon, AaveV2PolygonAssets, ILendingPoolConfigurator} from 'aave-address-book/AaveV2Polygon.sol';
+import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 
 /**
  * @dev Update Reserve Factors (RF) on Polygon v2 to encourage users to migrate funds to v3.

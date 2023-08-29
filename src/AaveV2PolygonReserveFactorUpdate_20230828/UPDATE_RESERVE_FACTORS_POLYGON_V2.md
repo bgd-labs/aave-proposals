@@ -6,15 +6,15 @@ discussions: https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-a
 
 # Simple Summary
 
-This AIP is a continuation of [AIP 284](https://app.aave.com/governance/proposal/284/) and increases the Rserve Factor (RF) for assets on Polygon v2 by 5%, up to a maximum of 99.99%.
+This AIP is a continuation of [AIP 284](https://app.aave.com/governance/proposal/284/) and increases the Reserve Factor (RF) for assets on Polygon v2 by 5%, up to a maximum of 99.99%.
 
 # Motivation
 
-This AIP increases will reduce deposit yield for assets on Polygon v2 by increasing the RF. With this upgrade being passed, users are further encouraged to migrate from Polygon v2 to v3.
+This AIP will reduce deposit yield for assets on Polygon v2 by increasing the RF. With this upgrade being passed, users will be further encouraged to migrate from Polygon v2 to v3.
 
 Increasing the RF routes a larger portion of the interest paid by users to Aave DAO's Treasury. User's funds are not at risk of liquidation and the borrowing rate remains unchanged. 
 
-Of the assets with an RF set at 99.99%, there is no change. All other assets reserves will have the RF increased by 5%.
+Of the assets with an RF set at 99.99%, there is no change. All other asset reserves will have the RF increased by 5%.
 
 The next AIP will be submitted during the first week of October.
 
@@ -50,7 +50,7 @@ The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.co
 
 # Disclaimer
 
-The author, TokenLogic, receives no payment from anyone, including Aave DAO, for this proposal.TokenLogic is a delegate within the Aave community. 
+The author, TokenLogic, receives no payment from anyone, including Aave DAO, for this proposal. TokenLogic is a delegate within the Aave community. 
 
 # Copyright
 

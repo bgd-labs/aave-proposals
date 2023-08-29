@@ -39,6 +39,55 @@ contract AaveV2PolygonReserveFactorUpdate_20230828_Test is ProtocolV2TestBase {
     assetsChanged[5] = AaveV2PolygonAssets.WMATIC_UNDERLYING;
     assetsChanged[6] = AaveV2PolygonAssets.BAL_UNDERLYING;
 
+    ReserveConfig memory DAI_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.DAI_UNDERLYING
+    );
+    DAI_UNDERLYING_CONFIG.reserveFactor = 31_00;
+    _validateReserveConfig(DAI_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory USDC_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.USDC_UNDERLYING
+    );
+    USDC_UNDERLYING_CONFIG.reserveFactor = 33_00;
+    _validateReserveConfig(USDC_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory USDT_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.USDT_UNDERLYING
+    );
+    USDT_UNDERLYING_CONFIG.reserveFactor = 32_00;
+    _validateReserveConfig(USDT_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory WBTC_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.WBTC_UNDERLYING
+    );
+    WBTC_UNDERLYING_CONFIG.reserveFactor = 65_00;
+    _validateReserveConfig(WBTC_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory WETH_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.WETH_UNDERLYING
+    );
+    WETH_UNDERLYING_CONFIG.reserveFactor = 55_00;
+    _validateReserveConfig(WETH_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory WMATIC_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.WMATIC_UNDERLYING
+    );
+    WMATIC_UNDERLYING_CONFIG.reserveFactor = 51_00;
+    _validateReserveConfig(WMATIC_UNDERLYING_CONFIG, allConfigsAfter);
+
+    ReserveConfig memory BAL_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2PolygonAssets.BAL_UNDERLYING
+    );
+    BAL_UNDERLYING_CONFIG.reserveFactor = 42_00;
+    _validateReserveConfig(BAL_UNDERLYING_CONFIG, allConfigsAfter);
+
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
     e2eTest(AaveV2Polygon.POOL);
