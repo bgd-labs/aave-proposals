@@ -30,7 +30,7 @@ An extensive rationale and description of this Phase 2 can be found on the [Aave
     - Maintain the new governance user interface.
     - Study technical ways of increasing voting participation.
 - Batch a series of improvements for Aave v3, into an Aave v3.1 version: this will include an improvement of the liquidation mechanism, and potentially some periphery components. In addition, any bug fixing (Aave v2 and v3) would be included.
-- Support and advice on deprecation of Aave v2, involving any (reasonable) development. Items included on the Aave v3 part of the scope could potentially be applied on v2.
+- Support and advise on deprecation of Aave v2, involving any (reasonable) development. Items included on the Aave v3 part of the scope could potentially be applied on v2.
 - Lead the deployment of 3 new deployment candidates (EVM), apart from the 2 pending network analyses (zkEVM, zkSync), if fully approved by the community. *Extra networks will be evaluated case-by-case*.
 
 
