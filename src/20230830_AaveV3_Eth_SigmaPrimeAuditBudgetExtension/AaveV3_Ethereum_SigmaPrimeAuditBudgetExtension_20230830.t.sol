@@ -16,7 +16,7 @@ import {AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830} from './AaveV3_
  */
  contract AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830_Test is ProtocolV3TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.envString("ETH_RPC_URL"), 18023212);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18023212);
   }
 
   function testProposalExecution() public {
