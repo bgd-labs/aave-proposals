@@ -18,7 +18,7 @@ An extensive rationale and description of this Phase 2 can be found on the [Aave
 
 **Development**
 
-- Maintain and improve all the Aave developer-experience tooling introduced in Phase I, including aave-address-book, aave-proposals 1, aave-helpers, and many others, present in the BGD Github org.
+- Maintain and improve all the Aave developer-experience tooling introduced in Phase I, including aave-address-book, aave-proposals, aave-helpers, and many others, present in the BGD Github org.
 - Iterate over Aave Seatbelt, making it fully compatible with Aave Governance v3, generalize it more for upcoming networks with Aave instances, and introduce new ideas to improve governance assurance.
 - Lead the development of new items involving changes in the Safety Module. More specifically, those already pre-approved by the community.
 - Create aggregated workflows, by re-organizing repositories (protocol, tooling from BGD, etc). At the moment, there are a lot of developer resources scattered around, properly organizing them requires further work.
