@@ -36,7 +36,7 @@ An extensive rationale and description of this Phase 2 can be found on the [Aave
 
 **Development liaison for security, and quality assurance**
 
-- Plan and coordinate all security resources for any development project of the community., both those executed by BGD and not. This includes also the evaluation of what should be reviewed, the parties involved in it, and asking for a budget to the DAO whenever required.
+- Plan and coordinate all security resources for any development project of the community, both those executed by BGD and not. This also includes the evaluation of what should be reviewed, the parties involved in it, and asking for a budget to the DAO whenever required.
 If a major project not executed by BGD appears, we will support it in a best-effort manner.
 - Onboard Certora on governance proposal reviews. We think it is important to have additional expert parties involved in the governance proposals verification process, and healthier for decentralization.
 We believe Certora, after years of collaboration in the ecosystem, is one of the only entities trustable for the task, if we support them with a light onboarding.
