@@ -51,9 +51,11 @@ contract AaveV3_Ethereum_AaveBGDPhase2_20230828_Test is ProtocolV3TestBase {
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
-    assertEq(
+    // Taking into account the 1 wei imprecion on aToken
+    assertApproxEqAbs(
       IERC20(UPFRONT_STABLE).balanceOf(BGD_RECIPIENT),
-      balanceBeforeStable + STABLE_UPFRONT_AMOUNT
+      balanceBeforeStable + STABLE_UPFRONT_AMOUNT,
+      1
     );
     assertEq(IERC20(AAVE).balanceOf(BGD_RECIPIENT), balanceBeforeAave + AAVE_UPFRONT_AMOUNT);
 
