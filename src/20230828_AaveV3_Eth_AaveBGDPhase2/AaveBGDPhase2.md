@@ -69,7 +69,7 @@ This will mean that what previously was done by BGD on the on-chain stage will b
 The proposal payload does the following:
 
 1. Releases the upfront payment component to BGD Labs: 1'140'000 aDAI v2 and 3'600 AAVE.
-2. Migrates the aDAI v2 of the Aave Ethereum Collector to aDAI v3, in order to create an stream from Aave v3, following the principles of migration v2->v3 of the community.
+2. Migrates the aDAI v2 of the Aave Ethereum Collector to aDAI v3, in order to create a stream from Aave v3, following the principles of migration v2->v3 of the community.
 3. Creates 2 streams for 6 months: 760'000 aDAI v3 and 2'400 AAVE.
 
 <br>
