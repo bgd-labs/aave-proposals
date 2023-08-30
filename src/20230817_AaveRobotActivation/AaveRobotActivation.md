@@ -27,8 +27,6 @@ Once the keeper is refilled, a total of 600 LINK will be transferred to BGD labs
 
 
 The `AaveCLRobotOperator` is a contract used to perform admin actions on the Aave Robot. An `AaveCLRobotOperator` is deployed on each network, which will allow for the DAO to have "admin" control on all the underlying robots, in order to register new ones, cancel or fund them with the LINK required for execution.
-
-
 To simplify operational complexity the role of robot guardian will have the permissions to set the maximum gas limit of the keeper and to disable automation for certain governance proposals. This non-invasive role will be held by BGD Labs, as technical service provider engaged with the community.
 Initially, BGD will keep the Robot Guardian role.
 
