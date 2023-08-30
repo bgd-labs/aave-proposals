@@ -22,7 +22,7 @@ An extensive rationale and description of this Phase 2 can be found on the [Aave
 - Iterate over Aave Seatbelt, making it fully compatible with Aave Governance v3, generalize it more for upcoming networks with Aave instances, and introduce new ideas to improve governance assurance.
 - Lead the development of new items involving changes in the Safety Module. More specifically, those already pre-approved by the community.
 - Create aggregated workflows, by re-organizing repositories (protocol, tooling from BGD, etc). At the moment, there are a lot of developer resources scattered around, properly organizing them requires further work.
-- Development of the killswitch component approved by the community 7.
+- Development of the killswitch component approved by the community.
 - Maintain and iterate over the upcoming Aave Governance v3, a.DI and Robot systems, including:
     - Deployment of new voting machines
     - Support the community on assessment of new bridges, and enabling them via proposals.
