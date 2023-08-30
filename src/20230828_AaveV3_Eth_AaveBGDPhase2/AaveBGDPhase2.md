@@ -8,7 +8,7 @@ discussions: "https://governance.aave.com/t/aave-bored-ghosts-developing-phase-2
 
 Approval for an engagement for services between the Aave DAO and BGD Labs, focused on development related tasks and with a duration of 6 months.
 
-<br>
+
 
 ## Motivation
 
@@ -33,7 +33,6 @@ An extensive rationale and description of this Phase 2 can be found on the [Aave
 - Support and advice on deprecation of Aave v2, involving any (reasonable) development. Items included on the Aave v3 part of the scope could potentially be applied on v2.
 - Lead the deployment of 3 new deployment candidates (EVM), apart from the 2 pending network analyses (zkEVM, zkSync), if fully approved by the community. *Extra networks will be evaluated case-by-case*.
 
-<br>
 
 **Development liaison for security, and quality assurance**
 
@@ -47,22 +46,17 @@ This will mean that what previously was done by BGD on the on-chain stage will b
 - Provide network analysis for 3 new deployment candidates (if applicable), together with tackling the whole deployment and activation technical procedure. *Extra network analysis will be budgeted independently*.
 - Execute an initial iteration of the proposed Aave Forest. At the moment (Phase I) we are finishing the evaluation of an initial set of Owls, but coordination and acting as a technical entity associated “natively” with Aave will be necessary.
 
-<br>
-
 **Development support for contributors/partners**
 
 - Support any entity improving the Aave DAO documentation on all technical information.
 - Act as technical point of contact for external partners and contributors of the DAO.
 
-<br>
 
 **The duration of the engagement is 6 months**, from the execution of this on-chain governance proposal, which acts as the binding agreement between the Aave DAO and BGD Labs.
 
-<br>
 
 **The budget requested is 1’900’000 USD in stablecoins and 6’000 AAVE, 60% paid upfront and the rest over a stream of 6 months**.
 
-<br>
 
 ## Specification
 
@@ -72,7 +66,6 @@ The proposal payload does the following:
 2. Migrates the aDAI v2 of the Aave Ethereum Collector to aDAI v3, in order to create a stream from Aave v3, following the principles of migration v2->v3 of the community.
 3. Creates 2 streams for 6 months: 760'000 aDAI v3 and 2'400 AAVE.
 
-<br>
 
 ## References
 
@@ -81,7 +74,6 @@ The proposal payload does the following:
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0xe72dd00eb1ab6223b87e5e1fa740c39b64bfef9b7ccb0939e53403c78a04b18e)
 - [Discussion](https://governance.aave.com/t/aave-bored-ghosts-developing-phase-2/14484)
 
-<br>
 
 ## Copyright
 
