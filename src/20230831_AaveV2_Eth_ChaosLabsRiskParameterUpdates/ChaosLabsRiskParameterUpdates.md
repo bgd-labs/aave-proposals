@@ -8,9 +8,9 @@ discussions: "https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updat
 
 A proposal to:
 
-(1) Reduce the Liquidation Threshold (LT) and Loan-To-Value (LTV) for sixteen (16) frozen collateral assets on Aave V2 Ethereum.
+(1) Reduce the Liquidation Threshold (LT) and Loan-To-Value (LTV) for fourteen (14) frozen collateral assets on Aave V2 Ethereum.
 
-(2) Increase Reserve Factors for all collateral assets on Aave V2 Ethereum.
+(2) Increase Reserve Factors for collateral assets on Aave V2 Ethereum.
 
 ## Motivation
 
