@@ -13,49 +13,15 @@ can be governed by the DAO, while some functions can be invoked by an allowed gu
 
 #### StrategicAssetsManager.sol
 
-```
-  function addVeToken(
-    address underlying,
-    address veToken,
-    address warden,
-    uint256 lockDuration,
-    address initialDelegate,
-    bytes32 spaceId
-  ) external onlyOwner
-```
-
-This function, only governed by the DAO, sets the information needed in order to handle a veToken and all other functionality related to it.
-Without this information, the rest of the functionality will revert.
-
-Example: underlying would be B-80BAL-20WETH, veToken would be veBAL.
-Warden is a protocol by Paladin: https://app.warden.vote/boosts/ where users can boost their rewards or offer to lock their tokens for a price.
-Lock duration is the amount of time the veToken will be locked for. In the case of veBAL, max is 1 year. It can vary across different tokens.
-The initial delegate, is somebody who can vote. SpaceID is the snapshot ID for voting, which veBAL uses. veCRV votes via an Aragon contract.
-
-`function removeVeToken(address underlying) external onlyOwner`
-
-Removes the ability to interact with a certain veToken.
-
-`function addSdToken(address underlying, address sdToken, address depositor) external onlyOwner`
-
-SD tokens are StakeDAO tokens: https://stakedao.gitbook.io/stakedaohq/
-For them, the underlying, the sdToken address of the token, and the address where to deposit the underlying to receive sdToken.
-
-`function removeSdToken(address underlying) external onlyOwner`
-
 Removes the ability to interact with a certain sdToken.
 
 `function withdrawERC20(address token, address to, uint256 amount) external onlyOwner`
 
 Sends ERC20 tokens to an address. Withdrawal mechanism.
 
-`function setStrategicAssetsManager(address _manager) external onlyOwner`
+`function updateGuardian(address _manager) external onlyOwner`
 
-Adds manager role.
-
-`function removeStrategicAssetManager() external onlyOwner`
-
-Revokes manager role.
+Updates guardian role, which in this contract functions as a strategic asset manager.
 
 #### VeTokenManager.sol
 
@@ -117,7 +83,7 @@ Claim rewards earned by selling boost.
 Sets the spaceID that's used by protocol on Snapshot for voting. For example, "balancer.eth" is Balancer's spaceId on Snapshot.
 
 ```
- function setDelegateSnapshot(
+ function setDelegate(
     address underlying,
     address newDelegate
   ) external onlyOwnerOrManager
@@ -125,21 +91,9 @@ Sets the spaceID that's used by protocol on Snapshot for voting. For example, "b
 
 Delegate tokens so they can vote on Snapshot.
 
-`function clearDelegateSnapshot(address underlying) external onlyOwnerOrManager`
+`function clearDelegate(address underlying) external onlyOwnerOrManager`
 
 Remove the active delegate.
-
-```
-function voteAragon(
-    address underlying,
-    uint256 voteData,
-    bool support
-  ) external onlyOwnerOrManager
-```
-
-Vote on Aragon (as opposed to off-chain votes done via Snapshot). veCRV uses Aragon voting.
-
-** Since DAO is unlikely to hold veCRV immediately, this function can likely be removed initially.**
 
 `function setVotingContract(address underlying, address voting) external onlyOwnerOrManager`
 
@@ -167,18 +121,6 @@ This function also locks more of the native token held by StrategicAssetsManager
 `function unlock(address underlying) external onlyOwnerOrManager`
 
 Unlocks the veToken in order to receive the underlying once again. Lock duration needs to have passed or transaction will revert.
-
-#### SdTokenManager.sol
-
-`function lock(address underlying, uint256 amount) external onlyOwnerOrManager`
-
-Locks underlying for sdToken for 4 years.
-
-`function retrieveUnderlying(address token) external onlyOwnerOrManager`
-
-This function is TODO depending on how we choose to approach this.
-There is no mechanism to unlock from sdTokens and Llama has voiced their concerns with sdTokens but the DAO voted to include them so we have added this functionality.
-The StakeDAO docs mention to go to Curve.fi and swap using the pool. This has no MEV protection so a better alternative might be using COW Swap or the Curator contract.
 
 ##### LSDLiquidityGaugeManager.sol
 

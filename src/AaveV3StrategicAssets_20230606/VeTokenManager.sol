@@ -4,19 +4,32 @@ pragma solidity 0.8.19;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
-import {DelegateRegistry} from './interfaces/IDelegateRegistry.sol';
+import {IDelegateRegistry} from './interfaces/IDelegateRegistry.sol';
 import {IVeToken} from './interfaces/IVeToken.sol';
 import {IWardenBoost} from './interfaces/IWardenBoost.sol';
-import {Core} from './Core.sol';
+import {Common} from './Common.sol';
 
-abstract contract VeTokenManager is Core {
+abstract contract VeTokenManager is Common {
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
+  event ClaimBoostRewards();
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
   event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
+  event RemoveBoostOffer();
+  event SellBoost(
+    uint256 pricePerVote,
+    uint64 duration,
+    uint64 expiryTime,
+    uint16 minPerc,
+    uint16 maxPerc,
+    bool useAdvicePrice
+  );
+  event SetLockDuration(uint256 newDuration);
   event Unlock(uint256 tokensUnlocked);
 
-  DelegateRegistry public constant DELEGATE_REGISTRY =
-    DelegateRegistry(0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446);
+  error MaxFeeExceeded();
+
+  IDelegateRegistry public constant DELEGATE_REGISTRY =
+    IDelegateRegistry(0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446);
 
   address public constant BAL = 0xba100000625a3754423978a60c9317c58a424e3D;
   address public constant B_80BAL_20WETH = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
@@ -28,35 +41,48 @@ abstract contract VeTokenManager is Core {
   /// @notice the keccak encoded spaceId of the snapshot space
   bytes32 public spaceId;
   /// @notice The lock duration of veToken
-  uint256 lockDuration;
+  uint256 public lockDuration;
 
-  /// @notice The Buyer will then need to call the user_checkpoint() method on all Curve V4 & Factory Gauges
-  /// currently farming, to apply the newly received Boost.
-  /// @notice duration in weeks (ie: 1 for 1 Week)
+  /// @notice Duration in weeks (ie: 1 for 1 Week)
+  /// @param delegator Address of user to buy boost from
+  /// @param receiver Address receiving the boost
+  /// @param amount The amount of boost to purchase
+  /// @param durationWeeks The number of weeks to buy boost for
+  /// @param maxFeeOffered The maximum fee the buyer is willing to pay
   function buyBoost(
     address delegator,
     address receiver,
     uint256 amount,
-    uint256 duration
+    uint256 durationWeeks,
+    uint256 maxFeeOffered
   ) external onlyOwnerOrGuardian {
-    uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, duration);
-    IERC20(BAL).approve(WARDEN_VE_BAL, maxFee);
-    IWardenBoost(WARDEN_VE_BAL).buyDelegationBoost(delegator, receiver, amount, duration, maxFee);
+    uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, durationWeeks);
 
-    emit BuyBoost(delegator, receiver, amount, duration);
+    if (maxFee > maxFeeOffered) revert MaxFeeExceeded();
+    
+    IERC20(BAL).approve(WARDEN_VE_BAL, maxFee);
+    IWardenBoost(WARDEN_VE_BAL).buyDelegationBoost(
+      delegator,
+      receiver,
+      amount,
+      durationWeeks,
+      maxFee
+    );
+
+    emit BuyBoost(delegator, receiver, amount, durationWeeks);
   }
 
   /// @notice Sells boost in order to accrue rewards
   /// @dev Registers a new user, creates a BoostOffer with the given parameters
   /// @param pricePerVote Price of 1 vote per second (in wei)
-  /// @param maxDuration Maximum duration (in weeks) that a Boost can last when taken from this Offer
-  /// @param expiryTime Timestamp when this Offer is not longer valid
+  /// @param maxDurationWeeks Maximum duration (in weeks) that a Boost can last when taken from this Offer
+  /// @param expiryTime Timestamp when this Offer is no longer valid
   /// @param minPerc Minimum percent of users voting token balance to buy for a Boost (in BPS)
   /// @param maxPerc Maximum percent of users total voting token balance available to delegate (in BPS)
   /// @param useAdvicePrice True to use the advice Price instead of the given pricePerVote
   function sellBoost(
     uint256 pricePerVote,
-    uint64 maxDuration,
+    uint64 maxDurationWeeks,
     uint64 expiryTime,
     uint16 minPerc,
     uint16 maxPerc,
@@ -68,18 +94,25 @@ abstract contract VeTokenManager is Core {
     );
     IWardenBoost(WARDEN_VE_BAL).register(
       pricePerVote,
-      maxDuration,
+      maxDurationWeeks,
       expiryTime,
       minPerc,
       maxPerc,
       useAdvicePrice
     );
+    emit SellBoost(pricePerVote, maxDurationWeeks, expiryTime, minPerc, maxPerc, useAdvicePrice);
   }
 
   /// @notice Update an existing boost offer
+  /// @param pricePerVote Price of 1 vote per second (in wei)
+  /// @param maxDurationWeeks Maximum duration (in weeks) that a Boost can last when taken from this Offer
+  /// @param expiryTime Timestamp when this Offer is no longer valid
+  /// @param minPerc Minimum percent of users voting token balance to buy for a Boost (in BPS)
+  /// @param maxPerc Maximum percent of users total voting token balance available to delegate (in BPS)
+  /// @param useAdvicePrice True to use the advice Price instead of the given pricePerVote
   function updateBoostOffer(
     uint256 pricePerVote,
-    uint64 maxDuration,
+    uint64 maxDurationWeeks,
     uint64 expiryTime,
     uint16 minPerc,
     uint16 maxPerc,
@@ -87,26 +120,30 @@ abstract contract VeTokenManager is Core {
   ) external onlyOwnerOrGuardian {
     IWardenBoost(WARDEN_VE_BAL).updateOffer(
       pricePerVote,
-      maxDuration,
+      maxDurationWeeks,
       expiryTime,
       minPerc,
       maxPerc,
       useAdvicePrice
     );
+    emit SellBoost(pricePerVote, maxDurationWeeks, expiryTime, minPerc, maxPerc, useAdvicePrice);
   }
 
-  /// @notice Removes an existing boost offer
+  /// @notice Removes existing boost offer
   function removeBoostOffer() external onlyOwnerOrGuardian {
     IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).approve(WARDEN_VE_BAL, 0);
     IWardenBoost(WARDEN_VE_BAL).quit();
+    emit RemoveBoostOffer();
   }
 
   /// @notice Claim fee token rewards accrued by selling veBoost
   function claim() external onlyOwnerOrGuardian {
     IWardenBoost(WARDEN_VE_BAL).claim();
+    emit ClaimBoostRewards();
   }
 
   /// @notice sets the snapshot space ID
+  /// @param _spaceId The string representation of the spaceId
   function setSpaceId(bytes32 _spaceId) external onlyOwnerOrGuardian {
     DELEGATE_REGISTRY.clearDelegate(spaceId);
     spaceId = _spaceId;
@@ -114,6 +151,7 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice sets the snapshot delegate
+  /// @param newDelegate Address of the user to delegate to
   function setDelegate(address newDelegate) external onlyOwnerOrGuardian {
     _delegate(newDelegate);
   }
@@ -127,8 +165,10 @@ abstract contract VeTokenManager is Core {
   }
 
   /// @notice Increases the lock duration for underlying token
+  /// @param newLockDuration New lock duration for underlying-locking
   function setLockDuration(uint256 newLockDuration) external onlyOwnerOrGuardian {
     lockDuration = newLockDuration;
+    emit SetLockDuration(newLockDuration);
   }
 
   /// @notice Locks underlying token into veToken until lockDuration

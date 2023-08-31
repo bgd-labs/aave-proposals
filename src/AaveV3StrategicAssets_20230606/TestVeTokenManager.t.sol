@@ -11,7 +11,6 @@ import {IVeToken} from './interfaces/IVeToken.sol';
 import {IWardenBoost} from './interfaces/IWardenBoost.sol';
 import {StrategicAssetsManager} from './StrategicAssetsManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
-import {Core} from './Core.sol';
 
 interface ISmartWalletChecker {
   function allowlistAddress(address contractAddress) external;
@@ -19,8 +18,19 @@ interface ISmartWalletChecker {
 
 contract VeTokenManagerTest is Test {
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
+  event ClaimBoostRewards();
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
   event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
+  event RemoveBoostOffer();
+  event SellBoost(
+    uint256 pricePerVote,
+    uint64 maxDurationWeeks,
+    uint64 expiryTime,
+    uint16 minPerc,
+    uint16 maxPerc,
+    bool useAdvicePrice
+  );
+  event SetLockDuration(uint256 newDuration);
   event Unlock(uint256 tokensUnlocked);
   event VoteCast(uint256 voteData, bool support);
   event VotingContractUpdate(address indexed token, address voting);
@@ -37,10 +47,6 @@ contract VeTokenManagerTest is Test {
   address public constant WARDEN_VE_BAL = 0x42227bc7D65511a357c43993883c7cef53B25de9;
   address public constant VE_BOOST = 0x67F8DF125B796B05895a6dc8Ecf944b9556ecb0B;
   bytes32 public constant BALANCER_SPACE_ID = 'balancer.eth';
-
-  address public constant CRV = 0xD533a949740bb3306d119CC777fa900bA034cd52;
-  address public constant VE_CRV = 0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2;
-  address public constant CRV_VOTING = 0xBCfF8B0b9419b9A88c44546519b1e909cF330399;
 
   uint256 public constant LOCK_DURATION_ONE_YEAR = 365 days;
   uint256 public constant WEEK = 7 days;
@@ -61,19 +67,20 @@ contract VeTokenManagerTest is Test {
 contract BuyBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.buyBoost(
-      makeAddr('delegator'),
-      makeAddr('receiver'),
-      1e18,
-      100000
-    );
+    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 100000, type(uint256).max);
+  }
+
+  function test_revertsIf_estimatedFeeExceedsMaxFee() public {
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectRevert(VeTokenManager.MaxFeeExceeded.selector);
+    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 100000, 1);
   }
 
   function test_successful() public {
     deal(BAL, address(strategicAssets), 100e18);
     address delegator = 0x20EADfcaf91BD98674FF8fc341D148E1731576A4;
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.buyBoost(delegator, address(strategicAssets), 4000e18, 1);
+    strategicAssets.buyBoost(delegator, address(strategicAssets), 4000e18, 1, type(uint256).max);
     vm.stopPrank();
   }
 }
@@ -91,6 +98,8 @@ contract SellBoostTest is VeTokenManagerTest {
 
     uint64 expiration = uint64(block.timestamp + WEEK);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectEmit();
+    emit SellBoost(1000, 10, expiration, 1000, 10000, true);
     strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
     vm.stopPrank();
 
@@ -137,14 +146,9 @@ contract UpdateBoostOfferTest is VeTokenManagerTest {
     assertEq(offer.maxPerc, 10000);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.updateBoostOffer(
-      1000,
-      20,
-      uint64(expiration + WEEK),
-      1000,
-      5000,
-      true
-    );
+    vm.expectEmit();
+    emit SellBoost(1000, 20, uint64(expiration + WEEK), 1000, 5000, true);
+    strategicAssets.updateBoostOffer(1000, 20, uint64(expiration + WEEK), 1000, 5000, true);
     vm.stopPrank();
 
     IWardenBoost.BoostOffer memory offerUpdated = IWardenBoost(WARDEN_VE_BAL).offers(7);
@@ -187,6 +191,8 @@ contract RemoveBoostOfferTest is VeTokenManagerTest {
     assertEq(offer.maxPerc, 10000);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectEmit();
+    emit RemoveBoostOffer();
     strategicAssets.removeBoostOffer();
     vm.stopPrank();
 
@@ -254,6 +260,8 @@ contract Claim is VeTokenManagerTest {
     uint256 balanceBefore = IERC20(BAL).balanceOf(address(strategicAssets));
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectEmit();
+    emit ClaimBoostRewards();
     strategicAssets.claim();
     vm.stopPrank();
 
@@ -331,7 +339,7 @@ contract ClearDelegationSnapshot is VeTokenManagerTest {
   }
 }
 
-contract SetLockDuration is VeTokenManagerTest {
+contract SetLockDurationTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
@@ -339,6 +347,8 @@ contract SetLockDuration is VeTokenManagerTest {
 
   function test_successful() public {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectEmit();
+    emit SetLockDuration(LOCK_DURATION_ONE_YEAR + 1);
     strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR + 1);
     vm.stopPrank();
   }

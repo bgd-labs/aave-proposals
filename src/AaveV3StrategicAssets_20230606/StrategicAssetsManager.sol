@@ -5,6 +5,7 @@ pragma solidity 0.8.19;
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {Initializable} from 'solidity-utils/contracts/transparent-proxy/Initializable.sol';
 import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
+import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 
 import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
@@ -15,7 +16,7 @@ contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTo
   event WithdrawalERC20(address indexed _token, address _to, uint256 _amount);
 
   function initialize() external initializer {
-    _transferOwnership(_msgSender());
+    _transferOwnership(AaveGovernanceV2.SHORT_EXECUTOR);
     _updateGuardian(_msgSender());
     spaceId = 'balancer.eth';
     gaugeController = 0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD;
@@ -23,7 +24,7 @@ contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTo
   }
 
   function withdrawERC20(address token, address to, uint256 amount) external onlyOwner {
-    if (to == address(0)) revert Invalid0xAddress();
+    if (to == address(0)) revert InvalidZeroAddress();
 
     IERC20(token).safeTransfer(to, amount);
     emit WithdrawalERC20(token, to, amount);

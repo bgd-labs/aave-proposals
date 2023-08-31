@@ -6,10 +6,10 @@ import {Test} from 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
-import {ILiquidityGaugeController} from './interfaces/ILiquidityGauge.sol';
+import {ILiquidityGaugeController} from './interfaces/ILiquidityGaugeController.sol';
 import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
 import {StrategicAssetsManager} from './StrategicAssetsManager.sol';
-import {Core} from './Core.sol';
+import {Common} from './Common.sol';
 
 interface ISmartWalletChecker {
   function allowlistAddress(address contractAddress) external;
@@ -48,8 +48,8 @@ contract SetGaugeController is LSDLiquidityGaugeManagerTest {
     strategicAssets.setGaugeController(BALANCER_GAUGE_CONTROLLER);
   }
 
-  function test_revertsIf_invalid0xAddress() public {
-    vm.expectRevert(Core.Invalid0xAddress.selector);
+  function test_revertsIf_invalidZeroAddress() public {
+    vm.expectRevert(Common.InvalidZeroAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.setGaugeController(address(0));
     vm.stopPrank();
@@ -85,7 +85,7 @@ contract VoteForGaugeWeight is LSDLiquidityGaugeManagerTest {
   }
 
   function test_revertsIf_gaugeIsZeroAddress() public {
-    vm.expectRevert(Core.Invalid0xAddress.selector);
+    vm.expectRevert(Common.InvalidZeroAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.voteForGaugeWeight(address(0), 100);
     vm.stopPrank();

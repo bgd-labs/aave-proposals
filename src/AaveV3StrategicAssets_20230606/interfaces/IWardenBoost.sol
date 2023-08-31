@@ -22,16 +22,12 @@ interface IWardenBoost {
     bool useAdvicePrice;
   }
 
+  /// @notice Claim rewards for selling boost
   function claim() external returns (bool);
-
-  function claimBoostReward(uint256 boostId) external returns (bool);
 
   function delegationBoost() external returns (address);
 
-  function feeToken() external returns (IERC20);
-
-  function nextBoostId() external returns (uint256);
-
+  /// @param boostId Id of Boost to check offers for
   function offers(uint256 boostId) external returns (BoostOffer memory);
 
   /**
@@ -62,6 +58,7 @@ interface IWardenBoost {
     bool useAdvicePrice
   ) external returns (bool);
 
+  /// @notice Remove an existing boost offer
   function quit() external returns (bool);
 
   function estimateFees(

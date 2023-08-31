@@ -9,7 +9,7 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {StrategicAssetsManager} from './StrategicAssetsManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
-import {Core} from './Core.sol';
+import {Common} from './Common.sol';
 
 contract StrategicAssetsManagerTest is Test {
   event GuardianUpdated(address oldGuardian, address newGuardian);
@@ -102,7 +102,7 @@ contract WithdrawERC20 is StrategicAssetsManagerTest {
 
   function test_revertsIf_transferToZeroAddress() public {
     deal(B_80BAL_20WETH, address(strategicAssets), 10e18);
-    vm.expectRevert(Core.Invalid0xAddress.selector);
+    vm.expectRevert(Common.InvalidZeroAddress.selector);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.withdrawERC20(B_80BAL_20WETH, address(0), 1e18);
     vm.stopPrank();
