@@ -4,16 +4,18 @@
 
 #### wstETH ([0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb](https://optimistic.etherscan.io/address/0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb))
 
-| description          | value before | value after |
-| -------------------- | ------------ | ----------- |
-| ltv                  | 70 %         | 71 %        |
-| liquidationThreshold | 79 %         | 80 %        |
+| description | value before | value after |
+| --- | --- | --- |
+| ltv | 70 % | 71 % |
+| liquidationThreshold | 79 % | 80 % |
+
 
 #### WBTC ([0x68f180fcCe6836688e9084f035309E29Bf0A2095](https://optimistic.etherscan.io/address/0x68f180fcCe6836688e9084f035309E29Bf0A2095))
 
-| description      | value before | value after |
-| ---------------- | ------------ | ----------- |
-| liquidationBonus | 8.5 %        | 7.5 %       |
+| description | value before | value after |
+| --- | --- | --- |
+| liquidationBonus | 8.5 % | 7.5 % |
+
 
 ## Raw diff
 
