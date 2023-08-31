@@ -23,7 +23,7 @@ import {AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830} from './AaveV3_
     AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830 proposal = new AaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830();
     IERC20 aUSDT = IERC20(AaveV2EthereumAssets.USDT_A_TOKEN);
 
-    uint256 totalAmountToDisburse = proposal.FEE();
+    uint256 totalAmountToDisburse = 162000 * 1e6;
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Ethereum_SigmaPrimeAuditBudgetExtension_20230830',
       AaveV3Ethereum.POOL
