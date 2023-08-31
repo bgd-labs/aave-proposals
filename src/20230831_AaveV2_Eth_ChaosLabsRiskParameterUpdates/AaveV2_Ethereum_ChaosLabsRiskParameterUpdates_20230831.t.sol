@@ -20,7 +20,7 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
     proposal = new AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831();
   }
 
-  function testProposalExecution() public {
+  function testProposalExecutionPartOne() public {
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831',
       AaveV2Ethereum.POOL
@@ -33,6 +33,22 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
       AaveV2Ethereum.POOL
     );
 
+    validateAssetBatchOne(allConfigsBefore, allConfigsAfter);
+    validateAssetBatchTwo(allConfigsBefore, allConfigsAfter);
+    validateAssetBatchThree(allConfigsBefore, allConfigsAfter);
+
+    diffReports(
+      'preAaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831',
+      'postAaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831'
+    );
+
+    e2eTest(AaveV2Ethereum.POOL);
+  }
+
+  function validateAssetBatchOne(
+    ReserveConfig[] memory allConfigsBefore,
+    ReserveConfig[] memory allConfigsAfter
+  ) public pure {
     // BAL
     ReserveConfig memory BAL_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
@@ -175,7 +191,12 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
     UNI_UNDERLYING_CONFIG.reserveFactor = 30_00;
 
     _validateReserveConfig(UNI_UNDERLYING_CONFIG, allConfigsAfter);
+  }
 
+  function validateAssetBatchTwo(
+    ReserveConfig[] memory allConfigsBefore,
+    ReserveConfig[] memory allConfigsAfter
+  ) public pure {
     // SNX
     ReserveConfig memory SNX_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
@@ -252,16 +273,6 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
 
     _validateReserveConfig(sUSD_UNDERLYING_CONFIG, allConfigsAfter);
 
-    // TUSD
-    ReserveConfig memory TUSD_UNDERLYING_CONFIG = _findReserveConfig(
-      allConfigsBefore,
-      AaveV2EthereumAssets.TUSD_UNDERLYING
-    );
-
-    TUSD_UNDERLYING_CONFIG.reserveFactor = 30_00;
-
-    _validateReserveConfig(TUSD_UNDERLYING_CONFIG, allConfigsAfter);
-
     // USDC
     ReserveConfig memory USDC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
@@ -301,7 +312,12 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
     CRV_UNDERLYING_CONFIG.reserveFactor = 30_00;
 
     _validateReserveConfig(CRV_UNDERLYING_CONFIG, allConfigsAfter);
+  }
 
+  function validateAssetBatchThree(
+    ReserveConfig[] memory allConfigsBefore,
+    ReserveConfig[] memory allConfigsAfter
+  ) public pure {
     // WBTC
     ReserveConfig memory WBTC_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
@@ -318,15 +334,8 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
       AaveV2EthereumAssets.WETH_UNDERLYING
     );
 
-    WETH_UNDERLYING_CONFIG.reserveFactor = 30_00;
+    WETH_UNDERLYING_CONFIG.reserveFactor = 25_00;
 
     _validateReserveConfig(WETH_UNDERLYING_CONFIG, allConfigsAfter);
-
-    diffReports(
-      'preAaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831',
-      'postAaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831'
-    );
-
-    e2eTest(AaveV2Ethereum.POOL);
   }
 }
