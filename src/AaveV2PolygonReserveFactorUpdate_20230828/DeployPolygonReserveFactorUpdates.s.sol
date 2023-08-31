@@ -22,7 +22,7 @@ contract PolygonV2RatesUpdatesPayloadProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildPolygon(
-      address(0) // TODO
+      0x40fa5610f17A99D20bD428810bEc965fe4694238
     );
     GovHelpers.createProposal(
       payloads,
