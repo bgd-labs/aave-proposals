@@ -48,7 +48,7 @@ We have not identified any outsized positions that are actively affecting our re
 
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230828_AaveV3_Eth_ChaosLabsRiskParameterUpdates_AaveV3Ethereum/AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828.sol)
 - Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230828_AaveV3_Eth_ChaosLabsRiskParameterUpdates_AaveV3Ethereum/AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828.t.sol)
-- [Snapshot](TODO)
+- [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x5aff6836eb2e2e7a664ab996a75e115dc1d2362d32bd4b1a3d8d68b1833db702)
 - [Discussion](https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-ethereum-2023-08-25/14641)
 
 ## Copyright

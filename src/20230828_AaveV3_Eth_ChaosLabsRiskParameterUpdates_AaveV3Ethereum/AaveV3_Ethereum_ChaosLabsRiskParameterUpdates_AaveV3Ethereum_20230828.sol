@@ -7,7 +7,7 @@ import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 /**
  * @title Chaos Labs Risk Parameter Updates - Aave V3 Ethereum
  * @author Chaos Labs
- * - Snapshot: TODO
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x5aff6836eb2e2e7a664ab996a75e115dc1d2362d32bd4b1a3d8d68b1833db702
  * - Discussion: https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-ethereum-2023-08-25/14641
  */
 contract AaveV3_Ethereum_ChaosLabsRiskParameterUpdates_AaveV3Ethereum_20230828 is
