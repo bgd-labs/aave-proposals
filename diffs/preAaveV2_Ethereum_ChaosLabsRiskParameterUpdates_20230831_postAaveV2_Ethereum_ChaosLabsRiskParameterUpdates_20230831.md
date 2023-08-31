@@ -53,7 +53,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| ltv | 65 % | 48 % |
+| ltv | 65 % | 58 % |
 | liquidationThreshold | 77 % | 70 % |
 | reserveFactor | 25 % | 30 % |
 
@@ -128,7 +128,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| ltv | 59 % | 44 % |
+| ltv | 59 % | 45 % |
 | liquidationThreshold | 64 % | 50 % |
 | reserveFactor | 25 % | 30 % |
 
@@ -271,7 +271,7 @@
       },
       "ltv": {
         "from": 6500,
-        "to": 4800
+        "to": 5800
       },
       "reserveFactor": {
         "from": 2500,
@@ -351,7 +351,7 @@
       },
       "ltv": {
         "from": 5900,
-        "to": 4400
+        "to": 4500
       },
       "reserveFactor": {
         "from": 2500,

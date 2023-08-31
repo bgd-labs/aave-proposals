@@ -118,7 +118,7 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831 is IProposalGene
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveFactor(AaveV2EthereumAssets.UNI_UNDERLYING, 30_00);
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral({
       asset: AaveV2EthereumAssets.UNI_UNDERLYING,
-      ltv: 48_00,
+      ltv: 58_00,
       liquidationThreshold: 70_00,
       liquidationBonus: 109_00
     });
@@ -136,7 +136,7 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831 is IProposalGene
     AaveV2Ethereum.POOL_CONFIGURATOR.setReserveFactor(AaveV2EthereumAssets.MKR_UNDERLYING, 30_00);
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral({
       asset: AaveV2EthereumAssets.MKR_UNDERLYING,
-      ltv: 44_00,
+      ltv: 45_00,
       liquidationThreshold: 50_00,
       liquidationBonus: 107_50
     });

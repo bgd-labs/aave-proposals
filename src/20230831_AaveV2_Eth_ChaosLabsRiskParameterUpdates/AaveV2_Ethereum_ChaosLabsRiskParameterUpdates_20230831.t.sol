@@ -187,7 +187,7 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
     );
 
     UNI_UNDERLYING_CONFIG.liquidationThreshold = 70_00;
-    UNI_UNDERLYING_CONFIG.ltv = 48_00;
+    UNI_UNDERLYING_CONFIG.ltv = 58_00;
     UNI_UNDERLYING_CONFIG.reserveFactor = 30_00;
 
     _validateReserveConfig(UNI_UNDERLYING_CONFIG, allConfigsAfter);
@@ -216,7 +216,7 @@ contract AaveV2_Ethereum_ChaosLabsRiskParameterUpdates_20230831_Test is Protocol
     );
 
     MKR_UNDERLYING_CONFIG.liquidationThreshold = 50_00;
-    MKR_UNDERLYING_CONFIG.ltv = 44_00;
+    MKR_UNDERLYING_CONFIG.ltv = 45_00;
     MKR_UNDERLYING_CONFIG.reserveFactor = 30_00;
 
     _validateReserveConfig(MKR_UNDERLYING_CONFIG, allConfigsAfter);
