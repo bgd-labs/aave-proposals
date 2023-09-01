@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.19;
-
+import {console2} from 'forge-std/Test.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {IDelegateRegistry} from './interfaces/IDelegateRegistry.sol';
@@ -57,6 +57,7 @@ abstract contract VeTokenManager is Common {
     uint256 maxFeeOffered
   ) external onlyOwnerOrGuardian {
     uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, durationWeeks);
+    console2.log(maxFee);
 
     if (maxFee > maxFeeOffered) revert MaxFeeExceeded();
     

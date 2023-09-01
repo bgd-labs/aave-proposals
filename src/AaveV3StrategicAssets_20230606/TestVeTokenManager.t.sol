@@ -67,13 +67,14 @@ contract VeTokenManagerTest is Test {
 contract BuyBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 100000, type(uint256).max);
+    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 1, type(uint256).max);
   }
 
   function test_revertsIf_estimatedFeeExceedsMaxFee() public {
+    address delegator = 0x20EADfcaf91BD98674FF8fc341D148E1731576A4;
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     vm.expectRevert(VeTokenManager.MaxFeeExceeded.selector);
-    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 100000, 1);
+    strategicAssets.buyBoost(delegator, makeAddr('receiver'), 4000e18, 1, 1);
   }
 
   function test_successful() public {

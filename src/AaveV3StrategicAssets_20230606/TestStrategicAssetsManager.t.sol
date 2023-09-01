@@ -13,7 +13,7 @@ import {Common} from './Common.sol';
 
 contract StrategicAssetsManagerTest is Test {
   event GuardianUpdated(address oldGuardian, address newGuardian);
-  event WithdrawalERC20(address indexed _token, address _to, uint256 _amount);
+  event WithdrawalERC20(address indexed _token, uint256 _amount);
 
   // VeToken
   address public constant B_80BAL_20WETH = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
@@ -90,21 +90,13 @@ contract RemoveStrategicAssetManager is StrategicAssetsManagerTest {
 contract WithdrawERC20 is StrategicAssetsManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('Ownable: caller is not the owner');
-    strategicAssets.withdrawERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), 1e18);
+    strategicAssets.withdrawERC20(B_80BAL_20WETH, 1e18);
   }
 
   function test_revertsIf_insufficientBalance() public {
     vm.expectRevert('BAL#406');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.withdrawERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), 1e18);
-    vm.stopPrank();
-  }
-
-  function test_revertsIf_transferToZeroAddress() public {
-    deal(B_80BAL_20WETH, address(strategicAssets), 10e18);
-    vm.expectRevert(Common.InvalidZeroAddress.selector);
-    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.withdrawERC20(B_80BAL_20WETH, address(0), 1e18);
+    strategicAssets.withdrawERC20(B_80BAL_20WETH, 1e18);
     vm.stopPrank();
   }
 
@@ -117,9 +109,9 @@ contract WithdrawERC20 is StrategicAssetsManagerTest {
     );
 
     vm.expectEmit();
-    emit WithdrawalERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), amount);
+    emit WithdrawalERC20(B_80BAL_20WETH, amount);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.withdrawERC20(B_80BAL_20WETH, address(AaveV2Ethereum.COLLECTOR), amount);
+    strategicAssets.withdrawERC20(B_80BAL_20WETH, amount);
     vm.stopPrank();
 
     uint256 balanceManagerAfter = IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets));
