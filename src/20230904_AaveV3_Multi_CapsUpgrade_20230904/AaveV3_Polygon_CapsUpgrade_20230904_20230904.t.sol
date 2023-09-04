@@ -33,6 +33,23 @@ contract AaveV3_Polygon_CapsUpgrade_20230904_20230904_Test is ProtocolV3TestBase
       AaveV3Polygon.POOL
     );
 
+    address[] memory assetsChanged = new address[](1);
+    assetsChanged[0] = AaveV3PolygonAssets.DPI_UNDERLYING;
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
+    ReserveConfig memory DPI = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3PolygonAssets.DPI_UNDERLYING
+    );
+    DPI.supplyCap = 2_460;
+    _validateReserveConfig(DPI, allConfigsAfter);
+
+//     e2eTestAsset(
+//        AaveV3Polygon.POOL,
+//        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.WMATIC_UNDERLYING),
+//        _findReserveConfig(allConfigsAfter, AaveV3PolygonAssets.DPI_UNDERLYING)
+//        );
+
     diffReports(
       'preAaveV3_Polygon_CapsUpgrade_20230904_20230904',
       'postAaveV3_Polygon_CapsUpgrade_20230904_20230904'
