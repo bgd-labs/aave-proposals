@@ -33,6 +33,23 @@ contract AaveV3_Metis_CapsUpgrade_20230904_20230904_Test is ProtocolV3TestBase {
       AaveV3Metis.POOL
     );
 
+    address[] memory assetsChanged = new address[](1);
+    assetsChanged[0] = AaveV3MetisAssets.Metis_UNDERLYING;
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
+    ReserveConfig memory Metis = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3MetisAssets.Metis_UNDERLYING
+    );
+    Metis.supplyCap = 120_000;
+    _validateReserveConfig(Metis, allConfigsAfter);
+
+     e2eTestAsset(
+        AaveV3Metis.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3MetisAssets.WETH_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV3MetisAssets.Metis_UNDERLYING)
+        );
+
     diffReports(
       'preAaveV3_Metis_CapsUpgrade_20230904_20230904',
       'postAaveV3_Metis_CapsUpgrade_20230904_20230904'
