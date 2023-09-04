@@ -11,7 +11,6 @@ import {AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
  * - Discussion: https://governance.aave.com/t/arfc-supply-cap-increase-lsts-on-polygon-v3/14696
  */
 contract AaveV3_Polygon_SupplyCapLSTs_20230831 is AaveV3PayloadPolygon {
-  function _preExecute() internal override {}
 
   function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
     IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](2);
