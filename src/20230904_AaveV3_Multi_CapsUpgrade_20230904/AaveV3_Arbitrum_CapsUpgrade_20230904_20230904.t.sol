@@ -33,6 +33,23 @@ contract AaveV3_Arbitrum_CapsUpgrade_20230904_20230904_Test is ProtocolV3TestBas
       AaveV3Arbitrum.POOL
     );
 
+    address[] memory assetsChanged = new address[](1);
+    assetsChanged[0] = AaveV3ArbitrumAssets.AAVE_UNDERLYING;
+    _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
+
+    ReserveConfig memory AAVE = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3ArbitrumAssets.AAVE_UNDERLYING
+    );
+    AAVE.supplyCap = 2_710;
+    _validateReserveConfig(AAVE, allConfigsAfter);
+
+     e2eTestAsset(
+        AaveV3Arbitrum.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3ArbitrumAssets.WETH_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, AaveV3ArbitrumAssets.AAVE_UNDERLYING)
+        );
+
     diffReports(
       'preAaveV3_Arbitrum_CapsUpgrade_20230904_20230904',
       'postAaveV3_Arbitrum_CapsUpgrade_20230904_20230904'
