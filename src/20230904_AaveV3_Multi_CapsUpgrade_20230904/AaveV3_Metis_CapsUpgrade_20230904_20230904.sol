@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {AaveV3PayloadMetis, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadMetis.sol';
+import {AaveV3PayloadMetis, IEngine, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadMetis.sol';
 import {AaveV3MetisAssets} from 'aave-address-book/AaveV3Metis.sol';
 
 /**
