@@ -19,7 +19,7 @@ The following parameters would be modified for the stMatic and wstETH tokens:
 | Token | Current supply cap | Proposed supply cap | Increase | Total Supply |	Total Supply (%) |
 | --- | --- | --- | --- | --- | --- |
 |stMatic Polygon V3 | 57M | 66M | ~16% | 88.9M | 75%|
-|wstETH Polygon V3 | 3.45k | 4125 | ~19% | 5.5k | 75%|
+|wstETH Polygon V3 | 3450 | 4125 | ~19% | 5.5k | 75%|
 
 Contract:
 * stMatic Polygon: 0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4
