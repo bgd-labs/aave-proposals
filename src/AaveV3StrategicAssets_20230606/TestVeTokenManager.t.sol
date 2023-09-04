@@ -4,7 +4,6 @@ pragma solidity 0.8.19;
 
 import {Test} from 'forge-std/Test.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
-import {AaveV2Ethereum} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {IVeToken} from './interfaces/IVeToken.sol';
@@ -31,6 +30,7 @@ contract VeTokenManagerTest is Test {
     bool useAdvicePrice
   );
   event SetLockDuration(uint256 newDuration);
+  event SetSpaceId(bytes32 id);
   event Unlock(uint256 tokensUnlocked);
   event VoteCast(uint256 voteData, bool support);
   event VotingContractUpdate(address indexed token, address voting);
@@ -80,6 +80,8 @@ contract BuyBoostTest is VeTokenManagerTest {
   function test_successful() public {
     deal(BAL, address(strategicAssets), 100e18);
     address delegator = 0x20EADfcaf91BD98674FF8fc341D148E1731576A4;
+    vm.expectEmit();
+    emit BuyBoost(delegator, address(strategicAssets), 4000e18, 1);
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.buyBoost(delegator, address(strategicAssets), 4000e18, 1, type(uint256).max);
     vm.stopPrank();
@@ -272,7 +274,7 @@ contract Claim is VeTokenManagerTest {
   }
 }
 
-contract SetSpaceId is VeTokenManagerTest {
+contract SetSpaceIdTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
     strategicAssets.setSpaceId(BALANCER_SPACE_ID);
@@ -281,6 +283,8 @@ contract SetSpaceId is VeTokenManagerTest {
   function test_successful() public {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.setDelegate(initialDelegate);
+    vm.expectEmit();
+    emit SetSpaceId(BALANCER_SPACE_ID);
     strategicAssets.setSpaceId(BALANCER_SPACE_ID);
     vm.stopPrank();
 

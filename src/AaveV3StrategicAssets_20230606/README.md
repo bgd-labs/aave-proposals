@@ -21,7 +21,11 @@ Sends ERC20 tokens to an address. Withdrawal mechanism.
 
 `function updateGuardian(address _manager) external onlyOwner`
 
-Updates guardian role, which in this contract functions as a strategic asset manager.
+Updates guardian role, which in this contract functions as a strategic asset manager. Inherited from OwnableWithGuardian.
+
+`function transferOwnership(address _owner) external onlyOwner`
+
+Updates the owner of the contract. Inherited from Ownable.
 
 #### VeTokenManager.sol
 
@@ -94,12 +98,6 @@ Delegate tokens so they can vote on Snapshot.
 `function clearDelegate(address underlying) external onlyOwnerOrManager`
 
 Remove the active delegate.
-
-`function setVotingContract(address underlying, address voting) external onlyOwnerOrManager`
-
-Sets the contract where veToken voting takes place (for example, veCRV's Aragon voting contract).
-
-** Since DAO is unlikely to hold veCRV immediately, this function can likely be removed initially.**
 
 ```
 function setLockDuration(

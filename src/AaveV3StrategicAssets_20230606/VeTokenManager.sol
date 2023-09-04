@@ -24,6 +24,7 @@ abstract contract VeTokenManager is Common {
     bool useAdvicePrice
   );
   event SetLockDuration(uint256 newDuration);
+  event SetSpaceId(bytes32 id);
   event Unlock(uint256 tokensUnlocked);
 
   error MaxFeeExceeded();
@@ -148,6 +149,7 @@ abstract contract VeTokenManager is Common {
   function setSpaceId(bytes32 _spaceId) external onlyOwnerOrGuardian {
     DELEGATE_REGISTRY.clearDelegate(spaceId);
     spaceId = _spaceId;
+    emit SetSpaceId(_spaceId);
     _delegate(delegate);
   }
 

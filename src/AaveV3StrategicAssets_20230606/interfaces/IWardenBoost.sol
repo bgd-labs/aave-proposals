@@ -31,16 +31,14 @@ interface IWardenBoost {
   /// @param boostId Id of Boost to check offers for
   function offers(uint256 boostId) external returns (BoostOffer memory);
 
-  /**
-   * @notice Registers a new user wanting to sell its delegation
-   * @dev Regsiters a new user, creates a BoostOffer with the given parameters
-   * @param pricePerVote Price of 1 vote per second (in wei)
-   * @param maxDuration Maximum duration (in weeks) that a Boost can last when taken from this Offer
-   * @param expiryTime Timestamp when this Offer is not longer valid
-   * @param minPerc Minimum percent of users voting token balance to buy for a Boost (in BPS)
-   * @param maxPerc Maximum percent of users total voting token balance available to delegate (in BPS)
-   * @param useAdvicePrice True to use the advice Price instead of the given pricePerVote
-   */
+   /// @notice Registers a new user wanting to sell its delegation
+   /// @dev Regsiters a new user, creates a BoostOffer with the given parameters
+   /// @param pricePerVote Price of 1 vote per second (in wei)
+   /// @param maxDuration Maximum duration (in weeks) that a Boost can last when taken from this Offer
+   /// @param expiryTime Timestamp when this Offer is not longer valid
+   /// @param minPerc Minimum percent of users voting token balance to buy for a Boost (in BPS)
+   /// @param maxPerc Maximum percent of users total voting token balance available to delegate (in BPS)
+   /// @param useAdvicePrice True to use the advice Price instead of the given pricePerVote
   function register(
     uint256 pricePerVote,
     uint64 maxDuration,
