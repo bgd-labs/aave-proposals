@@ -23,59 +23,7 @@ The previous iteration of proposals:
 
 ### LT Reductions
 
-Implementing a gradual decrease in LTs effectively diminishes the borrowing power for the existing markets. This proposal offers the community two alternatives - a "moderate" and an "aggressive" approach for the preliminary LT reduction.
-
-- Aggressive (Chaos Recommendation) - This option suggests an LT configuration that optimizes reductions without significantly increasing the number of accounts eligible for liquidation. The proposed values are set at a margin of 8% from the closest LT figure, which would trigger more substantial liquidations.
-- Moderate - If the community leans towards a more tempered approach of slowly reducing the Liquidation Thresholds, we propose limiting the LT decrease to a maximum of 10%. Hence, we define the “Moderate” option as the minimum between 10% and the value suggested by the aggressive approach.
-
-• “Aggressive”
-
-| Asset  | Current LT | Rec LT | Value Liquidated ($) | Accounts Liquidated |
-| ------ | ---------- | ------ | -------------------- | ------------------- |
-| BAL    | 55%        | 35%    | 1,580                | 5                   |
-| BAT    | 52%        | 38%    | 750                  | 3                   |
-| CVX    | 40%        | 34%    | 250                  | 3                   |
-| DPI    | 42%        | 22%    | 80                   | 2                   |
-| ENJ    | 60%        | 54%    | 500                  | 4                   |
-| MANA   | 62%        | 54%    | 1,500                | 4                   |
-| REN    | 40%        | 32%    | 1,160                | 3                   |
-| xSUSHI | 60%        | 53%    | 0                    | 0                   |
-| YFI    | 55%        | 52%    | 0                    | 0                   |
-| ZRX    | 45%        | 39%    | 0                    | 0                   |
-| LINK   | 83%        | 78%    | 2,440                | 10                  |
-| 1INCH  | 50%        | 40%    | 56                   | 1                   |
-| UNI    | 77%        | 57%    | 500                  | 9                   |
-| SNX    | 59%        | 39%    | 650                  | 10                  |
-| MKR    | 64%        | 44%    | 140                  | 5                   |
-| ENS    | 57%        | 50%    | 45                   | 2                   |
-
-• “Moderate”
-
-| Asset  | Current LT | Rec LT | Value Liquidated ($) | Accounts Liquidated |
-| ------ | ---------- | ------ | -------------------- | ------------------- |
-| BAL    | 55%        | 45%    | 1,120                | 3                   |
-| BAT    | 52%        | 42%    | 80                   | 2                   |
-| CVX    | 40%        | 34%    | 250                  | 3                   |
-| DPI    | 42%        | 32%    | 0                    | 0                   |
-| ENJ    | 60%        | 54%    | 500                  | 4                   |
-| MANA   | 62%        | 54%    | 1,500                | 4                   |
-| REN    | 40%        | 32%    | 1,160                | 3                   |
-| xSUSHI | 60%        | 53%    | 0                    | 0                   |
-| YFI    | 55%        | 52%    | 0                    | 0                   |
-| ZRX    | 45%        | 39%    | 0                    | 0                   |
-| LINK   | 83%        | 78%    | 2,440                | 10                  |
-| 1INCH  | 50%        | 40%    | 56                   | 1                   |
-| UNI    | 77%        | 67%    | 290                  | 6                   |
-| SNX    | 59%        | 49%    | 85                   | 3                   |
-| MKR    | 64%        | 54%    | 16                   | 2                   |
-| ENS    | 57%        | 50%    | 45                   | 2                   |
-
-In the tables below, we share data to quantify the effect of the recommended reductions on protocol users:
-
-|            | Value liquidated | Accounts liquidated |
-| ---------- | ---------------- | ------------------- |
-| Aggressive | $10,100          | 58                  |
-| Moderate   | $8,580           | 43                  |
+Implementing a gradual decrease in LTs effectively diminishes the borrowing power for the existing markets. The community has aligned on the aggressive option in the Snapshot, which suggested a LT configuration that optimizes reductions without significantly increasing the number of accounts eligible for liquidation. Following decline in the assets prices since the initial Snapshot, we have modified the proposal to be more conservative than the initially approved update. Please note LINK and DPI are omitted from this proposal, as reducing their LTs would put larger positions at risk of liquidation.
 
 _As Liquidation Threshold reductions may lead to user accounts being eligible for liquidations upon their approval, we want to clarify the full implications to the community at each step. Chaos Labs will publicly communicate the planned amendments and list of affected accounts leading to the on-chain execution._
 
