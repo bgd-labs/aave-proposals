@@ -54,7 +54,8 @@ contract AaveV3_Polygon_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     assertTrue(
       AaveV3Polygon.POOL.getConfiguration(AaveV3PolygonAssets.USDC_UNDERLYING).getFrozen()
     );
-
+    FreezingSteward(freezingSteward).setFreeze(AaveV3PolygonAssets.USDC_UNDERLYING, false);
+    
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Polygon_FreezeStewards_20230907',
       AaveV3Polygon.POOL

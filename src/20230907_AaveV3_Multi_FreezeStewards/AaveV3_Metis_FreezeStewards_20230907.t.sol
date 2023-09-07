@@ -51,6 +51,7 @@ contract AaveV3_Metis_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     assertTrue(
       AaveV3Metis.POOL.getConfiguration(AaveV3MetisAssets.mUSDC_UNDERLYING).getFrozen()
     );
+    FreezingSteward(freezingSteward).setFreeze(AaveV3MetisAssets.mUSDC_UNDERLYING, false);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Metis_FreezeStewards_20230907',

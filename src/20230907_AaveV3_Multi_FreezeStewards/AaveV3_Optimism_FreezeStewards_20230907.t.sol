@@ -54,6 +54,7 @@ contract AaveV3_Optimism_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     assertTrue(
       AaveV3Optimism.POOL.getConfiguration(AaveV3OptimismAssets.USDC_UNDERLYING).getFrozen()
     );
+    FreezingSteward(freezingSteward).setFreeze(AaveV3OptimismAssets.USDC_UNDERLYING, false);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Optimism_FreezeStewards_20230907',

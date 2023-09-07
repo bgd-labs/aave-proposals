@@ -58,6 +58,7 @@ contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     assertTrue(
       AaveV3Avalanche.POOL.getConfiguration(AaveV3AvalancheAssets.USDC_UNDERLYING).getFrozen()
     );
+    FreezingSteward(freezingSteward).setFreeze(AaveV3AvalancheAssets.USDC_UNDERLYING, false);
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Avalanche_FreezeStewards_20230907',
