@@ -20,7 +20,7 @@ contract AaveV2_Eth_AURA_OTC_Deal_20230508_Test is ProtocolV2TestBase {
   uint256 public constant DAI_AMOUNT = 420_159e18;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18063434);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18086015);
   }
 
   function testProposalExecution() public {
