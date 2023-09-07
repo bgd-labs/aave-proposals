@@ -7,6 +7,7 @@ import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Metis, AaveV3MetisAssets} from 'aave-address-book/AaveV3Metis.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3_Metis_FreezeStewards_20230907} from './AaveV3_Metis_FreezeStewards_20230907.sol';
+import {FreezingSteward} from './FreezingSteward.sol';
 
 /**
  * @dev Test for AaveV3_Metis_FreezeStewards_20230907
@@ -17,7 +18,10 @@ contract AaveV3_Metis_FreezeStewards_20230907_Test is ProtocolV3TestBase {
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('metis'), 8452282);
-    proposal = new AaveV3_Metis_FreezeStewards_20230907();
+    address freezingSteward = address(
+      new FreezingSteward(AaveV3Metis.ACL_MANAGER, AaveV3Metis.POOL_CONFIGURATOR)
+    );
+    proposal = new AaveV3_Metis_FreezeStewards_20230907(freezingSteward);
   }
 
   function testProposalExecution() public {
@@ -26,7 +30,13 @@ contract AaveV3_Metis_FreezeStewards_20230907_Test is ProtocolV3TestBase {
       AaveV3Metis.POOL
     );
 
+    address freezingSteward = proposal.FREEZING_STEWARD();
+
+    assertFalse(AaveV3Metis.ACL_MANAGER.isRiskAdmin(freezingSteward));
+
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.METIS_BRIDGE_EXECUTOR);
+
+    assertTrue(AaveV3Metis.ACL_MANAGER.isRiskAdmin(freezingSteward));
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Metis_FreezeStewards_20230907',
