@@ -1,0 +1,33 @@
+---
+title: "Freeze Stewards"
+author: "BGD Labs"
+discussions: ""
+---
+
+## Simple Summary
+As the Aave V3 Ethereum market already has a freezing steward, which allows the emergency admin to freeze reserves, this AIP aims to synchronize the behavior by doing the same across networks. 
+
+## Motivation
+In order to maintain security across Aave V3 deployments, it's essential to maintain up-to-date preventative functionality on all networks.
+
+## Specification
+Adds a `FreezingSteward` as the `riskAdmin` on the canonical Aave V3 deployments on the following networks:
+
+- Optimism
+- Arbitrum
+- Avalanche
+- Polygon
+- Metis
+- Base
+
+The `FreezingSteward` is identical to the one currently deployed on Ethereum, and only allows the `emergencyAdmin` listed in the `ACLManager` for the given deployment to freeze reserves.
+## References
+
+- Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Optimism_FreezeStewards_20230907.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Arbitrum_FreezeStewards_20230907.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Polygon_FreezeStewards_20230907.sol), [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Avalanche_FreezeStewards_20230907.sol), [Metis](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Metis_FreezeStewards_20230907.sol), [Base](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Base_FreezeStewards_20230907.sol)
+- Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Optimism_FreezeStewards_20230907.t.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Arbitrum_FreezeStewards_20230907.t.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Polygon_FreezeStewards_20230907.t.sol), [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Avalanche_FreezeStewards_20230907.t.sol), [Metis](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Metis_FreezeStewards_20230907.t.sol), [Base](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Base_FreezeStewards_20230907.t.sol)
+- [Snapshot](TODO)
+- [Discussion](TODO)
+
+## Copyright
+
+Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
