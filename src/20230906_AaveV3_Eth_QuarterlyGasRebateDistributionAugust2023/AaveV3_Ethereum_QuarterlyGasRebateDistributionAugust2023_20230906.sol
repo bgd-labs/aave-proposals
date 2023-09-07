@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
+import {Address} from 'solidity-utils/contracts/oz-common/Address.sol';
 
 interface IWETH {
     function withdraw(uint wad) external;
@@ -18,6 +19,8 @@ interface IWETH {
 contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
   IProposalGenericExecutor
 {
+
+  using Address for address payable;
 
   address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
@@ -55,14 +58,14 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
     IWETH(WETH).withdraw(TOTAL_AMOUNT);
 
     // transfer ETH to delegates
-    payable(ACI).transfer(ACI_AMOUNT);
-    payable(HKUST).transfer(HKUST_AMOUNT);
-    payable(TOKEN_LOGIC).transfer(TOKEN_LOGIC_AMOUNT);
-    payable(MICHIGAN).transfer(MICHIGAN_AMOUNT);
-    payable(LBS).transfer(LBS_AMOUNT);
-    payable(WINTERMUTE).transfer(WINTERMUTE_AMOUNT);
-    payable(KEYROCK).transfer(KEYROCK_AMOUNT);
-    payable(STABLELAB).transfer(STABLELAB_AMOUNT);
+  payable(ACI).sendValue(ACI_AMOUNT);
+  payable(HKUST).sendValue(HKUST_AMOUNT);
+  payable(TOKEN_LOGIC).sendValue(TOKEN_LOGIC_AMOUNT);
+  payable(MICHIGAN).sendValue(MICHIGAN_AMOUNT);
+  payable(LBS).sendValue(LBS_AMOUNT);
+  payable(WINTERMUTE).sendValue(WINTERMUTE_AMOUNT);
+  payable(KEYROCK).sendValue(KEYROCK_AMOUNT);
+  payable(STABLELAB).sendValue(STABLELAB_AMOUNT);
 
   }
 }
