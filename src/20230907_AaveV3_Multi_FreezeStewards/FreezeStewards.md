@@ -1,6 +1,6 @@
 ---
 title: "Freeze Stewards"
-author: "BGD Labs"
+author: "BGD Labs @bgdlabs"
 discussions: ""
 ---
 
