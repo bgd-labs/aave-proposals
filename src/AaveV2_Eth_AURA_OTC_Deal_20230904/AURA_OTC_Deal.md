@@ -12,7 +12,7 @@ This AIP proposes Aave DAO acquire 443,674 AURA from Olympus DAO for 420,159.28 
 
 Over the next few months the veBAL and vlAURA being used to support GHO pools will reduce as voters shift there focus away from GHO. The initial commit from the Aura Finance team was 400,000 units of vlAURA for an initial 3 month duration.
 
-This proposal seeks to replace the support from Aura Finance by acquiring 443,674 units of AURA from Olympus DAO. Olympus DAO is reducing there AURA exposure due to change in the Olympus DAO roadmap which is detailed [here](https://forum.olympusdao.finance/d/3756-towards-a-fully-autonomous-olympus) and [her](https://forum.olympusdao.finance/d/3967-tap29-aura-solicitation-to-bid).
+This proposal seeks to replace the support from Aura Finance by acquiring 443,674 units of AURA from Olympus DAO. Olympus DAO is reducing there AURA exposure due to change in the Olympus DAO roadmap which is detailed [here](https://forum.olympusdao.finance/d/3756-towards-a-fully-autonomous-olympus) and [here](https://forum.olympusdao.finance/d/3967-tap29-aura-solicitation-to-bid).
 
 Based upon the research presented in this [Update Balancer Ecosystem Holdings](https://governance.aave.com/t/temp-check-update-balancer-ecosystem-holdings/14682), which details impact AIP-42 by Aura Finance, the most efficient way for Aave DAO to bootstrap GHO is via vlAURA relative to veBAL. 
 
