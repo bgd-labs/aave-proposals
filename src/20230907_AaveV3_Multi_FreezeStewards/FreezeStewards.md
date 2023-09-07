@@ -1,7 +1,7 @@
 ---
 title: "Freeze Stewards"
 author: "BGD Labs @bgdlabs"
-discussions: ""
+discussions: "https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2"
 ---
 
 ## Simple Summary

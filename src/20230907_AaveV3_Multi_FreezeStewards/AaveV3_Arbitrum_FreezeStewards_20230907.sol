@@ -8,7 +8,7 @@ import {AaveV3Arbitrum} from 'aave-address-book/AaveV3Arbitrum.sol';
  * @title Freeze Stewards
  * @author BGD Labs
  * - Snapshot: TODO
- * - Discussion: TODO
+ * - Discussion: https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2
  */
 contract AaveV3_Arbitrum_FreezeStewards_20230907 is IProposalGenericExecutor {
   address public immutable FREEZING_STEWARD;
