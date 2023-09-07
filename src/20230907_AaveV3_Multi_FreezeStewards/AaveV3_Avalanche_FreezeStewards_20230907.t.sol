@@ -5,7 +5,7 @@ import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV3Avalanche, AaveV3AvalancheAssets} from 'aave-address-book/AaveV3Avalanche.sol';
-import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
+import {ProtocolV3TestBase, ReserveConfig, ReserveConfiguration, DataTypes} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3_Avalanche_FreezeStewards_20230907} from './AaveV3_Avalanche_FreezeStewards_20230907.sol';
 import {FreezingSteward} from './FreezingSteward.sol';
 
@@ -14,6 +14,8 @@ import {FreezingSteward} from './FreezingSteward.sol';
  * command: make test-contract filter=AaveV3_Avalanche_FreezeStewards_20230907
  */
 contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
+  using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
+
   AaveV3_Avalanche_FreezeStewards_20230907 internal proposal;
 
   function setUp() public {
@@ -34,6 +36,11 @@ contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     address freezingSteward = proposal.FREEZING_STEWARD();
 
     assertFalse(AaveV3Avalanche.ACL_MANAGER.isRiskAdmin(freezingSteward));
+    assertFalse(
+      AaveV3Avalanche.POOL.getConfiguration(AaveV3AvalancheAssets.USDC_UNDERLYING).getFrozen()
+    );
+    vm.expectRevert(bytes('ONLY_EMERGENCY_ADMIN'));
+    FreezingSteward(freezingSteward).setFreeze(AaveV3AvalancheAssets.USDC_UNDERLYING, true);
 
     GovHelpers.executePayload(
       vm,
@@ -42,6 +49,15 @@ contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     );
 
     assertTrue(AaveV3Avalanche.ACL_MANAGER.isRiskAdmin(freezingSteward));
+    
+    vm.prank(0xa35b76E4935449E33C56aB24b23fcd3246f13470);
+    AaveV3Avalanche.ACL_MANAGER.addEmergencyAdmin(address(this));
+    
+    FreezingSteward(freezingSteward).setFreeze(AaveV3AvalancheAssets.USDC_UNDERLYING, true);
+    
+    assertTrue(
+      AaveV3Avalanche.POOL.getConfiguration(AaveV3AvalancheAssets.USDC_UNDERLYING).getFrozen()
+    );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Avalanche_FreezeStewards_20230907',
