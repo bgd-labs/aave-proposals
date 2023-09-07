@@ -7,7 +7,6 @@ import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
 /**
  * @title Freeze Stewards
  * @author BGD Labs
- * - Snapshot: TODO
  * - Discussion: https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2
  */
 contract AaveV3_Optimism_FreezeStewards_20230907 is IProposalGenericExecutor {
