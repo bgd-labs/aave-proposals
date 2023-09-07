@@ -31,11 +31,7 @@ contract AaveV2_Eth_AURA_OTC_Deal_20230508 {
 
     // Transfer aDAI from COLLECTOR to short_executor
 
-    AaveV2Ethereum.COLLECTOR.transfer(
-      AaveV3EthereumAssets.DAI_A_TOKEN,
-      address(this),
-      DAI_AMOUNT
-    );
+    AaveV2Ethereum.COLLECTOR.transfer(AaveV3EthereumAssets.DAI_A_TOKEN, address(this), DAI_AMOUNT);
 
     // withdraw aDAI and convert it to DAI
 
@@ -50,7 +46,7 @@ contract AaveV2_Eth_AURA_OTC_Deal_20230508 {
     IERC20(AaveV3EthereumAssets.DAI_UNDERLYING).safeTransferFrom(
       address(this),
       OLYMPUS_ADDRESS,
-      DAI_AMOUNT
+      IERC20(AaveV3EthereumAssets.DAI_UNDERLYING).balanceOf(address(this))
     );
   }
 }

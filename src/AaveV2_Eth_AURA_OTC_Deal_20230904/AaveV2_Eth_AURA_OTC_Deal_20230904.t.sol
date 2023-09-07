@@ -44,12 +44,15 @@ contract AaveV2_Eth_AURA_OTC_Deal_20230508_Test is ProtocolV2TestBase {
 
     uint256 AURABalanceAfter = IERC20(AURA_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
 
-    assertApproxEqAbs(
-      aDAIBalanceAfter,
-      aDAIBalanceBefore - DAI_AMOUNT,
-      1500 ether,
-      'aDAI_LEFTOVER'
+    // Check if the SHORT_EXECUTOR's DAI balance is 0 after execution
+
+    uint256 shortExecutorDAIBalance = IERC20(AaveV3EthereumAssets.DAI_UNDERLYING).balanceOf(
+      AaveGovernanceV2.SHORT_EXECUTOR
     );
+    assertEq(shortExecutorDAIBalance, 0);
+
+    assertApproxEqAbs(aDAIBalanceAfter, aDAIBalanceBefore - DAI_AMOUNT, 1500 wei, 'aDAI_LEFTOVER');
+
     assertEq(AURABalanceAfter, AURABalanceBefore + AURA_AMOUNT);
 
     e2eTest(AaveV2Ethereum.POOL);

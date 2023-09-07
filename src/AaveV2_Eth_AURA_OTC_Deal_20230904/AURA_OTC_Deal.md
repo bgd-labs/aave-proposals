@@ -6,7 +6,7 @@ discussions: https://governance.aave.com/t/arfc-treasury-management-acquire-aura
 
 ## Simple Summary
 
-This AIP proposes Aave DAO acquire 443,674 AURA from Olympus DAO for 420,159.28 units of DAI
+This AIP proposes Aave DAO acquire 443,674 AURA from Olympus DAO for 420,159 units of DAI
 
 ## Motivation
 
@@ -14,22 +14,20 @@ Over the next few months the veBAL and vlAURA being used to support GHO pools wi
 
 This proposal seeks to replace the support from Aura Finance by acquiring 443,674 units of AURA from Olympus DAO. Olympus DAO is reducing there AURA exposure due to change in the Olympus DAO roadmap which is detailed [here](https://forum.olympusdao.finance/d/3756-towards-a-fully-autonomous-olympus) and [here](https://forum.olympusdao.finance/d/3967-tap29-aura-solicitation-to-bid).
 
-Based upon the research presented in this [Update Balancer Ecosystem Holdings](https://governance.aave.com/t/temp-check-update-balancer-ecosystem-holdings/14682), which details impact AIP-42 by Aura Finance, the most efficient way for Aave DAO to bootstrap GHO is via vlAURA relative to veBAL. 
+Based upon the research presented in this [Update Balancer Ecosystem Holdings](https://governance.aave.com/t/temp-check-update-balancer-ecosystem-holdings/14682), which details impact AIP-42 by Aura Finance, the most efficient way for Aave DAO to bootstrap GHO is via vlAURA relative to veBAL.
 
-Olympus DAO seeks payment in DAI, at an exchange rate of 0.9470 DAI per unit of AURA. The amount of AURA is 443,674 with a total cost to Aave DAO of 420,159.28 units of DAI. Aave DAO currently holds [2.873M](https://etherscan.io/token/0x028171bca77440897b824ca71d1c56cac55b68a3?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c) units of aDAI on Aave v2.
-
+Olympus DAO seeks payment in DAI, at an exchange rate of 0.9470 DAI per unit of AURA. The amount of AURA is 443,674 with a total cost to Aave DAO of 420,159 units of DAI. Aave DAO currently holds [2.873M](https://etherscan.io/token/0x028171bca77440897b824ca71d1c56cac55b68a3?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c) units of aDAI on Aave v2.
 
 ## Specification
 
 This proposal will achieve the following:
 
-* Redeem 420,159.28 units aDAI from Aave v2
-* Exchange 420,159.28 units of DAI for 443,674 units of AURA with Olympus DAO
+- Redeem 420,159 units aDAI from Aave v2
+- Exchange 420,159 units of DAI for 443,674 units of AURA with Olympus DAO
 
 For reference, Olympus DAO AURA Holding Address: `0x245cc372C84B3645Bf0Ffe6538620B04a217988B`
 
 The contract was developed in collaboration with @MarcZeller and deployed by the ACI team.
-
 
 ## References
 
