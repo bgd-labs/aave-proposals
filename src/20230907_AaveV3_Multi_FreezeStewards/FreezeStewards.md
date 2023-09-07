@@ -15,12 +15,14 @@ Adds a `FreezingSteward` as the `riskAdmin` on the canonical Aave V3 deployments
 
 - Optimism
 - Arbitrum
-- Avalanche
 - Polygon
 - Metis
 - Base
 
-The `FreezingSteward` is identical to the one currently deployed on Ethereum, and only allows the `emergencyAdmin` listed in the `ACLManager` for the given deployment to freeze reserves.
+The `FreezingSteward` is identical to the one currently [deployed on Ethereum](https://etherscan.io/address/0x2eE68ACb6A1319de1b49DC139894644E424fefD6#code), and only allows the `emergencyAdmin` listed in the `ACLManager` for the given deployment to freeze reserves.
+
+This proposal also acts as an approval for the Guardian to execute the payload on the Avalanche network.
+
 ## References
 
 - Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Optimism_FreezeStewards_20230907.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Arbitrum_FreezeStewards_20230907.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Polygon_FreezeStewards_20230907.sol), [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Avalanche_FreezeStewards_20230907.sol), [Metis](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Metis_FreezeStewards_20230907.sol), [Base](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Base_FreezeStewards_20230907.sol)
