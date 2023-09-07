@@ -5,6 +5,7 @@ discussions: "https://governance.aave.com/t/arfc-quarterly-gas-rebate-distributi
 ---
 
 ## Simple Summary
+
 This AIP proposes the quarterly gas rebate distribution for recognized delegates. The distribution aims to reimburse the gas costs incurred by delegates during their participation in Aave governance.
 
 ## Motivation
@@ -15,17 +16,17 @@ Recognized delegates play a crucial role in Aave governance by actively particip
 
 The following table provides a breakdown of the total gas used by each recognized delegate and the corresponding ETH amount to be distributed:
 
-| Name             | Total Gas Spent          |
-|------------------|--------------------------|
-| ACI              | 1.35      |
-| HKTrust          | 0.07     |
-| TokenLogic       | 0.50     |
-| michigan         | 0.11     |
-| LBS Blockchain   | 0.18     |
-| Wintermute       | 0.15     |
-| keyrock          | 0.14     |
-| Stablelab        | 0.20     |
-| **Total ETH** | **2.7 ETH** | 
+| Name           | Total Gas Spent |
+| -------------- | --------------- |
+| ACI            | 1.35            |
+| HKTrust        | 0.07            |
+| TokenLogic     | 0.50            |
+| michigan       | 0.11            |
+| LBS Blockchain | 0.18            |
+| Wintermute     | 0.15            |
+| keyrock        | 0.14            |
+| Stablelab      | 0.20            |
+| **Total ETH**  | **2.7 ETH**     |
 
 ## References
 

@@ -7,7 +7,7 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
 import {Address} from 'solidity-utils/contracts/oz-common/Address.sol';
 
 interface IWETH {
-    function withdraw(uint wad) external;
+  function withdraw(uint wad) external;
 }
 
 /**
@@ -19,7 +19,6 @@ interface IWETH {
 contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
   IProposalGenericExecutor
 {
-
   using Address for address payable;
 
   address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
@@ -46,7 +45,6 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
   uint256 public constant TOTAL_AMOUNT = 3e18;
 
   function execute() external {
-
     // withdraw WETH to short_executor
     AaveV2Ethereum.COLLECTOR.transfer(
       AaveV2EthereumAssets.WETH_UNDERLYING,
@@ -58,14 +56,13 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
     IWETH(WETH).withdraw(TOTAL_AMOUNT);
 
     // transfer ETH to delegates
-  payable(ACI).sendValue(ACI_AMOUNT);
-  payable(HKUST).sendValue(HKUST_AMOUNT);
-  payable(TOKEN_LOGIC).sendValue(TOKEN_LOGIC_AMOUNT);
-  payable(MICHIGAN).sendValue(MICHIGAN_AMOUNT);
-  payable(LBS).sendValue(LBS_AMOUNT);
-  payable(WINTERMUTE).sendValue(WINTERMUTE_AMOUNT);
-  payable(KEYROCK).sendValue(KEYROCK_AMOUNT);
-  payable(STABLELAB).sendValue(STABLELAB_AMOUNT);
-
+    payable(ACI).sendValue(ACI_AMOUNT);
+    payable(HKUST).sendValue(HKUST_AMOUNT);
+    payable(TOKEN_LOGIC).sendValue(TOKEN_LOGIC_AMOUNT);
+    payable(MICHIGAN).sendValue(MICHIGAN_AMOUNT);
+    payable(LBS).sendValue(LBS_AMOUNT);
+    payable(WINTERMUTE).sendValue(WINTERMUTE_AMOUNT);
+    payable(KEYROCK).sendValue(KEYROCK_AMOUNT);
+    payable(STABLELAB).sendValue(STABLELAB_AMOUNT);
   }
 }

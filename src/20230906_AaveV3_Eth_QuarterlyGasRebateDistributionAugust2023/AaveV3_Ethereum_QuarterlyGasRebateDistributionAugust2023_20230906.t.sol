@@ -11,7 +11,9 @@ import {IERC20} from 'lib/solidity-utils/src/contracts/oz-common/interfaces/IERC
 
 // make test-contract filter=AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906
 
-contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test is ProtocolV2TestBase {
+contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test is
+  ProtocolV2TestBase
+{
   address public constant WETH = AaveV2EthereumAssets.WETH_UNDERLYING;
   string public constant WETH_SYMBOL = 'WETH';
   uint256 public constant Amount_DISTRIBUTED = 3e18;
@@ -31,7 +33,9 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       WETH_SYMBOL
     );
 
-    address WETHPayload = address(new AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906());
+    address WETHPayload = address(
+      new AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906()
+    );
 
     uint256 WETHBalanceBefore = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
@@ -65,7 +69,7 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       configWETHBefore.underlying
     );
     // diff should be null as pools are not modified
-    
+
     diffReports('pre-WETH-Payload-activation', 'post-WETH-Payload-activation');
   }
 }
