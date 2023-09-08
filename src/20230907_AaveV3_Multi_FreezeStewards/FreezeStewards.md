@@ -1,7 +1,7 @@
 ---
 title: "Freeze Stewards"
 author: "BGD Labs @bgdlabs"
-discussions: "https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2"
+discussions: "https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/8"
 ---
 
 ## Simple Summary
@@ -27,7 +27,7 @@ This proposal also acts as an approval for the Guardian to execute the payload o
 
 - Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Optimism_FreezeStewards_20230907.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Arbitrum_FreezeStewards_20230907.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Polygon_FreezeStewards_20230907.sol), [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Avalanche_FreezeStewards_20230907.sol), [Metis](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Metis_FreezeStewards_20230907.sol), [Base](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Base_FreezeStewards_20230907.sol)
 - Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Optimism_FreezeStewards_20230907.t.sol), [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Arbitrum_FreezeStewards_20230907.t.sol), [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Polygon_FreezeStewards_20230907.t.sol), [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Avalanche_FreezeStewards_20230907.t.sol), [Metis](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Metis_FreezeStewards_20230907.t.sol), [Base](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230907_AaveV3_Multi_FreezeStewards/AaveV3_Base_FreezeStewards_20230907.t.sol)
-- [Discussion](https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2)
+- [Discussion](https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/8)
 
 ## Copyright
 

@@ -7,7 +7,7 @@ import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 /**
  * @title Freeze Stewards
  * @author BGD Labs
- * - Discussion: https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/2
+ * - Discussion: https://governance.aave.com/t/temporarily-pausing-gho-integration-in-aave/14626/8
  */
 contract AaveV3_Polygon_FreezeStewards_20230907 is IProposalGenericExecutor {
   address public immutable FREEZING_STEWARD;
