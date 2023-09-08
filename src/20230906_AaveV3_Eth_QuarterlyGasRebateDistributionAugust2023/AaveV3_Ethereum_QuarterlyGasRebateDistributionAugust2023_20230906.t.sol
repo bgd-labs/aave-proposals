@@ -19,7 +19,7 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
   uint256 public constant Amount_DISTRIBUTED = 3e18;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18083237);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18091458);
   }
 
   function testWETH() public {
@@ -68,6 +68,10 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       allConfigsAfter,
       configWETHBefore.underlying
     );
+
+    uint256 shortExecutorETHBalance = address(AaveGovernanceV2.SHORT_EXECUTOR).balance;
+    assertEq(shortExecutorETHBalance, 0);
+
     // diff should be null as pools are not modified
 
     diffReports('pre-WETH-Payload-activation', 'post-WETH-Payload-activation');
