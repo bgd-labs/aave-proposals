@@ -79,14 +79,14 @@ export const collateralUpdates: FeatureModule<CollateralUpdates> = {
         code: {
           dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
           fn: [
-            `function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
+            `function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
               IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](${
                 cfg[chain].length
               });
 
             ${cfg[chain]
               .map(
-                (cfg, ix) => `capsUpdate[${ix}] = IEngine.CapsUpdate({
+                (cfg, ix) => `collateralUpdate[${ix}] = IEngine.CollateralUpdate({
                  asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
                  ltv: ${jsPercentToSol(cfg.ltv)},
                  liqThreshold: ${jsPercentToSol(cfg.liqThreshold)},
@@ -98,7 +98,7 @@ export const collateralUpdates: FeatureModule<CollateralUpdates> = {
               )
               .join('\n')}
 
-            return capsUpdate;
+            return collateralUpdate;
           }`,
           ],
         },
