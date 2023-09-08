@@ -13,19 +13,19 @@ import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 contract AaveV3_Ethereum_MKRDebtCeiling_20230908 is AaveV3PayloadEthereum {
   function _preExecute() internal override {}
 
-  function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
+  function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](1);
 
-    capsUpdate[0] = IEngine.CapsUpdate({
+    collateralUpdate[0] = IEngine.CollateralUpdate({
       asset: AaveV3EthereumAssets.MKR_UNDERLYING,
       ltv: EngineFlags.KEEP_CURRENT,
       liqThreshold: EngineFlags.KEEP_CURRENT,
       liqBonus: EngineFlags.KEEP_CURRENT,
       debtCeiling: 6_000_000,
       liqProtocolFee: EngineFlags.KEEP_CURRENT,
-      eModeCategory: KEEP_CURRENT
+      eModeCategory: EngineFlags.KEEP_CURRENT
     });
 
-    return capsUpdate;
+    return collateralUpdate;
   }
 }
