@@ -16,7 +16,7 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
 {
   address public constant WETH = AaveV2EthereumAssets.WETH_UNDERLYING;
   string public constant WETH_SYMBOL = 'WETH';
-  uint256 public constant Amount_DISTRIBUTED = 3e18;
+  uint256 public constant Amount_DISTRIBUTED = 2.7e18;
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 18091458);
@@ -37,10 +37,14 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       new AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906()
     );
 
+    uint256 shortExecutorETHBalanceBefore = address(AaveGovernanceV2.SHORT_EXECUTOR).balance;
+
     uint256 WETHBalanceBefore = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
     GovHelpers.executePayload(vm, WETHPayload, AaveGovernanceV2.SHORT_EXECUTOR);
+
+    uint256 shortExecutorETHBalanceAfter = address(AaveGovernanceV2.SHORT_EXECUTOR).balance;
 
     // check balances are correct
     uint256 WETHBalanceAfter = IERC20(AaveV2EthereumAssets.WETH_UNDERLYING).balanceOf(
@@ -68,6 +72,9 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       allConfigsAfter,
       configWETHBefore.underlying
     );
+
+    // check ETH balance is same as before 
+    assertEq(shortExecutorETHBalanceAfter, shortExecutorETHBalanceBefore);
 
     // diff should be null as pools are not modified
 

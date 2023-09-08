@@ -42,7 +42,7 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
   uint256 public constant STABLELAB_AMOUNT = 0.20e18;
 
   // total amount of WETH to withdraw + buffer
-  uint256 public constant TOTAL_AMOUNT = 3e18;
+  uint256 public constant TOTAL_AMOUNT = 2.7e18;
 
   function execute() external {
     // withdraw WETH to short_executor
