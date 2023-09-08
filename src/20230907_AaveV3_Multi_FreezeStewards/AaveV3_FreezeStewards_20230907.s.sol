@@ -104,11 +104,11 @@ contract DeployBase is BaseScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](5);
-    payloads[0] = GovHelpers.buildOptimism(address(0));
-    payloads[1] = GovHelpers.buildArbitrum(address(0));
-    payloads[2] = GovHelpers.buildPolygon(address(0));
-    payloads[3] = GovHelpers.buildMetis(address(0));
-    payloads[4] = GovHelpers.buildBase(address(0));
+    payloads[0] = GovHelpers.buildOptimism(0xe59470B3BE3293534603487E00A44C72f2CD466d);
+    payloads[1] = GovHelpers.buildArbitrum(0x746c675dAB49Bcd5BB9Dc85161f2d7Eb435009bf);
+    payloads[2] = GovHelpers.buildPolygon(0xAE93BEa44dcbE52B625169588574d31e36fb3A67);
+    payloads[3] = GovHelpers.buildMetis(0x250F1c4D85Fa52848956c3A6b746869A4ee4d2cc);
+    payloads[4] = GovHelpers.buildBase(0x889c0cc3283DB588A34E89Ad1E8F25B0fc827b4b);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(vm, 'src/20230907_AaveV3_Multi_FreezeStewards/FreezeStewards.md')
