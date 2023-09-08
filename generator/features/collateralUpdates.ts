@@ -93,7 +93,7 @@ export const collateralUpdates: FeatureModule<CollateralUpdates> = {
                  liqBonus: ${jsPercentToSol(cfg.liqBonus)},
                  debtCeiling: ${jsNumberToSol(cfg.debtCeiling)},
                  liqProtocolFee: ${jsPercentToSol(cfg.liqProtocolFee)},
-                 eModeCategory: ${cfg.eModeCategory}
+                 eModeCategory: ${(cfg.eModeCategory === ENGINE_FLAGS.KEEP_CURRENT) ? `EngineFlags.KEEP_CURRENT` : cfg.eModeCategory}
                });`
               )
               .join('\n')}
