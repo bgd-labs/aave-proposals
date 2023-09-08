@@ -64,7 +64,5 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906 is
     payable(WINTERMUTE).sendValue(WINTERMUTE_AMOUNT);
     payable(KEYROCK).sendValue(KEYROCK_AMOUNT);
     payable(STABLELAB).sendValue(STABLELAB_AMOUNT);
-
-    payable(address(AaveV2Ethereum.COLLECTOR)).sendValue(address(this).balance);
   }
 }

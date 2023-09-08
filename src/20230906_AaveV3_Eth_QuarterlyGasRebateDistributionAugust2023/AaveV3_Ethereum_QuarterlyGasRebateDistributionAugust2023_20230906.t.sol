@@ -69,9 +69,6 @@ contract AaveV3_Ethereum_QuarterlyGasRebateDistributionAugust2023_20230906Test i
       configWETHBefore.underlying
     );
 
-    uint256 shortExecutorETHBalance = address(AaveGovernanceV2.SHORT_EXECUTOR).balance;
-    assertEq(shortExecutorETHBalance, 0);
-
     // diff should be null as pools are not modified
 
     diffReports('pre-WETH-Payload-activation', 'post-WETH-Payload-activation');
