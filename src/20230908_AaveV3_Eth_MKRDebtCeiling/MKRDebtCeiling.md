@@ -6,9 +6,19 @@ discussions: "https://governance.aave.com/t/arfc-borrowing-cap-expansion-request
 
 ## Simple Summary
 
+This is a proposal to expand the current cap of borrowing against an isolated collateral (MKR) from $2.5 million to $6.0 million.
+This proposal is compatible with Direct-to-AIP.
+
 ## Motivation
 
+The Aave user @Leritu wishes to borrow more asset with his $6.4 million in MKR but the Debt Ceiling has been reached. 
+
 ## Specification
+The following parameter will be modified:
+
+| Token | Current debt ceiling | Proposed debt ceiling |
+| --- | --- | --- |
+| MKR Ethereum V3 | 2.5M$ | 6M$ |
 
 ## References
 
