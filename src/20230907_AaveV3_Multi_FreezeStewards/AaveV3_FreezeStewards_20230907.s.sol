@@ -67,7 +67,6 @@ contract DeployAvalanche is AvalancheScript {
     address avalancheFreezingSteward = address(
       new FreezingSteward(AaveV3Avalanche.ACL_MANAGER, AaveV3Avalanche.POOL_CONFIGURATOR)
     );
-
     new AaveV3_Avalanche_FreezeStewards_20230907(avalancheFreezingSteward);
   }
 }
@@ -81,7 +80,6 @@ contract DeployMetis is MetisScript {
     address metisFreezingSteward = address(
       new FreezingSteward(AaveV3Metis.ACL_MANAGER, AaveV3Metis.POOL_CONFIGURATOR)
     );
-
     new AaveV3_Metis_FreezeStewards_20230907(metisFreezingSteward);
   }
 }
@@ -95,7 +93,6 @@ contract DeployBase is BaseScript {
     address baseFreezingSteward = address(
       new FreezingSteward(AaveV3Base.ACL_MANAGER, AaveV3Base.POOL_CONFIGURATOR)
     );
-
     new AaveV3_Base_FreezeStewards_20230907(baseFreezingSteward);
   }
 }
