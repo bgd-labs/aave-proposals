@@ -27,7 +27,7 @@ contract AaveV3_Metis_FreezeStewards_20230907_Test is ProtocolV3TestBase {
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Metis_FreezeStewards_20230907',
       AaveV3Metis.POOL
     );
@@ -53,7 +53,7 @@ contract AaveV3_Metis_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     );
     FreezingSteward(freezingSteward).setFreeze(AaveV3MetisAssets.mUSDC_UNDERLYING, false);
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Metis_FreezeStewards_20230907',
       AaveV3Metis.POOL
     );

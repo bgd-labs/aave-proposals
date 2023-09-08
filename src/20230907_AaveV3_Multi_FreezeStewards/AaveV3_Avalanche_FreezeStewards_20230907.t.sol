@@ -28,7 +28,7 @@ contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Avalanche_FreezeStewards_20230907',
       AaveV3Avalanche.POOL
     );
@@ -60,7 +60,7 @@ contract AaveV3_Avalanche_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     );
     FreezingSteward(freezingSteward).setFreeze(AaveV3AvalancheAssets.USDC_UNDERLYING, false);
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Avalanche_FreezeStewards_20230907',
       AaveV3Avalanche.POOL
     );

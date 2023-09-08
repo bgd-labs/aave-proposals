@@ -28,7 +28,7 @@ contract AaveV3_Arbitrum_FreezeStewards_20230907_Test is ProtocolV3TestBase {
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Arbitrum_FreezeStewards_20230907',
       AaveV3Arbitrum.POOL
     );
@@ -56,7 +56,7 @@ contract AaveV3_Arbitrum_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     );
     FreezingSteward(freezingSteward).setFreeze(AaveV3ArbitrumAssets.USDC_UNDERLYING, false);
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Arbitrum_FreezeStewards_20230907',
       AaveV3Arbitrum.POOL
     );

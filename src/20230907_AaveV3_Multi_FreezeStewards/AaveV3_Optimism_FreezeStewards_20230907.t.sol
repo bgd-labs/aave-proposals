@@ -28,7 +28,7 @@ contract AaveV3_Optimism_FreezeStewards_20230907_Test is ProtocolV3TestBase {
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Optimism_FreezeStewards_20230907',
       AaveV3Optimism.POOL
     );
@@ -56,7 +56,7 @@ contract AaveV3_Optimism_FreezeStewards_20230907_Test is ProtocolV3TestBase {
     );
     FreezingSteward(freezingSteward).setFreeze(AaveV3OptimismAssets.USDC_UNDERLYING, false);
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Optimism_FreezeStewards_20230907',
       AaveV3Optimism.POOL
     );
