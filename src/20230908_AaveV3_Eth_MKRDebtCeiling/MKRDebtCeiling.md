@@ -1,5 +1,5 @@
 ---
-title: "MKRDebtCeiling"
+title: "Aave V3 Ethereum MKR Debt Ceiling Update"
 author: "Alice Rozengarden (@Rozengarden - Aave-chan initiative)"
 discussions: "https://governance.aave.com/t/arfc-borrowing-cap-expansion-request-mkr/14763"
 ---
@@ -11,7 +11,8 @@ This proposal is compatible with Direct-to-AIP.
 
 ## Motivation
 
-The Aave user @Leritu wishes to borrow more asset with his $6.4 million in MKR but the Debt Ceiling has been reached. 
+Organic demand to use the MKR asset has reached the currently set ceiling.
+To accommodate this demand and in alignment with Risk service providers teams recommendation, this AIP proposes to expand the MKR debt ceiling from 2.5M$ to 6M$ ```
 
 ## Specification
 The following parameter will be modified:
