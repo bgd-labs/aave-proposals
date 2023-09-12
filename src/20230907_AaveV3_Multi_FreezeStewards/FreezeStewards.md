@@ -5,7 +5,7 @@ discussions: "https://governance.aave.com/t/temporarily-pausing-gho-integration-
 ---
 
 ## Simple Summary
-As the Aave V3 Ethereum market already has a freezing steward, which allows the emergency admin to freeze reserves, this AIP aims to synchronize the behavior by doing the same across networks. 
+As the Aave V3 Ethereum pool already has a freezing steward, which allows the emergency admin to freeze reserves, this AIP aims to synchronize the behavior by doing the same across networks. 
 
 ## Motivation
 In order to maintain security across Aave V3 deployments, it's essential to maintain up-to-date preventative functionality on all networks.
