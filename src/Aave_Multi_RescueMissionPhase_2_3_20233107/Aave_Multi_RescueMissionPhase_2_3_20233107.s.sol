@@ -11,9 +11,9 @@ import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](3);
-    payloads[0] = GovHelpers.buildMainnet(address(0)); // TODO:
-    payloads[1] = GovHelpers.buildPolygon(address(0)); // TODO:
-    payloads[2] = GovHelpers.buildOptimism(address(0)); // TODO:
+    payloads[0] = GovHelpers.buildMainnet(0x5d7e9a32E0c3db609089186bEBC4B9d8Eb86ad2c);
+    payloads[1] = GovHelpers.buildPolygon(0x7B74938583Eb03e06042fcB651046BaF0bf15644);
+    payloads[2] = GovHelpers.buildOptimism(0x7B74938583Eb03e06042fcB651046BaF0bf15644);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
