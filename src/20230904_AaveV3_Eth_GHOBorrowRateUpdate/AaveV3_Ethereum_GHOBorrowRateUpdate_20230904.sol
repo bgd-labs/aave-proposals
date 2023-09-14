@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {AaveV3EthereumAssets} from 'lib/aave-address-book/src/AaveV3Ethereum.sol';
-import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'lib/aave-helpers/src/v3-config-engine/AaveV3PayloadEthereum.sol';
+import {AaveV3PayloadEthereum, IEngine, EngineFlags} from 'lib/aave-helpers/src/v3-config-engine/AaveV3PayloadEthereum.sol';
 import {IV3RateStrategyFactory} from 'lib/aave-helpers/src/v3-config-engine/IV3RateStrategyFactory.sol';
 
 /**
