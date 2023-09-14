@@ -21,7 +21,7 @@ contract AaveV3_Ethereum_GHOBorrowRateUpdate_20230904_Test is ProtocolV3TestBase
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Ethereum_GHOBorrowRateUpdate_20230904',
       AaveV3Ethereum.POOL
     );
