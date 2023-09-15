@@ -16,7 +16,7 @@ contract AaveV3_Ethereum_GHOBorrowRateUpdate_20230904_Test is ProtocolV3TestBase
   AaveV3_Ethereum_GHOBorrowRateUpdate_20230904 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18062800);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18141094);
     proposal = new AaveV3_Ethereum_GHOBorrowRateUpdate_20230904();
   }
 
