@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {AaveV3Ethereum, AaveV3EthereumAssets} from 'lib/aave-address-book/src/AaveV3Ethereum.sol';
+import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 /**
  * @title GHO Borrow Rate Update
