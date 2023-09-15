@@ -22,7 +22,7 @@ contract DeployEthereum is EthereumScript {
  */
 contract DeployInterestRateStrategy is EthereumScript {
   function run() external broadcast {
-    address poolAddressesProvider = 0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e; // Provided address
+    address poolAddressesProvider = 0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e;
     new GhoInterestRateStrategy(poolAddressesProvider);
   }
 }
@@ -34,7 +34,7 @@ contract DeployInterestRateStrategy is EthereumScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0x77c2Bf7d387D4d0C54dAd4221764f0aC0c289d24);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
