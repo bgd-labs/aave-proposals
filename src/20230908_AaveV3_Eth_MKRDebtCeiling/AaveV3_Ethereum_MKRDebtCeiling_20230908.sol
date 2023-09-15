@@ -11,7 +11,6 @@ import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
  * - Discussion: https://governance.aave.com/t/arfc-borrowing-cap-expansion-request-mkr/14763
  */
 contract AaveV3_Ethereum_MKRDebtCeiling_20230908 is AaveV3PayloadEthereum {
-  function _preExecute() internal override {}
 
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](1);
