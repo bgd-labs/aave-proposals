@@ -12,7 +12,7 @@ This proposal is compatible with Direct-to-AIP.
 ## Motivation
 
 Organic demand to use the MKR asset has reached the currently set ceiling.
-To accommodate this demand and in alignment with Risk service providers teams recommendation, this AIP proposes to expand the MKR debt ceiling from 2.5M$ to 6M$ ```
+To accommodate this demand and in alignment with Risk service providers teams recommendation, this AIP proposes to expand the MKR debt ceiling from 2.5M$ to 6M$
 
 ## Specification
 The following parameter will be modified:
