@@ -15,11 +15,12 @@ Organic demand to use the MKR asset has reached the currently set ceiling.
 To accommodate this demand and in alignment with Risk service providers teams recommendation, this AIP proposes to expand the MKR debt ceiling from 2.5M$ to 6M$
 
 ## Specification
+
 The following parameter will be modified:
 
-| Token | Current debt ceiling | Proposed debt ceiling |
-| --- | --- | --- |
-| MKR Ethereum V3 | 2.5M$ | 6M$ |
+| Token           | Current debt ceiling | Proposed debt ceiling |
+| --------------- | -------------------- | --------------------- |
+| MKR Ethereum V3 | 2.5M$                | 6M$                   |
 
 ## References
 

@@ -32,7 +32,6 @@ contract AaveV3_Ethereum_MKRDebtCeiling_20230908_Test is ProtocolV3TestBase {
       AaveV3Ethereum.POOL
     );
 
-
     ReserveConfig memory MKR_UNDERLYING_CONFIG = _findReserveConfig(
       allConfigsBefore,
       AaveV3EthereumAssets.MKR_UNDERLYING
@@ -53,8 +52,7 @@ contract AaveV3_Ethereum_MKRDebtCeiling_20230908_Test is ProtocolV3TestBase {
       _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.WETH_UNDERLYING),
       _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.MKR_UNDERLYING)
     );
-    
-    
+
     diffReports(
       'preAaveV3_Ethereum_MKRDebtCeiling_20230908',
       'postAaveV3_Ethereum_MKRDebtCeiling_20230908'
