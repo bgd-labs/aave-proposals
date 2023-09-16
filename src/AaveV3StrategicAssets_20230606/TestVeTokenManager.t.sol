@@ -19,7 +19,7 @@ contract VeTokenManagerTest is Test {
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
   event ClaimBoostRewards();
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
-  event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
+  event LockVEBAL(uint256 cummulativeTokensLocked, uint256 lockHorizon);
   event RemoveBoostOffer();
   event SellBoost(
     uint256 pricePerVote,
@@ -31,7 +31,7 @@ contract VeTokenManagerTest is Test {
   );
   event SetLockDuration(uint256 newDuration);
   event SetSpaceId(bytes32 id);
-  event Unlock(uint256 tokensUnlocked);
+  event UnlockVEBAL(uint256 tokensUnlocked);
   event VoteCast(uint256 voteData, bool support);
   event VotingContractUpdate(address indexed token, address voting);
 
@@ -236,8 +236,8 @@ contract Claim is VeTokenManagerTest {
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
-    strategicAssets.lock();
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     deal(BAL, address(this), 1_000e18);
@@ -277,15 +277,15 @@ contract Claim is VeTokenManagerTest {
 contract SetSpaceIdTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
+    strategicAssets.setSpaceIdVEBAL(BALANCER_SPACE_ID);
   }
 
   function test_successful() public {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setDelegate(initialDelegate);
+    strategicAssets.setDelegateVEBAL(initialDelegate);
     vm.expectEmit();
     emit SetSpaceId(BALANCER_SPACE_ID);
-    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
+    strategicAssets.setSpaceIdVEBAL(BALANCER_SPACE_ID);
     vm.stopPrank();
 
     assertEq(
@@ -298,14 +298,14 @@ contract SetSpaceIdTest is VeTokenManagerTest {
 contract SetDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setDelegate(makeAddr('another-delegate'));
+    strategicAssets.setDelegateVEBAL(makeAddr('another-delegate'));
   }
 
   function test_successful() public {
     address newDelegate = makeAddr('another-delegate');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setDelegate(newDelegate);
-    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
+    strategicAssets.setDelegateVEBAL(newDelegate);
+    strategicAssets.setSpaceIdVEBAL(BALANCER_SPACE_ID);
     vm.stopPrank();
 
     assertEq(
@@ -318,14 +318,14 @@ contract SetDelegationSnapshot is VeTokenManagerTest {
 contract ClearDelegationSnapshot is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.clearDelegate();
+    strategicAssets.clearDelegateVEBAL();
   }
 
   function test_successful() public {
     address newDelegate = makeAddr('new-delegate');
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setDelegate(newDelegate);
-    strategicAssets.setSpaceId(BALANCER_SPACE_ID);
+    strategicAssets.setDelegateVEBAL(newDelegate);
+    strategicAssets.setSpaceIdVEBAL(BALANCER_SPACE_ID);
     vm.stopPrank();
 
     assertEq(
@@ -334,7 +334,7 @@ contract ClearDelegationSnapshot is VeTokenManagerTest {
     );
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.clearDelegate();
+    strategicAssets.clearDelegateVEBAL();
     vm.stopPrank();
 
     assertEq(
@@ -347,14 +347,14 @@ contract ClearDelegationSnapshot is VeTokenManagerTest {
 contract SetLockDurationTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
   }
 
   function test_successful() public {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     vm.expectEmit();
     emit SetLockDuration(LOCK_DURATION_ONE_YEAR + 1);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR + 1);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR + 1);
     vm.stopPrank();
   }
 }
@@ -362,7 +362,7 @@ contract SetLockDurationTest is VeTokenManagerTest {
 contract LockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.lock();
+    strategicAssets.lockVEBAL();
   }
 
   function test_successful_locksFirstTime() public {
@@ -376,11 +376,11 @@ contract LockTest is VeTokenManagerTest {
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
 
     vm.expectEmit();
-    emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-    strategicAssets.lock();
+    emit LockVEBAL(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -399,11 +399,11 @@ contract LockTest is VeTokenManagerTest {
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
 
     vm.expectEmit();
-    emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-    strategicAssets.lock();
+    emit LockVEBAL(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -415,7 +415,7 @@ contract LockTest is VeTokenManagerTest {
     deal(B_80BAL_20WETH, address(strategicAssets), 500e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock();
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -435,11 +435,11 @@ contract LockTest is VeTokenManagerTest {
     assertEq(IERC20(VE_BAL).balanceOf(address(strategicAssets)), 0);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
 
     vm.expectEmit();
-    emit Lock(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
-    strategicAssets.lock();
+    emit LockVEBAL(1_000e18, ((block.timestamp + LOCK_DURATION_ONE_YEAR) / WEEK) * WEEK);
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     assertEq(IERC20(B_80BAL_20WETH).balanceOf(address(strategicAssets)), 0);
@@ -451,7 +451,7 @@ contract LockTest is VeTokenManagerTest {
     vm.warp(block.timestamp + WEEK);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.lock();
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     uint256 newLockEnd = IVeToken(VE_BAL).locked__end(address(strategicAssets));
@@ -466,7 +466,7 @@ contract LockTest is VeTokenManagerTest {
 contract UnlockTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.unlock();
+    strategicAssets.unlockVEBAL();
   }
 
   function test_revertsIf_unlockTimeHasNotPassed() public {
@@ -477,11 +477,11 @@ contract UnlockTest is VeTokenManagerTest {
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
-    strategicAssets.lock();
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lockVEBAL();
 
     vm.expectRevert("The lock didn't expire");
-    strategicAssets.unlock();
+    strategicAssets.unlockVEBAL();
     vm.stopPrank();
   }
 
@@ -493,17 +493,17 @@ contract UnlockTest is VeTokenManagerTest {
     deal(B_80BAL_20WETH, address(strategicAssets), 1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.setLockDuration(LOCK_DURATION_ONE_YEAR);
-    strategicAssets.lock();
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
+    strategicAssets.lockVEBAL();
     vm.stopPrank();
 
     vm.warp(block.timestamp + LOCK_DURATION_ONE_YEAR + 1);
 
     vm.expectEmit();
-    emit Unlock(1_000e18);
+    emit UnlockVEBAL(1_000e18);
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
-    strategicAssets.unlock();
+    strategicAssets.unlockVEBAL();
     vm.stopPrank();
   }
 }

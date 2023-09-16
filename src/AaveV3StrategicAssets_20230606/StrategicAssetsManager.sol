@@ -10,8 +10,9 @@ import {AaveV3Ethereum} from 'aave-address-book/AaveV3Ethereum.sol';
 
 import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
+import {VlTokenManager} from './VlTokenManager.sol';
 
-contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTokenManager {
+contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTokenManager, VlTokenManager {
   using SafeERC20 for IERC20;
 
   event WithdrawalERC20(address indexed _token, uint256 _amount);
@@ -19,9 +20,9 @@ contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTo
   function initialize() external initializer {
     _transferOwnership(AaveGovernanceV2.SHORT_EXECUTOR);
     _updateGuardian(_msgSender());
-    spaceId = 'balancer.eth';
-    gaugeController = 0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD;
-    lockDuration = 365 days;
+    spaceIdBalancer = 'balancer.eth';
+    gaugeControllerBalancer = 0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD;
+    lockDurationVEBAL = 365 days;
   }
 
   function withdrawERC20(address token, uint256 amount) external onlyOwner {

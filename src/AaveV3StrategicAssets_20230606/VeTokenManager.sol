@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.19;
-import {console2} from 'forge-std/Test.sol';
+
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
 import {IDelegateRegistry} from './interfaces/IDelegateRegistry.sol';
@@ -13,7 +13,7 @@ abstract contract VeTokenManager is Common {
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
   event ClaimBoostRewards();
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
-  event Lock(uint256 cummulativeTokensLocked, uint256 lockHorizon);
+  event LockVEBAL(uint256 cummulativeTokensLocked, uint256 lockHorizon);
   event RemoveBoostOffer();
   event SellBoost(
     uint256 pricePerVote,
@@ -25,7 +25,7 @@ abstract contract VeTokenManager is Common {
   );
   event SetLockDuration(uint256 newDuration);
   event SetSpaceId(bytes32 id);
-  event Unlock(uint256 tokensUnlocked);
+  event UnlockVEBAL(uint256 tokensUnlocked);
 
   error MaxFeeExceeded();
 
@@ -40,9 +40,9 @@ abstract contract VeTokenManager is Common {
   /// @notice the snapshot delegate for the deposit
   address public delegate;
   /// @notice the keccak encoded spaceId of the snapshot space
-  bytes32 public spaceId;
+  bytes32 public spaceIdBalancer;
   /// @notice The lock duration of veToken
-  uint256 public lockDuration;
+  uint256 public lockDurationVEBAL;
 
   /// @notice Duration in weeks (ie: 1 for 1 Week)
   /// @param delegator Address of user to buy boost from
@@ -58,7 +58,6 @@ abstract contract VeTokenManager is Common {
     uint256 maxFeeOffered
   ) external onlyOwnerOrGuardian {
     uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, durationWeeks);
-    console2.log(maxFee);
 
     if (maxFee > maxFeeOffered) revert MaxFeeExceeded();
     
@@ -139,47 +138,47 @@ abstract contract VeTokenManager is Common {
   }
 
   /// @notice Claim fee token rewards accrued by selling veBoost
-  function claim() external onlyOwnerOrGuardian {
+  function claimBoostRewards() external onlyOwnerOrGuardian {
     IWardenBoost(WARDEN_VE_BAL).claim();
     emit ClaimBoostRewards();
   }
 
   /// @notice sets the snapshot space ID
   /// @param _spaceId The string representation of the spaceId
-  function setSpaceId(bytes32 _spaceId) external onlyOwnerOrGuardian {
-    DELEGATE_REGISTRY.clearDelegate(spaceId);
-    spaceId = _spaceId;
+  function setSpaceIdVEBAL(bytes32 _spaceId) external onlyOwnerOrGuardian {
+    DELEGATE_REGISTRY.clearDelegate(spaceIdBalancer);
+    spaceIdBalancer = _spaceId;
     emit SetSpaceId(_spaceId);
     _delegate(delegate);
   }
 
   /// @notice sets the snapshot delegate
   /// @param newDelegate Address of the user to delegate to
-  function setDelegate(address newDelegate) external onlyOwnerOrGuardian {
+  function setDelegateVEBAL(address newDelegate) external onlyOwnerOrGuardian {
     _delegate(newDelegate);
   }
 
   /// @notice clears the delegate from snapshot
-  function clearDelegate() external onlyOwnerOrGuardian {
+  function clearDelegateVEBAL() external onlyOwnerOrGuardian {
     address oldDelegate = delegate;
-    DELEGATE_REGISTRY.clearDelegate(spaceId);
+    DELEGATE_REGISTRY.clearDelegate(spaceIdBalancer);
 
     emit DelegateUpdate(oldDelegate, address(0));
   }
 
   /// @notice Increases the lock duration for underlying token
   /// @param newLockDuration New lock duration for underlying-locking
-  function setLockDuration(uint256 newLockDuration) external onlyOwnerOrGuardian {
-    lockDuration = newLockDuration;
+  function setLockDurationVEBAL(uint256 newLockDuration) external onlyOwnerOrGuardian {
+    lockDurationVEBAL = newLockDuration;
     emit SetLockDuration(newLockDuration);
   }
 
   /// @notice Locks underlying token into veToken until lockDuration
   /// @notice Increases amount or lock duration if lock already exists
-  function lock() external onlyOwnerOrGuardian {
+  function lockVEBAL() external onlyOwnerOrGuardian {
     uint256 tokenBalance = IERC20(B_80BAL_20WETH).balanceOf(address(this));
     uint256 locked = IVeToken(VE_BAL).locked(address(this));
-    uint256 lockHorizon = ((block.timestamp + lockDuration) / WEEK) * WEEK;
+    uint256 lockHorizon = ((block.timestamp + lockDurationVEBAL) / WEEK) * WEEK;
 
     if (tokenBalance != 0 && locked == 0) {
       // First lock
@@ -200,18 +199,18 @@ abstract contract VeTokenManager is Common {
       return;
     }
 
-    emit Lock(tokenBalance + locked, lockHorizon);
+    emit LockVEBAL(tokenBalance + locked, lockHorizon);
   }
 
   /// @notice Reverts if lockDuration has not passed
-  function unlock() external onlyOwnerOrGuardian {
+  function unlockVEBAL() external onlyOwnerOrGuardian {
     IVeToken(VE_BAL).withdraw();
-    emit Unlock(IERC20(B_80BAL_20WETH).balanceOf(address(this)));
+    emit UnlockVEBAL(IERC20(B_80BAL_20WETH).balanceOf(address(this)));
   }
 
   function _delegate(address newDelegate) internal {
     address oldDelegate = delegate;
-    DELEGATE_REGISTRY.setDelegate(spaceId, newDelegate);
+    DELEGATE_REGISTRY.setDelegate(spaceIdBalancer, newDelegate);
     delegate = newDelegate;
 
     emit DelegateUpdate(oldDelegate, newDelegate);

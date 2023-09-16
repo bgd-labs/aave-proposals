@@ -13,19 +13,19 @@ abstract contract LSDLiquidityGaugeManager is Common {
   error SameController();
 
   /// @notice Address of LSD Gauge Controller
-  address public gaugeController;
+  address public gaugeControllerBalancer;
 
   /// @notice Set the gauge controller used for gauge weight voting
   /// @param _gaugeController The gauge controller address
   function setGaugeController(address _gaugeController) public onlyOwnerOrGuardian {
     if (_gaugeController == address(0)) revert InvalidZeroAddress();
 
-    address oldController = gaugeController;
+    address oldController = gaugeControllerBalancer;
     if (oldController == _gaugeController) revert SameController();
 
-    gaugeController = _gaugeController;
+    gaugeControllerBalancer = _gaugeController;
 
-    emit GaugeControllerChanged(oldController, gaugeController);
+    emit GaugeControllerChanged(oldController, gaugeControllerBalancer);
   }
 
   /// @notice Vote for a gauge's weight
@@ -34,7 +34,7 @@ abstract contract LSDLiquidityGaugeManager is Common {
   function voteForGaugeWeight(address gauge, uint256 weight) external onlyOwnerOrGuardian {
     if (gauge == address(0)) revert InvalidZeroAddress();
 
-    ILiquidityGaugeController(gaugeController).vote_for_gauge_weights(gauge, weight);
+    ILiquidityGaugeController(gaugeControllerBalancer).vote_for_gauge_weights(gauge, weight);
     emit GaugeVote(gauge, weight);
   }
 }
