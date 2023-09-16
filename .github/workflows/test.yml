@@ -14,3 +14,5 @@ jobs:
   test:
     uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main
     secrets: inherit
+    with:
+      mode: "CHANGED"

@@ -29,7 +29,7 @@ yarn
 ### Create an aip
 
 This repository includes a generator to help you bootstrap the required files for an `AIP`.
-To generate a proposal you need to run: `yarn generate -a "BGD labs" --chains Ethereum Polygon -pv V3 --name TestProposal --configEngine`
+To generate a proposal you need to run: `yarn generate`
 
 To get a full list of available commands run `yarn generate --help`
 
@@ -42,8 +42,7 @@ Options:
   -V, --version                    output the version number
   -f, --force                      force creation (might overwrite existing files)
   -cfg, --configEngine             extends config engine
-  -name, --name <string>           name of the proposal (e.g. CapsIncrease)
-  -ch, --chains <letters...>        (choices: "Ethereum", "Optimism", "Arbitrum", "Polygon", "Avalanche", "Fantom", "Harmony", "Metis")
+  -ch, --chains <letters...>        (choices: "Ethereum", "Optimism", "Arbitrum", "Polygon", "Avalanche", "Fantom", "Harmony", "Metis", "Base")
   -pv, --protocolVersion <string>   (choices: "V2", "V3")
   -t, --title <string>             aip title
   -a, --author <string>            author
