@@ -6,7 +6,7 @@ import {EthereumScript} from 'aave-helpers/ScriptUtils.sol';
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/AaveV2_Multi_RescueMissionPhase_2_3_20233107/AaveV2_Multi_RescueMissionPhase_2_3_20233107.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/Aave_Multi_RescueMissionPhase_2_3_20233107/Aave_Multi_RescueMissionPhase_2_3_20233107.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
@@ -18,7 +18,7 @@ contract CreateProposal is EthereumScript {
       payloads,
       GovHelpers.ipfsHashFile(
         vm,
-        'src/AaveV2_Multi_RescueMissionPhase_2_3_20233107/RescueMissionPhase_2_3.md'
+        'src/Aave_Multi_RescueMissionPhase_2_3_20233107/RescueMissionPhase_2_3.md'
       )
     );
   }
