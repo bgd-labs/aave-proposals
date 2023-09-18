@@ -67,7 +67,13 @@ contract VeTokenManagerTest is Test {
 contract BuyBoostTest is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.buyBoost(makeAddr('delegator'), makeAddr('receiver'), 1e18, 1, type(uint256).max);
+    strategicAssets.buyBoost(
+      makeAddr('delegator'),
+      makeAddr('receiver'),
+      1e18,
+      1,
+      type(uint256).max
+    );
   }
 
   function test_revertsIf_estimatedFeeExceedsMaxFee() public {
@@ -215,7 +221,7 @@ contract RemoveBoostOfferTest is VeTokenManagerTest {
 contract Claim is VeTokenManagerTest {
   function test_revertsIf_invalidCaller() public {
     vm.expectRevert('ONLY_BY_OWNER_OR_GUARDIAN');
-    strategicAssets.claim();
+    strategicAssets.claimBoostRewards();
   }
 
   function test_revertsIf_noRewardsWereEarned() public {
@@ -224,7 +230,7 @@ contract Claim is VeTokenManagerTest {
     strategicAssets.sellBoost(1000, 10, expiration, 1000, 10000, true);
 
     vm.expectRevert(NullClaimAmount.selector);
-    strategicAssets.claim();
+    strategicAssets.claimBoostRewards();
     vm.stopPrank();
   }
 
@@ -265,7 +271,7 @@ contract Claim is VeTokenManagerTest {
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     vm.expectEmit();
     emit ClaimBoostRewards();
-    strategicAssets.claim();
+    strategicAssets.claimBoostRewards();
     vm.stopPrank();
 
     uint256 balanceAfter = IERC20(BAL).balanceOf(address(strategicAssets));

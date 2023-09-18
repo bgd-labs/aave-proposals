@@ -60,7 +60,7 @@ abstract contract VeTokenManager is Common {
     uint256 maxFee = IWardenBoost(WARDEN_VE_BAL).estimateFees(delegator, amount, durationWeeks);
 
     if (maxFee > maxFeeOffered) revert MaxFeeExceeded();
-    
+
     IERC20(BAL).approve(WARDEN_VE_BAL, maxFee);
     IWardenBoost(WARDEN_VE_BAL).buyDelegationBoost(
       delegator,

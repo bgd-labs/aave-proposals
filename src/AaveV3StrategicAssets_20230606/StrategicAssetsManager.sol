@@ -12,7 +12,12 @@ import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
 import {VlTokenManager} from './VlTokenManager.sol';
 
-contract StrategicAssetsManager is Initializable, LSDLiquidityGaugeManager, VeTokenManager, VlTokenManager {
+contract StrategicAssetsManager is
+  Initializable,
+  LSDLiquidityGaugeManager,
+  VeTokenManager,
+  VlTokenManager
+{
   using SafeERC20 for IERC20;
 
   event WithdrawalERC20(address indexed _token, uint256 _amount);

@@ -74,7 +74,7 @@ contract SetGaugeController is LSDLiquidityGaugeManagerTest {
     strategicAssets.setGaugeController(newController);
     vm.stopPrank();
 
-    assertEq(strategicAssets.gaugeController(), newController);
+    assertEq(strategicAssets.gaugeControllerBalancer(), newController);
   }
 }
 
@@ -104,8 +104,8 @@ contract VoteForGaugeWeight is LSDLiquidityGaugeManagerTest {
 
     vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
     strategicAssets.setGaugeController(BALANCER_GAUGE_CONTROLLER);
-    strategicAssets.setLockDuration(365 days);
-    strategicAssets.lock();
+    strategicAssets.setLockDurationVEBAL(365 days);
+    strategicAssets.lockVEBAL();
 
     vm.expectEmit();
     emit GaugeVote(VE_BAL_GAUGE, 100);
