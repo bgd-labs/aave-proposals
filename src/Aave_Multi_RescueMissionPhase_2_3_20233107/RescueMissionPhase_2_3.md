@@ -30,6 +30,7 @@ The following table represents the tokens to rescue from various aave ecosystem 
 | [USDC](https://polygonscan.com/address/0x2791bca1f2de4661ed88a30c99a7a9449aa84174)           | [AAVE V2 POOL](https://polygonscan.com/address/0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf)         | 4515.242949             | POLYGON   |
 | [USDT.e](https://snowtrace.io/address/0xc7198437980c041c805a1edcba50c1ce5db95118)            | [AAVE V2 POOL](https://snowtrace.io/address/0x4F01AeD16D97E3aB5ab2B501154DC9bb0F1A5A2C)            | 1772.206585             | AVALANCHE |
 | [USDC.e](https://snowtrace.io/address/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664)            | [AAVE V2 POOL](https://snowtrace.io/address/0x4F01AeD16D97E3aB5ab2B501154DC9bb0F1A5A2C)            | 2522.408895             | AVALANCHE |
+| [USDC.e](https://snowtrace.io/address/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664)            | [WETH_GATEWAY](https://snowtrace.io/address/0x8a47F74d1eE0e2edEB4F3A7e64EF3bD8e11D27C8)            | 14100             | AVALANCHE |
 | [USDC](https://optimistic.etherscan.io/address/0x7f5c764cbc14f9669b88837ca1490cca17c31607)   | [AAVE V3 POOL](https://optimistic.etherscan.io/address/0x794a61358D6845594F94dc1DB02A252b5b4814aD) | 44428.421035            | OPTIMISM  |
 
 ## Specification
