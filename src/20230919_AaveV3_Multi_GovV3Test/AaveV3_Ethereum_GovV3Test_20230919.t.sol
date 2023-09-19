@@ -15,7 +15,7 @@ contract AaveV3_Ethereum_GovV3Test_20230919_Test is ProtocolV3TestBase {
   AaveV3_Ethereum_GovV3Test_20230919 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18170543);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18170582);
     proposal = new AaveV3_Ethereum_GovV3Test_20230919();
   }
 

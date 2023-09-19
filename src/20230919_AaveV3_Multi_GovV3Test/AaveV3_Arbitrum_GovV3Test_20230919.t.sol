@@ -15,7 +15,7 @@ contract AaveV3_Arbitrum_GovV3Test_20230919_Test is ProtocolV3TestBase {
   AaveV3_Arbitrum_GovV3Test_20230919 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('arbitrum'), 132554911);
+    vm.createSelectFork(vm.rpcUrl('arbitrum'), 132556738);
     proposal = new AaveV3_Arbitrum_GovV3Test_20230919();
   }
 

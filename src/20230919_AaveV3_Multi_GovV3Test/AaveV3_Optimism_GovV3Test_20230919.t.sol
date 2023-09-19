@@ -15,7 +15,7 @@ contract AaveV3_Optimism_GovV3Test_20230919_Test is ProtocolV3TestBase {
   AaveV3_Optimism_GovV3Test_20230919 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 109767412);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 109767645);
     proposal = new AaveV3_Optimism_GovV3Test_20230919();
   }
 

@@ -66,7 +66,8 @@ ${supportedChains
     template += `actions${chain}[0] = GovV3Helpers.buildAction(address(0));\n`;
     template += `payloads[${ix}] = GovV3Helpers.build${
       chain == 'Ethereum' ? 'Mainnet' : chain
-    }(vm, actions);`;
+    }(vm, actions);\n`;
+    return template;
   })
   .join('\n')}
     GovV3Helpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${

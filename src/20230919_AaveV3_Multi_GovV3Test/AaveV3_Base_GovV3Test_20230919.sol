@@ -9,6 +9,6 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Snapshot: TODO
  * - Discussion: TODO
  */
-contract AaveV3_Optimism_GovV3Test_20230919 is IProposalGenericExecutor {
+contract AaveV3_Base_GovV3Test_20230919 is IProposalGenericExecutor {
   function execute() external {}
 }
