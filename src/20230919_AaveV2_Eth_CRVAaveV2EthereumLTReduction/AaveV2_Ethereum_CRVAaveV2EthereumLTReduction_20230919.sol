@@ -8,7 +8,7 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
  * @title CRV Aave V2 Ethereum - LT Reduction
  * @author @yonikesel - ChaosLabsInc
  * - Snapshot: Direct to AIP
- * - Discussion: https://governance.aave.com/t/arfc-crv-aave-v2-ethereum-lt-reduction-08-21-2023/14589
+ * - Discussion: https://governance.aave.com/t/arfc-crv-aave-v2-ethereum-lt-reduction-09-19-2023/14890
  */
 contract AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919 is IProposalGenericExecutor {
   uint256 public constant CRV_LIQUIDATION_THRESHOLD = 45_00; // 47 -> 45
