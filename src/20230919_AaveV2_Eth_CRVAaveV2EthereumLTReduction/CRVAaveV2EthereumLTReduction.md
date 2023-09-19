@@ -18,7 +18,7 @@ The individual analyses and considerations can be found in the forum [discussion
 
 | Asset | Parameter | Current Value | Recommendation | Change |
 | ----- | --------- | ------------- | -------------- | ------ |
-| CRV   | LT        | 47            | 44             | -3%    |
+| CRV   | LT        | 47            | 45             | -2%    |
 
 ## References
 

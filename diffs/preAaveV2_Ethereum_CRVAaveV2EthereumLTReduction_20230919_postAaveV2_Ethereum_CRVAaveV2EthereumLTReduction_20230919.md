@@ -6,7 +6,7 @@
 
 | description | value before | value after |
 | --- | --- | --- |
-| liquidationThreshold | 47 % | 44 % |
+| liquidationThreshold | 47 % | 45 % |
 
 
 ## Raw diff
@@ -17,7 +17,7 @@
     "0xD533a949740bb3306d119CC777fa900bA034cd52": {
       "liquidationThreshold": {
         "from": 4700,
-        "to": 4400
+        "to": 4500
       }
     }
   }

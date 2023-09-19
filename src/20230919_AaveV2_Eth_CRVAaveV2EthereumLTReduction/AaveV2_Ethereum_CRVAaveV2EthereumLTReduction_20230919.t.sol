@@ -15,7 +15,7 @@ import {AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919} from './AaveV2_Et
 contract AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919_Test is ProtocolV2TestBase {
   AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919 internal proposal;
 
-  uint256 public constant CRV_LIQUIDATION_THRESHOLD = 44_00; // 44%
+  uint256 public constant CRV_LIQUIDATION_THRESHOLD = 45_00; // 45%
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 18168802);
