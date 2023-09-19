@@ -25,7 +25,7 @@ The individual analyses and considerations can be found in the forum [discussion
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230919_AaveV2_Eth_CRVAaveV2EthereumLTReduction/AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919.sol)
 - Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230919_AaveV2_Eth_CRVAaveV2EthereumLTReduction/AaveV2_Ethereum_CRVAaveV2EthereumLTReduction_20230919.t.sol)
 - [Snapshot](Direct to AIP)
-- [Discussion](https://governance.aave.com/t/arfc-crv-aave-v2-ethereum-lt-reduction-08-21-2023/14589)
+- [Discussion](https://governance.aave.com/t/arfc-crv-aave-v2-ethereum-lt-reduction-09-19-2023/14890)
 
 ## Copyright
 
