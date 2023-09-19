@@ -13,7 +13,7 @@ export function generateScript(options: Options) {
   let template = pragma;
 
   // generate imports
-  template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
+  template += `import {GovHelpersV3} from 'aave-helpers/GovHelpersV3.sol';\n`;
   template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]
     .map((chain) => `${chain}Script`)
     .join(', ')}} from 'aave-helpers/ScriptUtils.sol';\n`;
@@ -38,7 +38,10 @@ export function generateScript(options: Options) {
  */
 contract Deploy${chain} is ${chain}Script {
   function run() external broadcast {
-    new ${name}();
+    ${name} payload = new ${name}();
+    IPayloadsControllerCore.ExecutionAction[] memory actions = new IPayloadsControllerCore.ExecutionAction[](1);
+    actions[0] = GovV3Helpers.buildAction(address(payload));
+    GovHelpersV3.createPayload(actions);
   }
 }`;
     })
@@ -54,16 +57,19 @@ contract Deploy${chain} is ${chain}Script {
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${supportedChains.length});
+    PayloadsControllerUtils.Payload[] memory payloads = new PayloadsControllerUtils.Payload[](${
+      supportedChains.length
+    });
 ${supportedChains
-  .map(
-    (chain, ix) =>
-      `    payloads[${ix}] = GovHelpers.build${
-        chain == 'Ethereum' ? 'Mainnet' : chain
-      }(address(0));`
-  )
+  .map((chain, ix) => {
+    let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](1);\n`;
+    template += `actions${chain}[0] = GovV3Helpers.buildAction(address(0));\n`;
+    template += `payloads[${ix}] = GovHelpersV3.build${
+      chain == 'Ethereum' ? 'Mainnet' : chain
+    }(vm, actions);`;
+  })
   .join('\n')}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
+    GovHelpersV3.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
     options.shortName
   }.md'));
   }

@@ -12,16 +12,6 @@ export const AVAILABLE_CHAINS = [
   'Base',
 ] as const;
 
-export const CHAIN_TO_EXECUTOR = {
-  Ethereum: 'AaveGovernanceV2.SHORT_EXECUTOR',
-  Polygon: 'AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR',
-  Optimism: 'AaveGovernanceV2.OPTIMISM_BRIDGE_EXECUTOR',
-  Arbitrum: 'AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR',
-  Metis: 'AaveGovernanceV2.METIS_BRIDGE_EXECUTOR',
-  Base: 'AaveGovernanceV2.BASE_BRIDGE_EXECUTOR',
-  Avalanche: '0xa35b76E4935449E33C56aB24b23fcd3246f13470 // avalanche guardian',
-} as const;
-
 export const CHAINS_WITH_GOV_SUPPORT = [
   'Ethereum',
   'Optimism',

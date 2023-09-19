@@ -1,6 +1,6 @@
 import {createPublicClient, http} from 'viem';
 import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
-import {CHAIN_TO_EXECUTOR, generateContractName, getAlias} from '../common';
+import {generateContractName, getAlias} from '../common';
 import {Options} from '../types';
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -33,8 +33,7 @@ export const testTemplate = async (options: Options, chain, artifacts) => {
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
-import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
+import {GovHelpersV3} from 'aave-helpers/GovHelpersV3.sol';
 import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} from 'aave-address-book/Aave${protocolVersion}${chain}.sol';
 import {Protocol${protocolVersion}TestBase, ReserveConfig} from 'aave-helpers/Protocol${protocolVersion}TestBase.sol';
 import {${contractName}} from './${contractName}.sol';
@@ -57,10 +56,9 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
       Aave${protocolVersion}${chain}.POOL
     );
 
-    GovHelpers.executePayload(
+    GovHelpersV3.executePayload(
       vm,
-      address(proposal),
-      ${CHAIN_TO_EXECUTOR[chain]}
+      address(proposal)
     );
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
