@@ -28,14 +28,6 @@ Based on our analysis, we have determined that there is adequate on-chain liquid
 
 We have not identified any outsized positions that are actively affecting our recommendations.
 
-### Top Borrowers
-
-![Untitled - 2023-09-06T163537.943|2000x858](upload://4GZAtzp77W78v2tLa8bxkXyZVNf.png)
-
-### Top Suppliers
-
-[Uploading: Untitled - 2023-09-06T163539.322.png…]()
-
 ### Recommendations
 
 | Asset  | Parameter             | Current | Recommended | Change |
