@@ -1,6 +1,5 @@
 import {input} from '@inquirer/prompts';
 import {CodeArtifacts, DEPENDENCIES, FeatureModule} from '../types';
-import {CHAIN_TO_EXECUTOR} from '../common';
 
 type FlashBorrower = {
   [chain: string]: {
@@ -37,10 +36,9 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
         test: {
           fn: [
             `function test_isFlashBorrower() external {
-            GovHelpers.executePayload(
+            GovV3Helpers.executePayload(
               vm,
-              address(proposal),
-              ${CHAIN_TO_EXECUTOR[chain]}
+              address(proposal)
             );
             bool isFlashBorrower = Aave${opt.protocolVersion}${chain}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
             assertEq(isFlashBorrower, true);

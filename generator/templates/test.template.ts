@@ -33,7 +33,7 @@ export const testTemplate = async (options: Options, chain, artifacts) => {
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {GovHelpersV3} from 'aave-helpers/GovHelpersV3.sol';
+import {GovV3Helpers} from 'aave-helpers/GovV3Helpers.sol';
 import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} from 'aave-address-book/Aave${protocolVersion}${chain}.sol';
 import {Protocol${protocolVersion}TestBase, ReserveConfig} from 'aave-helpers/Protocol${protocolVersion}TestBase.sol';
 import {${contractName}} from './${contractName}.sol';
@@ -56,7 +56,7 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
       Aave${protocolVersion}${chain}.POOL
     );
 
-    GovHelpersV3.executePayload(
+    GovV3Helpers.executePayload(
       vm,
       address(proposal)
     );

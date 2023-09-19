@@ -13,7 +13,7 @@ export function generateScript(options: Options) {
   let template = pragma;
 
   // generate imports
-  template += `import {GovHelpersV3} from 'aave-helpers/GovHelpersV3.sol';\n`;
+  template += `import {GovV3Helpers} from 'aave-helpers/GovV3Helpers.sol';\n`;
   template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]
     .map((chain) => `${chain}Script`)
     .join(', ')}} from 'aave-helpers/ScriptUtils.sol';\n`;
@@ -41,7 +41,7 @@ contract Deploy${chain} is ${chain}Script {
     ${name} payload = new ${name}();
     IPayloadsControllerCore.ExecutionAction[] memory actions = new IPayloadsControllerCore.ExecutionAction[](1);
     actions[0] = GovV3Helpers.buildAction(address(payload));
-    GovHelpersV3.createPayload(actions);
+    GovV3Helpers.createPayload(actions);
   }
 }`;
     })
@@ -64,12 +64,12 @@ ${supportedChains
   .map((chain, ix) => {
     let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](1);\n`;
     template += `actions${chain}[0] = GovV3Helpers.buildAction(address(0));\n`;
-    template += `payloads[${ix}] = GovHelpersV3.build${
+    template += `payloads[${ix}] = GovV3Helpers.build${
       chain == 'Ethereum' ? 'Mainnet' : chain
     }(vm, actions);`;
   })
   .join('\n')}
-    GovHelpersV3.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
+    GovV3Helpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
     options.shortName
   }.md'));
   }
