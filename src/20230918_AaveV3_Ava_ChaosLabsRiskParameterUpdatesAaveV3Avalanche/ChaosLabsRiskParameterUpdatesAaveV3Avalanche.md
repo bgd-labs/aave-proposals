@@ -10,7 +10,7 @@ A proposal to adjust five (5) total risk parameters, including Loan-to-Value, Li
 
 ## Motivation
 
-Chaos Labs’ Parameter Recommendation Platform runs hundreds of thousands of agent-based off-chain and on-chain simulations to examine how different Aave V3 risk parameters configurations would behave under adverse market conditions - and find the optimal values to maximize protocol borrow usage while minimizing losses from liquidations and bad debt. 
+Chaos Labs’ Parameter Recommendation Platform runs hundreds of thousands of agent-based off-chain and on-chain simulations to examine how different Aave V3 risk parameters configurations would behave under adverse market conditions - and find the optimal values to maximize protocol borrow usage while minimizing losses from liquidations and bad debt.
 
 Please find more information on the parameter recommendation methodology [here](https://community.chaoslabs.xyz/aave/recommendations/methodology).
 
@@ -18,7 +18,7 @@ You can also view the simulation results and breakdown for the different assets 
 
 The output of our simulations reveals an opportunity to optimize parameters for WAVAX, sAVAX and LINK.e on V3 Avalanche, resulting in improved capital efficiency of the system, with a negligible effect on the projected VaR (95th percentile of the protocol losses that will be accrued due to bad debt from under-collateralized accounts over 24 hours) and EVaR (Extreme VaR, the 99th percentile of the protocol losses that will be accrued due to bad debt from under-collateralized accounts over 24 hours)
 
-*Simulating all changes jointly yields a projected borrow increase of ~$26K, with a negligible increase in VaR and Extreme VaR compared to simulations with the current parameters.*
+_Simulating all changes jointly yields a projected borrow increase of ~$26K, with a negligible increase in VaR and Extreme VaR compared to simulations with the current parameters._
 
 ### Liquidity Analysis:
 
@@ -38,13 +38,13 @@ We have not identified any outsized positions that are actively affecting our re
 
 ### Recommendations
 
-| Asset | Parameter | Current | Recommended | Change |
-| --- | --- | --- | --- | --- |
-| WAVAX | Liquidation Bonus | 10% | 9% | -1% |
-| sAVAX | Liquidation Threshold | 30% | 40% | +10% |
-| sAVAX | Loan-to-Value | 20% | 30% | +10% |
-| LINK.e | Liquidation Threshold | 68% | 71% | +3% |
-| LINK.e | Loan-to-Value | 53% | 56% | +3% |
+| Asset  | Parameter             | Current | Recommended | Change |
+| ------ | --------------------- | ------- | ----------- | ------ |
+| WAVAX  | Liquidation Bonus     | 10%     | 9%          | -1%    |
+| sAVAX  | Liquidation Threshold | 30%     | 40%         | +10%   |
+| sAVAX  | Loan-to-Value         | 20%     | 30%         | +10%   |
+| LINK.e | Liquidation Threshold | 68%     | 71%         | +3%    |
+| LINK.e | Loan-to-Value         | 53%     | 56%         | +3%    |
 
 ## References
 
