@@ -40,12 +40,9 @@ contract TokenLogicFunding_20230919 is IProposalGenericExecutor {
   }
   
   function execute() external {
-    address TOKENLOGIC = 0x3e4A9f478C0c13A15137Fc81e9d8269F127b4B40;
     address MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
     address PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
-
-    uint256 START_STREAM_TIME = 1695089997; /// 2023/09/19
-    uint256 END_STREAM_TIME = 1710645493; /// 2024/03/17
+    AaveSwapper SWAPPER = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
 
     Asset memory DAI = Asset({
       underlying: AaveV3EthereumAssets.DAI_UNDERLYING,
@@ -60,8 +57,6 @@ contract TokenLogicFunding_20230919 is IProposalGenericExecutor {
       oracle: 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC,
       amount: 350_000 * 1e18
     });
-
-    AaveSwapper SWAPPER = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
 
     /// 1. withdraw DAI & swap to GHO
 
@@ -83,13 +78,16 @@ contract TokenLogicFunding_20230919 is IProposalGenericExecutor {
     );
 
     /// 2. create GHO stream
-    /// TODO: figure out this out, the remainder of the division between gho amount and timestamp delta should be zero
-    /// probably set start time to 1 month from now and then end = +180 days. amount should be finetuned to fit the timestamps
+    address TOKENLOGIC = 0x3e4A9f478C0c13A15137Fc81e9d8269F127b4B40;
+    uint256 STREAM_DURATION = 180 days;
+    uint256 ACTUAL_STREAM_AMOUNT = (GHO.amount / STREAM_DURATION) * STREAM_DURATION;
+
     AaveV3Ethereum.COLLECTOR.createStream(
-      TOKENLOGIC, GHO.amount, 
+      TOKENLOGIC, 
+      ACTUAL_STREAM_AMOUNT, 
       GHO.underlying, 
       block.timestamp, 
-      block.timestamp + 180 days
+      block.timestamp + STREAM_DURATION
     );
   }
 }
