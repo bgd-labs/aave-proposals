@@ -6,7 +6,7 @@ import {AgdAllowanceModification_20230817} from './AgdAllowanceModification_2023
 
 /**
  * @dev Deploy AgdAllowanceModification_20230817
- * command: make deploy-ledger contract=src/AgdAllowanceModification_20230817/Scripts.s.sol:DeployPayload chain=ethereum
+ * command: make deploy-ledger contract=src/AgdAllowanceModification_20230817/Scripts.s.sol:DeployPayload chain=mainnet
  */
 contract DeployPayload is EthereumScript {
   function run() external broadcast {
