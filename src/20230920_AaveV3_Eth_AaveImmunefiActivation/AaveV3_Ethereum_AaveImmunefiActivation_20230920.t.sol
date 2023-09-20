@@ -15,6 +15,8 @@ import {AaveV3_Ethereum_AaveImmunefiActivation_20230920} from './AaveV3_Ethereum
 contract AaveV3_Ethereum_AaveImmunefiActivation_20230920_Test is ProtocolV3TestBase {
   AaveV3_Ethereum_AaveImmunefiActivation_20230920 internal proposal;
 
+  event Decision(string agreed);
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 18176275);
     proposal = new AaveV3_Ethereum_AaveImmunefiActivation_20230920();
@@ -26,6 +28,10 @@ contract AaveV3_Ethereum_AaveImmunefiActivation_20230920_Test is ProtocolV3TestB
       AaveV3Ethereum.POOL
     );
 
+    vm.expectEmit();
+    emit Decision(
+      'The Aave DAO authorises the activation of an Aave <> Immunefi bug bounty program'
+    );
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     createConfigurationSnapshot(
