@@ -39,9 +39,7 @@ export function generateScript(options: Options) {
 contract Deploy${chain} is ${chain}Script {
   function run() external broadcast {
     ${name} payload = new ${name}();
-    IPayloadsControllerCore.ExecutionAction[] memory actions = new IPayloadsControllerCore.ExecutionAction[](1);
-    actions[0] = GovV3Helpers.buildAction(address(payload));
-    GovV3Helpers.createPayload(actions);
+    GovV3Helpers.createPayload(GovV3Helpers.buildAction(address(payload)));
   }
 }`;
     })
@@ -62,11 +60,9 @@ contract CreateProposal is EthereumScript {
     });
 ${supportedChains
   .map((chain, ix) => {
-    let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](1);\n`;
-    template += `actions${chain}[0] = GovV3Helpers.buildAction(address(0));\n`;
-    template += `payloads[${ix}] = GovV3Helpers.build${
+    let template = `payloads[${ix}] = GovV3Helpers.build${
       chain == 'Ethereum' ? 'Mainnet' : chain
-    }(vm, actions);\n`;
+    }(vm, GovV3Helpers.buildAction(address(0)));\n`;
     return template;
   })
   .join('\n')}
