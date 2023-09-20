@@ -1,6 +1,6 @@
 import {createPublicClient, http} from 'viem';
 import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
-import {generateContractName, getAlias, isV2Pool} from '../common';
+import {generateContractName, getAlias, getPoolChain, isV2Pool} from '../common';
 import {CodeArtifact, Options, PoolIdentifier} from '../types';
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -25,6 +25,7 @@ export const testTemplate = async (
   pool: PoolIdentifier,
   artifacts: CodeArtifact[]
 ) => {
+  const chain = getPoolChain(pool);
   const contractName = generateContractName(options, pool);
 
   const testBase = isV2Pool(pool) ? 'ProtocolV2TestBase' : 'ProtocolV3TestBase';

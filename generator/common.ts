@@ -20,7 +20,7 @@ export const CHAINS_WITH_GOV_SUPPORT = [
   'Polygon',
   'Metis',
   'Base',
-];
+] as const satisfies readonly (typeof AVAILABLE_CHAINS)[number][];
 
 export const SHORT_CHAINS = {
   Ethereum: 'Eth',
@@ -41,6 +41,16 @@ export function getAssets(pool: PoolIdentifier): string[] {
 
 export function isV2Pool(pool: PoolIdentifier) {
   return V2_POOLS.includes(pool as any);
+}
+
+export function getVersion(pool: PoolIdentifier) {
+  return isV2Pool(pool) ? 'V2' : 'V3';
+}
+
+export function getPoolChain(pool: PoolIdentifier) {
+  const chain = AVAILABLE_CHAINS.find((chain) => pool.indexOf(chain) !== -1);
+  if (!chain) throw new Error('cannot find chain for pool');
+  return chain;
 }
 
 export function getDate() {

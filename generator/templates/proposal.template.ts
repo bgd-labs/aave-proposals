@@ -1,23 +1,21 @@
-import {generateContractName} from '../common';
-import {CodeArtifact, CodeArtifacts, DEPENDENCIES, Options, PoolIdentifier} from '../types';
+import {generateContractName, getPoolChain, getVersion} from '../common';
+import {CodeArtifact, DEPENDENCIES, Options, PoolIdentifier} from '../types';
 
-function buildImport(options: Options, chain, dependencies: DEPENDENCIES[]) {
+function buildImport(options: Options, pool: PoolIdentifier, dependencies: DEPENDENCIES[]) {
   let template = '';
+  const chain = getPoolChain(pool);
+  const version = getVersion(pool);
   if (dependencies.includes(DEPENDENCIES.Engine)) {
-    template += `import {Aave${
-      options.protocolVersion
-    }Payload${chain}, IEngine, Rates, EngineFlags} from 'aave-helpers/${options.protocolVersion.toLowerCase()}-config-engine/Aave${
-      options.protocolVersion
-    }Payload${chain}.sol';`;
+    template += `import {Aave${version}Payload${chain}, IEngine, Rates, EngineFlags} from 'aave-helpers/${version.toLowerCase()}-config-engine/Aave${version}Payload${chain}.sol';`;
   } else {
     template += `import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';\n`;
   }
   if (dependencies.includes(DEPENDENCIES.Addresses) && dependencies.includes(DEPENDENCIES.Assets)) {
-    template += `import {Aave${options.protocolVersion}${chain}, Aave${options.protocolVersion}${chain}Assets} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+    template += `import {${pool}, ${pool}Assets} from 'aave-address-book/${pool}.sol';\n`;
   } else if (dependencies.includes(DEPENDENCIES.Addresses)) {
-    template += `import {Aave${options.protocolVersion}${chain}} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+    template += `import {${pool}} from 'aave-address-book/${pool}.sol';\n`;
   } else if (dependencies.includes(DEPENDENCIES.Assets)) {
-    template += `import {Aave${options.protocolVersion}${chain}Assets} from 'aave-address-book/Aave${options.protocolVersion}${chain}.sol';\n`;
+    template += `import {${pool}Assets} from 'aave-address-book/${pool}.sol';\n`;
   }
 
   return template;
@@ -29,6 +27,7 @@ export const proposalTemplate = (
   artifacts: CodeArtifact[] = []
 ) => {
   const {title, author, snapshot, discussion} = options;
+  const chain = getPoolChain(pool);
   const contractName = generateContractName(options, pool);
 
   const dependencies = [
@@ -70,7 +69,7 @@ ${imports}
  */
 contract ${contractName} is ${
     dependencies.includes(DEPENDENCIES.Engine)
-      ? `${options.protocolVersion}Payload${chain}`
+      ? `Aave${getVersion(pool)}Payload${chain}`
       : 'IProposalGenericExecutor'
   } {
   ${constants}
