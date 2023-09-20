@@ -17,26 +17,26 @@ export function generateScript(options: Options) {
   template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]
     .map((chain) => `${chain}Script`)
     .join(', ')}} from 'aave-helpers/ScriptUtils.sol';\n`;
-  template += options.chains
-    .map((chain) => {
-      const name = generateContractName(options, chain);
+  template += options.pools
+    .map((pool) => {
+      const name = generateContractName(options, pool);
       return `import {${name}} from './${name}.sol';`;
     })
     .join('\n');
   template += '\n\n';
 
   // generate chain scripts
-  template += options.chains
-    .map((chain) => {
-      const name = generateContractName(options, chain);
+  template += options.pools
+    .map((pool) => {
+      const name = generateContractName(options, pool);
 
       return `/**
  * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
-        chain
+ * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${pool} chain=${getAlias(
+        pool
       )}
  */
-contract Deploy${chain} is ${chain}Script {
+contract Deploy${pool} is ${chain}Script {
   function run() external broadcast {
     ${name} payload = new ${name}();
     GovV3Helpers.createPayload(GovV3Helpers.buildAction(address(payload)));

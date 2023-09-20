@@ -1,5 +1,5 @@
-import {input, confirm, checkbox} from '@inquirer/prompts';
-import {CodeArtifacts, DEPENDENCIES, ENGINE_FLAGS, FeatureModule} from '../types';
+import {input, checkbox} from '@inquirer/prompts';
+import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
 import {
   getAssets,
   jsNumberToSol,
@@ -8,11 +8,11 @@ import {
   transformPercent,
 } from '../common';
 
-async function subCli(chain: string) {
-  console.log(`Fetching information for Collateral Updates on ${chain}`);
+async function subCli(pool: PoolIdentifier) {
+  console.log(`Fetching information for Collateral Updates on ${pool}`);
   const assets = await checkbox({
     message: 'Select the assets you want to amend',
-    choices: getAssets(chain as any, 'V3').map((asset) => ({name: asset, value: asset})),
+    choices: getAssets(pool).map((asset) => ({name: asset, value: asset})),
   });
   const answers: CollateralUpdate[] = [];
   for (const asset of assets) {
@@ -66,54 +66,46 @@ type CollateralUpdate = {
   eModeCategory: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
 };
 
-type CollateralUpdates = {
-  [chain: string]: CollateralUpdate[];
-};
+type CollateralUpdates = CollateralUpdate[];
 
 export const collateralUpdates: FeatureModule<CollateralUpdates> = {
-  async cli(opt) {
-    const response: CollateralUpdates = {};
-    for (const chain of opt.chains) {
-      response[chain] = await subCli(chain);
-    }
+  async cli(opt, pool) {
+    const response: CollateralUpdates = await subCli(pool);
     return response;
   },
-  build(opt, cfg) {
-    const response: CodeArtifacts = {};
-    for (const chain of opt.chains) {
-      response[chain] = {
-        code: {
-          dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
-          fn: [
-            `function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
-              IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](${
-                cfg[chain].length
-              });
+  build(opt, pool, cfg) {
+    const response: CodeArtifact = {
+      code: {
+        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
+        fn: [
+          `function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
+            IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](${
+              cfg.length
+            });
 
-            ${cfg[chain]
-              .map(
-                (cfg, ix) => `collateralUpdate[${ix}] = IEngine.CollateralUpdate({
-                 asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
-                 ltv: ${jsPercentToSol(cfg.ltv)},
-                 liqThreshold: ${jsPercentToSol(cfg.liqThreshold)},
-                 liqBonus: ${jsPercentToSol(cfg.liqBonus)},
-                 debtCeiling: ${jsNumberToSol(cfg.debtCeiling)},
-                 liqProtocolFee: ${jsPercentToSol(cfg.liqProtocolFee)},
-                 eModeCategory: ${
-                   cfg.eModeCategory === ENGINE_FLAGS.KEEP_CURRENT
-                     ? `EngineFlags.KEEP_CURRENT`
-                     : cfg.eModeCategory
-                 }
-               });`
-              )
-              .join('\n')}
+          ${cfg
+            .map(
+              (cfg, ix) => `collateralUpdate[${ix}] = IEngine.CollateralUpdate({
+               asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+               ltv: ${jsPercentToSol(cfg.ltv)},
+               liqThreshold: ${jsPercentToSol(cfg.liqThreshold)},
+               liqBonus: ${jsPercentToSol(cfg.liqBonus)},
+               debtCeiling: ${jsNumberToSol(cfg.debtCeiling)},
+               liqProtocolFee: ${jsPercentToSol(cfg.liqProtocolFee)},
+               eModeCategory: ${
+                 cfg.eModeCategory === ENGINE_FLAGS.KEEP_CURRENT
+                   ? `EngineFlags.KEEP_CURRENT`
+                   : cfg.eModeCategory
+               }
+             });`
+            )
+            .join('\n')}
 
-            return collateralUpdate;
-          }`,
-          ],
-        },
-      };
-    }
+          return collateralUpdate;
+        }`,
+        ],
+      },
+    };
     return response;
   },
 };

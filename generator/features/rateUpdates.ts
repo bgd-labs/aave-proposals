@@ -1,12 +1,19 @@
-import {checkbox, confirm, input} from '@inquirer/prompts';
+import {checkbox, input} from '@inquirer/prompts';
 import {
   AVAILABLE_VERSIONS,
-  CodeArtifacts,
+  CodeArtifact,
   DEPENDENCIES,
   ENGINE_FLAGS,
   FeatureModule,
+  PoolIdentifier,
 } from '../types';
-import {getAssets, jsPercentToSol, numberOrKeepCurrent, transformPercent} from '../common';
+import {
+  getAssets,
+  isV2Pool,
+  jsPercentToSol,
+  numberOrKeepCurrent,
+  transformPercent,
+} from '../common';
 
 type RateUpdate = {
   asset: string;
@@ -21,20 +28,18 @@ type RateUpdate = {
   optimalStableToTotalDebtRatio?: string;
 };
 
-type RateUpdates = {
-  [chain: string]: RateUpdate[];
-};
+type RateUpdates = RateUpdate[];
 
-async function subCli(opt, chain: string) {
-  console.log(`Fetching information for RatesUpdate on ${chain}`);
+async function subCli(pool: PoolIdentifier) {
+  console.log(`Fetching information for RatesUpdate on ${pool}`);
   const assets = await checkbox({
     message: 'Select the assets you want to amend',
-    choices: getAssets(chain as any, opt.protocolVersion).map((asset) => ({
+    choices: getAssets(pool).map((asset) => ({
       name: asset,
       value: asset,
     })),
   });
-  const answers: RateUpdate[] = [];
+  const answers: RateUpdates = [];
   for (const asset of assets) {
     answers.push({
       asset,
@@ -76,7 +81,7 @@ async function subCli(opt, chain: string) {
       }),
     });
 
-    if (opt.protocolVersion === 'V3') {
+    if (!isV2Pool(pool)) {
       answers[answers.length - 1].baseStableRateOffset = await input({
         message: 'baseStableRateOffset',
         default: ENGINE_FLAGS.KEEP_CURRENT,
@@ -101,79 +106,71 @@ async function subCli(opt, chain: string) {
 }
 
 export const rateUpdates: FeatureModule<RateUpdates> = {
-  async cli(opt) {
-    const response: RateUpdates = {};
-    for (const chain of opt.chains) {
-      response[chain] = await subCli(opt, chain);
-    }
+  async cli(opt, pool) {
+    const response: RateUpdates = await subCli(pool);
     return response;
   },
-  build(opt, cfg) {
-    const response: CodeArtifacts = {};
-    for (const chain of opt.chains) {
-      response[chain] = {
-        code: {
-          dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
-          execute: [
-            `Aave${opt.protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`,
-          ],
-          fn: [
-            `function rateStrategiesUpdates()
-            public
-            pure
-            override
-            returns (IEngine.RateStrategyUpdate[] memory)
-          {
-            IEngine.RateStrategyUpdate[] memory rateStrategies = new IEngine.RateStrategyUpdate[](${
-              cfg[chain].length
-            });
-            ${
-              opt.protocolVersion === AVAILABLE_VERSIONS.V2
-                ? cfg[chain]
-                    .map(
-                      (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
-                  asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
+  build(opt, pool, cfg) {
+    const response: CodeArtifact = {
+      code: {
+        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
+        execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
+        fn: [
+          `function rateStrategiesUpdates()
+          public
+          pure
+          override
+          returns (IEngine.RateStrategyUpdate[] memory)
+        {
+          IEngine.RateStrategyUpdate[] memory rateStrategies = new IEngine.RateStrategyUpdate[](${
+            cfg.length
+          });
+          ${
+            isV2Pool(pool)
+              ? cfg
+                  .map(
+                    (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
+                asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+                params: Rates.RateStrategyParams({
+                  optimalUtilizationRate: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
+                  baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate, true)},
+                  variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1, true)},
+                  variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2, true)},
+                  stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1, true)},
+                  stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)}
+                })
+              });`
+                  )
+                  .join('\n')
+              : cfg
+                  .map(
+                    (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
+                  asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
                   params: Rates.RateStrategyParams({
-                    optimalUtilizationRate: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
+                    optimalUsageRatio: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
                     baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate, true)},
                     variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1, true)},
                     variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2, true)},
                     stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1, true)},
-                    stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)}
+                    stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)},
+                    baseStableRateOffset: ${jsPercentToSol(cfg.baseStableRateOffset!, true)},
+                    stableRateExcessOffset: ${jsPercentToSol(cfg.stableRateExcessOffset!, true)},
+                    optimalStableToTotalDebtRatio: ${jsPercentToSol(
+                      cfg.optimalStableToTotalDebtRatio!,
+                      true
+                    )}
                   })
                 });`
-                    )
-                    .join('\n')
-                : cfg[chain]
-                    .map(
-                      (cfg, ix) => `rateStrategies[${ix}] = IEngine.RateStrategyUpdate({
-                    asset: Aave${opt.protocolVersion}${chain}Assets.${cfg.asset}_UNDERLYING,
-                    params: Rates.RateStrategyParams({
-                      optimalUsageRatio: ${jsPercentToSol(cfg.optimalUtilizationRate, true)},
-                      baseVariableBorrowRate: ${jsPercentToSol(cfg.baseVariableBorrowRate, true)},
-                      variableRateSlope1: ${jsPercentToSol(cfg.variableRateSlope1, true)},
-                      variableRateSlope2: ${jsPercentToSol(cfg.variableRateSlope2, true)},
-                      stableRateSlope1: ${jsPercentToSol(cfg.stableRateSlope1, true)},
-                      stableRateSlope2: ${jsPercentToSol(cfg.stableRateSlope2, true)},
-                      baseStableRateOffset: ${jsPercentToSol(cfg.baseStableRateOffset!, true)},
-                      stableRateExcessOffset: ${jsPercentToSol(cfg.stableRateExcessOffset!, true)},
-                      optimalStableToTotalDebtRatio: ${jsPercentToSol(
-                        cfg.optimalStableToTotalDebtRatio!,
-                        true
-                      )}
-                    })
-                  });`
-                    )
-                    .join('\n')
-            }
+                  )
+                  .join('\n')
+          }
 
 
-            return rateStrategies;
-          }`,
-          ],
-        },
-      };
-    }
+          return rateStrategies;
+        }`,
+        ],
+      },
+    };
     return response;
   },
 };

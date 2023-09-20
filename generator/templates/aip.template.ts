@@ -16,20 +16,20 @@ discussions: ${`"${options.discussion}"` || 'TODO'}
 
 ## References
 
-- Implementation: ${options.chains
+- Implementation: ${options.pools
     .map(
-      (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
+      (pool) =>
+        `[${pool}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateContractName(options, chain)}.sol)`
+        )}/${generateContractName(options, pool)}.sol)`
     )
     .join(', ')}
-- Tests: ${options.chains
+- Tests: ${options.pools
     .map(
-      (chain) =>
-        `[${chain}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
+      (pool) =>
+        `[${pool}](https://github.com/bgd-labs/aave-proposals/blob/main/src/${generateFolderName(
           options
-        )}/${generateContractName(options, chain)}.t.sol)`
+        )}/${generateContractName(options, pool)}.t.sol)`
     )
     .join(', ')}
 - [Snapshot](${options.snapshot || 'TODO'})

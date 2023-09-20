@@ -1,5 +1,5 @@
 import * as addressBook from '@bgd-labs/aave-address-book';
-import {AVAILABLE_VERSIONS, ENGINE_FLAGS} from './types';
+import {ENGINE_FLAGS, Options, PoolIdentifier, V2_POOLS} from './types';
 
 export const AVAILABLE_CHAINS = [
   'Ethereum',
@@ -34,13 +34,13 @@ export const SHORT_CHAINS = {
   Base: 'Bas',
 };
 
-export function getAssets(
-  chain: (typeof AVAILABLE_CHAINS)[number],
-  protocolVersion: keyof typeof AVAILABLE_VERSIONS
-): string[] {
-  const assets = addressBook['Aave' + protocolVersion + chain]
-    .ASSETS as (typeof addressBook)['AaveV3Arbitrum']['ASSETS'];
+export function getAssets(pool: PoolIdentifier): string[] {
+  const assets = addressBook[pool].ASSETS;
   return Object.keys(assets);
+}
+
+export function isV2Pool(pool: PoolIdentifier) {
+  return V2_POOLS.includes(pool as any);
 }
 
 export function getDate() {
@@ -56,10 +56,10 @@ export function getDate() {
  * @param {*} options
  * @returns
  */
-export function generateFolderName(options) {
-  return `${getDate()}_${options.protocolVersion === AVAILABLE_VERSIONS.V2 ? 'AaveV2' : 'AaveV3'}_${
-    options.chains.length === 1 ? SHORT_CHAINS[options.chains[0]] : 'Multi'
-  }_${options.shortName}`;
+export function generateFolderName(options: Options) {
+  return `${getDate()}_${options.pools.length === 1 ? options.pools[0] : 'Multi'}_${
+    options.shortName
+  }`;
 }
 
 /**
@@ -68,10 +68,9 @@ export function generateFolderName(options) {
  * @param {*} chain
  * @returns
  */
-export function generateContractName(options, chain?) {
-  let name = options.protocolVersion === AVAILABLE_VERSIONS.V2 ? 'AaveV2' : 'AaveV3';
-  if (chain) name += `_${chain}`;
-  name += `_${options.shortName}`;
+export function generateContractName(options: Options, pool?: PoolIdentifier) {
+  let name = pool ? `${pool}_` : '';
+  name += `${options.shortName}`;
   name += `_${getDate()}`;
   return name;
 }
@@ -80,9 +79,9 @@ export function getAlias(chain) {
   return chain === 'Ethereum' ? 'mainnet' : chain.toLowerCase();
 }
 
-export function pascalCase(str) {
+export function pascalCase(str: string) {
   return str
-    .replace(/[\W]/g, ' ')
+    .replace(/[\W]/g, ' ') // remove special chars as this is used for solc contract name
     .replace(/(\w)(\w*)/g, function (g0, g1, g2) {
       return g1.toUpperCase() + g2;
     })

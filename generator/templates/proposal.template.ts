@@ -1,5 +1,5 @@
 import {generateContractName} from '../common';
-import {CodeArtifacts, DEPENDENCIES, Options} from '../types';
+import {CodeArtifact, CodeArtifacts, DEPENDENCIES, Options, PoolIdentifier} from '../types';
 
 function buildImport(options: Options, chain, dependencies: DEPENDENCIES[]) {
   let template = '';
@@ -23,33 +23,37 @@ function buildImport(options: Options, chain, dependencies: DEPENDENCIES[]) {
   return template;
 }
 
-export const proposalTemplate = (options: Options, chain, artifacts: CodeArtifacts[]) => {
-  const {protocolVersion, title, author, snapshot, discussion, features} = options;
-  const contractName = generateContractName(options, chain);
+export const proposalTemplate = (
+  options: Options,
+  pool: PoolIdentifier,
+  artifacts: CodeArtifact[] = []
+) => {
+  const {title, author, snapshot, discussion} = options;
+  const contractName = generateContractName(options, pool);
 
   const dependencies = [
     ...new Set(
       artifacts
-        .map((a) => a[chain].code?.dependencies)
+        .map((a) => a.code?.dependencies)
         .flat()
         .filter((f) => f !== undefined)
     ),
   ];
-  const imports = buildImport(options, chain, dependencies as DEPENDENCIES[]);
+  const imports = buildImport(options, pool, dependencies as DEPENDENCIES[]);
   const constants = artifacts
-    .map((artifact) => artifact[chain].code?.constants)
+    .map((artifact) => artifact.code?.constants)
     .flat()
     .filter((f) => f !== undefined)
     .join('\n');
   const functions = artifacts
-    .map((artifact) => artifact[chain].code?.fn)
+    .map((artifact) => artifact.code?.fn)
     .flat()
     .filter((f) => f !== undefined)
     .join('\n');
 
   // need to figure out if execute or pre/post
   const innerExecute = artifacts
-    .map((artifact) => artifact[chain].code?.execute)
+    .map((artifact) => artifact.code?.execute)
     .flat()
     .filter((f) => f !== undefined)
     .join('\n');
@@ -66,7 +70,7 @@ ${imports}
  */
 contract ${contractName} is ${
     dependencies.includes(DEPENDENCIES.Engine)
-      ? `Aave${options.protocolVersion}Payload${chain}`
+      ? `${options.protocolVersion}Payload${chain}`
       : 'IProposalGenericExecutor'
   } {
   ${constants}

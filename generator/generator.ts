@@ -1,11 +1,22 @@
 import fs from 'fs';
 import path from 'path';
 import {Command, Option} from 'commander';
-import {AVAILABLE_CHAINS, generateContractName, generateFolderName, pascalCase} from './common';
+import {generateContractName, generateFolderName, pascalCase} from './common';
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
-import {input, checkbox, select, confirm} from '@inquirer/prompts';
-import {AVAILABLE_VERSIONS, CodeArtifacts, DEPENDENCIES, FeatureModule, Options} from './types';
+import {input, checkbox, confirm} from '@inquirer/prompts';
+import {
+  CodeArtifact,
+  DEPENDENCIES,
+  Feature,
+  FeatureModule,
+  Options,
+  POOLS,
+  PoolConfigs,
+  PoolIdentifier,
+  V2_POOLS,
+  V3_POOLS,
+} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capUpdates} from './features/capUpdates';
 import {rateUpdates} from './features/rateUpdates';
@@ -24,9 +35,7 @@ program
   .description('CLI to generate aave proposals')
   .version('0.0.0')
   .addOption(new Option('-f, --force', 'force creation (might overwrite existing files)'))
-  .addOption(new Option('-cfg, --configEngine', 'extends config engine'))
-  .addOption(new Option('-ch, --chains <letters...>').choices(AVAILABLE_CHAINS))
-  .addOption(new Option('-pv, --protocolVersion <string>').choices(Object.keys(AVAILABLE_VERSIONS)))
+  .addOption(new Option('-p, --pools <pools...>').choices(POOLS))
   .addOption(new Option('-t, --title <string>', 'aip title'))
   .addOption(new Option('-a, --author <string>', 'author'))
   .addOption(new Option('-d, --discussion <string>', 'forum link'))
@@ -38,25 +47,15 @@ let options = program.opts<Options>();
 
 // workaround as there's validate is not currently supported on checkbox
 // https://github.com/SBoudrias/Inquirer.js/issues/1257
-while (!options.chains?.length === true) {
-  options.chains = await checkbox({
+while (!options.pools?.length === true) {
+  options.pools = await checkbox({
     message: 'Chains this proposal targets',
-    choices: AVAILABLE_CHAINS.map((v) => ({name: v, value: v})),
+    choices: POOLS.map((v) => ({name: v, value: v})),
     // validate(input) {
     //   // currently ignored due to a bug
     //   if (input.length == 0) return 'You must target at least one chain in your proposal!';
     //   return true;
     // },
-  });
-}
-
-if (!options.protocolVersion) {
-  options.protocolVersion = await select({
-    message: 'Protocol version this proposal targets',
-    choices: Object.keys(AVAILABLE_VERSIONS)
-      .map((v) => ({name: v, value: v}))
-      .reverse(),
-    // default: "V3", // default on select not currently supported which is why we reverse
   });
 }
 
@@ -93,7 +92,7 @@ if (!options.snapshot) {
   });
 }
 
-export const FEATURES = {
+export const FEATURES: {[key: string]: Feature} = {
   rateStrategiesUpdates: {
     name: 'Rate Strategy Updates',
     value: 'rateStrategiesUpdates',
@@ -119,52 +118,47 @@ export const FEATURES = {
     name: 'Something different supported by config engine(but not the generator, yet)',
     value: 'engine',
     module: {
-      cli: async (opt) => {
+      cli: async (opt, pool) => {
         return {};
       },
-      build: (opt, cfg) => {
-        const response: CodeArtifacts = {};
-        for (const chain of opt.chains) {
-          response[chain] = {
-            code: {dependencies: [DEPENDENCIES.Engine]},
-          };
-        }
+      build: (opt, pool, cfg) => {
+        const response: CodeArtifact = {
+          code: {dependencies: [DEPENDENCIES.Engine]},
+        };
         return response;
       },
-    } as FeatureModule<{}>,
+    },
   },
   others: {
     name: 'Something different not supported by configEngine',
     value: 'others',
   },
-};
+} as const;
 
-if (options.protocolVersion === AVAILABLE_VERSIONS.V2) {
-  options.features = await checkbox({
-    message: 'What do you want to do?',
-    choices: [FEATURES.rateStrategiesUpdates, FEATURES.others],
-  });
-}
-if (options.protocolVersion === AVAILABLE_VERSIONS.V3) {
-  options.features = await checkbox({
-    message: 'What do you want to do?',
-    choices: [
-      FEATURES.rateStrategiesUpdates,
-      FEATURES.capsUpdates,
-      FEATURES.collateralUpdates,
-      FEATURES.flashBorrower,
-      FEATURES.others,
-    ],
-  });
-}
+const poolConfigs: PoolConfigs = {};
 
-let artifacts: CodeArtifacts[] = [];
-for (const feature of options.features) {
-  const module: FeatureModule<any> = FEATURES[feature].module;
-  if (module) {
-    const cfg = await module.cli(options);
-    artifacts.push(module.build(options, cfg));
+for (const pool of options.pools) {
+  const features: (keyof typeof FEATURES)[] = await checkbox({
+    message: `What do you want to do on ${pool}?`,
+    choices: V2_POOLS.includes(pool as any)
+      ? [FEATURES.rateStrategiesUpdates, FEATURES.others]
+      : [
+          FEATURES.rateStrategiesUpdates,
+          FEATURES.capsUpdates,
+          FEATURES.collateralUpdates,
+          FEATURES.flashBorrower,
+          FEATURES.others,
+        ],
+  });
+  let artifacts: CodeArtifact[] = [];
+  for (const feature of features) {
+    const module: FeatureModule | undefined = FEATURES[feature].module;
+    if (module) {
+      const cfg = await module.cli(options, pool);
+      artifacts.push(module.build(options, pool, cfg));
+    }
   }
+  poolConfigs[pool] = {artifacts};
 }
 
 const baseName = generateFolderName(options);
@@ -183,25 +177,25 @@ if (fs.existsSync(baseFolder) && !options.force) {
 } else {
   fs.mkdirSync(baseFolder, {recursive: true});
 
-  async function createFiles(options: Options, chain: string) {
-    const contractName = generateContractName(options, chain);
+  async function createFiles(options: Options, pool: PoolIdentifier) {
+    const contractName = generateContractName(options, pool);
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.sol`),
-      prettier.format(proposalTemplate(options, chain, artifacts), {
+      prettier.format(proposalTemplate(options, pool, poolConfigs[pool]?.artifacts), {
         ...prettierSolCfg,
         filepath: 'foo.sol',
       })
     );
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.t.sol`),
-      prettier.format(await testTemplate(options, chain, artifacts), {
+      prettier.format(await testTemplate(options, pool, poolConfigs[pool]?.artifacts), {
         ...prettierSolCfg,
         filepath: 'foo.sol',
       })
     );
   }
 
-  options.chains.forEach((chain) => createFiles(options, chain));
+  options.pools.forEach((pool) => createFiles(options, pool));
 
   fs.writeFileSync(
     path.join(baseFolder, `${generateContractName(options)}.s.sol`),

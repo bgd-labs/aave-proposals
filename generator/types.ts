@@ -1,15 +1,21 @@
+import * as addressBook from '@bgd-labs/aave-address-book';
+
 export interface Options {
   force: boolean;
-  chains: string[];
-  protocolVersion: string;
+  pools: PoolIdentifier[];
   title: string;
   // automatically generated shortName from title
   shortName: string;
   author: string;
   discussion: string;
   snapshot: string;
-  features: string[];
 }
+
+interface PoolConfig {
+  artifacts?: CodeArtifact[];
+}
+
+export type PoolConfigs = Partial<Record<PoolIdentifier, PoolConfig>>;
 
 export enum DEPENDENCIES {
   Addresses,
@@ -17,23 +23,27 @@ export enum DEPENDENCIES {
   Engine,
 }
 
-export type CodeArtifacts = {
-  [chain: string]: {
-    code?: {
-      dependencies?: DEPENDENCIES[];
-      constants?: string[];
-      fn?: string[];
-      execute?: string[];
-    };
-    test?: {
-      fn?: string[];
-    };
+export type CodeArtifact = {
+  code?: {
+    dependencies?: DEPENDENCIES[];
+    constants?: string[];
+    fn?: string[];
+    execute?: string[];
+  };
+  test?: {
+    fn?: string[];
   };
 };
 
-export interface FeatureModule<T extends {}> {
-  cli: (opt: Options) => Promise<T>;
-  build: (opt: Options, cfg: T) => CodeArtifacts;
+export type Feature = {
+  name: string;
+  value: string;
+  module?: FeatureModule<any>;
+};
+
+export interface FeatureModule<T extends {} = {}> {
+  cli: (opt: Options, pool: PoolIdentifier) => Promise<T>;
+  build: (opt: Options, pool: PoolIdentifier, cfg: T) => CodeArtifact;
 }
 
 export const ENGINE_FLAGS = {
@@ -41,3 +51,27 @@ export const ENGINE_FLAGS = {
 } as const;
 
 export const AVAILABLE_VERSIONS = {V2: 'V2', V3: 'V3'} as const;
+
+export const V2_POOLS = [
+  'AaveV2Ethereum',
+  'AaveV2EthereumAMM',
+  'AaveV2Polygon',
+  'AaveV2Avalanche',
+] as const satisfies readonly (keyof typeof addressBook)[];
+
+export const V3_POOLS = [
+  'AaveV3Ethereum',
+  'AaveV3Polygon',
+  'AaveV3Avalanche',
+  'AaveV3Optimism',
+  'AaveV3Arbitrum',
+  'AaveV3Metis',
+  'AaveV3Base',
+] as const satisfies readonly (keyof typeof addressBook)[];
+
+export const POOLS = [
+  ...V2_POOLS,
+  ...V3_POOLS,
+] as const satisfies readonly (keyof typeof addressBook)[];
+
+export type PoolIdentifier = (typeof POOLS)[number];

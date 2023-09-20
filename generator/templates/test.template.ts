@@ -1,7 +1,7 @@
 import {createPublicClient, http} from 'viem';
 import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
-import {generateContractName, getAlias} from '../common';
-import {Options} from '../types';
+import {generateContractName, getAlias, isV2Pool} from '../common';
+import {CodeArtifact, Options, PoolIdentifier} from '../types';
 
 const CHAIN_TO_CHAIN_OBJECT = {
   Ethereum: mainnet,
@@ -20,12 +20,17 @@ export const getBlock = async (chain) => {
   }).getBlockNumber();
 };
 
-export const testTemplate = async (options: Options, chain, artifacts) => {
-  const {protocolVersion, title, author, snapshot, discussion, features} = options;
-  const contractName = generateContractName(options, chain);
+export const testTemplate = async (
+  options: Options,
+  pool: PoolIdentifier,
+  artifacts: CodeArtifact[]
+) => {
+  const contractName = generateContractName(options, pool);
+
+  const testBase = isV2Pool(pool) ? 'ProtocolV2TestBase' : 'ProtocolV3TestBase';
 
   const functions = artifacts
-    .map((artifact) => artifact[chain].test?.fn)
+    .map((artifact) => artifact.test?.fn)
     .flat()
     .filter((f) => f !== undefined)
     .join('\n');
@@ -34,15 +39,15 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 import {GovV3Helpers} from 'aave-helpers/GovV3Helpers.sol';
-import {Aave${protocolVersion}${chain}, Aave${protocolVersion}${chain}Assets} from 'aave-address-book/Aave${protocolVersion}${chain}.sol';
-import {Protocol${protocolVersion}TestBase, ReserveConfig} from 'aave-helpers/Protocol${protocolVersion}TestBase.sol';
+import {${pool}, ${pool}Assets} from 'aave-address-book/${pool}.sol';
+import {${testBase}, ReserveConfig} from 'aave-helpers/${testBase}.sol';
 import {${contractName}} from './${contractName}.sol';
 
 /**
  * @dev Test for ${contractName}
  * command: make test-contract filter=${contractName}
  */
-contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
+contract ${contractName}_Test is ${testBase} {
   ${contractName} internal proposal;
 
   function setUp() public {
@@ -53,7 +58,7 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
   function testProposalExecution() public {
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'pre${contractName}',
-      Aave${protocolVersion}${chain}.POOL
+      ${pool}.POOL
     );
 
     GovV3Helpers.executePayload(
@@ -63,7 +68,7 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post${contractName}',
-      Aave${protocolVersion}${chain}.POOL
+      ${pool}.POOL
     );
 
     diffReports('pre${contractName}', 'post${contractName}');
