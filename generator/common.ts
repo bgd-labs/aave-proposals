@@ -1,3 +1,4 @@
+import * as addressBook from '@bgd-labs/aave-address-book';
 import {AVAILABLE_VERSIONS, ENGINE_FLAGS} from './types';
 
 export const AVAILABLE_CHAINS = [
@@ -32,6 +33,15 @@ export const SHORT_CHAINS = {
   Harmony: 'Har',
   Base: 'Bas',
 };
+
+export function getAssets(
+  chain: (typeof AVAILABLE_CHAINS)[number],
+  protocolVersion: keyof typeof AVAILABLE_VERSIONS
+): string[] {
+  const assets = addressBook['Aave' + protocolVersion + chain]
+    .ASSETS as (typeof addressBook)['AaveV3Arbitrum']['ASSETS'];
+  return Object.keys(assets);
+}
 
 export function getDate() {
   const date = new Date();

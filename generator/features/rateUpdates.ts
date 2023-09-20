@@ -1,4 +1,4 @@
-import {confirm, input} from '@inquirer/prompts';
+import {checkbox, confirm, input} from '@inquirer/prompts';
 import {
   AVAILABLE_VERSIONS,
   CodeArtifacts,
@@ -6,7 +6,7 @@ import {
   ENGINE_FLAGS,
   FeatureModule,
 } from '../types';
-import {jsPercentToSol, numberOrKeepCurrent, transformPercent} from '../common';
+import {getAssets, jsPercentToSol, numberOrKeepCurrent, transformPercent} from '../common';
 
 type RateUpdate = {
   asset: string;
@@ -20,80 +20,84 @@ type RateUpdate = {
   stableRateExcessOffset?: string;
   optimalStableToTotalDebtRatio?: string;
 };
+
 type RateUpdates = {
   [chain: string]: RateUpdate[];
 };
 
 async function subCli(opt, chain: string) {
   console.log(`Fetching information for RatesUpdate on ${chain}`);
-  const answers: RateUpdate = {
-    asset: await input({
-      // TODO: should be select, but npm package needs to be restructured a bit
-      message: 'Which asset would you like to amend(type symbol)?',
-    }),
-    optimalUtilizationRate: await input({
-      message: 'optimalUtilizationRate',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-    baseVariableBorrowRate: await input({
-      message: 'baseVariableBorrowRate',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-    variableRateSlope1: await input({
-      message: 'variableRateSlope1',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-    variableRateSlope2: await input({
-      message: 'variableRateSlope2',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-    stableRateSlope1: await input({
-      message: 'stableRateSlope1',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-    stableRateSlope2: await input({
-      message: 'stableRateSlope2',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    }),
-  };
-  if (opt.protocolVersion === 'V3') {
-    answers.baseStableRateOffset = await input({
-      message: 'baseStableRateOffset',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    });
-    answers.stableRateExcessOffset = await input({
-      message: 'stableRateExcessOffset',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    });
-    answers.optimalStableToTotalDebtRatio = await input({
-      message: 'stableRateExcessOffset',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      transformer: transformPercent,
-      validate: numberOrKeepCurrent,
-    });
-  }
-  const anotherOne = await confirm({
-    message: 'Do you want to amend another rate?',
-    default: false,
+  const assets = await checkbox({
+    message: 'Select the assets you want to amend',
+    choices: getAssets(chain as any, opt.protocolVersion).map((asset) => ({
+      name: asset,
+      value: asset,
+    })),
   });
-  if (anotherOne) return [answers, ...(await subCli(opt, chain))];
-  return [answers];
+  const answers: RateUpdate[] = [];
+  for (const asset of assets) {
+    answers.push({
+      asset,
+      optimalUtilizationRate: await input({
+        message: 'optimalUtilizationRate',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+      baseVariableBorrowRate: await input({
+        message: 'baseVariableBorrowRate',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+      variableRateSlope1: await input({
+        message: 'variableRateSlope1',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+      variableRateSlope2: await input({
+        message: 'variableRateSlope2',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+      stableRateSlope1: await input({
+        message: 'stableRateSlope1',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+      stableRateSlope2: await input({
+        message: 'stableRateSlope2',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      }),
+    });
+
+    if (opt.protocolVersion === 'V3') {
+      answers[answers.length - 1].baseStableRateOffset = await input({
+        message: 'baseStableRateOffset',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      });
+      answers[answers.length - 1].stableRateExcessOffset = await input({
+        message: 'stableRateExcessOffset',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      });
+      answers[answers.length - 1].optimalStableToTotalDebtRatio = await input({
+        message: 'stableRateExcessOffset',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        transformer: transformPercent,
+        validate: numberOrKeepCurrent,
+      });
+    }
+  }
+  return answers;
 }
 
 export const rateUpdates: FeatureModule<RateUpdates> = {

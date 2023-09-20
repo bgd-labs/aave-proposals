@@ -1,39 +1,40 @@
-import {input, confirm} from '@inquirer/prompts';
+import {input, confirm, checkbox} from '@inquirer/prompts';
 import {CodeArtifacts, DEPENDENCIES, ENGINE_FLAGS, FeatureModule} from '../types';
-import {jsNumberToSol, numberOrKeepCurrent} from '../common';
+import {getAssets, jsNumberToSol, numberOrKeepCurrent} from '../common';
 
 async function subCli(chain: string) {
   console.log(`Fetching information for CapsUpdates on ${chain}`);
-  const answers = {
-    asset: await input({
-      // TODO: should be select, but npm package needs to be restructured a bit
-      message: 'Which asset would you like to amend(type symbol)?',
-    }),
-    supplyCap: await input({
-      message: 'New supply cap',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      validate: numberOrKeepCurrent,
-    }),
-    borrowCap: await input({
-      message: 'New borrow cap',
-      default: ENGINE_FLAGS.KEEP_CURRENT,
-      validate: numberOrKeepCurrent,
-    }),
-  };
-  const anotherOne = await confirm({
-    message: 'Do you want to amend another cap?',
-    default: false,
+  const assets = await checkbox({
+    message: 'Select the assets you want to amend',
+    choices: getAssets(chain as any, 'V3').map((asset) => ({name: asset, value: asset})),
   });
-  if (anotherOne) return [answers, ...(await subCli(chain))];
-  return [answers];
+  const answers: CapUpdate[] = [];
+  for (const asset of assets) {
+    answers.push({
+      asset,
+      supplyCap: await input({
+        message: 'New supply cap',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        validate: numberOrKeepCurrent,
+      }),
+      borrowCap: await input({
+        message: 'New borrow cap',
+        default: ENGINE_FLAGS.KEEP_CURRENT,
+        validate: numberOrKeepCurrent,
+      }),
+    });
+  }
+  return answers;
 }
 
+type CapUpdate = {
+  asset: string;
+  borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
+  supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
+};
+
 type CapsUpdates = {
-  [chain: string]: {
-    asset: string;
-    borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-    supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  }[];
+  [chain: string]: CapUpdate[];
 };
 
 export const capUpdates: FeatureModule<CapsUpdates> = {
