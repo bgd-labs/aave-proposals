@@ -10,8 +10,13 @@ import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGeneric
  * - Discussion: https://governance.aave.com/t/bgd-aave-immunefi-bug-bounty-program/14757
  */
 contract AaveV3_Ethereum_AaveImmunefiActivation_20230920 is IProposalGenericExecutor {
+  event Decision(string agreed);
+
   function execute() external {
     // This proposal only serves as binding approval from the Aave DAO to authorize the activation
-    // of the Aave <> Immunefi bug bounty program, with no executable code
+    // of the Aave <> Immunefi bug bounty program, with no side effect apart from the emitted event
+    emit Decision(
+      'The Aave DAO authorises the activation of an Aave <> Immunefi bug bounty program'
+    );
   }
 }

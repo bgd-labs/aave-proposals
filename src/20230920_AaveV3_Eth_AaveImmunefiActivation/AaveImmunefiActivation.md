@@ -21,7 +21,7 @@ Following the pre-approval on Snapshot, and within the context of our engagement
 
 ## Specification
 
-This proposal doesn't include any executable code, as it will only serve as binding agreement from the Aave DAO with Immunefi, to formally activated the bounty program.
+The proposal event only emits an event, in order to leave on-chain trace of the binding agreement from the Aave DAO with Immunefi, to formally activated the bounty program.
 
 The activation will happen once all operational details are finished by Immunefi, in coordination with the entities defined as reviewers of the DAO in this specific context.
 
