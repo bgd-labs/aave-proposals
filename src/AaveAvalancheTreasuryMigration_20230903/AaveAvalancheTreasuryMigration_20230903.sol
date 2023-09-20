@@ -37,13 +37,11 @@ contract AaveAvalancheTreasuryMigration_20230903 is IProposalGenericExecutor {
   function execute() external {
     IMigrationHelper MIGRATION_HELPER = IMigrationHelper(AaveV2Avalanche.MIGRATION_HELPER);
 
-    address[] memory ASSETS_TO_MIGRATE = new address[](6);
+    address[] memory ASSETS_TO_MIGRATE = new address[](4);
     ASSETS_TO_MIGRATE[0] = AaveV2AvalancheAssets.DAIe_UNDERLYING;
-    ASSETS_TO_MIGRATE[1] = AaveV2AvalancheAssets.USDCe_UNDERLYING;
-    ASSETS_TO_MIGRATE[2] = AaveV2AvalancheAssets.USDTe_UNDERLYING;
-    ASSETS_TO_MIGRATE[3] = AaveV2AvalancheAssets.WBTCe_UNDERLYING;
-    ASSETS_TO_MIGRATE[4] = AaveV2AvalancheAssets.WETHe_UNDERLYING;
-    ASSETS_TO_MIGRATE[5] = AaveV2AvalancheAssets.WAVAX_UNDERLYING;
+    ASSETS_TO_MIGRATE[1] = AaveV2AvalancheAssets.WBTCe_UNDERLYING;
+    ASSETS_TO_MIGRATE[2] = AaveV2AvalancheAssets.WETHe_UNDERLYING;
+    ASSETS_TO_MIGRATE[3] = AaveV2AvalancheAssets.WAVAX_UNDERLYING;
 
     IMigrationHelper.RepaySimpleInput[] memory POSITIONS_TO_REPAY = new IMigrationHelper.RepaySimpleInput[](0);
     IMigrationHelper.PermitInput[] memory PERMITS = new IMigrationHelper.PermitInput[](0);
@@ -63,13 +61,11 @@ contract AaveAvalancheTreasuryMigration_20230903 is IProposalGenericExecutor {
 
     MIGRATION_HELPER.migrate(ASSETS_TO_MIGRATE, POSITIONS_TO_REPAY, PERMITS, CREDIT_DELEGATION_PERMITS);
 
-    address[] memory NEW_ASSETS_MIGRATED = new address[](6);
+    address[] memory NEW_ASSETS_MIGRATED = new address[](4);
     NEW_ASSETS_MIGRATED[0] = AaveV3AvalancheAssets.DAIe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[1] = AaveV3AvalancheAssets.USDC_A_TOKEN;
-    NEW_ASSETS_MIGRATED[2] = AaveV3AvalancheAssets.USDt_UNDERLYING;
-    NEW_ASSETS_MIGRATED[3] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[4] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[5] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
+    NEW_ASSETS_MIGRATED[1] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
+    NEW_ASSETS_MIGRATED[2] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
+    NEW_ASSETS_MIGRATED[3] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
 
     for(i = 0; i < NEW_ASSETS_MIGRATED.length;) {
         SafeERC20.safeTransfer(
