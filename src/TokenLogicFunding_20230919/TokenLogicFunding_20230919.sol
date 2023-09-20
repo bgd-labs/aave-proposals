@@ -25,7 +25,7 @@ import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 
 /**
- * @dev (1) Swap aEthUSDC & aEthUSDT to GHO; (2) Replace Aave Grants DAO’s (AGD) DAI allowance with a GHO allowance.
+ * @dev (1) Swap aEthDAI to GHO; (2) Create stream to Tokenlogic
  * @author defijesus.eth - TokenLogic
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x53728c0416a9063bf833f90c3b3169fa4387e66549d5eb2b7ed2747bfe7c23fc
  * - Discussion: https://governance.aave.com/t/arfc-treasury-management-replace-agd-s-dai-allowance-with-gho-allowance/14631
