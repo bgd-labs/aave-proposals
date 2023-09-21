@@ -27,8 +27,8 @@ These parameters are identical to those currently in place for USDC on the Aave 
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_Ethereum_LUSDCollateralActivation_20230811.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_Ethereum_LUSDCollateralActivation_20230811.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/cdc907874a05c73c073d51e95e7f41096c9e28ea/src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_Ethereum_LUSDCollateralActivation_20230811.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/cdc907874a05c73c073d51e95e7f41096c9e28ea/src/20230811_AaveV3_Eth_LUSDCollateralActivation/AaveV3_Ethereum_LUSDCollateralActivation_20230811.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x4e17faf4fdb1ea2c8974d19e710724daf98dde225cd2078a9af4fbb5f0895512)
 - [Discussion](https://governance.aave.com/t/arfc-activate-lusd-as-collateral-on-aave-v3-eth-pool/14199)
 
