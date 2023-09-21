@@ -7,6 +7,13 @@ import {
   numberOrKeepCurrent,
   transformPercent,
 } from '../common';
+import {
+  NumberInputValues,
+  PercentInputValues,
+  eModeSelect,
+  numberInput,
+  percentInput,
+} from '../prompts';
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for Collateral Updates on ${pool}`);
@@ -19,39 +26,24 @@ async function subCli(pool: PoolIdentifier) {
     console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
-      ltv: await input({
+      ltv: await percentInput({
         message: 'Loan to value',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
-        transformer: transformPercent,
       }),
-      liqThreshold: await input({
+      liqThreshold: await percentInput({
         message: 'Liquidation Threshold',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
-        transformer: transformPercent,
       }),
-      liqBonus: await input({
+      liqBonus: await percentInput({
         message: 'Liquidation bonus',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
-        transformer: transformPercent,
       }),
-      debtCeiling: await input({
+      debtCeiling: await numberInput({
         message: 'Debt ceiling',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
       }),
-      liqProtocolFee: await input({
+      liqProtocolFee: await percentInput({
         message: 'Liquidation protocol fee',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
-        transformer: transformPercent,
       }),
-      eModeCategory: await input({
+      eModeCategory: await eModeSelect({
         message: 'e mode category',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
+        pool,
       }),
     });
   }
@@ -59,11 +51,11 @@ async function subCli(pool: PoolIdentifier) {
 }
 type CollateralUpdate = {
   asset: string;
-  ltv: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  liqThreshold: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  liqBonus: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  debtCeiling: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  liqProtocolFee: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
+  ltv: PercentInputValues;
+  liqThreshold: PercentInputValues;
+  liqBonus: PercentInputValues;
+  debtCeiling: NumberInputValues;
+  liqProtocolFee: PercentInputValues;
   eModeCategory: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
 };
 
@@ -89,11 +81,11 @@ export const collateralsUpdates: FeatureModule<CollateralUpdates> = {
             .map(
               (cfg, ix) => `collateralUpdate[${ix}] = IEngine.CollateralUpdate({
                asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
-               ltv: ${jsPercentToSol(cfg.ltv)},
-               liqThreshold: ${jsPercentToSol(cfg.liqThreshold)},
-               liqBonus: ${jsPercentToSol(cfg.liqBonus)},
-               debtCeiling: ${jsNumberToSol(cfg.debtCeiling)},
-               liqProtocolFee: ${jsPercentToSol(cfg.liqProtocolFee)},
+               ltv: ${cfg.ltv},
+               liqThreshold: ${cfg.liqThreshold},
+               liqBonus: ${cfg.liqBonus},
+               debtCeiling: ${cfg.debtCeiling},
+               liqProtocolFee: ${cfg.liqProtocolFee},
                eModeCategory: ${
                  cfg.eModeCategory === ENGINE_FLAGS.KEEP_CURRENT
                    ? `EngineFlags.KEEP_CURRENT`

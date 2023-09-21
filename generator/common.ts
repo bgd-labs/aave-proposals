@@ -1,5 +1,5 @@
 import * as addressBook from '@bgd-labs/aave-address-book';
-import {ENGINE_FLAGS, Options, PoolIdentifier, V2_POOLS} from './types';
+import {ENGINE_FLAGS, Options, PoolIdentifier, PoolIdentifierV3, V2_POOLS} from './types';
 
 export const AVAILABLE_CHAINS = [
   'Ethereum',
@@ -37,6 +37,11 @@ export const SHORT_CHAINS = {
 export function getAssets(pool: PoolIdentifier): string[] {
   const assets = addressBook[pool].ASSETS;
   return Object.keys(assets);
+}
+
+export function getEModes(pool: PoolIdentifierV3) {
+  const eModes = addressBook[pool].E_MODES;
+  return eModes;
 }
 
 export function isV2Pool(pool: PoolIdentifier) {

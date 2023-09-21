@@ -1,27 +1,22 @@
-import {input, checkbox} from '@inquirer/prompts';
-import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
-import {getAssets, jsNumberToSol, numberOrKeepCurrent} from '../common';
+import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {NumberInputValues, assetsSelect, numberInput} from '../prompts';
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for CapsUpdates on ${pool}`);
-  const assets = await checkbox({
+  const assets = await assetsSelect({
     message: 'Select the assets you want to amend',
-    choices: getAssets(pool).map((asset) => ({name: asset, value: asset})),
+    pool,
   });
   const answers: CapUpdate[] = [];
   for (const asset of assets) {
     console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
-      supplyCap: await input({
+      supplyCap: await numberInput({
         message: 'New supply cap',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
       }),
-      borrowCap: await input({
+      borrowCap: await numberInput({
         message: 'New borrow cap',
-        default: ENGINE_FLAGS.KEEP_CURRENT,
-        validate: numberOrKeepCurrent,
       }),
     });
   }
@@ -30,8 +25,8 @@ async function subCli(pool: PoolIdentifier) {
 
 type CapUpdate = {
   asset: string;
-  borrowCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-  supplyCap: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
+  borrowCap: NumberInputValues;
+  supplyCap: NumberInputValues;
 };
 
 type CapsUpdates = CapUpdate[];
@@ -54,8 +49,8 @@ export const capsUpdates: FeatureModule<CapsUpdates> = {
             .map(
               (cfg, ix) => `capsUpdate[${ix}] = IEngine.CapsUpdate({
                asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
-               supplyCap: ${jsNumberToSol(cfg.supplyCap)},
-               borrowCap: ${jsNumberToSol(cfg.borrowCap)}
+               supplyCap: ${cfg.supplyCap},
+               borrowCap: ${cfg.borrowCap}
              });`
             )
             .join('\n')}

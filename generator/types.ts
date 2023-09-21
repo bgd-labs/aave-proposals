@@ -81,3 +81,4 @@ export const POOLS = [
 ] as const satisfies readonly (keyof typeof addressBook)[];
 
 export type PoolIdentifier = (typeof POOLS)[number];
+export type PoolIdentifierV3 = (typeof V3_POOLS)[number];
