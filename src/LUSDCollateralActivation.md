@@ -6,7 +6,7 @@ discussions: "https://governance.aave.com/t/arfc-activate-lusd-as-collateral-on-
 
 ## Simple Summary
 
-This AIP proposes to activate LUSD as a collateral asset on the Aave V3 ETH pool. The proposed risk parameters for LUSD will mirror those currently in place for USDC on the same pool.
+This AIP proposes to activate LUSDa as a collateral asset on the Aave V3 ETH pool. The proposed risk parameters for LUSD will mirror those currently in place for USDC on the same pool.
 
 ## Motivation
 

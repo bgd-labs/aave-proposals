@@ -19,3 +19,6 @@ broadcast
 reports/*
 src/etherscan
 !reports/.empty
+
+# ci artifacts
+.github/outputs/
