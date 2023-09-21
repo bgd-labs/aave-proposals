@@ -45,7 +45,7 @@ jobs:
           cat .github/outputs/all_changed_files.json
 
       - name: replace main with hash
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           json_array=($(jq -r '.[]' ".github/outputs/all_changed_files.json"))
           for i in "${json_array[@]}"
@@ -66,9 +66,8 @@ jobs:
           done
 
       - name: Create Pull Request
-        uses:
-          peter-evans/create-pull-request@712add83f26c1e359c046a6ca3dd677fb7017626
-          # if: github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@712add83f26c1e359c046a6ca3dd677fb7017626
+        if: github.event_name != 'pull_request'
         with:
           committer: Ipfs-bot <noreply@github.com>
           commit-message: "chore(ipfs): automated branch replacement [skip ci]"
