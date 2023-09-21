@@ -1,6 +1,6 @@
 import {createPublicClient, http} from 'viem';
 import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
-import {generateContractName, getAlias, getPoolChain, isV2Pool} from '../common';
+import {generateContractName, getChainAlias, getPoolChain, isV2Pool} from '../common';
 import {CodeArtifact, Options, PoolIdentifier} from '../types';
 
 const CHAIN_TO_CHAIN_OBJECT = {
@@ -23,7 +23,7 @@ export const getBlock = async (chain) => {
 export const testTemplate = async (
   options: Options,
   pool: PoolIdentifier,
-  artifacts: CodeArtifact[]
+  artifacts: CodeArtifact[] = []
 ) => {
   const chain = getPoolChain(pool);
   const contractName = generateContractName(options, pool);
@@ -52,7 +52,7 @@ contract ${contractName}_Test is ${testBase} {
   ${contractName} internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('${getAlias(chain)}'), ${await getBlock(chain)});
+    vm.createSelectFork(vm.rpcUrl('${getChainAlias(chain)}'), ${await getBlock(chain)});
     proposal = new ${contractName}();
   }
 

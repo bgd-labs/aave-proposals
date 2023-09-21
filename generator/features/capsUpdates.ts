@@ -10,6 +10,7 @@ async function subCli(pool: PoolIdentifier) {
   });
   const answers: CapUpdate[] = [];
   for (const asset of assets) {
+    console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
       supplyCap: await input({
@@ -35,7 +36,8 @@ type CapUpdate = {
 
 type CapsUpdates = CapUpdate[];
 
-export const capUpdates: FeatureModule<CapsUpdates> = {
+export const capsUpdates: FeatureModule<CapsUpdates> = {
+  value: 'CapsUpdates (supplyCap, borrowCap)',
   async cli(opt, pool) {
     const response: CapsUpdates = await subCli(pool);
     return response;

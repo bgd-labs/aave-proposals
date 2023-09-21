@@ -1,12 +1,5 @@
 import {checkbox, input} from '@inquirer/prompts';
-import {
-  AVAILABLE_VERSIONS,
-  CodeArtifact,
-  DEPENDENCIES,
-  ENGINE_FLAGS,
-  FeatureModule,
-  PoolIdentifier,
-} from '../types';
+import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
 import {
   getAssets,
   isV2Pool,
@@ -41,6 +34,7 @@ async function subCli(pool: PoolIdentifier) {
   });
   const answers: RateUpdates = [];
   for (const asset of assets) {
+    console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
       optimalUtilizationRate: await input({
@@ -106,6 +100,7 @@ async function subCli(pool: PoolIdentifier) {
 }
 
 export const rateUpdates: FeatureModule<RateUpdates> = {
+  value: 'RateStrategiesUpdates',
   async cli(opt, pool) {
     const response: RateUpdates = await subCli(pool);
     return response;

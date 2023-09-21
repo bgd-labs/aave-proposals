@@ -6,6 +6,7 @@ type FlashBorrower = {
 };
 
 export const flashBorrower: FeatureModule<FlashBorrower> = {
+  value: 'FlashBorrower (whitelist address as 0% fee flashborrower)',
   async cli(opt, pool) {
     console.log(`Fetching information for FlashBorrower on ${pool}`);
     const response: FlashBorrower = {

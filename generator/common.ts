@@ -85,7 +85,7 @@ export function generateContractName(options: Options, pool?: PoolIdentifier) {
   return name;
 }
 
-export function getAlias(chain) {
+export function getChainAlias(chain) {
   return chain === 'Ethereum' ? 'mainnet' : chain.toLowerCase();
 }
 

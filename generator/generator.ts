@@ -1,29 +1,26 @@
 import fs from 'fs';
 import path from 'path';
 import {Command, Option} from 'commander';
-import {generateContractName, generateFolderName, pascalCase} from './common';
+import {generateContractName, generateFolderName, isV2Pool, pascalCase} from './common';
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
 import {input, checkbox, confirm} from '@inquirer/prompts';
 import {
   CodeArtifact,
   DEPENDENCIES,
-  Feature,
   FeatureModule,
   Options,
   POOLS,
   PoolConfigs,
   PoolIdentifier,
-  V2_POOLS,
-  V3_POOLS,
 } from './types';
 import {flashBorrower} from './features/flashBorrower';
-import {capUpdates} from './features/capUpdates';
+import {capsUpdates} from './features/capsUpdates';
 import {rateUpdates} from './features/rateUpdates';
 import prettier from 'prettier';
 import {generateScript} from './templates/script.template';
 import {generateAIP} from './templates/aip.template';
-import {collateralUpdates} from './features/collateralUpdates';
+import {collateralsUpdates} from './features/collateralsUpdates';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -91,71 +88,48 @@ if (!options.snapshot) {
     message: 'Link to snapshot',
   });
 }
-
-export const FEATURES: {[key: string]: Feature} = {
-  rateStrategiesUpdates: {
-    name: 'Rate Strategy Updates',
-    value: 'rateStrategiesUpdates',
-    module: rateUpdates,
-  },
-  capsUpdates: {
-    name: 'Caps Updates',
-    value: 'capsUpdates',
-    module: capUpdates,
-  },
-  collateralUpdates: {
-    name: 'Collateral Updates',
-    value: 'collateralUpdates',
-    module: collateralUpdates,
-  },
-  flashBorrower: {
-    name: 'Add an address as flash borrower',
-    value: 'flashBorrower',
-    module: flashBorrower,
-  },
-  // this module is a workaround as long as we don't support all generator features
-  engine: {
-    name: 'Something different supported by config engine(but not the generator, yet)',
-    value: 'engine',
-    module: {
-      cli: async (opt, pool) => {
-        return {};
-      },
-      build: (opt, pool, cfg) => {
-        const response: CodeArtifact = {
-          code: {dependencies: [DEPENDENCIES.Engine]},
-        };
-        return response;
-      },
+const PLACEHOLDER_MODULE = {
+  value: 'Something different not supported by configEngine',
+};
+const FEATURE_MODULES_V2 = [rateUpdates, PLACEHOLDER_MODULE];
+const FEATURE_MODULES_V3 = [
+  rateUpdates,
+  capsUpdates,
+  collateralsUpdates,
+  flashBorrower,
+  {
+    value: 'Something different supported by config engine(but not the generator, yet)',
+    cli: async (opt, pool) => {
+      return {};
+    },
+    build: (opt, pool, cfg) => {
+      const response: CodeArtifact = {
+        code: {dependencies: [DEPENDENCIES.Engine]},
+      };
+      return response;
     },
   },
-  others: {
-    name: 'Something different not supported by configEngine',
-    value: 'others',
-  },
-} as const;
+  PLACEHOLDER_MODULE,
+];
 
 const poolConfigs: PoolConfigs = {};
 
 for (const pool of options.pools) {
-  const features: (keyof typeof FEATURES)[] = await checkbox({
+  const v2 = isV2Pool(pool);
+  const features = await checkbox({
     message: `What do you want to do on ${pool}?`,
-    choices: V2_POOLS.includes(pool as any)
-      ? [FEATURES.rateStrategiesUpdates, FEATURES.others]
-      : [
-          FEATURES.rateStrategiesUpdates,
-          FEATURES.capsUpdates,
-          FEATURES.collateralUpdates,
-          FEATURES.flashBorrower,
-          FEATURES.others,
-        ],
+    choices: v2 ? FEATURE_MODULES_V2 : FEATURE_MODULES_V3,
   });
   let artifacts: CodeArtifact[] = [];
   for (const feature of features) {
-    const module: FeatureModule | undefined = FEATURES[feature].module;
-    if (module) {
+    const module: FeatureModule = v2
+      ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
+      : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
+    if (module.cli) {
       const cfg = await module.cli(options, pool);
-      artifacts.push(module.build(options, pool, cfg));
+      if (module.build) {
+        artifacts.push(module.build(options, pool, cfg));
+      }
     }
   }
   poolConfigs[pool] = {artifacts};

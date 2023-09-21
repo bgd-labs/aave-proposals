@@ -16,6 +16,7 @@ async function subCli(pool: PoolIdentifier) {
   });
   const answers: CollateralUpdate[] = [];
   for (const asset of assets) {
+    console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
       ltv: await input({
@@ -68,7 +69,8 @@ type CollateralUpdate = {
 
 type CollateralUpdates = CollateralUpdate[];
 
-export const collateralUpdates: FeatureModule<CollateralUpdates> = {
+export const collateralsUpdates: FeatureModule<CollateralUpdates> = {
+  value: 'CollateralsUpdates (ltv,lt,lb,debtCeiling,liqProtocolFee,eModeCategory)',
   async cli(opt, pool) {
     const response: CollateralUpdates = await subCli(pool);
     return response;

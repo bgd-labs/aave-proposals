@@ -2,7 +2,7 @@ import {
   CHAINS_WITH_GOV_SUPPORT,
   generateContractName,
   generateFolderName,
-  getAlias,
+  getChainAlias,
   getPoolChain,
   pragma,
 } from '../common';
@@ -35,8 +35,8 @@ export function generateScript(options: Options) {
 
       return `/**
  * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${pool} chain=${getAlias(
-        pool
+ * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${pool} chain=${getChainAlias(
+        chain
       )}
  */
 contract Deploy${pool} is ${chain}Script {

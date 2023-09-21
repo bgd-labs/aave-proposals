@@ -42,12 +42,17 @@ export type Feature = {
 };
 
 export interface FeatureModule<T extends {} = {}> {
-  cli: (opt: Options, pool: PoolIdentifier) => Promise<T>;
-  build: (opt: Options, pool: PoolIdentifier, cfg: T) => CodeArtifact;
+  value: string;
+  cli?: (opt: Options, pool: PoolIdentifier) => Promise<T>;
+  build?: (opt: Options, pool: PoolIdentifier, cfg: T) => CodeArtifact;
 }
 
 export const ENGINE_FLAGS = {
   KEEP_CURRENT: 'KEEP_CURRENT',
+  KEEP_CURRENT_STRING: 'KEEP_CURRENT_STRING',
+  KEEP_CURRENT_ADDRESS: 'KEEP_CURRENT_ADDRESS',
+  ENABLED: 'ENABLED',
+  DISABLED: 'DISABLED',
 } as const;
 
 export const AVAILABLE_VERSIONS = {V2: 'V2', V3: 'V3'} as const;
