@@ -44,6 +44,7 @@ We have not identified any outsized positions that are actively affecting our re
 - Tests: [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230918_AaveV3_Ava_ChaosLabsRiskParameterUpdatesAaveV3Avalanche/AaveV3_Avalanche_ChaosLabsRiskParameterUpdatesAaveV3Avalanche_20230918.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x0c7fc4246c5795a9d9901c08a9a8279e7e6ed1069f2155fe48239c92e4e43193)
 - [Discussion](https://governance.aave.com/t/arfc-chaos-labs-risk-parameter-updates-aave-v3-avalanche-2023-09-06/14774/1)
+- Payload contract: [0xC4421Eaf9087aa0B8f453C130Dc024c3Eb3A34D7](https://snowtrace.io/address/0xc4421eaf9087aa0b8f453c130dc024c3eb3a34d7)
 
 ## Copyright
 
