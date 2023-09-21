@@ -1,15 +1,8 @@
-import {input, checkbox} from '@inquirer/prompts';
 import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
-import {
-  getAssets,
-  jsNumberToSol,
-  jsPercentToSol,
-  numberOrKeepCurrent,
-  transformPercent,
-} from '../common';
 import {
   NumberInputValues,
   PercentInputValues,
+  assetsSelect,
   eModeSelect,
   numberInput,
   percentInput,
@@ -17,9 +10,9 @@ import {
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for Collateral Updates on ${pool}`);
-  const assets = await checkbox({
+  const assets = await assetsSelect({
     message: 'Select the assets you want to amend',
-    choices: getAssets(pool).map((asset) => ({name: asset, value: asset})),
+    pool,
   });
   const answers: CollateralUpdate[] = [];
   for (const asset of assets) {
