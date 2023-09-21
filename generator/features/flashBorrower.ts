@@ -19,7 +19,7 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Addresses],
+        dependencies: [DEPENDENCIES.Addresses, DEPENDENCIES.Execute],
         constants: [`address public constant NEW_FLASH_BORROWER = address(${cfg.address});`],
         execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
       },

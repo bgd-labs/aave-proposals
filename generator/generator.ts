@@ -91,6 +91,15 @@ if (!options.snapshot) {
 }
 const PLACEHOLDER_MODULE = {
   value: 'Something different not supported by configEngine',
+  cli: async (opt, pool) => {
+    return {};
+  },
+  build: (opt, pool, cfg) => {
+    const response: CodeArtifact = {
+      code: {dependencies: [DEPENDENCIES.Execute]},
+    };
+    return response;
+  },
 };
 const FEATURE_MODULES_V2 = [rateUpdates, PLACEHOLDER_MODULE];
 const FEATURE_MODULES_V3 = [

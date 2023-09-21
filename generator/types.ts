@@ -21,6 +21,7 @@ export enum DEPENDENCIES {
   Addresses,
   Assets,
   Engine,
+  Execute,
 }
 
 export type CodeArtifact = {

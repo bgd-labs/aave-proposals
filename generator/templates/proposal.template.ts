@@ -51,11 +51,24 @@ export const proposalTemplate = (
     .join('\n');
 
   // need to figure out if execute or pre/post
-  const innerExecute = artifacts
-    .map((artifact) => artifact.code?.execute)
-    .flat()
-    .filter((f) => f !== undefined)
-    .join('\n');
+  let optionalExecute = '';
+  if (dependencies.includes(DEPENDENCIES.Execute)) {
+    const innerExecute = artifacts
+      .map((artifact) => artifact.code?.execute)
+      .flat()
+      .filter((f) => f !== undefined)
+      .join('\n');
+    if (dependencies.includes(DEPENDENCIES.Engine)) {
+      optionalExecute = `function _preExecute() internal override {
+        ${innerExecute}
+       }`;
+    } else {
+      optionalExecute = `function execute() external {
+        ${innerExecute}
+       }`;
+    }
+  }
+
   let template = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -74,15 +87,7 @@ contract ${contractName} is ${
   } {
   ${constants}
 
-  ${
-    dependencies.includes(DEPENDENCIES.Engine)
-      ? `function _preExecute() internal override {
-          ${innerExecute}
-         }`
-      : `function execute() external {
-          ${innerExecute}
-         }`
-  }
+  ${optionalExecute}
 
   ${functions}
 }`;
