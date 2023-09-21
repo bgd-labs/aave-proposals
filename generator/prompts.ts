@@ -42,7 +42,7 @@ export async function booleanSelect({message, disableKeepCurrent}: GenericPrompt
   return select({
     message,
     choices: [
-      ...(disableKeepCurrent ? [{value: ENGINE_FLAGS.KEEP_CURRENT}] : []),
+      ...(disableKeepCurrent ? [] : [{value: ENGINE_FLAGS.KEEP_CURRENT}]),
       {value: ENGINE_FLAGS.ENABLED},
       {value: ENGINE_FLAGS.DISABLED},
     ],

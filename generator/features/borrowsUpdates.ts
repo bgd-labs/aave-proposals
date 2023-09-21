@@ -19,22 +19,22 @@ async function subCli(pool: PoolIdentifier) {
     answers.push({
       asset,
       enabledToBorrow: await booleanSelect({
-        message: 'New supply cap',
+        message: 'enabled to borrow',
       }),
       flashloanable: await booleanSelect({
-        message: 'New borrow cap',
+        message: 'flashloanable',
       }),
       stableRateModeEnabled: await booleanSelect({
-        message: 'New borrow cap',
+        message: 'stable rate mode enabled',
       }),
       borrowableInIsolation: await booleanSelect({
-        message: 'New borrow cap',
+        message: 'borrowable in isolation',
       }),
       withSiloedBorrowing: await booleanSelect({
-        message: 'New borrow cap',
+        message: 'siloed borrowing',
       }),
       reserveFactor: await percentInput({
-        message: 'New borrow cap',
+        message: 'reserve factor',
       }),
     });
   }

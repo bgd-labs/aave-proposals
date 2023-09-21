@@ -21,6 +21,7 @@ import prettier from 'prettier';
 import {generateScript} from './templates/script.template';
 import {generateAIP} from './templates/aip.template';
 import {collateralsUpdates} from './features/collateralsUpdates';
+import {borrowsUpdates} from './features/borrowsUpdates';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -96,6 +97,7 @@ const FEATURE_MODULES_V3 = [
   rateUpdates,
   capsUpdates,
   collateralsUpdates,
+  borrowsUpdates,
   flashBorrower,
   {
     value: 'Something different supported by config engine(but not the generator, yet)',
