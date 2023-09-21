@@ -71,5 +71,6 @@ jobs:
           # if: github.event_name != 'pull_request'
         with:
           committer: Ipfs-bot <noreply@github.com>
-          commit-message: "chore(ipfs): automated branch replacement"
+          commit-message: "chore(ipfs): automated branch replacement [skip ci]"
           title: "chore(ipfs): automated branch replacement"
+          base: "main"
