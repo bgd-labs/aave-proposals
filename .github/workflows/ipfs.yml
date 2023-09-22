@@ -44,6 +44,15 @@ jobs:
         run: |
           cat .github/outputs/all_changed_files.json
 
+      - name: replace main with hash
+        if: github.event_name != 'pull_request' && steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          json_array=($(jq -r '.[]' ".github/outputs/all_changed_files.json"))
+          for i in "${json_array[@]}"
+          do
+            sed -i 's@https://github.com/bgd-labs/aave-proposals/blob/main/@https://github.com/bgd-labs/aave-proposals/blob/${{ github.sha }}/@g' $i
+          done
+
       - name: Upload
         if: steps.changed-files.outputs.any_changed == 'true'
         env:
@@ -55,3 +64,12 @@ jobs:
           do
             npx aave-cli ipfs $i -u ${{ github.event_name != 'pull_request'}}
           done
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@712add83f26c1e359c046a6ca3dd677fb7017626
+        if: github.event_name != 'pull_request' && steps.changed-files.outputs.any_changed == 'true'
+        with:
+          committer: Ipfs-bot <noreply@github.com>
+          commit-message: "chore(ipfs): automated branch/hash replacement [skip ci]"
+          title: "chore(ipfs): automated branch/hash replacement"
+          base: "main"
