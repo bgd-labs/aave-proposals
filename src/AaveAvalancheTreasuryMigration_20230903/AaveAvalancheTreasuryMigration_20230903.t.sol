@@ -16,45 +16,44 @@ contract AaveAvalancheTreasuryMigration_20230903_Test is Test {
   }
 
   function testPayload() public {
-    address[] memory OLD_ASSETS_MIGRATED = new address[](4);
-    OLD_ASSETS_MIGRATED[0] = AaveV2AvalancheAssets.DAIe_A_TOKEN;
-    OLD_ASSETS_MIGRATED[1] = AaveV2AvalancheAssets.WBTCe_A_TOKEN;
-    OLD_ASSETS_MIGRATED[2] = AaveV2AvalancheAssets.WETHe_A_TOKEN;
-    OLD_ASSETS_MIGRATED[3] = AaveV2AvalancheAssets.WAVAX_A_TOKEN;
+    address[4] memory oldAssetsMigrated;
+    oldAssetsMigrated[0] = AaveV2AvalancheAssets.DAIe_A_TOKEN;
+    oldAssetsMigrated[1] = AaveV2AvalancheAssets.WBTCe_A_TOKEN;
+    oldAssetsMigrated[2] = AaveV2AvalancheAssets.WETHe_A_TOKEN;
+    oldAssetsMigrated[3] = AaveV2AvalancheAssets.WAVAX_A_TOKEN;
 
-    address[] memory NEW_ASSETS_MIGRATED = new address[](4);
-    NEW_ASSETS_MIGRATED[0] = AaveV3AvalancheAssets.DAIe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[1] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[2] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[3] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
+    address[4] memory newAssetsMigrated;
+    newAssetsMigrated[0] = AaveV3AvalancheAssets.DAIe_A_TOKEN;
+    newAssetsMigrated[1] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
+    newAssetsMigrated[2] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
+    newAssetsMigrated[3] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
 
-    uint256[] memory NEW_ASSETS_BEFORE_BALANCE = new uint256[](4);
-    uint256[] memory OLD_ASSETS_BEFORE_BALANCE = new uint256[](4);
+    uint256[4] memory newAssetsBeforeBalance;
+    uint256[4] memory oldAssetsBeforeBalance;
 
-    uint256 i = 0;
-    uint256 payloadBalanceAfter;
+    uint256 executorBalanceAfter;
     uint256 collectorBalanceAfter;
 
-    for(; i < NEW_ASSETS_MIGRATED.length; i++) {
-      NEW_ASSETS_BEFORE_BALANCE[i] = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(AaveV3Avalanche.COLLECTOR));
-      OLD_ASSETS_BEFORE_BALANCE[i] = IERC20(OLD_ASSETS_MIGRATED[i]).balanceOf(address(AaveV2Avalanche.COLLECTOR));
+    for(uint256 i = 0; i < newAssetsMigrated.length; i++) {
+      newAssetsBeforeBalance[i] = IERC20(newAssetsMigrated[i]).balanceOf(address(AaveV3Avalanche.COLLECTOR));
+      oldAssetsBeforeBalance[i] = IERC20(oldAssetsMigrated[i]).balanceOf(address(AaveV2Avalanche.COLLECTOR));
     }
 
     AaveAvalancheTreasuryMigration_20230903 payload = new AaveAvalancheTreasuryMigration_20230903();
 
     GovHelpers.executePayload(vm, address(payload), AaveV3Avalanche.ACL_ADMIN);
 
-    for(i = 0; i < OLD_ASSETS_MIGRATED.length; i++) {
-      payloadBalanceAfter = IERC20(OLD_ASSETS_MIGRATED[i]).balanceOf(address(payload));
-      assertEq(payloadBalanceAfter, 0);
-      payloadBalanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(payload));
-      assertEq(payloadBalanceAfter, 0);
+    for(uint256 i = 0; i < oldAssetsMigrated.length; i++) {
+      executorBalanceAfter = IERC20(oldAssetsMigrated[i]).balanceOf(AaveV3Avalanche.ACL_ADMIN);
+      assertEq(executorBalanceAfter, 0);
+      executorBalanceAfter = IERC20(newAssetsMigrated[i]).balanceOf(AaveV3Avalanche.ACL_ADMIN);
+      assertEq(executorBalanceAfter, 0);
     }
 
-    for(i = 0; i < NEW_ASSETS_MIGRATED.length; i++) {
-      collectorBalanceAfter = IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(AaveV3Avalanche.COLLECTOR));
+    for(uint256 i = 0; i < newAssetsMigrated.length; i++) {
+      collectorBalanceAfter = IERC20(newAssetsMigrated[i]).balanceOf(address(AaveV3Avalanche.COLLECTOR));
       /// 0.001e18 is 0.1%
-      assertApproxEqRel(NEW_ASSETS_BEFORE_BALANCE[i] + OLD_ASSETS_BEFORE_BALANCE[i], collectorBalanceAfter, 0.001e18);
+      assertApproxEqRel(newAssetsBeforeBalance[i] + oldAssetsBeforeBalance[i], collectorBalanceAfter, 0.001e18);
     }
   }
 }

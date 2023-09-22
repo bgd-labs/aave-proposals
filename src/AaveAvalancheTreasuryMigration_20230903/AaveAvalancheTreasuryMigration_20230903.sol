@@ -29,52 +29,52 @@ import {IMigrationHelper} from 'aave-address-book/common/IMigrationHelper.sol';
 /**
  * @dev Redeem aTokens from Aave v2 Avalanche and deposit the underlying assets into Aave v3 Avalanche. 
  * @author defijesus.eth - TokenLogic
- * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x1b816c12b6f547a1982198ffd0e36412390b05828b560c9edee4e8a6903c4882
- * - Discussion: https://governance.aave.com/t/arfc-migrate-consolidate-polygon-treasury/12248
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xfe17ba406d90f8308794d14e8cad4f8d44c1f74e5589a5a106f9af17df916a59
+ * - Discussion: https://governance.aave.com/t/arfc-treasury-management-avalanche-v2-to-v3-migration/14469
  */
 contract AaveAvalancheTreasuryMigration_20230903 is IProposalGenericExecutor {
 
   function execute() external {
-    IMigrationHelper MIGRATION_HELPER = IMigrationHelper(AaveV2Avalanche.MIGRATION_HELPER);
+    IMigrationHelper migrationHelper = IMigrationHelper(AaveV2Avalanche.MIGRATION_HELPER);
 
-    address[] memory ASSETS_TO_MIGRATE = new address[](4);
-    ASSETS_TO_MIGRATE[0] = AaveV2AvalancheAssets.DAIe_UNDERLYING;
-    ASSETS_TO_MIGRATE[1] = AaveV2AvalancheAssets.WBTCe_UNDERLYING;
-    ASSETS_TO_MIGRATE[2] = AaveV2AvalancheAssets.WETHe_UNDERLYING;
-    ASSETS_TO_MIGRATE[3] = AaveV2AvalancheAssets.WAVAX_UNDERLYING;
+    address[] memory assetsToMigrate = new address[](4);
+    assetsToMigrate[0] = AaveV2AvalancheAssets.DAIe_UNDERLYING;
+    assetsToMigrate[1] = AaveV2AvalancheAssets.WBTCe_UNDERLYING;
+    assetsToMigrate[2] = AaveV2AvalancheAssets.WETHe_UNDERLYING;
+    assetsToMigrate[3] = AaveV2AvalancheAssets.WAVAX_UNDERLYING;
 
-    IMigrationHelper.RepaySimpleInput[] memory POSITIONS_TO_REPAY = new IMigrationHelper.RepaySimpleInput[](0);
-    IMigrationHelper.PermitInput[] memory PERMITS = new IMigrationHelper.PermitInput[](0);
-    IMigrationHelper.CreditDelegationInput[] memory CREDIT_DELEGATION_PERMITS = new IMigrationHelper.CreditDelegationInput[](0);
+    IMigrationHelper.RepaySimpleInput[] memory positionsToRepay = new IMigrationHelper.RepaySimpleInput[](0);
+    IMigrationHelper.PermitInput[] memory permits = new IMigrationHelper.PermitInput[](0);
+    IMigrationHelper.CreditDelegationInput[] memory creditDelegationPermits = new IMigrationHelper.CreditDelegationInput[](0);
 
     uint256 i = 0;
 
-    for(;i < ASSETS_TO_MIGRATE.length;) {
-        address aToken = MIGRATION_HELPER.aTokens(ASSETS_TO_MIGRATE[i]);
+    for(;i < assetsToMigrate.length;) {
+        address aToken = migrationHelper.aTokens(assetsToMigrate[i]);
         uint256 amount = IERC20(aToken).balanceOf(address(AaveV2Avalanche.COLLECTOR));
         AaveV2Avalanche.COLLECTOR.transfer(aToken, address(this), amount);
-        SafeERC20.forceApprove(IERC20(aToken), AaveV2Avalanche.MIGRATION_HELPER, amount);
+        SafeERC20.forceApprove(IERC20(aToken), address(migrationHelper), amount);
         unchecked {
-            i++;
+            ++i;
         }
     }
 
-    MIGRATION_HELPER.migrate(ASSETS_TO_MIGRATE, POSITIONS_TO_REPAY, PERMITS, CREDIT_DELEGATION_PERMITS);
+    migrationHelper.migrate(assetsToMigrate, positionsToRepay, permits, creditDelegationPermits);
 
-    address[] memory NEW_ASSETS_MIGRATED = new address[](4);
-    NEW_ASSETS_MIGRATED[0] = AaveV3AvalancheAssets.DAIe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[1] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[2] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
-    NEW_ASSETS_MIGRATED[3] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
+    address[] memory newAssetsMigrated = new address[](4);
+    newAssetsMigrated[0] = AaveV3AvalancheAssets.DAIe_A_TOKEN;
+    newAssetsMigrated[1] = AaveV3AvalancheAssets.WBTCe_A_TOKEN;
+    newAssetsMigrated[2] = AaveV3AvalancheAssets.WETHe_A_TOKEN;
+    newAssetsMigrated[3] = AaveV3AvalancheAssets.WAVAX_A_TOKEN;
 
-    for(i = 0; i < NEW_ASSETS_MIGRATED.length;) {
+    for(i = 0; i < newAssetsMigrated.length;) {
         SafeERC20.safeTransfer(
-            IERC20(NEW_ASSETS_MIGRATED[i]), 
+            IERC20(newAssetsMigrated[i]), 
             address(AaveV3Avalanche.COLLECTOR), 
-            IERC20(NEW_ASSETS_MIGRATED[i]).balanceOf(address(this))
+            IERC20(newAssetsMigrated[i]).balanceOf(address(this))
         );
         unchecked {
-            i++;
+            ++i;
         }
     }
   }

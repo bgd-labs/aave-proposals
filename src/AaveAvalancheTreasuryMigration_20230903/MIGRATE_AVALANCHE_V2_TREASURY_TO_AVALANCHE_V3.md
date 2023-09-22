@@ -16,8 +16,6 @@ Aave DAO currently holds around $4.52M on Avalanche v2. There are several driver
 * wAVAX incentives
 * Encourage migration v2 to v3
 
-Most of these funds can be migrated to v3 with the exception of USDT. There is not enough liquidity to redeem the entire 541.51K of USDT. As a result, approximately 25% of the USDT will be redeemed and deposited into v3.
-
 # Specification
 
 Migrate the following holdings:
