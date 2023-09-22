@@ -43,9 +43,9 @@ contract AgdAllowanceModification_20230817 is IProposalGenericExecutor {
   }
   
   function execute() external {
-    address AGD_MULTISIG = 0x89C51828427F70D77875C6747759fB17Ba10Ceb0;
-    address MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-    address PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
+    address agdMultisig = 0x89C51828427F70D77875C6747759fB17Ba10Ceb0;
+    address milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
+    address priceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
 
     Asset memory USDC = Asset({
       underlying: AaveV3EthereumAssets.USDC_UNDERLYING,
@@ -68,44 +68,46 @@ contract AgdAllowanceModification_20230817 is IProposalGenericExecutor {
       amount: 388_000 * 1e18
     });
 
-    AaveSwapper SWAPPER = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
+    AaveSwapper swapper = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
 
     /// 1. swap USDC & USDT to GHO
 
     AaveV3Ethereum.COLLECTOR.transfer(USDC.aToken, address(this), USDC.amount);
     AaveV3Ethereum.COLLECTOR.transfer(USDT.aToken, address(this), USDT.amount);
 
-    uint256 EXECUTOR_USDC_BALANCE = 
-      AaveV3Ethereum.POOL.withdraw(USDC.underlying, USDC.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    uint256 EXECUTOR_USDT_BALANCE = 
-      AaveV3Ethereum.POOL.withdraw(USDT.underlying, USDT.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
+    uint256 executorUsdcBalance = 
+      AaveV3Ethereum.POOL.withdraw(USDC.underlying, USDC.amount, address(swapper));
+    uint256 executorUsdtBalance = 
+      AaveV3Ethereum.POOL.withdraw(USDT.underlying, USDT.amount, address(swapper));
 
-    SWAPPER.swap(
-      MILKMAN,
-      PRICE_CHECKER,
+    swapper.swap(
+      milkman,
+      priceChecker,
       USDC.underlying,
       GHO.underlying,
       USDC.oracle,
       GHO.oracle,
       address(AaveV3Ethereum.COLLECTOR),
-      EXECUTOR_USDC_BALANCE,
+      executorUsdcBalance,
       150
     );
 
-    SWAPPER.swap(
-      MILKMAN,
-      PRICE_CHECKER,
+    swapper.swap(
+      milkman,
+      priceChecker,
       USDT.underlying,
       GHO.underlying,
       USDT.oracle,
       GHO.oracle,
       address(AaveV3Ethereum.COLLECTOR),
-      EXECUTOR_USDT_BALANCE,
+      executorUsdtBalance,
       150
     );
 
     /// 2. remove aDAI allowance and add GHO allowance
-    AaveV3Ethereum.COLLECTOR.approve(AaveV2EthereumAssets.DAI_A_TOKEN, AGD_MULTISIG, 0);
-    AaveV3Ethereum.COLLECTOR.approve(GHO.underlying, AGD_MULTISIG, GHO.amount);
+    uint256 currentAllowance = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN)
+      .allowance(address(AaveV3Ethereum.COLLECTOR), agdMultisig);
+    AaveV3Ethereum.COLLECTOR.approve(AaveV2EthereumAssets.DAI_A_TOKEN, agdMultisig, 0);
+    AaveV3Ethereum.COLLECTOR.approve(GHO.underlying, agdMultisig, currentAllowance);
   }
 }
