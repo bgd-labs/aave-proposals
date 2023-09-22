@@ -28,6 +28,16 @@ contract TokenLogicFunding_20230919_Test is ProtocolV2TestBase {
 
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 
+    // milkman creates intermediary contract for each swap
+    // while swap is not executed the assets will be in these swap-specific proxy addresses instead of aaveSwapper
+    // proxy contracts addresses are deterministic, they could be derived via code. 
+    // I simulated execution and copy pasted the address for simplicity
+    // see https://etherscan.io/address/0x11C76AD590ABDFFCD980afEC9ad951B160F02797#code#L878
+    address swapProxy = 0x2414B7eDd549E62e8a5877b73D96C80bAbC30bca;
+    uint256 daiAmount = 350_000 * 1e18;
+    uint256 proxyBalanceAfter = IERC20(AaveV3EthereumAssets.DAI_UNDERLYING).balanceOf(swapProxy);
+    assertEq(proxyBalanceAfter, daiAmount);
+
     /// check if can withdraw from stream & pretend the swap happened
     vm.warp(block.timestamp + 180 days + 1);
 
