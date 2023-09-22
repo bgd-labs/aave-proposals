@@ -27,8 +27,8 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
 /**
  * @dev (1) Swap aEthDAI to GHO; (2) Create stream to Tokenlogic
  * @author defijesus.eth - TokenLogic
- * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x53728c0416a9063bf833f90c3b3169fa4387e66549d5eb2b7ed2747bfe7c23fc
- * - Discussion: https://governance.aave.com/t/arfc-treasury-management-replace-agd-s-dai-allowance-with-gho-allowance/14631
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0x05636d75aae6e99be9c79a6337603f69213d34c3cf0b518842aa994f2ec790bf
+ * - Discussion: https://governance.aave.com/t/arfc-tokenlogic-6-month-service-provider-proposal/14793 
  */
 contract TokenLogicFunding_20230919 is IProposalGenericExecutor {
 
