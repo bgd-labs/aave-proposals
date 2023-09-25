@@ -19,7 +19,7 @@
 
 pragma solidity ^0.8.0;
 
-import 'aave-helpers/v2-config-engine/AaveV2PayloadPolygon.sol';
+import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
 
 /**
@@ -28,9 +28,9 @@ import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygo
  * - Snapshot: Direct-to-AIP Framework
  * - Discussion: https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937/6
  */
-contract AaveV2PolygonReserveFactorUpdate_20230920 is AaveV2PayloadPolygon {
+contract AaveV2PolygonReserveFactorUpdate_20230920 is IProposalGenericExecutor {
 
-  function _postExecute() internal override {
+  function execute() external {
     AaveV2Polygon.POOL_CONFIGURATOR.setReserveFactor(AaveV2PolygonAssets.DAI_UNDERLYING, 36_00);
     AaveV2Polygon.POOL_CONFIGURATOR.setReserveFactor(AaveV2PolygonAssets.USDC_UNDERLYING, 38_00);
     AaveV2Polygon.POOL_CONFIGURATOR.setReserveFactor(AaveV2PolygonAssets.USDT_UNDERLYING, 37_00);
