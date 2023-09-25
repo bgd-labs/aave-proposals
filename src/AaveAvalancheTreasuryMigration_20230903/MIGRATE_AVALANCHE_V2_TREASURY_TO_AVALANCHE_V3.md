@@ -39,7 +39,7 @@ A list of relevant links like for this proposal:
 * [Snapshot vote](https://snapshot.org/#/aave.eth/proposal/0x0be8229173181fe0aaf5ed1883e53752546efb810e55610e7ac8b991155ab788)
 * [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveAvalancheTreasuryMigration_20230903/AaveAvalancheTreasuryMigration_20230903.t.sol)
 * [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveAvalancheTreasuryMigration_20230903/AaveAvalancheTreasuryMigration_20230903.sol)
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://snowtrace.io/address/0x2dd58bedc4a91110bf9af1d2bc3f13966d1c6643)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

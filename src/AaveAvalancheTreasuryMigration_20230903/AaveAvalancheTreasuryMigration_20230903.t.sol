@@ -12,7 +12,7 @@ import {AaveAvalancheTreasuryMigration_20230903} from './AaveAvalancheTreasuryMi
 
 contract AaveAvalancheTreasuryMigration_20230903_Test is Test {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('avalanche'), 35447142);
+    vm.createSelectFork(vm.rpcUrl('avalanche'), 35644766);
   }
 
   function testPayload() public {
@@ -39,7 +39,7 @@ contract AaveAvalancheTreasuryMigration_20230903_Test is Test {
       oldAssetsBeforeBalance[i] = IERC20(oldAssetsMigrated[i]).balanceOf(address(AaveV2Avalanche.COLLECTOR));
     }
 
-    AaveAvalancheTreasuryMigration_20230903 payload = new AaveAvalancheTreasuryMigration_20230903();
+    AaveAvalancheTreasuryMigration_20230903 payload = AaveAvalancheTreasuryMigration_20230903(0x2DD58BeDC4A91110Bf9aF1d2bc3f13966d1C6643);
 
     GovHelpers.executePayload(vm, address(payload), AaveV3Avalanche.ACL_ADMIN);
 
