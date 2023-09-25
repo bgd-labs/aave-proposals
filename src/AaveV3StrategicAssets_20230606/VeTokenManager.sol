@@ -9,6 +9,7 @@ import {IVeToken} from './interfaces/IVeToken.sol';
 import {IWardenBoost} from './interfaces/IWardenBoost.sol';
 import {Common} from './Common.sol';
 
+// @author Llama
 abstract contract VeTokenManager is Common {
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
   event ClaimBoostRewards();
