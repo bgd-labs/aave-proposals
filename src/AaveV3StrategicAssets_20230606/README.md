@@ -13,8 +13,6 @@ can be governed by the DAO, while some functions can be invoked by an allowed gu
 
 #### StrategicAssetsManager.sol
 
-Removes the ability to interact with a certain sdToken.
-
 `function withdrawERC20(address token, address to, uint256 amount) external onlyOwner`
 
 Sends ERC20 tokens to an address. Withdrawal mechanism.
@@ -78,16 +76,16 @@ Allows the user to update an existing offer to sell boost.
 
 Removes a boost offer.
 
-` function claim(address underlying) external onlyOwnerOrManager`
+` function claimBoostRewards(address underlying) external onlyOwnerOrManager`
 
 Claim rewards earned by selling boost.
 
-`function setSpaceId(address underlying, bytes32 _spaceId) external onlyOwnerOrManager`
+`function setSpaceIdVEBAL(address underlying, bytes32 _spaceId) external onlyOwnerOrManager`
 
 Sets the spaceID that's used by protocol on Snapshot for voting. For example, "balancer.eth" is Balancer's spaceId on Snapshot.
 
 ```
- function setDelegate(
+ function setDelegateVEBAL(
     address underlying,
     address newDelegate
   ) external onlyOwnerOrManager
@@ -95,12 +93,12 @@ Sets the spaceID that's used by protocol on Snapshot for voting. For example, "b
 
 Delegate tokens so they can vote on Snapshot.
 
-`function clearDelegate(address underlying) external onlyOwnerOrManager`
+`function clearDelegateVEBAL(address underlying) external onlyOwnerOrManager`
 
 Remove the active delegate.
 
 ```
-function setLockDuration(
+function setLockDurationVEBAL(
     address underlying,
     uint256 newLockDuration
   ) external onlyOwnerOrManager
@@ -108,7 +106,7 @@ function setLockDuration(
 
 Set the lock duration to specific time. For example, max lock for veBAL is 1 year, so set to 1 year (or less).
 
-`function lock(address underlying) external onlyOwnerOrManager`
+`function lockVEBAL(address underlying) external onlyOwnerOrManager`
 
 The main function for veBAL.
 Initially, it locks the B-80BAL-20WETH token to receive veBAL. (This contract needs to be allow-listed by Balancer prior to calling or it will fail).
@@ -116,9 +114,35 @@ On subsequent calls (for example, weekly) it extends the lock duration once agai
 If locking duration is 6 months and the maximum duration is 1 year, then the voting weight is only half.
 This function also locks more of the native token held by StrategicAssetsManager available on the contract.
 
-`function unlock(address underlying) external onlyOwnerOrManager`
+`function unlockVEBAL(address underlying) external onlyOwnerOrManager`
 
 Unlocks the veToken in order to receive the underlying once again. Lock duration needs to have passed or transaction will revert.
+
+#### VlTokenManager.sol
+
+`function lockVLAURA(uint256 amount) external onlyOwnerOrGuardian`
+
+Locks AURA into vlAURA (if not locked before).
+
+`function claimVLAURARewards() external onlyOwnerOrGuardian`
+
+Claims rewards accrued by locking vlAURA.
+
+`function delegateVLAURA(address delegatee) external onlyOwnerOrGuardian`
+
+Delegates vlAURA for voting purposes.
+
+`function relockVLAURA() external onlyOwnerOrGuardian`
+
+Relocks vlAURA that has been previously locked.
+
+`function unlockVLAURA() external onlyOwnerOrGuardian`
+
+Unlock vlAURA position into AURA. Lock period needs to have passed or it will revert.
+
+`function emergencyWithdrawVLAURA() external onlyOwnerOrGuardian`
+
+Emergency function to exit a position if the AURA system is shut down.
 
 ##### LSDLiquidityGaugeManager.sol
 
