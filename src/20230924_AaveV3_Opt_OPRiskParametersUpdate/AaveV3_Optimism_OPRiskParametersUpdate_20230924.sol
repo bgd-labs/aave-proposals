@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import {AaveV3PayloadOptimism, IEngine, Rates, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
-import {IV3RateStrategyFactory} from 'aave-helpers/v3-config-engine/IV3RateStrategyFactory.sol';
 
 /**
  * @title OP Risk Parameters Update
@@ -12,46 +11,40 @@ import {IV3RateStrategyFactory} from 'aave-helpers/v3-config-engine/IV3RateStrat
  * - Discussion: https://governance.aave.com/t/arfc-op-risk-parameters-update-aave-v3-optimism-pool/14633
  */
 contract AaveV3_Optimism_OPRiskParametersUpdate_20230924 is AaveV3PayloadOptimism {
+  uint256 public constant BORROW_CAP = 500_000;
+  address public constant INTEREST_RATE_STRATEGY = 0x3B57B081dA6Af5e2759A57bD3211932Cb6176997;
 
-  
+  function _preExecute() internal override {
+    AaveV3Optimism.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
+      AaveV3OptimismAssets.OP_UNDERLYING,
+      INTEREST_RATE_STRATEGY
+    );
+  }
+
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](1);
 
     collateralUpdate[0] = IEngine.CollateralUpdate({
       asset: AaveV3OptimismAssets.OP_UNDERLYING,
-      ltv: 30_00,
-      liqThreshold: 40_00,
-      liqBonus: 10_00,
+      ltv: EngineFlags.KEEP_CURRENT,
+      liqThreshold: EngineFlags.KEEP_CURRENT,
+      liqBonus: EngineFlags.KEEP_CURRENT,
       debtCeiling: 0,
-      liqProtocolFee: 10_00,
+      liqProtocolFee: EngineFlags.KEEP_CURRENT,
       eModeCategory: EngineFlags.KEEP_CURRENT
     });
     return collateralUpdate;
   }
 
-  function rateStrategiesUpdates()
-    public
-    view
-    override
-    returns (IEngine.RateStrategyUpdate[] memory)
-  {
-    IEngine.RateStrategyUpdate[] memory ratesUpdate = new IEngine.RateStrategyUpdate[](1);
+  function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
+    IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](1);
 
-    ratesUpdate[0] = IEngine.RateStrategyUpdate({
+    capsUpdate[0] = IEngine.CapsUpdate({
       asset: AaveV3OptimismAssets.OP_UNDERLYING,
-      params: Rates.RateStrategyParams({
-        optimalUsageRatio: _bpsToRay(45_00),
-        baseVariableBorrowRate: 0,
-        variableRateSlope1: _bpsToRay(7_00),
-        variableRateSlope2: _bpsToRay(300_00),
-        stableRateSlope1: _bpsToRay(7_00),
-        stableRateSlope2: _bpsToRay(300_00),
-        baseStableRateOffset: _bpsToRay(3_00),
-        stableRateExcessOffset: EngineFlags.KEEP_CURRENT,
-        optimalStableToTotalDebtRatio: EngineFlags.KEEP_CURRENT
-      })
+      borrowCap: BORROW_CAP,
+      supplyCap: EngineFlags.KEEP_CURRENT
     });
 
-    return ratesUpdate;
+    return capsUpdate;
   }
 }
