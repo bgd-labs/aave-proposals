@@ -14,6 +14,7 @@ async function subCli(pool: PoolIdentifier) {
       asset,
       priceFeed: await addressInput({
         message: 'New price feed address',
+        disableKeepCurrent: true,
       }),
     });
   }

@@ -13,6 +13,11 @@ function isNumberOrKeepCurrent(value: string) {
   return 'Must be number or KEEP_CURRENT';
 }
 
+function isAddressOrKeepCurrent(value: string) {
+  if (value == ENGINE_FLAGS.KEEP_CURRENT_ADDRESS || isAddress(value)) return true;
+  return 'Must be a calid address';
+}
+
 // TRANSFORMS
 function transformNumberToPercent(value: string) {
   if (value && isNumber(value)) {
@@ -37,7 +42,12 @@ function translateJsPercentToSol(value: string, bpsToRay?: boolean) {
 
 function translateJsNumberToSol(value: string) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
-  return value.replace(/\B(?=(\d{3})+(?!\d))/g, '_');
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '_');
+}
+
+function translateEModeToEModeLib(value: string, pool: PoolIdentifier) {
+  if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
+  return `${pool}EModes.${value}`;
 }
 
 // PROMPTS
@@ -93,7 +103,7 @@ export async function numberInput({message, disableKeepCurrent}: GenericPrompt) 
 export async function addressInput({message, disableKeepCurrent}: GenericPrompt) {
   const value = await input({
     message,
-    validate: (value) => (isAddress(value) ? true : 'Must be a valid address'),
+    validate: disableKeepCurrent ? isAddress : isAddressOrKeepCurrent,
     ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT_ADDRESS}),
   });
   return getAddress(value);
@@ -120,23 +130,24 @@ export async function eModeSelect({message, disableKeepCurrent, pool}: EModeSele
     message,
     choices: [
       ...(disableKeepCurrent ? [] : [{value: ENGINE_FLAGS.KEEP_CURRENT}]),
-      ...Object.keys(eModes).map((eMode) => ({name: eMode, value: eModes[eMode]})),
+      ...Object.keys(eModes).map((eMode) => ({value: eMode})),
     ],
   });
-  return translateJsNumberToSol(eMode);
+  return translateEModeToEModeLib(eMode, pool);
 }
 
 export async function eModesSelect({message, pool}: EModeSelectPrompt) {
   const eModes = getEModes(pool as any);
-  const eMode = await checkbox({
+  const values = await checkbox({
     message,
     choices: [
       ...Object.keys(eModes)
-        .map((eMode) => ({name: eMode, value: eModes[eMode]}))
-        .filter((e) => e.value != 0),
+        .filter((e) => e != 'NONE')
+        .map((eMode) => ({value: eMode})),
     ],
   });
-  return eMode.map((eMode) => translateJsNumberToSol(eMode));
+  console.log(values);
+  return values.map((mode) => translateEModeToEModeLib(mode, pool));
 }
 
 export async function stringInput({message, disableKeepCurrent}: GenericPrompt) {
