@@ -89,7 +89,7 @@ contract AgdAllowanceModification_20230817 is IProposalGenericExecutor {
       GHO.oracle,
       address(AaveV3Ethereum.COLLECTOR),
       executorUsdcBalance,
-      150
+      50
     );
 
     swapper.swap(
@@ -101,7 +101,7 @@ contract AgdAllowanceModification_20230817 is IProposalGenericExecutor {
       GHO.oracle,
       address(AaveV3Ethereum.COLLECTOR),
       executorUsdtBalance,
-      150
+      50
     );
 
     /// 2. remove aDAI allowance and add GHO allowance
