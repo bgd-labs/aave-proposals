@@ -148,7 +148,7 @@ Emergency function to exit a position if the AURA system is shut down.
 
 `function setGaugeController(address token, address gaugeController) public onlyOwnerOrManager`
 
-Sets the address that handles gauges for sdTokens or veTokens.
+Sets the address that handles gauges for veTokens.
 
 Here is the proposal on Balancer as it relates to GHO: https://forum.balancer.fi/t/bip-xxx-approve-the-smbpt-gauges-for-the-aave-sm/4949
 This post has the explanation on all the steps the DAO can expect to interact with these protocols to maximize rewards.
@@ -167,5 +167,5 @@ function voteForGaugeWeight(
   ) external onlyOwnerOrManager
 ```
 
-Utilizing the veToken holdings or sdToken holdings, the DAO can vote to redirect emissions to the DAO's own gauge.
+Utilizing the veToken holdings, the DAO can vote to redirect emissions to the DAO's own gauge.
 Here, by voting for the DAO's gauge, and also purchasing boost, the DAO can expect to earn a lot more BAL rewards over time than just by holding a veToken for example.
