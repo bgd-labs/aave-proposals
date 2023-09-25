@@ -22,6 +22,8 @@ import {generateScript} from './templates/script.template';
 import {generateAIP} from './templates/aip.template';
 import {collateralsUpdates} from './features/collateralsUpdates';
 import {borrowsUpdates} from './features/borrowsUpdates';
+import {eModeUpdates} from './features/eModesUpdates';
+import {priceFeedsUpdates} from './features/priceFeedsUpdates';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -108,6 +110,8 @@ const FEATURE_MODULES_V3 = [
   collateralsUpdates,
   borrowsUpdates,
   flashBorrower,
+  priceFeedsUpdates,
+  eModeUpdates,
   {
     value: 'Something different supported by config engine(but not the generator, yet)',
     cli: async (opt, pool) => {
@@ -133,7 +137,7 @@ for (const pool of options.pools) {
   });
   let artifacts: CodeArtifact[] = [];
   for (const feature of features) {
-    const module: FeatureModule = v2
+    const module: FeatureModule<any> = v2
       ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
       : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
     if (module.cli) {

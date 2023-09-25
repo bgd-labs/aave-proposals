@@ -27,7 +27,7 @@ type PriceFeedUpdate = {
 
 type PriceFeedUpdates = PriceFeedUpdate[];
 
-export const capsUpdates: FeatureModule<PriceFeedUpdates> = {
+export const priceFeedsUpdates: FeatureModule<PriceFeedUpdates> = {
   value: 'PriceFeedsUpdates (replacing priceFeeds)',
   async cli(opt, pool) {
     const response: PriceFeedUpdates = await subCli(pool);

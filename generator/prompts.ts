@@ -94,6 +94,7 @@ export async function addressInput({message, disableKeepCurrent}: GenericPrompt)
   const value = await input({
     message,
     validate: (value) => (isAddress(value) ? true : 'Must be a valid address'),
+    ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT_ADDRESS}),
   });
   return getAddress(value);
 }
@@ -123,4 +124,24 @@ export async function eModeSelect({message, disableKeepCurrent, pool}: EModeSele
     ],
   });
   return translateJsNumberToSol(eMode);
+}
+
+export async function eModesSelect({message, pool}: EModeSelectPrompt) {
+  const eModes = getEModes(pool as any);
+  const eMode = await checkbox({
+    message,
+    choices: [
+      ...Object.keys(eModes)
+        .map((eMode) => ({name: eMode, value: eModes[eMode]}))
+        .filter((e) => e.value != 0),
+    ],
+  });
+  return eMode.map((eMode) => translateJsNumberToSol(eMode));
+}
+
+export async function stringInput({message, disableKeepCurrent}: GenericPrompt) {
+  return input({
+    message,
+    ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT_STRING}),
+  });
 }
