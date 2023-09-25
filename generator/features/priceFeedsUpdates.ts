@@ -1,5 +1,5 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
-import {NumberInputValues, assetsSelect, numberInput} from '../prompts';
+import {NumberInputValues, addressInput, assetsSelect, numberInput} from '../prompts';
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for PriceFeeds on ${pool}`);
@@ -12,8 +12,8 @@ async function subCli(pool: PoolIdentifier) {
     console.log(`collecting info for ${asset}`);
     answers.push({
       asset,
-      priceFeed: await numberInput({
-        message: 'New price feed',
+      priceFeed: await addressInput({
+        message: 'New price feed address',
       }),
     });
   }

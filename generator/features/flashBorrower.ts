@@ -1,5 +1,5 @@
-import {input} from '@inquirer/prompts';
 import {CodeArtifact, DEPENDENCIES, FeatureModule} from '../types';
+import {addressInput} from '../prompts';
 
 type FlashBorrower = {
   address: string;
@@ -10,7 +10,7 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
   async cli(opt, pool) {
     console.log(`Fetching information for FlashBorrower on ${pool}`);
     const response: FlashBorrower = {
-      address: await input({
+      address: await addressInput({
         message: 'Who do you want to grant the flashBorrower role',
       }),
     };

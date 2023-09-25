@@ -1,6 +1,7 @@
 import {checkbox, input, select} from '@inquirer/prompts';
 import {ENGINE_FLAGS, PoolIdentifier} from './types';
 import {getAssets, getEModes} from './common';
+import {getAddress, isAddress} from 'viem';
 
 // VALIDATION
 function isNumber(value: string) {
@@ -87,6 +88,14 @@ export async function numberInput({message, disableKeepCurrent}: GenericPrompt) 
     ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT}),
   });
   return translateJsNumberToSol(value);
+}
+
+export async function addressInput({message, disableKeepCurrent}: GenericPrompt) {
+  const value = await input({
+    message,
+    validate: (value) => (isAddress(value) ? true : 'Must be a valid address'),
+  });
+  return getAddress(value);
 }
 
 interface AssetsSelectPrompt extends Omit<GenericPrompt, 'disableKeepCurrent'> {
