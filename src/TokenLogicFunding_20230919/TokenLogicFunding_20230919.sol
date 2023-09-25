@@ -74,7 +74,7 @@ contract TokenLogicFunding_20230919 is IProposalGenericExecutor {
       GHO.oracle,
       address(AaveV3Ethereum.COLLECTOR),
       SWAPPER_DAI_BALANCE,
-      150
+      50
     );
 
     /// 2. create GHO stream
