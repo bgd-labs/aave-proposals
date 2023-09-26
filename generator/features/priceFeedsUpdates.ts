@@ -1,37 +1,28 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
-import {NumberInputValues, addressInput, assetsSelect, numberInput} from '../prompts';
+import {addressInput, assetsSelect} from '../prompts';
+import {PriceFeedUpdate, PriceFeedUpdatePartial} from './types';
 
-async function subCli(pool: PoolIdentifier) {
-  console.log(`Fetching information for PriceFeeds on ${pool}`);
-  const assets = await assetsSelect({
-    message: 'Select the assets you want to amend',
-    pool,
-  });
-  const answers: PriceFeedUpdate[] = [];
-  for (const asset of assets) {
-    console.log(`collecting info for ${asset}`);
-    answers.push({
-      asset,
-      priceFeed: await addressInput({
-        message: 'New price feed address',
-        disableKeepCurrent: true,
-      }),
-    });
-  }
-  return answers;
+async function fetchPriceFeedUpdate(): Promise<PriceFeedUpdatePartial> {
+  return {
+    priceFeed: await addressInput({
+      message: 'New price feed address',
+      disableKeepCurrent: true,
+    }),
+  };
 }
 
-type PriceFeedUpdate = {
-  asset: string;
-  priceFeed: NumberInputValues;
-};
-
-type PriceFeedUpdates = PriceFeedUpdate[];
-
-export const priceFeedsUpdates: FeatureModule<PriceFeedUpdates> = {
+export const priceFeedsUpdates: FeatureModule<PriceFeedUpdate[]> = {
   value: 'PriceFeedsUpdates (replacing priceFeeds)',
   async cli(opt, pool) {
-    const response: PriceFeedUpdates = await subCli(pool);
+    const response: PriceFeedUpdate[] = [];
+    const assets = await assetsSelect({
+      message: 'Select the assets you want to amend',
+      pool,
+    });
+    for (const asset of assets) {
+      console.log(`collecting info for ${asset}`);
+      response.push({asset, ...(await fetchPriceFeedUpdate())});
+    }
     return response;
   },
   build(opt, pool, cfg) {

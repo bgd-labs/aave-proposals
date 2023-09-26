@@ -1,40 +1,36 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
-import {NumberInputValues, assetsSelect, numberInput} from '../prompts';
+import {assetsSelect, numberInput} from '../prompts';
+import {CapsUpdate, CapsUpdatePartial} from './types';
 
-async function subCli(pool: PoolIdentifier) {
-  console.log(`Fetching information for CapsUpdates on ${pool}`);
-  const assets = await assetsSelect({
-    message: 'Select the assets you want to amend',
-    pool,
-  });
-  const answers: CapUpdate[] = [];
-  for (const asset of assets) {
-    console.log(`collecting info for ${asset}`);
-    answers.push({
-      asset,
-      supplyCap: await numberInput({
-        message: 'New supply cap',
-      }),
-      borrowCap: await numberInput({
-        message: 'New borrow cap',
-      }),
-    });
-  }
-  return answers;
+export async function fetchCapsUpdate(disableKeepCurrent?: boolean): Promise<CapsUpdatePartial> {
+  return {
+    supplyCap: await numberInput({
+      message: 'New supply cap',
+      disableKeepCurrent,
+    }),
+    borrowCap: await numberInput({
+      message: 'New borrow cap',
+      disableKeepCurrent,
+    }),
+  };
 }
 
-type CapUpdate = {
-  asset: string;
-  borrowCap: NumberInputValues;
-  supplyCap: NumberInputValues;
-};
-
-type CapsUpdates = CapUpdate[];
+type CapsUpdates = CapsUpdate[];
 
 export const capsUpdates: FeatureModule<CapsUpdates> = {
   value: 'CapsUpdates (supplyCap, borrowCap)',
   async cli(opt, pool) {
-    const response: CapsUpdates = await subCli(pool);
+    console.log(`Fetching information for CapsUpdates on ${pool}`);
+    const assets = await assetsSelect({
+      message: 'Select the assets you want to amend',
+      pool,
+    });
+
+    const response: CapsUpdates = [];
+    for (const asset of assets) {
+      console.log(`collecting info for ${asset}`);
+      response.push({asset, ...(await fetchCapsUpdate())});
+    }
     return response;
   },
   build(opt, pool, cfg) {

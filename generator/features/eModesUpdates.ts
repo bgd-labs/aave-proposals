@@ -1,6 +1,6 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
-import {NumberInputValues, addressInput, eModesSelect, percentInput, stringInput} from '../prompts';
-import {Hex} from 'viem';
+import {addressInput, eModesSelect, percentInput, stringInput} from '../prompts';
+import {EModeCategoryUpdate} from './types';
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for EModes on ${pool}`);
@@ -31,16 +31,7 @@ async function subCli(pool: PoolIdentifier) {
   return answers;
 }
 
-type EmodeUpdate = {
-  eModeCategory: string;
-  ltv: NumberInputValues;
-  liqThreshold: NumberInputValues;
-  liqBonus: NumberInputValues;
-  priceSource: Hex;
-  label: string;
-};
-
-type EmodeUpdates = EmodeUpdate[];
+type EmodeUpdates = EModeCategoryUpdate[];
 
 export const eModeUpdates: FeatureModule<EmodeUpdates> = {
   value: 'eModeCategoriesUpdates (altering/adding eModes)',

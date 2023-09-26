@@ -1,5 +1,6 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
 import {assetsSelect, eModeSelect} from '../prompts';
+import {AssetEModeUpdate} from './types';
 
 async function subCli(pool: PoolIdentifier) {
   console.log(`Fetching information for Emode assets on ${pool}`);
@@ -22,12 +23,7 @@ async function subCli(pool: PoolIdentifier) {
   return answers;
 }
 
-type EmodeAssetUpdate = {
-  asset: string;
-  eModeCategory: string;
-};
-
-type EmodeAssetUpdates = EmodeAssetUpdate[];
+type EmodeAssetUpdates = AssetEModeUpdate[];
 
 export const eModeAssets: FeatureModule<EmodeAssetUpdates> = {
   value: 'assetsEModeUpdates (setting eMode for an asset)',

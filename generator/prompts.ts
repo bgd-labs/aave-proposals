@@ -113,6 +113,11 @@ interface AssetsSelectPrompt extends Omit<GenericPrompt, 'disableKeepCurrent'> {
   pool: PoolIdentifier;
 }
 
+/**
+ * allows selecting an asset
+ * @param param0
+ * @returns
+ */
 export function assetsSelect({pool, message}: AssetsSelectPrompt) {
   return checkbox({
     message,
@@ -146,7 +151,6 @@ export async function eModesSelect({message, pool}: EModeSelectPrompt) {
         .map((eMode) => ({value: eMode})),
     ],
   });
-  console.log(values);
   return values.map((mode) => translateEModeToEModeLib(mode, pool));
 }
 

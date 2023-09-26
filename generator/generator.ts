@@ -24,8 +24,8 @@ import {collateralsUpdates} from './features/collateralsUpdates';
 import {borrowsUpdates} from './features/borrowsUpdates';
 import {eModeUpdates} from './features/eModesUpdates';
 import {eModeAssets} from './features/eModesAssets';
-
 import {priceFeedsUpdates} from './features/priceFeedsUpdates';
+import {assetListing} from './features/assetListing';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -115,6 +115,7 @@ const FEATURE_MODULES_V3 = [
   priceFeedsUpdates,
   eModeUpdates,
   eModeAssets,
+  assetListing,
   {
     value: 'Something different supported by config engine(but not the generator, yet)',
     cli: async (opt, pool) => {

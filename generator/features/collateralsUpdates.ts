@@ -1,63 +1,57 @@
 import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
-import {
-  NumberInputValues,
-  PercentInputValues,
-  assetsSelect,
-  eModeSelect,
-  numberInput,
-  percentInput,
-} from '../prompts';
+import {assetsSelect, eModeSelect, numberInput, percentInput} from '../prompts';
+import {CollateralUpdate, CollateralUpdatePartial} from './types';
 
-async function subCli(pool: PoolIdentifier) {
-  console.log(`Fetching information for Collateral Updates on ${pool}`);
-  const assets = await assetsSelect({
-    message: 'Select the assets you want to amend',
-    pool,
-  });
-  const answers: CollateralUpdate[] = [];
-  for (const asset of assets) {
-    console.log(`collecting info for ${asset}`);
-    answers.push({
-      asset,
-      ltv: await percentInput({
-        message: 'Loan to value',
-      }),
-      liqThreshold: await percentInput({
-        message: 'Liquidation Threshold',
-      }),
-      liqBonus: await percentInput({
-        message: 'Liquidation bonus',
-      }),
-      debtCeiling: await numberInput({
-        message: 'Debt ceiling',
-      }),
-      liqProtocolFee: await percentInput({
-        message: 'Liquidation protocol fee',
-      }),
-      eModeCategory: await eModeSelect({
-        message: 'e mode category',
-        pool,
-      }),
-    });
-  }
-  return answers;
+export async function fetchCollateralUpdate(
+  pool: PoolIdentifier,
+  disableKeepCurrent?: boolean
+): Promise<CollateralUpdatePartial> {
+  return {
+    ltv: await percentInput({
+      message: 'Loan to value',
+      disableKeepCurrent,
+    }),
+    liqThreshold: await percentInput({
+      message: 'Liquidation Threshold',
+      disableKeepCurrent,
+    }),
+    liqBonus: await percentInput({
+      message: 'Liquidation bonus',
+      disableKeepCurrent,
+    }),
+    debtCeiling: await numberInput({
+      message: 'Debt ceiling',
+      disableKeepCurrent,
+    }),
+    liqProtocolFee: await percentInput({
+      message: 'Liquidation protocol fee',
+      disableKeepCurrent,
+    }),
+    eModeCategory: await eModeSelect({
+      message: 'e mode category',
+      disableKeepCurrent,
+      pool,
+    }),
+  };
 }
-type CollateralUpdate = {
-  asset: string;
-  ltv: PercentInputValues;
-  liqThreshold: PercentInputValues;
-  liqBonus: PercentInputValues;
-  debtCeiling: NumberInputValues;
-  liqProtocolFee: PercentInputValues;
-  eModeCategory: typeof ENGINE_FLAGS.KEEP_CURRENT | string;
-};
 
 type CollateralUpdates = CollateralUpdate[];
 
 export const collateralsUpdates: FeatureModule<CollateralUpdates> = {
   value: 'CollateralsUpdates (ltv,lt,lb,debtCeiling,liqProtocolFee,eModeCategory)',
   async cli(opt, pool) {
-    const response: CollateralUpdates = await subCli(pool);
+    console.log(`Fetching information for Collateral Updates on ${pool}`);
+
+    const response: CollateralUpdates = [];
+    const assets = await assetsSelect({
+      message: 'Select the assets you want to amend',
+      pool,
+    });
+    for (const asset of assets) {
+      console.log(`collecting info for ${asset}`);
+
+      response.push({asset, ...(await fetchCollateralUpdate(pool))});
+    }
     return response;
   },
   build(opt, pool, cfg) {

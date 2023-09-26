@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, DEPENDENCIES, FeatureModule} from '../types';
 import {
   BooleanSelectValues,
   PercentInputValues,
@@ -7,42 +7,36 @@ import {
   percentInput,
 } from '../prompts';
 
-async function subCli(pool: PoolIdentifier) {
-  console.log(`Fetching information for BorrowUpdates on ${pool}`);
-  const assets = await assetsSelect({
-    message: 'Select the assets you want to amend',
-    pool,
-  });
-  const answers: BorrowUpdate[] = [];
-  for (const asset of assets) {
-    console.log(`collecting info for ${asset}`);
-    answers.push({
-      asset,
-      enabledToBorrow: await booleanSelect({
-        message: 'enabled to borrow',
-      }),
-      flashloanable: await booleanSelect({
-        message: 'flashloanable',
-      }),
-      stableRateModeEnabled: await booleanSelect({
-        message: 'stable rate mode enabled',
-      }),
-      borrowableInIsolation: await booleanSelect({
-        message: 'borrowable in isolation',
-      }),
-      withSiloedBorrowing: await booleanSelect({
-        message: 'siloed borrowing',
-      }),
-      reserveFactor: await percentInput({
-        message: 'reserve factor',
-      }),
-    });
-  }
-  return answers;
+export async function fetchBorrowUpdate(disableKeepCurrent?: boolean): Promise<BorrowUpdate> {
+  return {
+    enabledToBorrow: await booleanSelect({
+      message: 'enabled to borrow',
+      disableKeepCurrent,
+    }),
+    flashloanable: await booleanSelect({
+      message: 'flashloanable',
+      disableKeepCurrent,
+    }),
+    stableRateModeEnabled: await booleanSelect({
+      message: 'stable rate mode enabled',
+      disableKeepCurrent,
+    }),
+    borrowableInIsolation: await booleanSelect({
+      message: 'borrowable in isolation',
+      disableKeepCurrent,
+    }),
+    withSiloedBorrowing: await booleanSelect({
+      message: 'siloed borrowing',
+      disableKeepCurrent,
+    }),
+    reserveFactor: await percentInput({
+      message: 'reserve factor',
+      disableKeepCurrent,
+    }),
+  };
 }
 
 type BorrowUpdate = {
-  asset: string;
   enabledToBorrow: BooleanSelectValues;
   flashloanable: BooleanSelectValues;
   stableRateModeEnabled: BooleanSelectValues;
@@ -51,13 +45,21 @@ type BorrowUpdate = {
   reserveFactor: PercentInputValues;
 };
 
-type BorrowUpdates = BorrowUpdate[];
+type BorrowUpdates = (BorrowUpdate & {asset: string})[];
 
 export const borrowsUpdates: FeatureModule<BorrowUpdates> = {
   value:
     'BorrowsUpdates (enabledToBorrow, flashloanable, stableRateModeEnabled, borrowableInIsolation, withSiloedBorrowing, reserveFactor)',
   async cli(opt, pool) {
-    const response: BorrowUpdates = await subCli(pool);
+    const assets = await assetsSelect({
+      message: 'Select the assets you want to amend',
+      pool,
+    });
+    const response: BorrowUpdates = [];
+    for (const asset of assets) {
+      console.log(`Fetching information for BorrowUpdates on ${pool} ${asset}`);
+      response.push({...(await getBorrowUpdateParams()), asset});
+    }
     return response;
   },
   build(opt, pool, cfg) {
