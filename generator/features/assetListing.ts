@@ -43,6 +43,9 @@ export const assetListing: FeatureModule<Listing[]> = {
     const response: CodeArtifact = {
       code: {
         dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
+        constants: cfg.map(
+          (cfg) => `address public constant ${cfg.assetSymbol} = address(${cfg.asset});`
+        ),
         fn: [
           `function newListings() public pure override returns (IEngine.Listing[] memory) {
           IEngine.Listing[] memory listings = new IEngine.Listing[](${cfg.length});
@@ -50,8 +53,8 @@ export const assetListing: FeatureModule<Listing[]> = {
           ${cfg
             .map(
               (cfg, ix) => `listings[${ix}] = IEngine.Listing({
-               asset: ${cfg.asset},
-               assetSymbol: ${cfg.assetSymbol},
+               asset: ${cfg.assetSymbol},
+               assetSymbol: "${cfg.assetSymbol}",
                priceFeed: ${cfg.priceFeed},
                eModeCategory: ${cfg.eModeCategory},
                enabledToBorrow: ${cfg.enabledToBorrow},
@@ -102,6 +105,9 @@ export const assetListingCustom: FeatureModule<ListingWithCustomImpl[]> = {
     const response: CodeArtifact = {
       code: {
         dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
+        constants: cfg.map(
+          (cfg) => `address public constant ${cfg.base.assetSymbol} = address(${cfg.base.asset});`
+        ),
         fn: [
           `function newListingsCustom() public pure override returns (IEngine.ListingWithCustomImpl[] memory) {
           IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](${
@@ -112,8 +118,8 @@ export const assetListingCustom: FeatureModule<ListingWithCustomImpl[]> = {
             .map(
               (cfg, ix) => `listings[${ix}] = IEngine.ListingWithCustomImpl(
                 IEngine.Listing({
-               asset: ${cfg.base.asset},
-               assetSymbol: ${cfg.base.assetSymbol},
+              asset: ${cfg.base.assetSymbol},
+              assetSymbol: "${cfg.base.assetSymbol}",
                priceFeed: ${cfg.base.priceFeed},
                eModeCategory: ${cfg.base.eModeCategory},
                enabledToBorrow: ${cfg.base.enabledToBorrow},
