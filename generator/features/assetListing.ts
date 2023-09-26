@@ -4,14 +4,14 @@ import {fetchBorrowUpdate} from './borrowsUpdates';
 import {fetchRateStrategyParams} from './rateUpdates';
 import {fetchCollateralUpdate} from './collateralsUpdates';
 import {fetchCapsUpdate} from './capsUpdates';
-import {Listing} from './types';
+import {Listing, ListingWithCustomImpl, TokenImplementations} from './types';
 
-async function subCli(pool: PoolIdentifier): Promise<Listing> {
-  console.log(`Fetching information for Emode assets on ${pool}`);
+async function fetchListing(pool: PoolIdentifier): Promise<Listing> {
   const asset = await addressInput({
-    message: 'select the asset you want to list',
+    message: 'enter the asset you want to list',
     disableKeepCurrent: true,
   });
+
   return {
     assetSymbol: await stringInput({message: 'Enter the asset symbol', disableKeepCurrent: true}),
     priceFeed: await addressInput({message: 'PriceFeed address', disableKeepCurrent: true}),
@@ -22,13 +22,21 @@ async function subCli(pool: PoolIdentifier): Promise<Listing> {
     asset,
   };
 }
-type AssetListings = Listing[];
 
-export const assetListing: FeatureModule<AssetListings> = {
+async function fetchCustomImpl(): Promise<TokenImplementations> {
+  return {
+    aToken: await addressInput({message: 'aToken implementation', disableKeepCurrent: true}),
+    vToken: await addressInput({message: 'vToken implementation', disableKeepCurrent: true}),
+    sToken: await addressInput({message: 'sToken implementation', disableKeepCurrent: true}),
+  };
+}
+
+export const assetListing: FeatureModule<Listing[]> = {
   value: 'newListings (listing a new asset)',
   async cli(opt, pool) {
-    const response: AssetListings = [];
-    response.push(await subCli(pool));
+    const response: Listing[] = [];
+    console.log(`Fetching information for Assets assets on ${pool}`);
+    response.push(await fetchListing(pool));
     return response;
   },
   build(opt, pool, cfg) {
@@ -71,6 +79,74 @@ export const assetListing: FeatureModule<AssetListings> = {
                   optimalStableToTotalDebtRatio: ${cfg.rateStrategyParams.optimalStableToTotalDebtRatio}
               })
              });`
+            )
+            .join('\n')}
+
+          return listings;
+        }`,
+        ],
+      },
+    };
+    return response;
+  },
+};
+
+export const assetListingCustom: FeatureModule<ListingWithCustomImpl[]> = {
+  value: 'newListingsCustom (listing a new asset, with custom imeplementations)',
+  async cli(opt, pool) {
+    const response: ListingWithCustomImpl[] = [];
+    response.push({base: await fetchListing(pool), implementations: await fetchCustomImpl()});
+    return response;
+  },
+  build(opt, pool, cfg) {
+    const response: CodeArtifact = {
+      code: {
+        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
+        fn: [
+          `function newListingsCustom() public pure override returns (IEngine.ListingWithCustomImpl[] memory) {
+          IEngine.ListingWithCustomImpl[] memory listings = new IEngine.ListingWithCustomImpl[](${
+            cfg.length
+          });
+
+          ${cfg
+            .map(
+              (cfg, ix) => `listings[${ix}] = IEngine.ListingWithCustomImpl(
+                IEngine.Listing({
+               asset: ${cfg.base.asset},
+               assetSymbol: ${cfg.base.assetSymbol},
+               priceFeed: ${cfg.base.priceFeed},
+               eModeCategory: ${cfg.base.eModeCategory},
+               enabledToBorrow: ${cfg.base.enabledToBorrow},
+               stableRateModeEnabled: ${cfg.base.stableRateModeEnabled},
+               borrowableInIsolation: ${cfg.base.borrowableInIsolation},
+               withSiloedBorrowing: ${cfg.base.withSiloedBorrowing},
+               flashloanable: ${cfg.base.flashloanable},
+               ltv: ${cfg.base.ltv}
+               liqThreshold: ${cfg.base.liqThreshold},
+               liqBonus: ${cfg.base.liqBonus},
+               reserveFactor: ${cfg.base.reserveFactor},
+               supplyCap: ${cfg.base.supplyCap},
+               borrowCap: ${cfg.base.borrowCap},
+               debtCeiling: ${cfg.base.debtCeiling},
+               liqProtocolFee: ${cfg.base.liqProtocolFee},
+               rateStrategyParams: Rates.RateStrategyParams({
+                  optimalUsageRatio: ${cfg.base.rateStrategyParams.optimalUtilizationRate},
+                  baseVariableBorrowRate: ${cfg.base.rateStrategyParams.baseVariableBorrowRate},
+                  variableRateSlope1: ${cfg.base.rateStrategyParams.variableRateSlope1},
+                  variableRateSlope2: ${cfg.base.rateStrategyParams.variableRateSlope2},
+                  stableRateSlope1: ${cfg.base.rateStrategyParams.stableRateSlope1},
+                  stableRateSlope2: ${cfg.base.rateStrategyParams.stableRateSlope2},
+                  baseStableRateOffset: ${cfg.base.rateStrategyParams.baseStableRateOffset},
+                  stableRateExcessOffset: ${cfg.base.rateStrategyParams.stableRateExcessOffset},
+                  optimalStableToTotalDebtRatio: ${cfg.base.rateStrategyParams.optimalStableToTotalDebtRatio}
+              })
+             }),
+             IEngine.TokenImplementations({
+              aToken: ${cfg.implementations.aToken},
+              vToken: ${cfg.implementations.vToken},
+              sToken: ${cfg.implementations.sToken}
+            })
+             );`
             )
             .join('\n')}
 

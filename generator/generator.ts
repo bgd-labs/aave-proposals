@@ -25,7 +25,7 @@ import {borrowsUpdates} from './features/borrowsUpdates';
 import {eModeUpdates} from './features/eModesUpdates';
 import {eModeAssets} from './features/eModesAssets';
 import {priceFeedsUpdates} from './features/priceFeedsUpdates';
-import {assetListing} from './features/assetListing';
+import {assetListing, assetListingCustom} from './features/assetListing';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
 const prettierMDCfg = await prettier.resolveConfig('foo.md');
@@ -116,18 +116,7 @@ const FEATURE_MODULES_V3 = [
   eModeUpdates,
   eModeAssets,
   assetListing,
-  {
-    value: 'Something different supported by config engine(but not the generator, yet)',
-    cli: async (opt, pool) => {
-      return {};
-    },
-    build: (opt, pool, cfg) => {
-      const response: CodeArtifact = {
-        code: {dependencies: [DEPENDENCIES.Engine]},
-      };
-      return response;
-    },
-  },
+  assetListingCustom,
   PLACEHOLDER_MODULE,
 ];
 
