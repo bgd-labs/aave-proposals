@@ -44,7 +44,7 @@ export const capsUpdates: FeatureModule<CapsUpdates> = {
           ${cfg
             .map(
               (cfg, ix) => `capsUpdate[${ix}] = IEngine.CapsUpdate({
-               asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+               asset: ${cfg.asset},
                supplyCap: ${cfg.supplyCap},
                borrowCap: ${cfg.borrowCap}
              });`

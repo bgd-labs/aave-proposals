@@ -38,7 +38,7 @@ export const priceFeedsUpdates: FeatureModule<PriceFeedUpdate[]> = {
           ${cfg
             .map(
               (cfg, ix) => `priceFeedsUpdates[${ix}] = IEngine.PriceFeedUpdate({
-               asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+               asset: ${cfg.asset},
                priceFeed: ${cfg.priceFeed}
              });`
             )

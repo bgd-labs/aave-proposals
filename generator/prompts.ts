@@ -50,6 +50,10 @@ function translateEModeToEModeLib(value: string, pool: PoolIdentifier) {
   return `${pool}EModes.${value}`;
 }
 
+function translateAssetToAssetLibUnderlying(value: string, pool: PoolIdentifier) {
+  return `${pool}Assets.${value}_UNDERLYING`;
+}
+
 // PROMPTS
 interface GenericPrompt {
   message: string;
@@ -118,11 +122,12 @@ interface AssetsSelectPrompt extends Omit<GenericPrompt, 'disableKeepCurrent'> {
  * @param param0
  * @returns
  */
-export function assetsSelect({pool, message}: AssetsSelectPrompt) {
-  return checkbox({
+export async function assetsSelect({pool, message}: AssetsSelectPrompt) {
+  const values = await checkbox({
     message,
     choices: getAssets(pool).map((asset) => ({name: asset, value: asset})),
   });
+  return values.map((v) => translateAssetToAssetLibUnderlying(v, pool));
 }
 
 interface EModeSelectPrompt extends GenericPrompt {

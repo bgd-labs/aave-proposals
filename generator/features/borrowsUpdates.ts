@@ -1,13 +1,10 @@
 import {CodeArtifact, DEPENDENCIES, FeatureModule} from '../types';
-import {
-  BooleanSelectValues,
-  PercentInputValues,
-  assetsSelect,
-  booleanSelect,
-  percentInput,
-} from '../prompts';
+import {assetsSelect, booleanSelect, percentInput} from '../prompts';
+import {BorrowUpdate, BorrowUpdatePartial} from './types';
 
-export async function fetchBorrowUpdate(disableKeepCurrent?: boolean): Promise<BorrowUpdate> {
+export async function fetchBorrowUpdate(
+  disableKeepCurrent?: boolean
+): Promise<BorrowUpdatePartial> {
   return {
     enabledToBorrow: await booleanSelect({
       message: 'enabled to borrow',
@@ -36,16 +33,7 @@ export async function fetchBorrowUpdate(disableKeepCurrent?: boolean): Promise<B
   };
 }
 
-type BorrowUpdate = {
-  enabledToBorrow: BooleanSelectValues;
-  flashloanable: BooleanSelectValues;
-  stableRateModeEnabled: BooleanSelectValues;
-  borrowableInIsolation: BooleanSelectValues;
-  withSiloedBorrowing: BooleanSelectValues;
-  reserveFactor: PercentInputValues;
-};
-
-type BorrowUpdates = (BorrowUpdate & {asset: string})[];
+type BorrowUpdates = BorrowUpdate[];
 
 export const borrowsUpdates: FeatureModule<BorrowUpdates> = {
   value:
@@ -58,7 +46,7 @@ export const borrowsUpdates: FeatureModule<BorrowUpdates> = {
     const response: BorrowUpdates = [];
     for (const asset of assets) {
       console.log(`Fetching information for BorrowUpdates on ${pool} ${asset}`);
-      response.push({...(await getBorrowUpdateParams()), asset});
+      response.push({...(await fetchBorrowUpdate()), asset});
     }
     return response;
   },
@@ -73,7 +61,7 @@ export const borrowsUpdates: FeatureModule<BorrowUpdates> = {
           ${cfg
             .map(
               (cfg, ix) => `borrowUpdates[${ix}] = IEngine.BorrowUpdate({
-               asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+               asset: ${cfg.asset},
                enabledToBorrow: ${cfg.enabledToBorrow},
                flashloanable: ${cfg.flashloanable},
                stableRateModeEnabled: ${cfg.stableRateModeEnabled},

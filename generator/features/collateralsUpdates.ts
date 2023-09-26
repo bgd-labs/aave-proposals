@@ -67,7 +67,7 @@ export const collateralsUpdates: FeatureModule<CollateralUpdates> = {
           ${cfg
             .map(
               (cfg, ix) => `collateralUpdate[${ix}] = IEngine.CollateralUpdate({
-               asset: ${pool}Assets.${cfg.asset}_UNDERLYING,
+               asset: ${cfg.asset},
                ltv: ${cfg.ltv},
                liqThreshold: ${cfg.liqThreshold},
                liqBonus: ${cfg.liqBonus},
