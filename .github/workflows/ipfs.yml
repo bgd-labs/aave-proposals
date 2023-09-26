@@ -2,10 +2,6 @@ name: Ipfs uploader
 # Uploads all changed md files to ipfs once merged to main
 # Comments the pr
 
-concurrency:
-  group: ${{ github.workflow }}
-# cancel-in-progress: true
-
 on:
   pull_request:
   push:
