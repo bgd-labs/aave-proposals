@@ -30,7 +30,7 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
             vm,
             address(proposal)
           );
-          bool isFlashBorrower =${pool}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
+          bool isFlashBorrower = ${pool}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
           assertEq(isFlashBorrower, true);
         }`,
         ],

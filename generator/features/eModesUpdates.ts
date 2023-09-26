@@ -3,7 +3,7 @@ import {NumberInputValues, addressInput, eModesSelect, percentInput, stringInput
 import {Hex} from 'viem';
 
 async function subCli(pool: PoolIdentifier) {
-  console.log(`Fetching information for PriceFeeds on ${pool}`);
+  console.log(`Fetching information for EModes on ${pool}`);
   const eModeCategories = await eModesSelect({
     message: 'Select the eModes you want to amend',
     pool,
@@ -43,7 +43,7 @@ type EmodeUpdate = {
 type EmodeUpdates = EmodeUpdate[];
 
 export const eModeUpdates: FeatureModule<EmodeUpdates> = {
-  value: 'eModeCategoriesUpdates (altering eModes)',
+  value: 'eModeCategoriesUpdates (altering/adding eModes)',
   async cli(opt, pool) {
     const response: EmodeUpdates = await subCli(pool);
     return response;

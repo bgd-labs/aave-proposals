@@ -23,6 +23,8 @@ import {generateAIP} from './templates/aip.template';
 import {collateralsUpdates} from './features/collateralsUpdates';
 import {borrowsUpdates} from './features/borrowsUpdates';
 import {eModeUpdates} from './features/eModesUpdates';
+import {eModeAssets} from './features/eModesAssets';
+
 import {priceFeedsUpdates} from './features/priceFeedsUpdates';
 
 const prettierSolCfg = await prettier.resolveConfig('foo.sol');
@@ -112,6 +114,7 @@ const FEATURE_MODULES_V3 = [
   flashBorrower,
   priceFeedsUpdates,
   eModeUpdates,
+  eModeAssets,
   {
     value: 'Something different supported by config engine(but not the generator, yet)',
     cli: async (opt, pool) => {
