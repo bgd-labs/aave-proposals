@@ -25,41 +25,10 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
       TUSD_LIQUIDATION_BONUS
     );
 
-    uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-    uint256 availableBUSD = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(
-      AaveV2EthereumAssets.BUSD_A_TOKEN
-    );
-    AaveV2Ethereum.COLLECTOR.transfer(
-      AaveV2EthereumAssets.BUSD_A_TOKEN,
-      address(this),
-      aBUSDBalance > availableBUSD ? availableBUSD : aBUSDBalance
-    );
-    AaveV2Ethereum.POOL.withdraw(
-      AaveV2EthereumAssets.BUSD_UNDERLYING,
-      type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
-    );
+    collectorATokenToUnderlying(AaveV2EthereumAssets.BUSD_UNDERLYING, AaveV2EthereumAssets.BUSD_A_TOKEN);
+    collectorATokenToUnderlying(AaveV2EthereumAssets.TUSD_UNDERLYING, AaveV2EthereumAssets.TUSD_A_TOKEN);
 
-    uint256 aTUSDBalance = IERC20(AaveV2EthereumAssets.TUSD_A_TOKEN).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-    uint256 availableTUSD = IERC20(AaveV2EthereumAssets.TUSD_UNDERLYING).balanceOf(
-      AaveV2EthereumAssets.TUSD_A_TOKEN
-    );
-    AaveV2Ethereum.COLLECTOR.transfer(
-      AaveV2EthereumAssets.TUSD_A_TOKEN,
-      address(this),
-      aTUSDBalance > availableTUSD ? availableTUSD : aTUSDBalance
-    );
-    AaveV2Ethereum.POOL.withdraw(
-      AaveV2EthereumAssets.TUSD_UNDERLYING,
-      type(uint256).max,
-      address(AaveV2Ethereum.COLLECTOR)
-    );
-
-  ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
+    ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
       AaveV2EthereumAssets.TUSD_UNDERLYING,
       99_90
     );
@@ -87,4 +56,31 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
 
     return rateStrategy;
   }
+
+  function collectorATokenToUnderlying(address underlying, address aToken) internal {
+    uint256 aBalance = IERC20(aToken).balanceOf(
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+
+    uint256 availableUnderlying = IERC20(underlying).balanceOf(
+      aToken
+    );
+
+    uint256 amount = aBalance > availableUnderlying ? availableUnderlying : aBalance;
+
+    AaveV2Ethereum.COLLECTOR.transfer(
+      aToken,
+      address(this),
+      amount
+    );
+
+    AaveV2Ethereum.POOL.withdraw(
+      underlying,
+      amount,
+      address(AaveV2Ethereum.COLLECTOR)
+    );
+  }
+
 }
+
+
