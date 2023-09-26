@@ -33,7 +33,6 @@ contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
 
     IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(this), USDC_AMOUNT);
 
-
     // withdraw aUSDC and convert it to USDC
 
     AaveV2Ethereum.POOL.withdraw(
@@ -47,18 +46,18 @@ contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
     IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).safeTransferFrom(
       address(this),
       CENTRIFUGE,
-      USDC_AMOUNT);
+      USDC_AMOUNT
+    );
 
     // send back USDC dust to COLLECTOR
 
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(this), IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(this)));
-
+    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(this), USDC_AMOUNT);
 
     IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).safeTransferFrom(
       address(this),
       address(AaveV2Ethereum.COLLECTOR),
       IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(this))
-      );
+    );
 
     // create AAVE stream for CENTRIFUGE
     AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.createStream(
