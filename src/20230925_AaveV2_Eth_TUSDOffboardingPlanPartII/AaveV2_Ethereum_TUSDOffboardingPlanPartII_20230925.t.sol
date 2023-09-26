@@ -88,47 +88,7 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925_Test is ProtocolV2Te
     ReserveConfig memory configBUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, BUSD_SYMBOL);
     ReserveConfig memory configTUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, TUSD_SYMBOL);
 
-    // _withdraw(
-    //   configBUSDAfter,
-    //   AaveV2Ethereum.POOL,
-    //   0xc579a79376148c4B17821C5Eb9434965f3a15C80,
-    //   1 ether
-    // ); // aBUSD whale
-
-    // Commenting out the failing functions
-
-    // _repay(
-    //   configBUSDAfter,
-    //   AaveV2Ethereum.POOL,
-    //   0xc3B6BE246524F5dcA0f335109E5F4F6544c3E789,
-    //   1 ether,
-    //   false
-    // ); // aBUSD whale
-
-    // _withdraw(
-    //   configTUSDAfter,
-    //   AaveV2Ethereum.POOL,
-    //   0x9FCc67D7DB763787BB1c7f3bC7f34d3C548c19Fe,
-    //   1 ether
-    // ); // aTUSD whale
-
-    // _repay(
-    //   configTUSDAfter,
-    //   AaveV2Ethereum.POOL,
-    //   0xbFB3C2cF90B17cabF40E73384e1fEa5D64d83644,
-    //   1 ether,
-    //   false
-    // ); // VTUSD whale variable debt
-
-    // _repay(
-    //   configTUSDAfter,
-    //   AaveV2Ethereum.POOL,
-    //   0xbab2051A457AD7338D8CfE142089E4062DE48Bd0,
-    //   1 ether,
-    //   true
-    // ); // sTUSD whale stable debt
-
-    // e2eTest(AaveV2Ethereum.POOL);
+    e2eTest(AaveV2Ethereum.POOL);
 
     address[] memory assetsChanged = new address[](2);
     assetsChanged[0] = AaveV2EthereumAssets.BUSD_UNDERLYING;
