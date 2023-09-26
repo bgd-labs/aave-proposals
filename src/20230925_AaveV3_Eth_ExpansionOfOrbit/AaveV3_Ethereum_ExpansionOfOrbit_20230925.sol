@@ -20,13 +20,13 @@ contract AaveV3_Ethereum_ExpansionOfOrbit_20230925 {
   address public constant GHO = AaveV3EthereumAssets.GHO_UNDERLYING;
   uint256 public constant STREAM_AMOUNT = 15000e18;
   uint256 public constant STREAM_DURATION = 90 days;
-  uint256 public constant ACTUAL_STREAM_AMOUNT_A_USDT =
+  uint256 public constant ACTUAL_STREAM_AMOUNT_GHO =
     (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
   function execute() external {
     AaveV2Ethereum.COLLECTOR.createStream(
       STABLE_LABS,
-      ACTUAL_STREAM_AMOUNT_A_USDT,
+      ACTUAL_STREAM_AMOUNT_GHO,
       GHO,
       block.timestamp,
       block.timestamp + STREAM_DURATION
@@ -34,7 +34,7 @@ contract AaveV3_Ethereum_ExpansionOfOrbit_20230925 {
 
     AaveV2Ethereum.COLLECTOR.createStream(
       KEYROCK,
-      ACTUAL_STREAM_AMOUNT_A_USDT,
+      ACTUAL_STREAM_AMOUNT_GHO,
       GHO,
       block.timestamp,
       block.timestamp + STREAM_DURATION
@@ -42,7 +42,7 @@ contract AaveV3_Ethereum_ExpansionOfOrbit_20230925 {
 
     AaveV2Ethereum.COLLECTOR.createStream(
       LBS_BLOCKCHAIN,
-      ACTUAL_STREAM_AMOUNT_A_USDT,
+      ACTUAL_STREAM_AMOUNT_GHO,
       GHO,
       block.timestamp,
       block.timestamp + STREAM_DURATION
@@ -50,7 +50,7 @@ contract AaveV3_Ethereum_ExpansionOfOrbit_20230925 {
 
     AaveV2Ethereum.COLLECTOR.createStream(
       HKUST,
-      ACTUAL_STREAM_AMOUNT_A_USDT,
+      ACTUAL_STREAM_AMOUNT_GHO,
       GHO,
       block.timestamp,
       block.timestamp + STREAM_DURATION
@@ -58,7 +58,7 @@ contract AaveV3_Ethereum_ExpansionOfOrbit_20230925 {
 
     AaveV2Ethereum.COLLECTOR.createStream(
       MICHIGAN,
-      ACTUAL_STREAM_AMOUNT_A_USDT,
+      ACTUAL_STREAM_AMOUNT_GHO,
       GHO,
       block.timestamp,
       block.timestamp + STREAM_DURATION
