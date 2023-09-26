@@ -12,7 +12,7 @@ import {AgdAllowanceModification_20230817} from './AgdAllowanceModification_2023
 
 contract AgdAllowanceModification_20230817_Test is ProtocolV2TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18166945);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18219922);
   }
 
   function testpayload() public {
@@ -33,7 +33,7 @@ contract AgdAllowanceModification_20230817_Test is ProtocolV2TestBase {
     uint256 aDaiAllowanceBefore = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN)
       .allowance(address(AaveV2Ethereum.COLLECTOR), AGD_MULTISIG);
 
-    AgdAllowanceModification_20230817 payload = new AgdAllowanceModification_20230817();
+    AgdAllowanceModification_20230817 payload = AgdAllowanceModification_20230817(0x7fBA17dA9A96Fb77a86229C975C91dEd11dAFa60);
 
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.SHORT_EXECUTOR);
 

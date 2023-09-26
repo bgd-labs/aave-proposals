@@ -40,7 +40,7 @@ A list of relevant links like for this proposal:
 * [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x53728c0416a9063bf833f90c3b3169fa4387e66549d5eb2b7ed2747bfe7c23fc)
 * [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.t.sol)
 * [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.sol)
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://etherscan.io/address/0x7fba17da9a96fb77a86229c975c91ded11dafa60)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

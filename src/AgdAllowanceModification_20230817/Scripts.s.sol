@@ -22,7 +22,7 @@ contract ProposePayload is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
     payloads[0] = GovHelpers.buildMainnet(
-      address(0) // TODO
+      0x7fBA17dA9A96Fb77a86229C975C91dEd11dAFa60
     );
     GovHelpers.createProposal(
       payloads,
