@@ -38,11 +38,11 @@ A list of relevant links like for this proposal:
 
 - [Governance Forum Discussion](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937/5)
 
-- [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.t.sol)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/da71e84ff0ed0cad7d8c05520c7c76b77e9ddaf1/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.t.sol)
 
-- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/da71e84ff0ed0cad7d8c05520c7c76b77e9ddaf1/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.sol)
 
-- [Pre-Post Payload Protocol Diff](https://github.com/bgd-labs/aave-proposals/tree/main/diffs/preTestPolygonReserveFactorUpdate20230920_postTestPolygonReserveFactorUpdate20230920.md)
+- [Pre-Post Payload Protocol Diff](https://github.com/bgd-labs/aave-proposals/blob/da71e84ff0ed0cad7d8c05520c7c76b77e9ddaf1/diffs/preTestPolygonReserveFactorUpdate20230920_postTestPolygonReserveFactorUpdate20230920.md)
 
 - [Deployed Contracts](https://polygonscan.com/address/0x2120570b9add275864830b173bdaf50b0f4e748a)
 

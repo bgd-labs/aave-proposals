@@ -38,8 +38,8 @@ A list of relevant links like for this proposal:
 
 - [Governance Forum Discussion](https://governance.aave.com/t/arfc-treasury-management-replace-agd-s-dai-allowance-with-gho-allowance/14631)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x53728c0416a9063bf833f90c3b3169fa4387e66549d5eb2b7ed2747bfe7c23fc)
-- [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.t.sol)
-- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.sol)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/blob/da71e84ff0ed0cad7d8c05520c7c76b77e9ddaf1/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.t.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/blob/da71e84ff0ed0cad7d8c05520c7c76b77e9ddaf1/src/AgdAllowanceModification_20230817/AgdAllowanceModification_20230817.sol)
 - [Deployed Contracts](https://etherscan.io/address/0x7fba17da9a96fb77a86229c975c91ded11dafa60)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
