@@ -13,7 +13,18 @@ import {IV2RateStrategyFactory} from 'lib/aave-helpers/src/v2-config-engine/IV2R
  * - Discussion: https://governance.aave.com/t/arfc-tusd-offboarding-plan-part-ii/14863
  */
 contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthereum {
+  uint256 public constant TUSD_LTV = 0;
+  uint256 public constant TUSD_LIQUIDATION_THRESHOLD = 65_00;
+  uint256 public constant TUSD_LIQUIDATION_BONUS = 11000;
+
   function _preExecute() internal override {
+    AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
+      AaveV2EthereumAssets.TUSD_UNDERLYING,
+      TUSD_LTV,
+      TUSD_LIQUIDATION_THRESHOLD,
+      TUSD_LIQUIDATION_BONUS
+    );
+
     uint256 aBUSDBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
