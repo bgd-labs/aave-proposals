@@ -5,15 +5,7 @@ import {generateContractName, generateFolderName, isV2Pool, pascalCase} from './
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
 import {input, checkbox, confirm} from '@inquirer/prompts';
-import {
-  CodeArtifact,
-  DEPENDENCIES,
-  FeatureModule,
-  Options,
-  POOLS,
-  PoolConfigs,
-  PoolIdentifier,
-} from './types';
+import {CodeArtifact, FeatureModule, Options, POOLS, PoolConfigs, PoolIdentifier} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capsUpdates} from './features/capsUpdates';
 import {rateUpdates} from './features/rateUpdates';
@@ -100,7 +92,7 @@ const PLACEHOLDER_MODULE = {
   },
   build: (opt, pool, cfg) => {
     const response: CodeArtifact = {
-      code: {dependencies: [DEPENDENCIES.Execute]},
+      code: {execute: ['// custom code goes here']},
     };
     return response;
   },
