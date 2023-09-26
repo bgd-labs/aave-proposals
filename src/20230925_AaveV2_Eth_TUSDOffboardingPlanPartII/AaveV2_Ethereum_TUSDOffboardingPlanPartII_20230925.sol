@@ -42,11 +42,6 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
       address(AaveV2Ethereum.COLLECTOR)
     );
 
-    ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
-      AaveV2EthereumAssets.TUSD_UNDERLYING,
-      99_90
-    );
-
     uint256 aTUSDBalance = IERC20(AaveV2EthereumAssets.TUSD_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
@@ -62,6 +57,11 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
       AaveV2EthereumAssets.TUSD_UNDERLYING,
       type(uint256).max,
       address(AaveV2Ethereum.COLLECTOR)
+    );
+
+  ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
+      AaveV2EthereumAssets.TUSD_UNDERLYING,
+      99_90
     );
   }
 
