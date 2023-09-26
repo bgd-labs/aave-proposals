@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule} from '../types';
+import {CodeArtifact, FeatureModule} from '../types';
 import {assetsSelect, booleanSelect, percentInput} from '../prompts';
 import {BorrowUpdate, BorrowUpdatePartial} from './types';
 
@@ -53,7 +53,6 @@ export const borrowsUpdates: FeatureModule<BorrowUpdates> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         fn: [
           `function borrowsUpdates() public pure override returns (IEngine.BorrowUpdate[] memory) {
           IEngine.BorrowUpdate[] memory borrowUpdates = new IEngine.BorrowUpdate[](${cfg.length});

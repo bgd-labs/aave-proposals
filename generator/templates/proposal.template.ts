@@ -1,23 +1,47 @@
-import {generateContractName, getPoolChain, getVersion} from '../common';
-import {CodeArtifact, DEPENDENCIES, Options, PoolIdentifier} from '../types';
+import {generateContractName, getPoolChain, getVersion, pragma} from '../common';
+import {CodeArtifact, Options, PoolIdentifier} from '../types';
 
-function buildImport(options: Options, pool: PoolIdentifier, dependencies: DEPENDENCIES[]) {
+enum EngineImports {
+  IEngine = 'IEngine',
+  EngineFlags = 'EngineFlags',
+  Rates = 'Rates',
+}
+
+enum LibraryImports {
+  Assets = 'Assets',
+  EModes = 'EModes',
+}
+
+function getEngineDependencies(content: string) {
+  return Object.keys(EngineImports).filter((engineFlag) =>
+    RegExp(engineFlag + '\\.', 'g').test(content)
+  );
+}
+
+function getPoolDependencies(pool: string, content: string) {
+  return [pool, ...Object.keys(LibraryImports).map((flag) => `${pool}${flag}`)].filter((library) =>
+    RegExp(library + '\\.', 'g').test(content)
+  );
+}
+
+function getImports(
+  pool: PoolIdentifier,
+  engineDependencies: string[],
+  poolDependencies: string[]
+) {
   let template = '';
   const chain = getPoolChain(pool);
   const version = getVersion(pool);
-  if (dependencies.includes(DEPENDENCIES.Engine)) {
-    template += `import {Aave${version}Payload${chain}, IEngine, Rates, EngineFlags} from 'aave-helpers/${version.toLowerCase()}-config-engine/Aave${version}Payload${chain}.sol';`;
+  if (engineDependencies.length > 0) {
+    template += `import {Aave${version}Payload${chain}, ${engineDependencies.join(
+      ', '
+    )}} from 'aave-helpers/${version.toLowerCase()}-config-engine/Aave${version}Payload${chain}.sol';`;
   } else {
     template += `import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';\n`;
   }
-  if (dependencies.includes(DEPENDENCIES.Addresses) && dependencies.includes(DEPENDENCIES.Assets)) {
-    template += `import {${pool}, ${pool}Assets} from 'aave-address-book/${pool}.sol';\n`;
-  } else if (dependencies.includes(DEPENDENCIES.Addresses)) {
-    template += `import {${pool}} from 'aave-address-book/${pool}.sol';\n`;
-  } else if (dependencies.includes(DEPENDENCIES.Assets)) {
-    template += `import {${pool}Assets} from 'aave-address-book/${pool}.sol';\n`;
+  if (poolDependencies.length > 0) {
+    template += `import {${poolDependencies.join(', ')}} from 'aave-address-book/${pool}.sol';\n`;
   }
-
   return template;
 }
 
@@ -28,17 +52,9 @@ export const proposalTemplate = (
 ) => {
   const {title, author, snapshot, discussion} = options;
   const chain = getPoolChain(pool);
+  const version = getVersion(pool);
   const contractName = generateContractName(options, pool);
 
-  const dependencies = [
-    ...new Set(
-      artifacts
-        .map((a) => a.code?.dependencies)
-        .flat()
-        .filter((f) => f !== undefined)
-    ),
-  ];
-  const imports = buildImport(options, pool, dependencies as DEPENDENCIES[]);
   const constants = artifacts
     .map((artifact) => artifact.code?.constants)
     .flat()
@@ -49,47 +65,44 @@ export const proposalTemplate = (
     .flat()
     .filter((f) => f !== undefined)
     .join('\n');
+  const innerExecute = artifacts
+    .map((artifact) => artifact.code?.execute)
+    .flat()
+    .filter((f) => f !== undefined)
+    .join('\n');
+  const engineDependencies = getEngineDependencies(functions + innerExecute);
+  const poolDependencies = getPoolDependencies(pool, functions + innerExecute);
 
-  // need to figure out if execute or pre/post
   let optionalExecute = '';
-  if (dependencies.includes(DEPENDENCIES.Execute)) {
-    const innerExecute = artifacts
-      .map((artifact) => artifact.code?.execute)
-      .flat()
-      .filter((f) => f !== undefined)
-      .join('\n');
-    if (dependencies.includes(DEPENDENCIES.Engine)) {
-      optionalExecute = `function _preExecute() internal override {
+  if (engineDependencies.length > 0) {
+    optionalExecute = `function _preExecute() internal override {
         ${innerExecute}
        }`;
-    } else {
-      optionalExecute = `function execute() external {
+  } else {
+    optionalExecute = `function execute() external {
         ${innerExecute}
        }`;
-    }
   }
 
-  let template = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-${imports}
-
-/**
- * @title ${title || 'TODO'}
- * @author ${author || 'TODO'}
- * - Snapshot: ${snapshot || 'TODO'}
- * - Discussion: ${discussion || 'TODO'}
- */
-contract ${contractName} is ${
-    dependencies.includes(DEPENDENCIES.Engine)
-      ? `Aave${getVersion(pool)}Payload${chain}`
-      : 'IProposalGenericExecutor'
+  const contract = `/**
+  * @title ${title || 'TODO'}
+  * @author ${author || 'TODO'}
+  * - Snapshot: ${snapshot || 'TODO'}
+  * - Discussion: ${discussion || 'TODO'}
+  */
+ contract ${contractName} is ${
+    engineDependencies.length > 0 ? `Aave${version}Payload${chain}` : 'IProposalGenericExecutor'
   } {
-  ${constants}
+   ${constants}
+ 
+   ${optionalExecute}
+ 
+   ${functions}
+ }`;
 
-  ${optionalExecute}
-
-  ${functions}
-}`;
-  return template;
+  return `${pragma}
+  
+  ${getImports(pool, engineDependencies, poolDependencies)}
+  
+  ${contract}`;
 };

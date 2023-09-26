@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, FeatureModule, PoolIdentifier} from '../types';
 import {addressInput, eModesSelect, percentInput, stringInput} from '../prompts';
 import {EModeCategoryUpdate} from './types';
 
@@ -42,7 +42,6 @@ export const eModeUpdates: FeatureModule<EmodeUpdates> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         fn: [
           `function eModeCategoriesUpdates() public pure override returns (IEngine.EModeCategoryUpdate[] memory) {
           IEngine.EModeCategoryUpdate[] memory eModeUpdates = new IEngine.EModeCategoryUpdate[](${

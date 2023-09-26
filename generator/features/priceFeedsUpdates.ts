@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, FeatureModule, PoolIdentifier} from '../types';
 import {addressInput, assetsSelect} from '../prompts';
 import {PriceFeedUpdate, PriceFeedUpdatePartial} from './types';
 
@@ -28,7 +28,6 @@ export const priceFeedsUpdates: FeatureModule<PriceFeedUpdate[]> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         fn: [
           `function priceFeedsUpdates() public pure override returns (IEngine.PriceFeedUpdate[] memory) {
           IEngine.PriceFeedUpdate[] memory priceFeedsUpdates = new IEngine.PriceFeedUpdate[](${

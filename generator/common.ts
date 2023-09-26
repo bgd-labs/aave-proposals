@@ -1,5 +1,5 @@
 import * as addressBook from '@bgd-labs/aave-address-book';
-import {ENGINE_FLAGS, Options, PoolIdentifier, PoolIdentifierV3, V2_POOLS} from './types';
+import {Options, PoolIdentifier, PoolIdentifierV3, V2_POOLS} from './types';
 
 export const AVAILABLE_CHAINS = [
   'Ethereum',
@@ -21,18 +21,6 @@ export const CHAINS_WITH_GOV_SUPPORT = [
   'Metis',
   'Base',
 ] as const satisfies readonly (typeof AVAILABLE_CHAINS)[number][];
-
-export const SHORT_CHAINS = {
-  Ethereum: 'Eth',
-  Polygon: 'Pol',
-  Optimism: 'Opt',
-  Arbitrum: 'Arb',
-  Fantom: 'Ftm',
-  Avalanche: 'Ava',
-  Metis: 'Met',
-  Harmony: 'Har',
-  Base: 'Bas',
-};
 
 export function getAssets(pool: PoolIdentifier): string[] {
   const assets = addressBook[pool].ASSETS;
@@ -103,43 +91,7 @@ export function pascalCase(str: string) {
     .replace(/ /g, '');
 }
 
-export function numberOrKeepCurrent(value) {
-  if (value != ENGINE_FLAGS.KEEP_CURRENT && isNaN(value)) return 'Must be number or KEEP_CURRENT';
-  return true;
-}
-
-/**
- * Transforms the input for nicer readability: 1000 -> 10.00 %
- * @param value
- * @returns
- */
-export function transformPercent(value: string) {
-  if (value && !isNaN(Number(value))) {
-    return value.replace(/(?=(\d{2}$)+(?!\d))/g, '.') + ' %';
-  }
-  return value;
-}
-
-/**
- * Transforms the % js output for nicer readability in sol: 1000 -> 10_00
- * @param value
- * @returns
- */
-export function jsPercentToSol(value: string, bpsToRay?: boolean) {
-  if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
-  if (bpsToRay) return `_bpsToRay(${value.replace(/(?=(\d{2}$))/g, '_')})`;
-  return value.replace(/(?=(\d{2}$)+(?!\d))/g, '_');
-}
-
-/**
- * Transforms the number js output for nicer readability in sol: 1000000 -> 1_000_000
- * @param value
- * @returns
- */
-export function jsNumberToSol(value: string) {
-  if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
-  return value.replace(/\B(?=(\d{3})+(?!\d))/g, '_');
-}
-
 export const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
+
+export function generateDependencies();

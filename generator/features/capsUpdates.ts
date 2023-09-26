@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, FeatureModule, PoolIdentifier} from '../types';
 import {assetsSelect, numberInput} from '../prompts';
 import {CapsUpdate, CapsUpdatePartial} from './types';
 
@@ -36,7 +36,6 @@ export const capsUpdates: FeatureModule<CapsUpdates> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         fn: [
           `function capsUpdates() public pure override returns (IEngine.CapsUpdate[] memory) {
           IEngine.CapsUpdate[] memory capsUpdate = new IEngine.CapsUpdate[](${cfg.length});

@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, FeatureModule, PoolIdentifier} from '../types';
 import {isV2Pool} from '../common';
 import {assetsSelect, percentInput} from '../prompts';
 import {RateStrategyParams, RateStrategyUpdate} from './types';
@@ -78,7 +78,6 @@ export const rateUpdates: FeatureModule<RateStrategyUpdate[]> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
         fn: [
           `function rateStrategiesUpdates()

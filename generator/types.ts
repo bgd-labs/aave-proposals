@@ -17,16 +17,8 @@ interface PoolConfig {
 
 export type PoolConfigs = Partial<Record<PoolIdentifier, PoolConfig>>;
 
-export enum DEPENDENCIES {
-  Addresses,
-  Assets,
-  Engine,
-  Execute,
-}
-
 export type CodeArtifact = {
   code?: {
-    dependencies?: DEPENDENCIES[];
     constants?: string[];
     fn?: string[];
     execute?: string[];

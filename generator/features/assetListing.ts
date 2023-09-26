@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, FeatureModule, PoolIdentifier} from '../types';
 import {addressInput, stringInput} from '../prompts';
 import {fetchBorrowUpdate} from './borrowsUpdates';
 import {fetchRateStrategyParams} from './rateUpdates';
@@ -42,7 +42,6 @@ export const assetListing: FeatureModule<Listing[]> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         constants: cfg.map(
           (cfg) => `address public constant ${cfg.assetSymbol} = address(${cfg.asset});`
         ),
@@ -104,7 +103,6 @@ export const assetListingCustom: FeatureModule<ListingWithCustomImpl[]> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         constants: cfg.map(
           (cfg) => `address public constant ${cfg.base.assetSymbol} = address(${cfg.base.asset});`
         ),

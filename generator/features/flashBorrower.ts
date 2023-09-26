@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, FeatureModule} from '../types';
+import {CodeArtifact, FeatureModule} from '../types';
 import {addressInput} from '../prompts';
 
 type FlashBorrower = {
@@ -19,7 +19,6 @@ export const flashBorrower: FeatureModule<FlashBorrower> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Addresses, DEPENDENCIES.Execute],
         constants: [`address public constant NEW_FLASH_BORROWER = address(${cfg.address});`],
         execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
       },

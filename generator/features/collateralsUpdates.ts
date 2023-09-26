@@ -1,4 +1,4 @@
-import {CodeArtifact, DEPENDENCIES, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
+import {CodeArtifact, ENGINE_FLAGS, FeatureModule, PoolIdentifier} from '../types';
 import {assetsSelect, eModeSelect, numberInput, percentInput} from '../prompts';
 import {CollateralUpdate, CollateralUpdatePartial} from './types';
 
@@ -57,7 +57,6 @@ export const collateralsUpdates: FeatureModule<CollateralUpdates> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        dependencies: [DEPENDENCIES.Assets, DEPENDENCIES.Engine],
         fn: [
           `function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
             IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](${
