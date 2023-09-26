@@ -5,6 +5,9 @@ import {fetchRateStrategyParams} from './rateUpdates';
 import {fetchCollateralUpdate} from './collateralsUpdates';
 import {fetchCapsUpdate} from './capsUpdates';
 import {Listing, ListingWithCustomImpl, TokenImplementations} from './types';
+import {CHAIN_TO_CHAIN_OBJECT, getPoolChain} from '../common';
+import {PublicClient, getContract} from 'viem';
+import {confirm} from '@inquirer/prompts';
 
 async function fetchListing(pool: PoolIdentifier): Promise<Listing> {
   const asset = await addressInput({
@@ -12,8 +15,35 @@ async function fetchListing(pool: PoolIdentifier): Promise<Listing> {
     disableKeepCurrent: true,
   });
 
+  const chain = getPoolChain(pool);
+  const erc20 = getContract({
+    abi: [
+      {
+        constant: true,
+        inputs: [],
+        name: 'symbol',
+        outputs: [{internalType: 'string', name: '', type: 'string'}],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    publicClient: CHAIN_TO_CHAIN_OBJECT[chain] as PublicClient,
+    address: asset,
+  });
+  let symbol = '';
+  try {
+    symbol = await erc20.read.symbol();
+  } catch (e) {
+    console.log('could not fetch the symbol - this is likely an error');
+  }
+
   return {
-    assetSymbol: await stringInput({message: 'Enter the asset symbol', disableKeepCurrent: true}),
+    assetSymbol: await stringInput({
+      message: 'Enter the asset symbol',
+      disableKeepCurrent: true,
+      defaultValue: symbol,
+    }),
     priceFeed: await addressInput({message: 'PriceFeed address', disableKeepCurrent: true}),
     ...(await fetchCollateralUpdate(pool, true)),
     ...(await fetchBorrowUpdate(true)),
@@ -36,7 +66,11 @@ export const assetListing: FeatureModule<Listing[]> = {
   async cli(opt, pool) {
     const response: Listing[] = [];
     console.log(`Fetching information for Assets assets on ${pool}`);
-    response.push(await fetchListing(pool));
+    let more: boolean = true;
+    while (more) {
+      response.push(await fetchListing(pool));
+      more = await confirm({message: 'Do you want to list another asset?', default: false});
+    }
     return response;
   },
   build(opt, pool, cfg) {
@@ -97,7 +131,11 @@ export const assetListingCustom: FeatureModule<ListingWithCustomImpl[]> = {
   value: 'newListingsCustom (listing a new asset, with custom imeplementations)',
   async cli(opt, pool) {
     const response: ListingWithCustomImpl[] = [];
-    response.push({base: await fetchListing(pool), implementations: await fetchCustomImpl()});
+    let more: boolean = true;
+    while (more) {
+      response.push({base: await fetchListing(pool), implementations: await fetchCustomImpl()});
+      more = await confirm({message: 'Do you want to list another asset?', default: false});
+    }
     return response;
   },
   build(opt, pool, cfg) {

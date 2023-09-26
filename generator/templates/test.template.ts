@@ -1,17 +1,6 @@
 import {createPublicClient, http} from 'viem';
-import {arbitrum, avalanche, mainnet, metis, optimism, polygon, base} from 'viem/chains';
 import {generateContractName, getChainAlias, getPoolChain, isV2Pool} from '../common';
 import {CodeArtifact, Options, PoolIdentifier} from '../types';
-
-const CHAIN_TO_CHAIN_OBJECT = {
-  Ethereum: mainnet,
-  Polygon: polygon,
-  Optimism: optimism,
-  Arbitrum: arbitrum,
-  Avalanche: avalanche,
-  Metis: metis,
-  Base: base,
-};
 
 export const getBlock = async (chain) => {
   return await createPublicClient({

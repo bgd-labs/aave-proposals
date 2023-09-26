@@ -58,6 +58,8 @@ function translateAssetToAssetLibUnderlying(value: string, pool: PoolIdentifier)
 interface GenericPrompt {
   message: string;
   disableKeepCurrent?: boolean;
+  transform?: (value: string) => string;
+  defaultValue?: string;
 }
 
 export type BooleanSelectValues =
@@ -159,9 +161,10 @@ export async function eModesSelect({message, pool}: EModeSelectPrompt) {
   return values.map((mode) => translateEModeToEModeLib(mode, pool));
 }
 
-export async function stringInput({message, disableKeepCurrent}: GenericPrompt) {
+export async function stringInput({message, defaultValue, disableKeepCurrent}: GenericPrompt) {
   return input({
     message,
+    default: defaultValue,
     ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT_STRING}),
   });
 }

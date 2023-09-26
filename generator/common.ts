@@ -1,5 +1,16 @@
 import * as addressBook from '@bgd-labs/aave-address-book';
 import {Options, PoolIdentifier, PoolIdentifierV3, V2_POOLS} from './types';
+import {
+  arbitrum,
+  avalanche,
+  mainnet,
+  metis,
+  optimism,
+  polygon,
+  base,
+  bsc,
+  gnosis,
+} from 'viem/chains';
 
 export const AVAILABLE_CHAINS = [
   'Ethereum',
@@ -11,6 +22,8 @@ export const AVAILABLE_CHAINS = [
   'Harmony',
   'Metis',
   'Base',
+  'Bsc',
+  'Gnosis',
 ] as const;
 
 export const CHAINS_WITH_GOV_SUPPORT = [
@@ -94,4 +107,14 @@ export function pascalCase(str: string) {
 export const pragma = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;\n\n`;
 
-export function generateDependencies();
+export const CHAIN_TO_CHAIN_OBJECT = {
+  Ethereum: mainnet,
+  Polygon: polygon,
+  Optimism: optimism,
+  Arbitrum: arbitrum,
+  Avalanche: avalanche,
+  Metis: metis,
+  Base: base,
+  Bsc: bsc,
+  Gnosis: gnosis,
+};
