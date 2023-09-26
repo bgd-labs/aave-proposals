@@ -10,7 +10,7 @@ import {TokenLogicFunding_20230919} from './TokenLogicFunding_20230919.sol';
 
 contract TokenLogicFunding_20230919_Test is ProtocolV2TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18166945);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18219942);
   }
 
   function testpayload() public {
@@ -22,7 +22,7 @@ contract TokenLogicFunding_20230919_Test is ProtocolV2TestBase {
     uint256 STREAM_DURATION = 180 days;
     uint256 ACTUAL_STREAM_AMOUNT = (AMOUNT / STREAM_DURATION) * STREAM_DURATION;
 
-    TokenLogicFunding_20230919 payload = new TokenLogicFunding_20230919();
+    TokenLogicFunding_20230919 payload = TokenLogicFunding_20230919(0xE5Cac83F10F9eed3fe1575AEe87DE030815F1d83);
     
     uint256 balanceBefore = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(TOKENLOGIC);
 

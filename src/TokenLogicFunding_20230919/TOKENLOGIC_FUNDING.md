@@ -36,7 +36,7 @@ A list of relevant links like for this proposal:
 * [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x272af88d9639fd246943630d7ad053cea73db9d6b5bfeca222d9a8906991168b)
 * [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/TokenLogicFunding_20230919/TokenLogicFunding_20230919.t.sol)
 * [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/TokenLogicFunding_20230919/TokenLogicFunding_20230919.sol)
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://etherscan.io/address/0xe5cac83f10f9eed3fe1575aee87de030815f1d83)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
