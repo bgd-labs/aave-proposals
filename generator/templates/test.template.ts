@@ -1,5 +1,11 @@
 import {createPublicClient, http} from 'viem';
-import {generateContractName, getChainAlias, getPoolChain, isV2Pool} from '../common';
+import {
+  CHAIN_TO_CHAIN_OBJECT,
+  generateContractName,
+  getChainAlias,
+  getPoolChain,
+  isV2Pool,
+} from '../common';
 import {CodeArtifact, Options, PoolIdentifier} from '../types';
 
 export const getBlock = async (chain) => {
