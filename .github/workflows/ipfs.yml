@@ -73,3 +73,5 @@ jobs:
           commit-message: "chore(ipfs): automated branch/hash replacement [skip ci]"
           title: "chore(ipfs): automated branch/hash replacement"
           base: "main"
+          add-paths: |
+            src
