@@ -44,7 +44,7 @@ A list of relevant links like for this proposal:
 
 * [Pre-Post Payload Protocol Diff](https://github.com/bgd-labs/aave-proposals/tree/main/diffs/preTestPolygonReserveFactorUpdate20230920_postTestPolygonReserveFactorUpdate20230920.md)
 
-* [Deployed Contracts](TODO)
+* [Deployed Contracts](https://polygonscan.com/address/0x2120570b9add275864830b173bdaf50b0f4e748a)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 

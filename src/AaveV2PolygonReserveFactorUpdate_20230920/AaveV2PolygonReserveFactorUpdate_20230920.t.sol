@@ -10,7 +10,7 @@ import {AaveV2PolygonReserveFactorUpdate_20230920} from './AaveV2PolygonReserveF
 
 contract AaveV2PolygonReserveFactorUpdate_20230920_Test is ProtocolV2TestBase {
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 47752373);
+    vm.createSelectFork(vm.rpcUrl('polygon'), 48006477);
   }
 
   function testpayload() public {
@@ -19,7 +19,7 @@ contract AaveV2PolygonReserveFactorUpdate_20230920_Test is ProtocolV2TestBase {
       AaveV2Polygon.POOL
     );
 
-    AaveV2PolygonReserveFactorUpdate_20230920 payload = new AaveV2PolygonReserveFactorUpdate_20230920();
+    AaveV2PolygonReserveFactorUpdate_20230920 payload = AaveV2PolygonReserveFactorUpdate_20230920(0x2120570b9ADD275864830B173BdAF50b0f4e748a);
 
     GovHelpers.executePayload(vm, address(payload), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
