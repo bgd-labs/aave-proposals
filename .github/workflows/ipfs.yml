@@ -2,10 +2,6 @@ name: Ipfs uploader
 # Uploads all changed md files to ipfs once merged to main
 # Comments the pr
 
-concurrency:
-  group: ${{ github.workflow }}
-# cancel-in-progress: true
-
 on:
   pull_request:
   push:
@@ -51,6 +47,7 @@ jobs:
           for i in "${json_array[@]}"
           do
             sed -i 's@https://github.com/bgd-labs/aave-proposals/blob/main/@https://github.com/bgd-labs/aave-proposals/blob/${{ github.sha }}/@g' $i
+            sed -i 's@https://github.com/bgd-labs/aave-proposals/tree/main/@https://github.com/bgd-labs/aave-proposals/blob/${{ github.sha }}/@g' $i
           done
 
       - name: Upload

@@ -12,7 +12,7 @@ This AIP is a continuation of [AIP 284](https://app.aave.com/governance/proposal
 
 This AIP will reduce deposit yield for assets on Polygon v2 by increasing the RF. With this upgrade being passed, users will be further encouraged to migrate from Polygon v2 to v3.
 
-Increasing the RF routes a larger portion of the interest paid by users to Aave DAO's Treasury. User's funds are not at risk of liquidation and the borrowing rate remains unchanged. 
+Increasing the RF routes a larger portion of the interest paid by users to Aave DAO's Treasury. User's funds are not at risk of liquidation and the borrowing rate remains unchanged.
 
 Of the assets with an RF set at 99.99%, there is no change. All other asset reserves will have the RF increased by 5%.
 
@@ -22,35 +22,35 @@ The next AIP will be submitted during the first week of October.
 
 The following parameters are to be updated as follows:
 
-|Asset|Reserve Factor|
-|---|---|
-|DAI|36.00%|
-|USDC|38.00%|
-|USDT|37.00%|
-|wBTC|70.00%|
-|wETH|60.00%|
-|MATIC|56.00%|
-|BAL|47.00%|
+| Asset | Reserve Factor |
+| ----- | -------------- |
+| DAI   | 36.00%         |
+| USDC  | 38.00%         |
+| USDT  | 37.00%         |
+| wBTC  | 70.00%         |
+| wETH  | 60.00%         |
+| MATIC | 56.00%         |
+| BAL   | 47.00%         |
 
 # Implementation
 
 A list of relevant links like for this proposal:
 
-* [Governance Forum Discussion](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937/5)
+- [Governance Forum Discussion](https://governance.aave.com/t/arfc-reserve-factor-updates-polygon-aave-v2/13937/5)
 
-* [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.t.sol)
+- [Test Cases](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.t.sol)
 
-* [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.sol)
+- [Payload Implementation](https://github.com/bgd-labs/aave-proposals/tree/main/src/AaveV2PolygonReserveFactorUpdate_20230920/AaveV2PolygonReserveFactorUpdate_20230920.sol)
 
-* [Pre-Post Payload Protocol Diff](https://github.com/bgd-labs/aave-proposals/tree/main/diffs/preTestPolygonReserveFactorUpdate20230920_postTestPolygonReserveFactorUpdate20230920.md)
+- [Pre-Post Payload Protocol Diff](https://github.com/bgd-labs/aave-proposals/tree/main/diffs/preTestPolygonReserveFactorUpdate20230920_postTestPolygonReserveFactorUpdate20230920.md)
 
-* [Deployed Contracts](https://polygonscan.com/address/0x2120570b9add275864830b173bdaf50b0f4e748a)
+- [Deployed Contracts](https://polygonscan.com/address/0x2120570b9add275864830b173bdaf50b0f4e748a)
 
 The proposal Payload was reviewed by [Bored Ghost Developing](https://bgdlabs.com/).
 
 # Disclaimer
 
-The author, TokenLogic, receives no payment from anyone, including Aave DAO, for this proposal. TokenLogic is a delegate within the Aave community. 
+The author, TokenLogic, receives no payment from anyone, including Aave DAO, for this proposal. TokenLogic is a delegate within the Aave community.
 
 # Copyright
 
