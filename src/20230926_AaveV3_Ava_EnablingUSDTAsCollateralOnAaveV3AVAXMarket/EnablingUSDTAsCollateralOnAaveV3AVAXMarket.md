@@ -20,9 +20,9 @@ The following table highlights the proposed change for USDT on the v3 AVAX marke
 | --- | --- | --- | --- |
 | Supply Cap | 200M | 170M | 170M |
 | Borrow Cap | 140M | 90M | 90M |
-| LTV | 75% | 82.25% | 82.25% |
-| LT | 81% | 86.25% | 86.25% |
-| LB | 5% | 4% | 4% |
+| LTV | 75% | 75.0% | 82.25% |
+| LT | 81% | 81.0% | 86.25% |
+| LB | 5% | 5% | 4% |
 | Isolation Mode | Yes | No | No |
 | Debt ceiling | 5M | N/A | N/A |
 

@@ -9,9 +9,6 @@
 | supplyCap | 200,000,000 USDt | 100,000,000 USDt |
 | borrowCap | 140,000,000 USDt | 80,000,000 USDt |
 | debtCeiling | 5,000,000 $ | 0 $ |
-| ltv | 75 % | 82.25 % |
-| liquidationThreshold | 81 % | 86.25 % |
-| liquidationBonus | 5 % | 4 % |
 
 
 ## Raw diff
@@ -27,18 +24,6 @@
       "debtCeiling": {
         "from": 500000000,
         "to": 0
-      },
-      "liquidationBonus": {
-        "from": 10500,
-        "to": 10400
-      },
-      "liquidationThreshold": {
-        "from": 8100,
-        "to": 8625
-      },
-      "ltv": {
-        "from": 7500,
-        "to": 8225
       },
       "supplyCap": {
         "from": 200000000,

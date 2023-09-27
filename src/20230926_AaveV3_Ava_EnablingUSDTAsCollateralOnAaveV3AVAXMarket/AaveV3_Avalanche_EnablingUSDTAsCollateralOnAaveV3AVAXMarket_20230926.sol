@@ -21,9 +21,9 @@ contract AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926 is
 
     collateralUpdate[0] = IEngine.CollateralUpdate({
       asset: AaveV3AvalancheAssets.USDt_UNDERLYING,
-      ltv: 82_25,
-      liqThreshold: 86_25,
-      liqBonus: 4_00,
+      ltv: EngineFlags.KEEP_CURRENT,
+      liqThreshold: EngineFlags.KEEP_CURRENT,
+      liqBonus: EngineFlags.KEEP_CURRENT,
       debtCeiling: 0,
       liqProtocolFee: EngineFlags.KEEP_CURRENT,
       eModeCategory: EngineFlags.KEEP_CURRENT
