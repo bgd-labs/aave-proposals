@@ -29,8 +29,10 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
   function execute() external {
     address milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
     address priceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
-    address ghoOracle = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC;
+    address ghoOracle = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC; 
     AaveSwapper swapper = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
+
+
     // DAI v2
     Asset memory DAIv2 = Asset({
       underlying: AaveV2EthereumAssets.DAI_UNDERLYING,
@@ -55,13 +57,8 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
       amount: 75_800 * 1e18
     });
     
-    // BUSD v1 (v1 aToken addresses are not in the aave-address-book repo)
-    Asset memory BUSDv1 = Asset({
-      underlying: AaveV2EthereumAssets.BUSD_UNDERLYING,
-      aToken: 0x6Ee0f7BB50a54AB5253dA0667B0Dc2ee526C30a8,
-      oracle: 0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A,
-      amount: 381_700 * 1e18
-    });
+    // BUSD
+    uint256 busdAmount = 381_700 * 1e18;
 
     // DAI v3
     Asset memory DAIv3 = Asset({
@@ -102,10 +99,10 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
 
     // BUSD v2 & v1 swap
     AaveV3Ethereum.COLLECTOR.transfer(BUSDv2.aToken, address(this), BUSDv2.amount);
-    AaveV3Ethereum.COLLECTOR.transfer(BUSDv1.underlying, AaveMisc.AAVE_SWAPPER_ETHEREUM, BUSDv1.amount);
+    AaveV3Ethereum.COLLECTOR.transfer(BUSDv2.underlying, AaveMisc.AAVE_SWAPPER_ETHEREUM, busdAmount);
     swapperBalance = 
       AaveV2Ethereum.POOL.withdraw(BUSDv2.underlying, BUSDv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    swapperBalance += BUSDv1.amount;
+    swapperBalance += busdAmount;
 
     swapper.swap(
       milkman,
