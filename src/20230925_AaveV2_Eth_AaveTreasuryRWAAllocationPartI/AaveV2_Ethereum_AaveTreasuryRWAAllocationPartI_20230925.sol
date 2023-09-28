@@ -29,34 +29,12 @@ contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
       USDC_AMOUNT
     );
 
-    // I needed to approve the transfer of USDC to CENTRIFUGE why?
-
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(this), USDC_AMOUNT);
-
     // withdraw aUSDC and convert it to USDC
 
     AaveV2Ethereum.POOL.withdraw(
       AaveV2EthereumAssets.USDC_UNDERLYING,
       type(uint256).max,
-      address(this)
-    );
-
-    // transfer USDC to CENTRIFUGE
-
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).safeTransferFrom(
-      address(this),
-      CENTRIFUGE,
-      USDC_AMOUNT
-    );
-
-    // send back USDC dust to COLLECTOR
-
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).approve(address(this), USDC_AMOUNT);
-
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).safeTransferFrom(
-      address(this),
-      address(AaveV2Ethereum.COLLECTOR),
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(this))
+      CENTRIFUGE
     );
 
     // create AAVE stream for CENTRIFUGE
