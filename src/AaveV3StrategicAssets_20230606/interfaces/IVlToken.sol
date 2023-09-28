@@ -8,26 +8,28 @@ struct LockedBalance {
 }
 
 interface IVlToken {
-  // Locked tokens cannot be withdrawn for lockDuration and are eligible to receive stakingReward rewards
+  /// @notice Locked tokens cannot be withdrawn for lockDuration and are eligible to receive stakingReward rewards
   function lock(address _account, uint256 _amount) external;
 
-  // claim all pending rewards
+  /// @notice claim all pending rewards
   function getReward(address _account) external;
 
-  // Withdraw/relock all currently locked tokens where the unlock time has passed
+  /// @notice Withdraw/relock all currently locked tokens where the unlock time has passed
   function processExpiredLocks(bool _relock) external;
 
-  // @dev Delegate votes from the sender to `newDelegatee`.
+  /// @dev Delegate votes from the sender to `newDelegatee`.
   function delegate(address newDelegatee) external;
 
+  /// @notice Returns delegate for given address
   function delegates(address account) external returns (address);
 
-  // Withdraw without checkpointing or accruing any rewards, providing system is shutdown
+  /// @notice Withdraw without checkpointing or accruing any rewards, providing system is shutdown
   function emergencyWithdraw() external;
 
+  /// @notice Returns the lock duration
   function lockDuration() external returns (uint256);
 
-  // Information on a user's locked balances
+  /// @notice Information on a user's locked balances
   function lockedBalances(
     address _user
   )
@@ -35,7 +37,9 @@ interface IVlToken {
     view
     returns (uint256 total, uint256 unlockable, uint256 locked, LockedBalance[] memory lockData);
 
+  /// @notice Shutdown the protocol
   function shutdown() external;
 
+  /// @notice Checkpoint an Epoch to register balances
   function checkpointEpoch() external;
 }

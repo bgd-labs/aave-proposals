@@ -3,14 +3,17 @@
 pragma solidity 0.8.19;
 
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
+import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 
 import {IDelegateRegistry} from './interfaces/IDelegateRegistry.sol';
 import {IVeToken} from './interfaces/IVeToken.sol';
 import {IWardenBoost} from './interfaces/IWardenBoost.sol';
 import {Common} from './Common.sol';
 
-// @author Llama
+/// @author Llama
 abstract contract VeTokenManager is Common {
+  using SafeERC20 for IERC20;
+
   event BuyBoost(address delegator, address receiver, uint256 amount, uint256 duration);
   event ClaimBoostRewards();
   event DelegateUpdate(address indexed oldDelegate, address indexed newDelegate);
@@ -29,6 +32,7 @@ abstract contract VeTokenManager is Common {
   event UnlockVEBAL(uint256 tokensUnlocked);
 
   error MaxFeeExceeded();
+  error NoTokensToLockOrRelock();
 
   IDelegateRegistry public constant DELEGATE_REGISTRY =
     IDelegateRegistry(0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446);
@@ -62,7 +66,7 @@ abstract contract VeTokenManager is Common {
 
     if (maxFee > maxFeeOffered) revert MaxFeeExceeded();
 
-    IERC20(BAL).approve(WARDEN_VE_BAL, maxFee);
+    IERC20(BAL).forceApprove(WARDEN_VE_BAL, maxFee);
     IWardenBoost(WARDEN_VE_BAL).buyDelegationBoost(
       delegator,
       receiver,
@@ -90,7 +94,7 @@ abstract contract VeTokenManager is Common {
     uint16 maxPerc,
     bool useAdvicePrice
   ) external onlyOwnerOrGuardian {
-    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).approve(
+    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).forceApprove(
       WARDEN_VE_BAL,
       type(uint256).max // Per Boost docs, approve uint256 max
     );
@@ -133,7 +137,7 @@ abstract contract VeTokenManager is Common {
 
   /// @notice Removes existing boost offer
   function removeBoostOffer() external onlyOwnerOrGuardian {
-    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).approve(WARDEN_VE_BAL, 0);
+    IERC20(IWardenBoost(WARDEN_VE_BAL).delegationBoost()).forceApprove(WARDEN_VE_BAL, 0);
     IWardenBoost(WARDEN_VE_BAL).quit();
     emit RemoveBoostOffer();
   }
@@ -145,7 +149,8 @@ abstract contract VeTokenManager is Common {
   }
 
   /// @notice sets the snapshot space ID
-  /// @param _spaceId The string representation of the spaceId
+  /// @param _spaceId bytes32 representation of the spaceId
+  /// @dev The _spaceId is used in the DelegateRegistry contract mapping to store the delegate
   function setSpaceIdVEBAL(bytes32 _spaceId) external onlyOwnerOrGuardian {
     DELEGATE_REGISTRY.clearDelegate(spaceIdBalancer);
     spaceIdBalancer = _spaceId;
@@ -183,11 +188,11 @@ abstract contract VeTokenManager is Common {
 
     if (tokenBalance != 0 && locked == 0) {
       // First lock
-      IERC20(B_80BAL_20WETH).approve(VE_BAL, tokenBalance);
+      IERC20(B_80BAL_20WETH).forceApprove(VE_BAL, tokenBalance);
       IVeToken(VE_BAL).create_lock(tokenBalance, lockHorizon);
     } else if (tokenBalance != 0 && locked != 0) {
       // Increase amount of tokens locked & refresh duration to lockDuration
-      IERC20(B_80BAL_20WETH).approve(VE_BAL, tokenBalance);
+      IERC20(B_80BAL_20WETH).forceApprove(VE_BAL, tokenBalance);
       IVeToken(VE_BAL).increase_amount(tokenBalance);
       if (IVeToken(VE_BAL).locked__end(address(this)) != lockHorizon) {
         IVeToken(VE_BAL).increase_unlock_time(lockHorizon);
@@ -197,7 +202,7 @@ abstract contract VeTokenManager is Common {
       IVeToken(VE_BAL).increase_unlock_time(lockHorizon);
     } else {
       // If tokenBalance == 0 and locked == 0, there is nothing to do.
-      return;
+      revert NoTokensToLockOrRelock();
     }
 
     emit LockVEBAL(tokenBalance + locked, lockHorizon);

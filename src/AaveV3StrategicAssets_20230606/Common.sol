@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 
 import {OwnableWithGuardian} from 'solidity-utils/contracts/access-control/OwnableWithGuardian.sol';
 
-// @author Llama
+/// @author Llama
 abstract contract Common is OwnableWithGuardian {
   /// @notice Provided address is zero address
   error InvalidZeroAddress();

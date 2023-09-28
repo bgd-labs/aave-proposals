@@ -12,7 +12,7 @@ import {LSDLiquidityGaugeManager} from './LSDLiquidityGaugeManager.sol';
 import {VeTokenManager} from './VeTokenManager.sol';
 import {VlTokenManager} from './VlTokenManager.sol';
 
-// @author Llama
+/// @author Llama
 contract StrategicAssetsManager is
   Initializable,
   LSDLiquidityGaugeManager,
@@ -23,7 +23,7 @@ contract StrategicAssetsManager is
 
   event WithdrawalERC20(address indexed _token, uint256 _amount);
 
-  // @notice Initialize function
+  /// @notice Initialize function
   function initialize() external initializer {
     _transferOwnership(AaveGovernanceV2.SHORT_EXECUTOR);
     _updateGuardian(AaveGovernanceV2.SHORT_EXECUTOR);
@@ -32,9 +32,9 @@ contract StrategicAssetsManager is
     lockDurationVEBAL = 365 days;
   }
 
-  // @notice Withdraw a specified amount of ERC20 token to the Aave Collector
-  // @param token The address of the ERC20 token to withdraw
-  // @param amount The amount of token to withdraw
+  /// @notice Withdraw a specified amount of ERC20 token to the Aave Collector
+  /// @param token The address of the ERC20 token to withdraw
+  /// @param amount The amount of token to withdraw
   function withdrawERC20(address token, uint256 amount) external onlyOwner {
     IERC20(token).safeTransfer(address(AaveV3Ethereum.COLLECTOR), amount);
     emit WithdrawalERC20(token, amount);

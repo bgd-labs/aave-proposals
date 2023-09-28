@@ -5,7 +5,7 @@ pragma solidity 0.8.19;
 import {ILiquidityGaugeController} from './interfaces/ILiquidityGaugeController.sol';
 import {Common} from './Common.sol';
 
-// @author Llama
+/// @author Llama
 abstract contract LSDLiquidityGaugeManager is Common {
   event GaugeControllerChanged(address indexed oldController, address indexed newController);
   event GaugeVote(address indexed gauge, uint256 amount);

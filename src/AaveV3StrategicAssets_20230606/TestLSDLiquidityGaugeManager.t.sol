@@ -27,7 +27,7 @@ contract LSDLiquidityGaugeManagerTest is Test {
 
   address public constant B_80BAL_20WETH = 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56;
   address public constant VE_BAL = 0xC128a9954e6c874eA3d62ce62B468bA073093F25;
-  address public constant VE_BAL_GAUGE = 0x27Fd581E9D0b2690C2f808cd40f7fe667714b575; // TODO: Replace with right gauge
+  address public constant VE_BAL_GAUGE = 0xe2b680A8d02fbf48C7D9465398C4225d7b7A7f87;
   address public constant WARDEN_VE_BAL = 0x42227bc7D65511a357c43993883c7cef53B25de9;
   address public constant BALANCER_GAUGE_CONTROLLER = 0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD;
 

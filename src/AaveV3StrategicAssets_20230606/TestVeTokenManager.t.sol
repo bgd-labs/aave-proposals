@@ -467,6 +467,20 @@ contract LockTest is VeTokenManagerTest {
     assertEq(IVeToken(VE_BAL).locked(address(strategicAssets)), 1_000e18);
     assertEq(initialLockEnd + WEEK, newLockEnd);
   }
+
+  function test_revertsIf_nothingToLockOrRelock() public {
+    vm.startPrank(0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f); // Authenticated Address
+    ISmartWalletChecker(SMART_WALLET_CHECKER).allowlistAddress(address(strategicAssets));
+    vm.stopPrank();
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    strategicAssets.setLockDurationVEBAL(LOCK_DURATION_ONE_YEAR);
+
+    vm.startPrank(AaveGovernanceV2.SHORT_EXECUTOR);
+    vm.expectRevert(VeTokenManager.NoTokensToLockOrRelock.selector);
+    strategicAssets.lockVEBAL();
+    vm.stopPrank();
+  }
 }
 
 contract UnlockTest is VeTokenManagerTest {

@@ -34,7 +34,7 @@ Updates the owner of the contract. Inherited from Ownable.
     address receiver,
     uint256 amount,
     uint256 duration
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Purchase boost to incentivize rewards earned by locking (up to 2.5x of earnings). Spend fee token.
@@ -52,7 +52,7 @@ For example, pay 10 BAL to boost rewards in a veBAL pool up to 2.5x times, to ea
     uint16 minPerc,
     uint16 maxPerc,
     bool useAdvicePrice
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Owner of veToken allows others to incentivize their liquidity pools by selling boost. The price can be chosen by the user, or by setting useAdvicePrice, let Warden determine the price.
@@ -67,20 +67,20 @@ The seller of boost receives the native token.
     uint16 minPerc,
     uint16 maxPerc,
     bool useAdvicePrice
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Allows the user to update an existing offer to sell boost.
 
-`function removeBoostOffer(address underlying) external onlyOwnerOrManager`
+`function removeBoostOffer(address underlying) external onlyOwnerOrGuardian`
 
 Removes a boost offer.
 
-` function claimBoostRewards(address underlying) external onlyOwnerOrManager`
+` function claimBoostRewards(address underlying) external onlyOwnerOrGuardian`
 
 Claim rewards earned by selling boost.
 
-`function setSpaceIdVEBAL(address underlying, bytes32 _spaceId) external onlyOwnerOrManager`
+`function setSpaceIdVEBAL(address underlying, bytes32 _spaceId) external onlyOwnerOrGuardian`
 
 Sets the spaceID that's used by protocol on Snapshot for voting. For example, "balancer.eth" is Balancer's spaceId on Snapshot.
 
@@ -88,12 +88,12 @@ Sets the spaceID that's used by protocol on Snapshot for voting. For example, "b
  function setDelegateVEBAL(
     address underlying,
     address newDelegate
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Delegate tokens so they can vote on Snapshot.
 
-`function clearDelegateVEBAL(address underlying) external onlyOwnerOrManager`
+`function clearDelegateVEBAL(address underlying) external onlyOwnerOrGuardian`
 
 Remove the active delegate.
 
@@ -101,12 +101,12 @@ Remove the active delegate.
 function setLockDurationVEBAL(
     address underlying,
     uint256 newLockDuration
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Set the lock duration to specific time. For example, max lock for veBAL is 1 year, so set to 1 year (or less).
 
-`function lockVEBAL(address underlying) external onlyOwnerOrManager`
+`function lockVEBAL(address underlying) external onlyOwnerOrGuardian`
 
 The main function for veBAL.
 Initially, it locks the B-80BAL-20WETH token to receive veBAL. (This contract needs to be allow-listed by Balancer prior to calling or it will fail).
@@ -114,7 +114,7 @@ On subsequent calls (for example, weekly) it extends the lock duration once agai
 If locking duration is 6 months and the maximum duration is 1 year, then the voting weight is only half.
 This function also locks more of the native token held by StrategicAssetsManager available on the contract.
 
-`function unlockVEBAL(address underlying) external onlyOwnerOrManager`
+`function unlockVEBAL(address underlying) external onlyOwnerOrGuardian`
 
 Unlocks the veToken in order to receive the underlying once again. Lock duration needs to have passed or transaction will revert.
 
@@ -146,7 +146,7 @@ Emergency function to exit a position if the AURA system is shut down.
 
 ##### LSDLiquidityGaugeManager.sol
 
-`function setGaugeController(address token, address gaugeController) public onlyOwnerOrManager`
+`function setGaugeController(address token, address gaugeController) public onlyOwnerOrGuardian`
 
 Sets the address that handles gauges for veTokens.
 
@@ -164,7 +164,7 @@ function voteForGaugeWeight(
     address token,
     address gauge,
     uint256 weight
-  ) external onlyOwnerOrManager
+  ) external onlyOwnerOrGuardian
 ```
 
 Utilizing the veToken holdings, the DAO can vote to redirect emissions to the DAO's own gauge.
