@@ -15,10 +15,10 @@ import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
 contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
   using SafeERC20 for IERC20;
 
-  address public constant CENTRIFUGE = 0x9c489E4efba90A67299C1097a8628e233C33BB7B; // Placeholder until address is confirmed, DO NOT MERGE
+  address public constant CENTRIFUGE = 0xC8B2404b84998C3f7a7Cc8459143309465FC97Da;
   uint256 public constant STREAM_AMOUNT = 500e18;
   uint256 public constant STREAM_DURATION = 720 days;
-  uint256 public constant ACTUAL_STREAM_AMOUNT_AAVE =
+  uint256 public constant ACTUAL_STREAM_AMOUNT =
     (STREAM_AMOUNT / STREAM_DURATION) * STREAM_DURATION;
   uint256 public constant USDC_AMOUNT = 50_000e6;
 
@@ -63,7 +63,7 @@ contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
     AaveMisc.AAVE_ECOSYSTEM_RESERVE_CONTROLLER.createStream(
       AaveMisc.ECOSYSTEM_RESERVE,
       CENTRIFUGE,
-      ACTUAL_STREAM_AMOUNT_AAVE,
+      ACTUAL_STREAM_AMOUNT,
       AaveV2EthereumAssets.AAVE_UNDERLYING,
       block.timestamp,
       block.timestamp + STREAM_DURATION
