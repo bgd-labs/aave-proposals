@@ -13,6 +13,7 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
 contract AaveV3_Optimism_OPRiskParametersUpdate_20230924 is AaveV3PayloadOptimism {
   uint256 public constant BORROW_CAP = 500_000;
   address public constant INTEREST_RATE_STRATEGY = 0x3B57B081dA6Af5e2759A57bD3211932Cb6176997;
+  uint256 public constant DEBT_CEILING = 0;
 
   function _preExecute() internal override {
     AaveV3Optimism.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
@@ -29,7 +30,7 @@ contract AaveV3_Optimism_OPRiskParametersUpdate_20230924 is AaveV3PayloadOptimis
       ltv: EngineFlags.KEEP_CURRENT,
       liqThreshold: EngineFlags.KEEP_CURRENT,
       liqBonus: EngineFlags.KEEP_CURRENT,
-      debtCeiling: 0,
+      debtCeiling: DEBT_CEILING,
       liqProtocolFee: EngineFlags.KEEP_CURRENT,
       eModeCategory: EngineFlags.KEEP_CURRENT
     });

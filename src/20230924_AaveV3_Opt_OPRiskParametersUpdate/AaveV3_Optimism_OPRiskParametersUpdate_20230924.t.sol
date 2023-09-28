@@ -16,11 +16,16 @@ contract AaveV3_Optimism_OPRiskParametersUpdate_20230924_Test is ProtocolV3TestB
   AaveV3_Optimism_OPRiskParametersUpdate_20230924 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 109974433);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 110152943);
     proposal = new AaveV3_Optimism_OPRiskParametersUpdate_20230924();
   }
 
   function testProposalExecution() public {
+
+    uint256 BORROW_CAP = proposal.BORROW_CAP();
+    address INTEREST_RATE_STRATEGY = proposal.INTEREST_RATE_STRATEGY();
+    uint256 DEBT_CEILING = proposal.DEBT_CEILING();
+
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Optimism_OPRiskParametersUpdate_20230924',
       AaveV3Optimism.POOL
@@ -39,11 +44,25 @@ contract AaveV3_Optimism_OPRiskParametersUpdate_20230924_Test is ProtocolV3TestB
       AaveV3OptimismAssets.OP_UNDERLYING
     );
 
+    ReserveConfig memory OP_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3OptimismAssets.OP_UNDERLYING
+    );
+
+    OP_UNDERLYING_CONFIG.borrowCap = BORROW_CAP;
+    OP_UNDERLYING_CONFIG.debtCeiling = DEBT_CEILING;
+    OP_UNDERLYING_CONFIG.interestRateStrategy = INTEREST_RATE_STRATEGY;
+
+  _validateReserveConfig(OP_UNDERLYING_CONFIG, allConfigsAfter);
+
+    
     e2eTestAsset(
       AaveV3Optimism.POOL,
       _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WETH_UNDERLYING),
       _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.OP_UNDERLYING)
     );
+
+    e2eTest(AaveV3Optimism.POOL);
 
     diffReports(
       'preAaveV3_Optimism_OPRiskParametersUpdate_20230924',
