@@ -15,6 +15,7 @@ contract AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926 is
 {
   uint256 public constant BORROW_CAP = 80_000_000; // 80M
   uint256 public constant SUPPLY_CAP = 100_000_000; // 100M
+  uint256 public constant DEBT_CEILING = 0;
 
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](1);
@@ -24,7 +25,7 @@ contract AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926 is
       ltv: EngineFlags.KEEP_CURRENT,
       liqThreshold: EngineFlags.KEEP_CURRENT,
       liqBonus: EngineFlags.KEEP_CURRENT,
-      debtCeiling: 0,
+      debtCeiling: DEBT_CEILING,
       liqProtocolFee: EngineFlags.KEEP_CURRENT,
       eModeCategory: EngineFlags.KEEP_CURRENT
     });

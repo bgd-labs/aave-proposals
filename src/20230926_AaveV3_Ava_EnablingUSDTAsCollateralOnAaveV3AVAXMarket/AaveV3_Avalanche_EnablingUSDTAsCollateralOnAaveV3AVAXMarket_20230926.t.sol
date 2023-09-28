@@ -23,10 +23,13 @@ contract AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926_Te
   }
 
   function testProposalExecution() public {
-   
-   // Create pre-execution snapshot
+    uint256 BORROW_CAP = proposal.BORROW_CAP();
+    uint256 SUPPLY_CAP = proposal.SUPPLY_CAP();
+    uint256 DEBT_CEILING = proposal.DEBT_CEILING();
 
-    createConfigurationSnapshot(
+    // Create pre-execution snapshot
+
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926',
       AaveV3Avalanche.POOL
     );
@@ -39,10 +42,27 @@ contract AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926_Te
 
     // Create post-execution snapshot
 
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'postAaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926',
       AaveV3Avalanche.POOL
     );
+
+    _noReservesConfigsChangesApartFrom(
+      allConfigsBefore,
+      allConfigsAfter,
+      AaveV3AvalancheAssets.USDt_UNDERLYING
+    );
+
+    ReserveConfig memory USDt_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV3AvalancheAssets.USDt_UNDERLYING
+    );
+
+    USDt_UNDERLYING_CONFIG.borrowCap = BORROW_CAP;
+    USDt_UNDERLYING_CONFIG.supplyCap = SUPPLY_CAP;
+    USDt_UNDERLYING_CONFIG.debtCeiling = DEBT_CEILING;
+
+    _validateReserveConfig(USDt_UNDERLYING_CONFIG, allConfigsAfter);
 
     e2eTest(AaveV3Avalanche.POOL);
 
