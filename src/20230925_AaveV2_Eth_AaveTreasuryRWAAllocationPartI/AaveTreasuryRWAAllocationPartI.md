@@ -20,7 +20,7 @@ Centrifuge has a long track record of working with DAOs to bring RWA on as colla
 
 ## Specification
 
-This proposal withdraw 50k aUSDC from the Aave COLLECTOR contract and convert them to USDC before transferring them to the Centrifuge Treasury.
+This proposal withdraws 50k aUSDC from the Aave COLLECTOR contract and converts them to USDC before transferring them to the Centrifuge Treasury.
 This proposal also create a 500 AAVE stream for a period of two years to the Centrifuge Treasury.
 
 ## References
