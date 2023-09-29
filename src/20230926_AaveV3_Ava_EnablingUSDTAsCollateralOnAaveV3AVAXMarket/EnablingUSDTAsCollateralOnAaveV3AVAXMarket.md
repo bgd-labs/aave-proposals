@@ -18,8 +18,8 @@ The following table highlights the proposed change for USDT on the v3 AVAX marke
 
 | Parameters | USDT (current) | USDT (proposed) | USDC (for reference) |
 | --- | --- | --- | --- |
-| Supply Cap | 200M | 170M | 170M |
-| Borrow Cap | 140M | 90M | 90M |
+| Supply Cap | 200M | 100M | 170M |
+| Borrow Cap | 140M | 80M | 90M |
 | LTV | 75% | 75.0% | 82.25% |
 | LT | 81% | 81.0% | 86.25% |
 | LB | 5% | 5% | 4% |
