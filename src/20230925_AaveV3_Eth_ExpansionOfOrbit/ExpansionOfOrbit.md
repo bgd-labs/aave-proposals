@@ -29,8 +29,8 @@ here's the list of delegates accepting participation in Orbit. for the next quar
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV3_Eth_ExpansionOfOrbit/AaveV3_Ethereum_ExpansionOfOrbit_20230925.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV3_Eth_ExpansionOfOrbit/AaveV3_Ethereum_ExpansionOfOrbit_20230925.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/5ff581cbfedca44a9d6e9eef8975aba06315e9a1/src/20230925_AaveV3_Eth_ExpansionOfOrbit/AaveV3_Ethereum_ExpansionOfOrbit_20230925.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/5ff581cbfedca44a9d6e9eef8975aba06315e9a1/src/20230925_AaveV3_Eth_ExpansionOfOrbit/AaveV3_Ethereum_ExpansionOfOrbit_20230925.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0xecd62eb5dca71e47e7e1d0e88f8e6127857c051bea190fe0eb665636b33caa62)
 - [Discussion](https://governance.aave.com/t/arfc-expansion-of-orbit-a-dao-funded-delegate-platform-initiative/14785)
 
