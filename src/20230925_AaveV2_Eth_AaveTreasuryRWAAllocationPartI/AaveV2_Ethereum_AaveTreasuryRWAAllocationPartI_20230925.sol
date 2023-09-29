@@ -13,7 +13,6 @@ import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
  * - Discussion: https://governance.aave.com/t/arfc-aave-treasury-rwa-allocation/14790
  */
 contract AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925 {
-  using SafeERC20 for IERC20;
 
   address public constant CENTRIFUGE = 0xC8B2404b84998C3f7a7Cc8459143309465FC97Da;
   uint256 public constant STREAM_AMOUNT = 500e18;
