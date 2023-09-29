@@ -25,8 +25,8 @@ This proposal also create a 500 AAVE stream for a period of two years to the Cen
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV2_Eth_AaveTreasuryRWAAllocationPartI/AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV2_Eth_AaveTreasuryRWAAllocationPartI/AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/5659ac51e5d9f89095e0350543ffece9e8218fdb/src/20230925_AaveV2_Eth_AaveTreasuryRWAAllocationPartI/AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/5659ac51e5d9f89095e0350543ffece9e8218fdb/src/20230925_AaveV2_Eth_AaveTreasuryRWAAllocationPartI/AaveV2_Ethereum_AaveTreasuryRWAAllocationPartI_20230925.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x71db494e4b49e7533c5ccaa566686b2d045b0761cb3296a2d77af4b500566eb0)
 - [Discussion](https://governance.aave.com/t/arfc-aave-treasury-rwa-allocation/14790)
 
