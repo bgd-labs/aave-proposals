@@ -21,9 +21,7 @@ contract AaveV3_Optimism_OPRiskParametersUpdate_20230924_Test is ProtocolV3TestB
   }
 
   function testProposalExecution() public {
-
     uint256 BORROW_CAP = proposal.BORROW_CAP();
-    address INTEREST_RATE_STRATEGY = proposal.INTEREST_RATE_STRATEGY();
     uint256 DEBT_CEILING = proposal.DEBT_CEILING();
 
     ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
@@ -51,11 +49,9 @@ contract AaveV3_Optimism_OPRiskParametersUpdate_20230924_Test is ProtocolV3TestB
 
     OP_UNDERLYING_CONFIG.borrowCap = BORROW_CAP;
     OP_UNDERLYING_CONFIG.debtCeiling = DEBT_CEILING;
-    OP_UNDERLYING_CONFIG.interestRateStrategy = INTEREST_RATE_STRATEGY;
 
-  _validateReserveConfig(OP_UNDERLYING_CONFIG, allConfigsAfter);
+    _validateReserveConfig(OP_UNDERLYING_CONFIG, allConfigsAfter);
 
-    
     e2eTestAsset(
       AaveV3Optimism.POOL,
       _findReserveConfig(allConfigsAfter, AaveV3OptimismAssets.WETH_UNDERLYING),

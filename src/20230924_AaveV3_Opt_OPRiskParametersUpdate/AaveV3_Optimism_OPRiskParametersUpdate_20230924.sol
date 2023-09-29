@@ -12,15 +12,7 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
  */
 contract AaveV3_Optimism_OPRiskParametersUpdate_20230924 is AaveV3PayloadOptimism {
   uint256 public constant BORROW_CAP = 500_000;
-  address public constant INTEREST_RATE_STRATEGY = 0x3B57B081dA6Af5e2759A57bD3211932Cb6176997;
   uint256 public constant DEBT_CEILING = 0;
-
-  function _preExecute() internal override {
-    AaveV3Optimism.POOL_CONFIGURATOR.setReserveInterestRateStrategyAddress(
-      AaveV3OptimismAssets.OP_UNDERLYING,
-      INTEREST_RATE_STRATEGY
-    );
-  }
 
   function collateralsUpdates() public pure override returns (IEngine.CollateralUpdate[] memory) {
     IEngine.CollateralUpdate[] memory collateralUpdate = new IEngine.CollateralUpdate[](1);
