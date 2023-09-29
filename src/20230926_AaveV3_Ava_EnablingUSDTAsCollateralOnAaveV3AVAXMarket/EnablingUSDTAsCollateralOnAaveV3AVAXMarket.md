@@ -28,8 +28,8 @@ The following table highlights the proposed change for USDT on the v3 AVAX marke
 
 ## References
 
-- Implementation: [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Ava_EnablingUSDTAsCollateralOnAaveV3AVAXMarket/AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926.sol)
-- Tests: [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Ava_EnablingUSDTAsCollateralOnAaveV3AVAXMarket/AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926.t.sol)
+- Implementation: [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/43431798d142529d156b0d99b9cc4b7e6de39de2/src/20230926_AaveV3_Ava_EnablingUSDTAsCollateralOnAaveV3AVAXMarket/AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926.sol)
+- Tests: [Avalanche](https://github.com/bgd-labs/aave-proposals/blob/43431798d142529d156b0d99b9cc4b7e6de39de2/src/20230926_AaveV3_Ava_EnablingUSDTAsCollateralOnAaveV3AVAXMarket/AaveV3_Avalanche_EnablingUSDTAsCollateralOnAaveV3AVAXMarket_20230926.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x5623b5f84f021ad787033b4a1efd9e2de417004d27c5f2e3d7351f9b575574b1)
 - [Discussion](https://governance.aave.com/t/arfc-enabling-usdt-as-collateral-on-aave-v3-avax-market/14632/3)
 
