@@ -6,7 +6,7 @@ discussions: "https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debt
 
 ## Simple Summary
 
-This AIP aims to set the `ParaswapDebtSwapAdapterV3GHO` as a flashBorrower on the `ACLManager` in each relevant network to provide users with fee-less debt swaps.
+This AIP aims to set the `ParaswapDebtSwapAdapterV3GHO` and `ParaswapDebtSwapAdapterV3` as a flashBorrower on the `ACLManager` in each relevant network to provide users with fee-less debt swaps.
 
 ## Motivation
 
@@ -16,7 +16,7 @@ Furthermore, debt swap users are already paying interest for their debt, unlike 
 
 ## Specification
 
-Set the `ParaswapDebtSwapAdapterV3GHO` as a flashBorrower on the `ACLManager` contract on Ethereum, Optimism, Arbitrum, Polygon, Avalanche and Base.
+Set the `ParaswapDebtSwapAdapterV3GHO` and `ParaswapDebtSwapAdapterV3` as a flashBorrower on the `ACLManager` contract on Ethereum, Optimism, Arbitrum, Polygon, Avalanche and Base.
 
 On Ethereum, the adapter address is [0x8761e0370f94f68Db8EaA731f4fC581f6AD0Bd68](https://etherscan.io/address/0x8761e0370f94f68Db8EaA731f4fC581f6AD0Bd68) and the ACLManager address is [0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0.](https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
 
