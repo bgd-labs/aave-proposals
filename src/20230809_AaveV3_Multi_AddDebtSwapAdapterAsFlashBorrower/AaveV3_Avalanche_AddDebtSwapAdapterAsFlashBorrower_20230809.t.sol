@@ -21,7 +21,7 @@ contract AaveV3_Avalanche_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Pro
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Avalanche_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Avalanche.POOL
     );
@@ -36,7 +36,7 @@ contract AaveV3_Avalanche_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Pro
 
     assertTrue(AaveV3Avalanche.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Avalanche_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Avalanche.POOL
     );

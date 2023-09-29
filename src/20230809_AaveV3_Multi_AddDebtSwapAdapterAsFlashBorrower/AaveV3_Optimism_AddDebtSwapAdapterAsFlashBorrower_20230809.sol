@@ -10,7 +10,7 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
  * - Discussion: https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debtswapadapter-s/14595
  */
 contract AaveV3_Optimism_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
-  address public constant NEW_FLASH_BORROWER = 0xcFaE0D8c5707FCc6478D6a65fFA31efADeF8b8EC;
+  address public constant NEW_FLASH_BORROWER = AaveV3Optimism.DEBT_SWAP_ADAPTER;
 
   function execute() external {
     AaveV3Optimism.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);

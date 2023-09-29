@@ -21,7 +21,7 @@ contract AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Prot
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Ethereum.POOL
     );
@@ -32,7 +32,7 @@ contract AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Prot
 
     assertTrue(AaveV3Ethereum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Ethereum.POOL
     );

@@ -10,7 +10,7 @@ import {AaveV3Ethereum, AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethe
  * - Discussion: https://governance.aave.com/t/bgd-grant-flashborrower-role-to-debtswapadapter-s/14595
  */
 contract AaveV3_Ethereum_AddDebtSwapAdapterAsFlashBorrower_20230809 is IProposalGenericExecutor {
-  address public constant NEW_FLASH_BORROWER = 0x8761e0370f94f68Db8EaA731f4fC581f6AD0Bd68;
+  address public constant NEW_FLASH_BORROWER = AaveV3Ethereum.DEBT_SWAP_ADAPTER;
 
   function execute() external {
     AaveV3Ethereum.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);

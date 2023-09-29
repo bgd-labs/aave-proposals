@@ -21,7 +21,7 @@ contract AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Proto
   }
 
   function testProposalExecution() public {
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Polygon.POOL
     );
@@ -32,7 +32,7 @@ contract AaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Proto
 
     assertTrue(AaveV3Polygon.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Polygon_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Polygon.POOL
     );

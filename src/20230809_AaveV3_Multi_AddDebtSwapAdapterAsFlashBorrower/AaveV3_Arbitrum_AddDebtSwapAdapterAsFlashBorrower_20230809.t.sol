@@ -17,31 +17,29 @@ contract AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809_Test is Prot
 
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('arbitrum'), 119814137);
-   proposal = new AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809();
+    proposal = new AaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809();
   }
 
   function testProposalExecution() public {
-
-
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'preAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Arbitrum.POOL
     );
 
     assertFalse(AaveV3Arbitrum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
-    GovHelpers.executePayload(
-      vm,
-      address(proposal),
-      AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR
-    );
+    GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.ARBITRUM_BRIDGE_EXECUTOR);
 
     assertTrue(AaveV3Arbitrum.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER()));
 
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
+    createConfigurationSnapshot(
       'postAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809',
       AaveV3Arbitrum.POOL
     );
 
-    diffReports('preAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809', 'postAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809');
-  }}
+    diffReports(
+      'preAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809',
+      'postAaveV3_Arbitrum_AddDebtSwapAdapterAsFlashBorrower_20230809'
+    );
+  }
+}
