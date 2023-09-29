@@ -14,12 +14,25 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
  * command: make test-contract filter=AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925
  */
 contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925_Test is ProtocolV2TestBase {
-  address public constant BUSD = AaveV2EthereumAssets.BUSD_UNDERLYING;
-  string public constant BUSD_SYMBOL = 'BUSD';
-  string public constant TUSD_SYMBOL = 'TUSD';
+  AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 public proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18220445);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18240272);
+    proposal = new AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925();
+  }
+
+  function updateReserveConfig(
+    ReserveConfig memory config,
+    uint256 ltv,
+    uint256 liquidationThreshold,
+    uint256 liquidationBonus,
+    uint256 reserveFactor
+  ) internal pure returns (ReserveConfig memory) {
+    config.ltv = ltv;
+    config.liquidationThreshold = liquidationThreshold;
+    config.liquidationBonus = liquidationBonus;
+    config.reserveFactor = reserveFactor;
+    return config;
   }
 
   function testBUSD() public {
@@ -28,12 +41,7 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925_Test is ProtocolV2Te
       AaveV2Ethereum.POOL
     );
 
-    ReserveConfig memory configBUSDBefore = _findReserveConfigBySymbol(
-      allConfigsBefore,
-      BUSD_SYMBOL
-    );
-
-    address BUSDPayload = address(new AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925());
+    address BUSDPayload = address(proposal);
 
     // Logging COLLECTOR balances for TUSD and BUSD before execution
     uint256 aBUSDBalanceBefore = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
@@ -49,12 +57,27 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925_Test is ProtocolV2Te
     uint256 TUSDBalanceBefore = IERC20(AaveV2EthereumAssets.TUSD_UNDERLYING).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
-  
-  // Execute proposal
+
+    // Execute proposal
 
     GovHelpers.executePayload(vm, BUSDPayload, AaveGovernanceV2.SHORT_EXECUTOR);
 
-  // Logging COLLECTOR balances for TUSD and BUSD after execution
+    // check updated parameters
+
+    ReserveConfig memory TUSD_UNDERLYING_CONFIG = _findReserveConfig(
+      allConfigsBefore,
+      AaveV2EthereumAssets.TUSD_UNDERLYING
+    );
+
+    TUSD_UNDERLYING_CONFIG = updateReserveConfig(
+      TUSD_UNDERLYING_CONFIG,
+      proposal.TUSD_LTV(),
+      proposal.TUSD_LIQUIDATION_THRESHOLD(),
+      proposal.TUSD_LIQUIDATION_BONUS(),
+      proposal.RESERVE_FACTOR()
+    );
+
+    // Logging COLLECTOR balances for TUSD and BUSD after execution
 
     uint256 aBUSDBalanceAfter = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
@@ -72,21 +95,17 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925_Test is ProtocolV2Te
 
     // Assert that the aBUSD and aTUSD balances are lower after execution
 
-    assertTrue(aBUSDBalanceAfter < aBUSDBalanceBefore, "aBUSD balance did not decrease");
-    assertTrue(aTUSDBalanceAfter < aTUSDBalanceBefore, "aTUSD balance did not decrease");
+    assertTrue(aBUSDBalanceAfter < aBUSDBalanceBefore, 'aBUSD balance did not decrease');
+    assertTrue(aTUSDBalanceAfter < aTUSDBalanceBefore, 'aTUSD balance did not decrease');
 
     // Assert that the TUSD and BUSD balances are higher after execution
-    assertTrue(TUSDBalanceAfter > TUSDBalanceBefore, "TUSD balance did not increase");
-    assertTrue(BUSDBalanceAfter > BUSDBalanceBefore, "BUSD balance did not increase");
+    assertTrue(TUSDBalanceAfter > TUSDBalanceBefore, 'TUSD balance did not increase');
+    assertTrue(BUSDBalanceAfter > BUSDBalanceBefore, 'BUSD balance did not increase');
 
     ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
       'post-TUSD-Payload-activation_20230926',
       AaveV2Ethereum.POOL
     );
-
-    // check it's not bricked
-    ReserveConfig memory configBUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, BUSD_SYMBOL);
-    ReserveConfig memory configTUSDAfter = _findReserveConfigBySymbol(allConfigsAfter, TUSD_SYMBOL);
 
     e2eTest(AaveV2Ethereum.POOL);
 

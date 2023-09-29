@@ -16,6 +16,7 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
   uint256 public constant TUSD_LTV = 0;
   uint256 public constant TUSD_LIQUIDATION_THRESHOLD = 65_00;
   uint256 public constant TUSD_LIQUIDATION_BONUS = 11000;
+  uint256 public constant RESERVE_FACTOR = 99_90;
 
   function _preExecute() internal override {
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
@@ -25,12 +26,18 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
       TUSD_LIQUIDATION_BONUS
     );
 
-    collectorATokenToUnderlying(AaveV2EthereumAssets.BUSD_UNDERLYING, AaveV2EthereumAssets.BUSD_A_TOKEN);
-    collectorATokenToUnderlying(AaveV2EthereumAssets.TUSD_UNDERLYING, AaveV2EthereumAssets.TUSD_A_TOKEN);
+    collectorATokenToUnderlying(
+      AaveV2EthereumAssets.BUSD_UNDERLYING,
+      AaveV2EthereumAssets.BUSD_A_TOKEN
+    );
+    collectorATokenToUnderlying(
+      AaveV2EthereumAssets.TUSD_UNDERLYING,
+      AaveV2EthereumAssets.TUSD_A_TOKEN
+    );
 
     ILendingPoolConfigurator(AaveV2Ethereum.POOL_CONFIGURATOR).setReserveFactor(
       AaveV2EthereumAssets.TUSD_UNDERLYING,
-      99_90
+      RESERVE_FACTOR
     );
   }
 
@@ -58,29 +65,14 @@ contract AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 is AaveV2PayloadEthe
   }
 
   function collectorATokenToUnderlying(address underlying, address aToken) internal {
-    uint256 aBalance = IERC20(aToken).balanceOf(
-      address(AaveV2Ethereum.COLLECTOR)
-    );
+    uint256 aBalance = IERC20(aToken).balanceOf(address(AaveV2Ethereum.COLLECTOR));
 
-    uint256 availableUnderlying = IERC20(underlying).balanceOf(
-      aToken
-    );
+    uint256 availableUnderlying = IERC20(underlying).balanceOf(aToken);
 
     uint256 amount = aBalance > availableUnderlying ? availableUnderlying : aBalance;
 
-    AaveV2Ethereum.COLLECTOR.transfer(
-      aToken,
-      address(this),
-      amount
-    );
+    AaveV2Ethereum.COLLECTOR.transfer(aToken, address(this), amount);
 
-    AaveV2Ethereum.POOL.withdraw(
-      underlying,
-      amount,
-      address(AaveV2Ethereum.COLLECTOR)
-    );
+    AaveV2Ethereum.POOL.withdraw(underlying, amount, address(AaveV2Ethereum.COLLECTOR));
   }
-
 }
-
-

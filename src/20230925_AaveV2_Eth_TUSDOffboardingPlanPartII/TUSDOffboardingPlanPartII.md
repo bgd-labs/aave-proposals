@@ -21,16 +21,16 @@ This ARFC also aims to authorize the ACI to publish regularly "withdraw aToken" 
 
 The risk parameters for TUSD on Aave V2 will be adjusted as follows:
 
-| Parameter              | Previous Value | New Value |
-|------------------------|----------------|-----------|
-| Loan-to-Value (LTV)    | 0%             | 0%       |
-| Liquidation Threshold (LT) | 75%       | 65%      |
-| Liquidation Bonus      | 10%            | 10%      |
-| Reserve Factor         | 95%            | 99.9%    |
-| uOptimal               | 20%              | 1%       |
-| Base Rate              | 0%              | 100%     |
-| Slope 1                | 10%              | 70%      |
-| Slope 2                | 200%              | 300%     |
+| Parameter                  | Previous Value | New Value |
+| -------------------------- | -------------- | --------- |
+| Loan-to-Value (LTV)        | 0%             | 0%        |
+| Liquidation Threshold (LT) | 75%            | 65%       |
+| Liquidation Bonus          | 10%            | 10%       |
+| Reserve Factor             | 95%            | 99.9%     |
+| uOptimal                   | 20%            | 1%        |
+| Base Rate                  | 0%             | 100%      |
+| Slope 1                    | 10%            | 70%       |
+| Slope 2                    | 200%           | 300%      |
 
 ## References
 
