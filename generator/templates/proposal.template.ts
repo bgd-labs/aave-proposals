@@ -27,7 +27,7 @@ export const proposalTemplate = (options: Options, chain, artifacts: CodeArtifac
   const {protocolVersion, title, author, snapshot, discussion, features} = options;
   const contractName = generateContractName(options, chain);
 
-  console.log(artifacts.map((a) => a['Ethereum'].code));
+  console.log(artifacts.map((a) => a[chain].code));
   const dependencies = [
     ...new Set(
       artifacts
