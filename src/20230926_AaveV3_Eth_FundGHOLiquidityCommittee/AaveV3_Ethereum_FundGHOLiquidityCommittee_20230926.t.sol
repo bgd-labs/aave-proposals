@@ -23,7 +23,8 @@ contract AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926_Test is ProtocolV3Te
 
   function testProposalExecution() public {
     uint256 daiAmount = 406_000 * 1e18;
-    address liquidityCommittee = address(1234); // TODO
+    uint256 awethAmount = 5 ether;
+    address liquidityCommittee = 0x205e795336610f5131Be52F09218AF19f0f3eC60;
     
     // milkman creates intermediary contract for each swap
     // while swap is not executed the assets will be in these swap-specific proxy addresses instead of aaveSwapper
@@ -42,7 +43,7 @@ contract AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926_Test is ProtocolV3Te
     assertEq(proxyBalanceAfter, daiAmount);
     
     uint256 balanceAfter = liquidityCommittee.balance;
-    assertEq(balanceAfter, balanceBefore + 5 ether);
+    assertEq(balanceAfter, balanceBefore + awethAmount);
 
     assertEq(
       IERC20(AaveV3EthereumAssets.GHO_UNDERLYING)
