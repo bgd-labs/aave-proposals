@@ -26,7 +26,7 @@ contract StrategicAssetsManager is
   /// @notice Initialize function
   function initialize() external initializer {
     _transferOwnership(AaveGovernanceV2.SHORT_EXECUTOR);
-    _updateGuardian(AaveGovernanceV2.SHORT_EXECUTOR);
+    _updateGuardian(0x205e795336610f5131Be52F09218AF19f0f3eC60);
     spaceIdBalancer = 'balancer.eth';
     gaugeControllerBalancer = 0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD;
     lockDurationVEBAL = 365 days;
