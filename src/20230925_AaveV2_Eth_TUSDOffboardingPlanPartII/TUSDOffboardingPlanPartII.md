@@ -32,6 +32,8 @@ The risk parameters for TUSD on Aave V2 will be adjusted as follows:
 | Slope 1                    | 10%            | 70%       |
 | Slope 2                    | 200%           | 300%      |
 
+Both aTUSD & aBUSD Aave treasury available treasury will be withdrawn from Aave V2 pool. this is meant to reduce available liquidity for these reserve and increase pressure of remaining borrowers.
+
 ## References
 
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.sol)
