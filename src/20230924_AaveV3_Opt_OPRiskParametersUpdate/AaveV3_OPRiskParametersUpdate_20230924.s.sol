@@ -22,7 +22,7 @@ contract DeployOptimism is OptimismScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildOptimism(address(0));
+    payloads[0] = GovHelpers.buildOptimism(0xe704Efe305b14BDDbba3d6C7f4A559149EdC1339);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
