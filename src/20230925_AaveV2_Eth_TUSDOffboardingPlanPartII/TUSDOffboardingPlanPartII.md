@@ -36,8 +36,8 @@ Both aTUSD & aBUSD Aave treasury available treasury will be withdrawn from Aave 
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/95a4af1bf575ee1099a58e4da22da39d38bc1730/src/20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/95a4af1bf575ee1099a58e4da22da39d38bc1730/src/20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x95cca29a9cdcaf51bb7331a9516d643a5c88f8ddce86c5f3920c2ae4d604193f)
 - [Discussion](https://governance.aave.com/t/arfc-tusd-offboarding-plan-part-ii/14863)
 
