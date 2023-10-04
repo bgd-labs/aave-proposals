@@ -41,8 +41,8 @@ While the proposed changes are less conservative, they still maintain strict sup
 
 ## References
 
-- Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230924_AaveV3_Opt_OPRiskParametersUpdate/AaveV3_Optimism_OPRiskParametersUpdate_20230924.sol)
-- Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230924_AaveV3_Opt_OPRiskParametersUpdate/AaveV3_Optimism_OPRiskParametersUpdate_20230924.t.sol)
+- Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/4dffb1b7a544863fba61a573bc0b631ff6525bc7/src/20230924_AaveV3_Opt_OPRiskParametersUpdate/AaveV3_Optimism_OPRiskParametersUpdate_20230924.sol)
+- Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/4dffb1b7a544863fba61a573bc0b631ff6525bc7/src/20230924_AaveV3_Opt_OPRiskParametersUpdate/AaveV3_Optimism_OPRiskParametersUpdate_20230924.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x617adb838ce95e319f06f72e177ad62cd743c2fe3fd50d6340dfc8606fbdd0b3)
 - [Discussion](https://governance.aave.com/t/arfc-op-risk-parameters-update-aave-v3-optimism-pool/14633)
 
