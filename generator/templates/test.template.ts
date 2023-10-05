@@ -69,6 +69,8 @@ contract ${contractName}_Test is Protocol${protocolVersion}TestBase {
     );
 
     diffReports('pre${contractName}', 'post${contractName}');
+
+    e2eTest(Aave${protocolVersion}${chain}.POOL);
   }
 
   ${functions}
