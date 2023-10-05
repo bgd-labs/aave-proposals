@@ -27,12 +27,11 @@ Again, this will help to
 | Arbitrum | WETH | Lower Variable Base| 1%| 0%
 
 
-
 ## Implementation
 
-The proposal implements changes on Optimism and Arbitrum v3 using the following pre-deployed payloads:
-  - Optimism:
-  - Arbitrum:
+The proposal implements changes on Optimism and Arbitrum v3 using the following payloads:
+  - [Optimism](https://github.com/GauntletNetworks/aave-proposals/blob/1e214b4083eb320788842333ced23acbeecc1238/src/AaveV3Update_20231002weth/AaveV3Optimism_20231002weth.sol)
+  - [Arbitrum](https://github.com/GauntletNetworks/aave-proposals/blob/1e214b4083eb320788842333ced23acbeecc1238/src/AaveV3Update_20231002weth/AaveV3Arbitrum_20231002weth.sol)
 
 ## Disclaimer
 
