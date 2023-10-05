@@ -30,7 +30,7 @@ Reducing MATIC LST non-emode LT to lower borrowing power can help combat the fol
 ## Implementation
 
 The proposal implements changes on Polygon v3 using the following pre-deployed payloads:
-  - Polygon
+  - [Polygon](https://github.com/GauntletNetworks/aave-proposals/blob/628e17e84c9d6b8177adaad22aa87a69a045e829/src/AaveV3Update_20231002matic/AaveV3Polygon_20231002matic.sol)
 
 ## Disclaimer
 
