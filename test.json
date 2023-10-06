@@ -1,0 +1,57 @@
+{
+  "rootOptions": {
+    "author": "BGD labs",
+    "pools": ["AaveV2Ethereum", "AaveV3Ethereum", "AaveV3Avalanche"],
+    "title": "Test proposal",
+    "shortName": "TestProposal",
+    "discussion": "https://test",
+    "snapshot": "https://test"
+  },
+  "poolOptions": {
+    "AaveV2Ethereum": {
+      "configs": {
+        "RateStrategiesUpdates": [
+          {
+            "asset": "AaveV2EthereumAssets.USDT_UNDERLYING",
+            "params": {
+              "optimalUtilizationRate": "EngineFlags.KEEP_CURRENT",
+              "baseVariableBorrowRate": "_bpsToRay(10_00)",
+              "variableRateSlope1": "EngineFlags.KEEP_CURRENT",
+              "variableRateSlope2": "EngineFlags.KEEP_CURRENT",
+              "stableRateSlope1": "EngineFlags.KEEP_CURRENT",
+              "stableRateSlope2": "EngineFlags.KEEP_CURRENT"
+            }
+          }
+        ]
+      },
+      "features": ["RateStrategiesUpdates"]
+    },
+    "AaveV3Ethereum": {
+      "configs": {
+        "CapsUpdates (supplyCap, borrowCap)": [
+          {
+            "asset": "AaveV3EthereumAssets.WBTC_UNDERLYING",
+            "supplyCap": "100_000",
+            "borrowCap": "EngineFlags.KEEP_CURRENT"
+          }
+        ]
+      },
+      "features": ["CapsUpdates (supplyCap, borrowCap)"]
+    },
+    "AaveV3Avalanche": {
+      "configs": {
+        "eModeCategoriesUpdates (altering/adding eModes)": [
+          {
+            "eModeCategory": "AaveV3AvalancheEModes.AVAX_CORRELATED",
+            "ltv": "EngineFlags.KEEP_CURRENT",
+            "liqThreshold": "99_99",
+            "liqBonus": "EngineFlags.KEEP_CURRENT",
+            "priceSource": "EngineFlags.KEEP_CURRENT_ADDRESS",
+            "label": "KEEP_CURRENT_STRING"
+          }
+        ]
+      },
+      "features": ["eModeCategoriesUpdates (altering/adding eModes)"]
+    }
+  }
+}

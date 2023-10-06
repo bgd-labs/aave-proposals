@@ -1,54 +1,40 @@
-import {input} from '@inquirer/prompts';
-import {CodeArtifacts, DEPENDENCIES, FeatureModule} from '../types';
-import {CHAIN_TO_EXECUTOR} from '../common';
+import {CodeArtifact, FeatureModule} from '../types';
+import {addressInput} from '../prompts';
 
 type FlashBorrower = {
-  [chain: string]: {
-    address: string;
-  };
+  address: string;
 };
 
 export const flashBorrower: FeatureModule<FlashBorrower> = {
-  async cli(opt) {
-    const response: FlashBorrower = {};
-    for (const chain of opt.chains) {
-      console.log(`Fetching information for FlashBorrower on ${chain}`);
-      response[chain] = {
-        address: await input({
-          message: 'Who do you want to grant the flashBorrower role',
-        }),
-      };
-    }
+  value: 'FlashBorrower (whitelist address as 0% fee flashborrower)',
+  async cli(opt, pool) {
+    console.log(`Fetching information for FlashBorrower on ${pool}`);
+    const response: FlashBorrower = {
+      address: await addressInput({
+        message: 'Who do you want to grant the flashBorrower role',
+      }),
+    };
     return response;
   },
-  build(opt, cfg) {
-    const response: CodeArtifacts = {};
-    for (const chain of opt.chains) {
-      response[chain] = {
-        code: {
-          dependencies: [DEPENDENCIES.Addresses],
-          constants: [
-            `address public constant NEW_FLASH_BORROWER = address(${cfg[chain].address});`,
-          ],
-          execute: [
-            `Aave${opt.protocolVersion}${chain}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`,
-          ],
-        },
-        test: {
-          fn: [
-            `function test_isFlashBorrower() external {
-            GovHelpers.executePayload(
-              vm,
-              address(proposal),
-              ${CHAIN_TO_EXECUTOR[chain]}
-            );
-            bool isFlashBorrower = Aave${opt.protocolVersion}${chain}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
-            assertEq(isFlashBorrower, true);
-          }`,
-          ],
-        },
-      };
-    }
+  build(opt, pool, cfg) {
+    const response: CodeArtifact = {
+      code: {
+        constants: [`address public constant NEW_FLASH_BORROWER = address(${cfg.address});`],
+        execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
+      },
+      test: {
+        fn: [
+          `function test_isFlashBorrower() external {
+          GovV3Helpers.executePayload(
+            vm,
+            address(proposal)
+          );
+          bool isFlashBorrower = ${pool}.ACL_MANAGER.isFlashBorrower(proposal.NEW_FLASH_BORROWER());
+          assertEq(isFlashBorrower, true);
+        }`,
+        ],
+      },
+    };
     return response;
   },
 };

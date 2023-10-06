@@ -2,7 +2,8 @@ import {
   CHAINS_WITH_GOV_SUPPORT,
   generateContractName,
   generateFolderName,
-  getAlias,
+  getChainAlias,
+  getPoolChain,
   pragma,
 } from '../common';
 import {Options} from '../types';
@@ -11,41 +12,63 @@ export function generateScript(options: Options) {
   const folderName = generateFolderName(options);
   const fileName = generateContractName(options);
   let template = pragma;
+  const chains = [...new Set(options.pools.map((pool) => getPoolChain(pool)!))];
 
   // generate imports
-  template += `import {GovHelpers} from 'aave-helpers/GovHelpers.sol';\n`;
-  template += `import {${['Ethereum', ...options.chains.filter((c) => c !== 'Ethereum')]
+  template += `import {GovV3Helpers} from 'aave-helpers/GovV3Helpers.sol';\n`;
+  template += `import {${['Ethereum', ...chains.filter((c) => c !== 'Ethereum')]
     .map((chain) => `${chain}Script`)
     .join(', ')}} from 'aave-helpers/ScriptUtils.sol';\n`;
-  template += options.chains
-    .map((chain) => {
-      const name = generateContractName(options, chain);
+  template += options.pools
+    .map((pool) => {
+      const name = generateContractName(options, pool);
       return `import {${name}} from './${name}.sol';`;
     })
     .join('\n');
   template += '\n\n';
 
-  // generate chain scripts
-  template += options.chains
-    .map((chain) => {
-      const name = generateContractName(options, chain);
+  const poolsToChainsMap = options.pools.reduce((acc, pool) => {
+    const chain = getPoolChain(pool);
+    const contractName = generateContractName(options, pool);
+    if (!acc[chain]) acc[chain] = [];
+    acc[chain].push({contractName, pool});
+    return acc;
+  }, {});
 
+  // generate chain scripts
+  template += Object.keys(poolsToChainsMap)
+    .map((chain) => {
       return `/**
- * @dev Deploy ${name}
- * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${chain} chain=${getAlias(
+    * @dev Deploy ${chain}
+    * command: make deploy-ledger contract=src/${folderName}/${fileName}.s.sol:Deploy${chain} chain=${getChainAlias(
         chain
       )}
- */
-contract Deploy${chain} is ${chain}Script {
-  function run() external broadcast {
-    new ${name}();
-  }
-}`;
+    */
+   contract Deploy${chain} is ${chain}Script {
+     function run() external broadcast {
+       // deploy payloads
+       ${poolsToChainsMap[chain]
+         .map(({contractName, pool}, ix) => `${contractName} payload${ix} = new ${contractName}();`)
+         .join('\n')}
+
+       // compose action
+       IPayloadsControllerCore.ExecutionAction[] memory actions = new IPayloadsControllerCore.ExecutionAction[](${
+         poolsToChainsMap[chain].length
+       });
+       ${poolsToChainsMap[chain]
+         .map(
+           ({contractName, pool}, ix) =>
+             `actions[${ix}] = GovV3Helpers.buildAction(address(payload${ix}));`
+         )
+         .join('\n')}
+
+       // register action at payloadsController
+       GovV3Helpers.createPayload(actions);
+     }
+   }`;
     })
     .join('\n\n');
   template += '\n\n';
-
-  const supportedChains = options.chains.filter((chain) => CHAINS_WITH_GOV_SUPPORT.includes(chain));
 
   // generate proposal creation script
   template += `/**
@@ -54,16 +77,29 @@ contract Deploy${chain} is ${chain}Script {
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
-    GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](${supportedChains.length});
-${supportedChains
-  .map(
-    (chain, ix) =>
-      `    payloads[${ix}] = GovHelpers.build${
-        chain == 'Ethereum' ? 'Mainnet' : chain
-      }(address(0));`
-  )
-  .join('\n')}
-    GovHelpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
+    // create payloads
+    PayloadsControllerUtils.Payload[] memory payloads = new PayloadsControllerUtils.Payload[](${
+      Object.keys(poolsToChainsMap).length
+    });
+
+    // compose actions for validation
+    ${Object.keys(poolsToChainsMap)
+      .map((chain, ix) => {
+        let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](${poolsToChainsMap[chain].length});\n`;
+        template += poolsToChainsMap[chain]
+          .map(({contractName, pool}, ix) => {
+            return `actions${chain}[${ix}] = GovV3Helpers.buildAction(address(0));`;
+          })
+          .join('\n');
+        template += `payloads[${ix}] = GovV3Helpers.build${
+          chain == 'Ethereum' ? 'Mainnet' : chain
+        }(vm, actions${chain});\n`;
+        return template;
+      })
+      .join('\n')}
+
+    // create proposal
+    GovV3Helpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
     options.shortName
   }.md'));
   }
