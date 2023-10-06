@@ -14,23 +14,25 @@ Reducing MATIC LST non-emode LT to lower borrowing power can help combat the fol
 - Risks of reduced capacity for recursive LST - WMATIC borrowing
 - Risks associated with increased stablecoin borrowing against LST collateral, amidst decreasing MATIC LST liquidity
 
-
 ## Specification
 
-
-| Chain | Asset | Action | Current Value | New Value
-|-------|-------|-----| ---| --- |
-| Polygon | stMATIC | Lower non-emode LT| 65% | 60%
-| Polygon | stMATIC | Lower non-emode LTV| 50%| 45%
-| Polygon | MaticX | Lower non-emode LT| 67%| 62%
-| Polygon | MaticX | Lower non-emode LTV| 58%| 45%
-
-
+| Chain   | Asset   | Action              | Current Value | New Value |
+| ------- | ------- | ------------------- | ------------- | --------- |
+| Polygon | stMATIC | Lower non-emode LT  | 65%           | 60%       |
+| Polygon | stMATIC | Lower non-emode LTV | 50%           | 45%       |
+| Polygon | MaticX  | Lower non-emode LT  | 67%           | 62%       |
+| Polygon | MaticX  | Lower non-emode LTV | 58%           | 45%       |
 
 ## Implementation
 
 The proposal implements changes on Polygon v3 using the following pre-deployed payloads:
-  - [Polygon](https://github.com/GauntletNetworks/aave-proposals/blob/628e17e84c9d6b8177adaad22aa87a69a045e829/src/AaveV3Update_20231002matic/AaveV3Polygon_20231002matic.sol)
+
+- [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Update_20231002matic/AaveV3Polygon_20231002matic.sol)
+
+## References
+
+- **Discussion**: https://governance.aave.com/t/arfc-gauntlet-recommendation-to-lower-stmatic-maticx-non-emode-lt/14859
+- **Snapshot**: https://snapshot.org/#/aave.eth/proposal/0x151df3127d187c203ff3a975d8ab9e34493d77edf67ec6884dc086d5aea9ce89
 
 ## Disclaimer
 
@@ -40,4 +42,4 @@ Gauntlet has not received any compensation from any third-party in exchange for 
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
 
-*By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos.*
+_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._
