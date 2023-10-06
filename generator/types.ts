@@ -9,10 +9,13 @@ export interface Options {
   author: string;
   discussion: string;
   snapshot: string;
+  configFile: string;
 }
 
-interface PoolConfig {
-  artifacts?: CodeArtifact[];
+export interface PoolConfig {
+  features: string[];
+  artifacts: CodeArtifact[];
+  configs: {[feature: string]: {}};
 }
 
 export type PoolConfigs = Partial<Record<PoolIdentifier, PoolConfig>>;
@@ -36,8 +39,8 @@ export type Feature = {
 
 export interface FeatureModule<T extends {} = {}> {
   value: string;
-  cli?: (opt: Options, pool: PoolIdentifier) => Promise<T>;
-  build?: (opt: Options, pool: PoolIdentifier, cfg: T) => CodeArtifact;
+  cli: (opt: Options, pool: PoolIdentifier) => Promise<T>;
+  build: (opt: Options, pool: PoolIdentifier, cfg: T) => CodeArtifact;
 }
 
 export const ENGINE_FLAGS = {
@@ -74,3 +77,8 @@ export const POOLS = [
 
 export type PoolIdentifier = (typeof POOLS)[number];
 export type PoolIdentifierV3 = (typeof V3_POOLS)[number];
+
+export type ConfigFile = {
+  rootOptions: Options;
+  poolOptions: Record<PoolIdentifier, Omit<PoolConfig, 'artifacts'>>;
+};

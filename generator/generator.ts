@@ -5,7 +5,16 @@ import {generateContractName, generateFolderName, isV2Pool, pascalCase} from './
 import {proposalTemplate} from './templates/proposal.template';
 import {testTemplate} from './templates/test.template';
 import {input, checkbox, confirm} from '@inquirer/prompts';
-import {CodeArtifact, FeatureModule, Options, POOLS, PoolConfigs, PoolIdentifier} from './types';
+import {
+  CodeArtifact,
+  ConfigFile,
+  FeatureModule,
+  Options,
+  POOLS,
+  PoolConfig,
+  PoolConfigs,
+  PoolIdentifier,
+} from './types';
 import {flashBorrower} from './features/flashBorrower';
 import {capsUpdates} from './features/capsUpdates';
 import {rateUpdates} from './features/rateUpdates';
@@ -27,17 +36,27 @@ const program = new Command();
 program
   .name('proposal-generator')
   .description('CLI to generate aave proposals')
-  .version('0.0.0')
+  .version('1.0.0')
   .addOption(new Option('-f, --force', 'force creation (might overwrite existing files)'))
   .addOption(new Option('-p, --pools <pools...>').choices(POOLS))
   .addOption(new Option('-t, --title <string>', 'aip title'))
   .addOption(new Option('-a, --author <string>', 'author'))
   .addOption(new Option('-d, --discussion <string>', 'forum link'))
   .addOption(new Option('-s, --snapshot <string>', 'snapshot link'))
+  .addOption(new Option('-c, --configFile <string>', 'path to config file'))
   .allowExcessArguments(false)
   .parse(process.argv);
 
 let options = program.opts<Options>();
+let poolConfigs: PoolConfigs = {};
+
+let configFileLoaded = false;
+if (options.configFile) {
+  const cfgFile: ConfigFile = await import(path.join(process.cwd(), options.configFile));
+  options = cfgFile.rootOptions;
+  poolConfigs = cfgFile.poolOptions as any;
+  configFileLoaded = true;
+}
 
 // workaround as there's validate is not currently supported on checkbox
 // https://github.com/SBoudrias/Inquirer.js/issues/1257
@@ -112,28 +131,49 @@ const FEATURE_MODULES_V3 = [
   PLACEHOLDER_MODULE,
 ];
 
-const poolConfigs: PoolConfigs = {};
-
-for (const pool of options.pools) {
-  const v2 = isV2Pool(pool);
-  const features = await checkbox({
-    message: `What do you want to do on ${pool}?`,
-    choices: v2 ? FEATURE_MODULES_V2 : FEATURE_MODULES_V3,
-  });
-  let artifacts: CodeArtifact[] = [];
-  for (const feature of features) {
-    const module: FeatureModule<any> = v2
-      ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
-      : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
-    if (module.cli) {
-      const cfg = await module.cli(options, pool);
-      if (module.build) {
-        artifacts.push(module.build(options, pool, cfg));
-      }
+if (!configFileLoaded) {
+  for (const pool of options.pools) {
+    poolConfigs[pool] = {configs: {}, artifacts: [], features: []} as PoolConfig;
+    const v2 = isV2Pool(pool);
+    options[pool].features = await checkbox({
+      message: `What do you want to do on ${pool}?`,
+      choices: v2 ? FEATURE_MODULES_V2 : FEATURE_MODULES_V3,
+    });
+    for (const feature of options[pool].features) {
+      const module = v2
+        ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
+        : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
+      poolConfigs[pool]!.configs[feature] = await module.cli(options, pool);
+      poolConfigs[pool]!.artifacts.push(
+        module.build(options, pool, poolConfigs[pool]!.configs[feature])
+      );
     }
   }
-  poolConfigs[pool] = {artifacts};
+} else {
+  for (const pool of options.pools) {
+    const v2 = isV2Pool(pool);
+    poolConfigs[pool]!.artifacts = [];
+    for (const feature of poolConfigs[pool]!.features) {
+      const module = v2
+        ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
+        : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
+      poolConfigs[pool]!.artifacts.push(
+        module.build(options, pool, poolConfigs[pool]!.configs[feature])
+      );
+    }
+  }
 }
+
+console.log('### JSON config emitted to be stored for reuse ###');
+const logOptions = {
+  rootOptions: options,
+  poolOptions: Object.keys(poolConfigs).reduce((acc, pool) => {
+    acc[pool] = {configs: poolConfigs[pool].configs, features: poolConfigs[pool].features};
+    return acc;
+  }, {} as PoolConfigs),
+} as ConfigFile;
+console.log(JSON.stringify(logOptions, null, 2));
+console.log('### ###');
 
 const baseName = generateFolderName(options);
 const baseFolder = path.join(process.cwd(), 'src', baseName);

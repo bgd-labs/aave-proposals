@@ -1,0 +1,42 @@
+{
+  "rootOptions": {
+    "pools": ["AaveV2Ethereum", "AaveV3Ethereum"],
+    "title": "Test proposal",
+    "shortName": "TestProposal",
+    "author": "BGD labs",
+    "discussion": "https://test",
+    "snapshot": "https//test"
+  },
+  "poolOptions": {
+    "AaveV2Ethereum": {
+      "features": ["CapsUpdates (supplyCap, borrowCap)"],
+      "configs": {
+        "RateStrategiesUpdates": [
+          {
+            "asset": "AaveV2EthereumAssets.WBTC_UNDERLYING",
+            "params": {
+              "optimalUtilizationRate": "EngineFlags.KEEP_CURRENT",
+              "baseVariableBorrowRate": "EngineFlags.KEEP_CURRENT",
+              "variableRateSlope1": "_bpsToRay(10_00)",
+              "variableRateSlope2": "EngineFlags.KEEP_CURRENT",
+              "stableRateSlope1": "EngineFlags.KEEP_CURRENT",
+              "stableRateSlope2": "_bpsToRay(1000_00)"
+            }
+          }
+        ]
+      }
+    },
+    "AaveV3Ethereum": {
+      "features": ["CapsUpdates (supplyCap, borrowCap)"],
+      "configs": {
+        "CapsUpdates (supplyCap, borrowCap)": [
+          {
+            "asset": "AaveV3EthereumAssets.wstETH_UNDERLYING",
+            "supplyCap": "EngineFlags.KEEP_CURRENT",
+            "borrowCap": "100_000"
+          }
+        ]
+      }
+    }
+  }
+}
