@@ -20,26 +20,29 @@ Again, this will help to
 
 ## Specification
 
-
-| Chain | Asset | Action | Current Value | New Value
-|-------|-------|-----| ---| --- |
-| Optimism | WETH | Lower Variable Base| 1% | 0%
-| Arbitrum | WETH | Lower Variable Base| 1%| 0%
-
+| Chain    | Asset | Action              | Current Value | New Value |
+| -------- | ----- | ------------------- | ------------- | --------- |
+| Optimism | WETH  | Lower Variable Base | 1%            | 0%        |
+| Arbitrum | WETH  | Lower Variable Base | 1%            | 0%        |
 
 ## Implementation
 
 The proposal implements changes on Optimism and Arbitrum v3 using the following payloads:
-  - [Optimism](https://github.com/GauntletNetworks/aave-proposals/blob/1e214b4083eb320788842333ced23acbeecc1238/src/AaveV3Update_20231002weth/AaveV3Optimism_20231002weth.sol)
-  - [Arbitrum](https://github.com/GauntletNetworks/aave-proposals/blob/1e214b4083eb320788842333ced23acbeecc1238/src/AaveV3Update_20231002weth/AaveV3Arbitrum_20231002weth.sol)
+
+- [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Update_20231002weth/AaveV3Optimism_20231002weth.sol)
+- [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Update_20231002weth/AaveV3Arbitrum_20231002weth.sol)
+
+## References
+
+- **Discussion**: https://governance.aave.com/t/gauntlet-interest-rate-recommendations-for-weth-and-wmatic-on-v2-and-v3/14588/8
+- **Snapshot**: https://snapshot.org/#/aave.eth/proposal/0x38a04c265542ec82202b9bb22ef4548290fbe7cde068f7c1c4fa9cd67c3c491b
 
 ## Disclaimer
 
 Gauntlet has not received any compensation from any third-party in exchange for recommending any of the actions contained in this proposal.
 
-
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
 
-*By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos.*
+_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._
