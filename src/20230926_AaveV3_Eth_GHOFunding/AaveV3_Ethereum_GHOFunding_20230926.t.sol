@@ -23,12 +23,16 @@ contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
   }
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18222915);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18274396);
     proposal = new AaveV3_Ethereum_GHOFunding_20230926();
   }
 
   function testProposalExecution() public {
-    Swap[4] memory swaps;
+    uint256 daiv2CollectorBalance = IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 busdv2CollectorBalance = IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 busdCollectorBalance = IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    // uint256 tusdv2CollectorBalance = 75_800 * 1e18;
+    Swap[3] memory swaps;
     // milkman creates intermediary contract for each swap
     // while swap is not executed the assets will be in these swap-specific proxy addresses instead of aaveSwapper
     // proxy contracts addresses are deterministic, they could be derived via code. 
@@ -37,22 +41,18 @@ contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
     swaps[0] = Swap({
       proxy: 0x2414B7eDd549E62e8a5877b73D96C80bAbC30bca,
       underlying: AaveV2EthereumAssets.DAI_UNDERLYING,
-      amount: (49_900 + 400_000) * 1e18
+      amount: (400_000 * 1e18) + daiv2CollectorBalance
     });
     swaps[1] = Swap({
       proxy: 0x86487dad62c99A37d0052ed56BF1EafF2959294D,
       underlying: AaveV2EthereumAssets.BUSD_UNDERLYING,
-      amount: (69_800 + 381_700) * 1e18
+      amount: busdv2CollectorBalance + busdCollectorBalance
     });
+
     swaps[2] = Swap({
       proxy: 0x3Df592eae98c2b4f312ADE339C01BBE2C8444618,
-      underlying: AaveV2EthereumAssets.TUSD_UNDERLYING,
-      amount: 75_800 * 1e18
-    });
-    swaps[3] = Swap({
-      proxy: 0x0eB322ac55dB67a5cA0810BA0eDae3501b1B7263,
       underlying: AaveV2EthereumAssets.USDT_UNDERLYING,
-      amount: 622_800 * 1e6
+      amount: 1_600_000 * 1e6
     });
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
