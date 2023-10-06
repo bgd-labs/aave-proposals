@@ -1,42 +1,53 @@
 {
   "rootOptions": {
-    "pools": ["AaveV2Ethereum", "AaveV3Ethereum"],
-    "title": "Test proposal",
-    "shortName": "TestProposal",
     "author": "BGD labs",
-    "discussion": "https://test",
-    "snapshot": "https//test"
+    "pools": ["AaveV2Ethereum", "AaveV3Ethereum", "AaveV3Optimism"],
+    "title": "Test Proposal",
+    "shortName": "TestProposal",
+    "discussion": "https://link",
+    "snapshot": ""
   },
   "poolOptions": {
     "AaveV2Ethereum": {
-      "features": ["CapsUpdates (supplyCap, borrowCap)"],
       "configs": {
         "RateStrategiesUpdates": [
           {
-            "asset": "AaveV2EthereumAssets.WBTC_UNDERLYING",
+            "asset": "AaveV2EthereumAssets.WETH_UNDERLYING",
             "params": {
-              "optimalUtilizationRate": "EngineFlags.KEEP_CURRENT",
-              "baseVariableBorrowRate": "EngineFlags.KEEP_CURRENT",
-              "variableRateSlope1": "_bpsToRay(10_00)",
+              "optimalUtilizationRate": "_bpsToRay(10_00)",
+              "baseVariableBorrowRate": "_bpsToRay(1000_00)",
+              "variableRateSlope1": "EngineFlags.KEEP_CURRENT",
               "variableRateSlope2": "EngineFlags.KEEP_CURRENT",
               "stableRateSlope1": "EngineFlags.KEEP_CURRENT",
-              "stableRateSlope2": "_bpsToRay(1000_00)"
+              "stableRateSlope2": "EngineFlags.KEEP_CURRENT"
             }
           }
         ]
-      }
+      },
+      "features": ["RateStrategiesUpdates"]
     },
     "AaveV3Ethereum": {
-      "features": ["CapsUpdates (supplyCap, borrowCap)"],
       "configs": {
         "CapsUpdates (supplyCap, borrowCap)": [
           {
             "asset": "AaveV3EthereumAssets.wstETH_UNDERLYING",
-            "supplyCap": "EngineFlags.KEEP_CURRENT",
-            "borrowCap": "100_000"
+            "supplyCap": "100_000_000",
+            "borrowCap": "1_000"
           }
         ]
-      }
+      },
+      "features": ["CapsUpdates (supplyCap, borrowCap)"]
+    },
+    "AaveV3Optimism": {
+      "configs": {
+        "PriceFeedsUpdates (replacing priceFeeds)": [
+          {
+            "asset": "AaveV3OptimismAssets.LINK_UNDERLYING",
+            "priceFeed": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+          }
+        ]
+      },
+      "features": ["PriceFeedsUpdates (replacing priceFeeds)"]
     }
   }
 }

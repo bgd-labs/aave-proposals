@@ -78,7 +78,6 @@ export const rateUpdates: FeatureModule<RateStrategyUpdate[]> = {
   build(opt, pool, cfg) {
     const response: CodeArtifact = {
       code: {
-        execute: [`${pool}.ACL_MANAGER.addFlashBorrower(NEW_FLASH_BORROWER);`],
         fn: [
           `function rateStrategiesUpdates()
           public

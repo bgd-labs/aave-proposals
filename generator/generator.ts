@@ -135,11 +135,11 @@ if (!configFileLoaded) {
   for (const pool of options.pools) {
     poolConfigs[pool] = {configs: {}, artifacts: [], features: []} as PoolConfig;
     const v2 = isV2Pool(pool);
-    options[pool].features = await checkbox({
+    poolConfigs[pool]!.features = await checkbox({
       message: `What do you want to do on ${pool}?`,
       choices: v2 ? FEATURE_MODULES_V2 : FEATURE_MODULES_V3,
     });
-    for (const feature of options[pool].features) {
+    for (const feature of poolConfigs[pool]!.features) {
       const module = v2
         ? FEATURE_MODULES_V2.find((m) => m.value === feature)!
         : FEATURE_MODULES_V3.find((m) => m.value === feature)!;
@@ -200,17 +200,19 @@ if (fs.existsSync(baseFolder) && !options.force) {
         filepath: 'foo.sol',
       })
     );
+    const testCode = await testTemplate(options, pool, poolConfigs[pool]?.artifacts);
     fs.writeFileSync(
       path.join(baseFolder, `${contractName}.t.sol`),
-      prettier.format(await testTemplate(options, pool, poolConfigs[pool]?.artifacts), {
+      prettier.format(testCode, {
         ...prettierSolCfg,
         filepath: 'foo.sol',
       })
     );
   }
 
-  options.pools.forEach((pool) => createFiles(options, pool));
+  await Promise.all(options.pools.map((pool) => createFiles(options, pool)));
 
+  console.log(generateScript(options));
   fs.writeFileSync(
     path.join(baseFolder, `${generateContractName(options)}.s.sol`),
     prettier.format(generateScript(options), {

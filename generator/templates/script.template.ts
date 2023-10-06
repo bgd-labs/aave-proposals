@@ -83,18 +83,20 @@ contract CreateProposal is EthereumScript {
     });
 
     // compose actions for validation
-    ${Object.keys(poolsToChainsMap).map((chain, ix) => {
-      let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](${poolsToChainsMap[chain].length});\n`;
-      template += poolsToChainsMap[chain]
-        .map(({contractName, pool}, ix) => {
-          return `actions${chain}[${ix}] = GovV3Helpers.buildAction(address(0));`;
-        })
-        .join('\n');
-      template += `payloads[${ix}] = GovV3Helpers.build${
-        chain == 'Ethereum' ? 'Mainnet' : chain
-      }(vm, actions${chain});\n`;
-      return template;
-    })}
+    ${Object.keys(poolsToChainsMap)
+      .map((chain, ix) => {
+        let template = `IPayloadsControllerCore.ExecutionAction[] memory actions${chain} = new IPayloadsControllerCore.ExecutionAction[](${poolsToChainsMap[chain].length});\n`;
+        template += poolsToChainsMap[chain]
+          .map(({contractName, pool}, ix) => {
+            return `actions${chain}[${ix}] = GovV3Helpers.buildAction(address(0));`;
+          })
+          .join('\n');
+        template += `payloads[${ix}] = GovV3Helpers.build${
+          chain == 'Ethereum' ? 'Mainnet' : chain
+        }(vm, actions${chain});\n`;
+        return template;
+      })
+      .join('\n')}
 
     // create proposal
     GovV3Helpers.createProposal(payloads, GovHelpers.ipfsHashFile(vm, 'src/${folderName}/${
