@@ -2,10 +2,10 @@
 pragma solidity ^0.8.0;
 
 import {GovV3Helpers} from 'aave-helpers/GovV3Helpers.sol';
-import {EthereumScript, OptimismScript} from 'aave-helpers/ScriptUtils.sol';
+import {EthereumScript, AvalancheScript} from 'aave-helpers/ScriptUtils.sol';
 import {AaveV2Ethereum_TestProposal_20231006} from './AaveV2Ethereum_TestProposal_20231006.sol';
 import {AaveV3Ethereum_TestProposal_20231006} from './AaveV3Ethereum_TestProposal_20231006.sol';
-import {AaveV3Optimism_TestProposal_20231006} from './AaveV3Optimism_TestProposal_20231006.sol';
+import {AaveV3Avalanche_TestProposal_20231006} from './AaveV3Avalanche_TestProposal_20231006.sol';
 
 /**
  * @dev Deploy Ethereum
@@ -29,13 +29,13 @@ contract DeployEthereum is EthereumScript {
 }
 
 /**
- * @dev Deploy Optimism
- * command: make deploy-ledger contract=src/20231006_Multi_TestProposal/TestProposal_20231006.s.sol:DeployOptimism chain=optimism
+ * @dev Deploy Avalanche
+ * command: make deploy-ledger contract=src/20231006_Multi_TestProposal/TestProposal_20231006.s.sol:DeployAvalanche chain=avalanche
  */
-contract DeployOptimism is OptimismScript {
+contract DeployAvalanche is AvalancheScript {
   function run() external broadcast {
     // deploy payloads
-    AaveV3Optimism_TestProposal_20231006 payload0 = new AaveV3Optimism_TestProposal_20231006();
+    AaveV3Avalanche_TestProposal_20231006 payload0 = new AaveV3Avalanche_TestProposal_20231006();
 
     // compose action
     IPayloadsControllerCore.ExecutionAction[]
@@ -64,9 +64,9 @@ contract CreateProposal is EthereumScript {
     payloads[0] = GovV3Helpers.buildMainnet(vm, actionsEthereum);
 
     IPayloadsControllerCore.ExecutionAction[]
-      memory actionsOptimism = new IPayloadsControllerCore.ExecutionAction[](1);
-    actionsOptimism[0] = GovV3Helpers.buildAction(address(0));
-    payloads[1] = GovV3Helpers.buildOptimism(vm, actionsOptimism);
+      memory actionsAvalanche = new IPayloadsControllerCore.ExecutionAction[](1);
+    actionsAvalanche[0] = GovV3Helpers.buildAction(address(0));
+    payloads[1] = GovV3Helpers.buildAvalanche(vm, actionsAvalanche);
 
     // create proposal
     GovV3Helpers.createProposal(

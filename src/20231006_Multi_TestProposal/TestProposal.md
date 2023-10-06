@@ -1,7 +1,7 @@
 ---
-title: "Test Proposal"
+title: "Test proposal"
 author: "BGD labs"
-discussions: "https://link"
+discussions: "https://test"
 ---
 
 ## Simple Summary
@@ -12,10 +12,10 @@ discussions: "https://link"
 
 ## References
 
-- Implementation: [AaveV2Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV2Ethereum_TestProposal_20231006.sol), [AaveV3Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Ethereum_TestProposal_20231006.sol), [AaveV3Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Optimism_TestProposal_20231006.sol)
-- Tests: [AaveV2Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV2Ethereum_TestProposal_20231006.t.sol), [AaveV3Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Ethereum_TestProposal_20231006.t.sol), [AaveV3Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Optimism_TestProposal_20231006.t.sol)
-- [Snapshot](yay)
-- [Discussion](https://link)
+- Implementation: [AaveV2Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV2Ethereum_TestProposal_20231006.sol), [AaveV3Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Ethereum_TestProposal_20231006.sol), [AaveV3Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Avalanche_TestProposal_20231006.sol)
+- Tests: [AaveV2Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV2Ethereum_TestProposal_20231006.t.sol), [AaveV3Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Ethereum_TestProposal_20231006.t.sol), [AaveV3Avalanche](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231006_Multi_TestProposal/AaveV3Avalanche_TestProposal_20231006.t.sol)
+- [Snapshot](https://test)
+- [Discussion](https://test)
 
 ## Copyright
 

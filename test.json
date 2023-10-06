@@ -1,21 +1,21 @@
 {
   "rootOptions": {
     "author": "BGD labs",
-    "pools": ["AaveV2Ethereum", "AaveV3Ethereum", "AaveV3Optimism"],
-    "title": "Test Proposal",
+    "pools": ["AaveV2Ethereum", "AaveV3Ethereum", "AaveV3Avalanche"],
+    "title": "Test proposal",
     "shortName": "TestProposal",
-    "discussion": "https://link",
-    "snapshot": ""
+    "discussion": "https://test",
+    "snapshot": "https://test"
   },
   "poolOptions": {
     "AaveV2Ethereum": {
       "configs": {
         "RateStrategiesUpdates": [
           {
-            "asset": "AaveV2EthereumAssets.WETH_UNDERLYING",
+            "asset": "AaveV2EthereumAssets.USDT_UNDERLYING",
             "params": {
-              "optimalUtilizationRate": "_bpsToRay(10_00)",
-              "baseVariableBorrowRate": "_bpsToRay(1000_00)",
+              "optimalUtilizationRate": "EngineFlags.KEEP_CURRENT",
+              "baseVariableBorrowRate": "_bpsToRay(10_00)",
               "variableRateSlope1": "EngineFlags.KEEP_CURRENT",
               "variableRateSlope2": "EngineFlags.KEEP_CURRENT",
               "stableRateSlope1": "EngineFlags.KEEP_CURRENT",
@@ -30,24 +30,28 @@
       "configs": {
         "CapsUpdates (supplyCap, borrowCap)": [
           {
-            "asset": "AaveV3EthereumAssets.wstETH_UNDERLYING",
-            "supplyCap": "100_000_000",
-            "borrowCap": "1_000"
+            "asset": "AaveV3EthereumAssets.WBTC_UNDERLYING",
+            "supplyCap": "100_000",
+            "borrowCap": "EngineFlags.KEEP_CURRENT"
           }
         ]
       },
       "features": ["CapsUpdates (supplyCap, borrowCap)"]
     },
-    "AaveV3Optimism": {
+    "AaveV3Avalanche": {
       "configs": {
-        "PriceFeedsUpdates (replacing priceFeeds)": [
+        "eModeCategoriesUpdates (altering/adding eModes)": [
           {
-            "asset": "AaveV3OptimismAssets.LINK_UNDERLYING",
-            "priceFeed": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+            "eModeCategory": "AaveV3AvalancheEModes.AVAX_CORRELATED",
+            "ltv": "EngineFlags.KEEP_CURRENT",
+            "liqThreshold": "99_99",
+            "liqBonus": "EngineFlags.KEEP_CURRENT",
+            "priceSource": "EngineFlags.KEEP_CURRENT_ADDRESS",
+            "label": "KEEP_CURRENT_STRING"
           }
         ]
       },
-      "features": ["PriceFeedsUpdates (replacing priceFeeds)"]
+      "features": ["eModeCategoriesUpdates (altering/adding eModes)"]
     }
   }
 }

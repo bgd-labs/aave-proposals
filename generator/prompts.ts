@@ -45,6 +45,11 @@ function translateJsNumberToSol(value: string) {
   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '_');
 }
 
+function translateJsAddressToSol(value: string) {
+  if (value === ENGINE_FLAGS.KEEP_CURRENT_ADDRESS) return `EngineFlags.KEEP_CURRENT_ADDRESS`;
+  return getAddress(value);
+}
+
 function translateEModeToEModeLib(value: string, pool: PoolIdentifier) {
   if (value === ENGINE_FLAGS.KEEP_CURRENT) return `EngineFlags.KEEP_CURRENT`;
   return `${pool}EModes.${value}`;
@@ -112,7 +117,7 @@ export async function addressInput({message, disableKeepCurrent}: GenericPrompt)
     validate: disableKeepCurrent ? isAddress : isAddressOrKeepCurrent,
     ...(disableKeepCurrent ? {} : {default: ENGINE_FLAGS.KEEP_CURRENT_ADDRESS}),
   });
-  return getAddress(value);
+  return translateJsAddressToSol(value);
 }
 
 interface AssetsSelectPrompt extends Omit<GenericPrompt, 'disableKeepCurrent'> {

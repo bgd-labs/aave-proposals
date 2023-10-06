@@ -15,7 +15,7 @@ contract AaveV2Ethereum_TestProposal_20231006_Test is ProtocolV2TestBase {
   AaveV2Ethereum_TestProposal_20231006 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18291442);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18291494);
     proposal = new AaveV2Ethereum_TestProposal_20231006();
   }
 
