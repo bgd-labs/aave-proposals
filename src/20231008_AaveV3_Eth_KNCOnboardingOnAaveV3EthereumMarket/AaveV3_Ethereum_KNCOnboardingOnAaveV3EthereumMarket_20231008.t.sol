@@ -32,6 +32,12 @@ contract AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
       'postAaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008',
       AaveV3Ethereum.POOL
     );
+ 
+   e2eTestAsset(
+      AaveV3Ethereum.POOL,
+        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
+        _findReserveConfig(allConfigsAfter, proposal.KNC())
+        );
 
     diffReports(
       'preAaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008',
