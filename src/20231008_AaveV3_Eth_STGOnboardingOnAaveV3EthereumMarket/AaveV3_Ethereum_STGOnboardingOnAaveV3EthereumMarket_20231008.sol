@@ -10,7 +10,7 @@ import {AaveV3PayloadEthereum, IEngine, Rates, EngineFlags} from 'lib/aave-helpe
  * - Discussion: https://governance.aave.com/t/arfc-stg-onboarding-on-aavev3-ethereum-market/14973
  */
 contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008 is AaveV3PayloadEthereum {
-  address public constant STG = 0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6;
+  address public constant STG = 0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6;
   address public constant STG_PRICE_FEED = 0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d;
   
   function newListings() public pure override returns (IEngine.Listing[] memory) {
