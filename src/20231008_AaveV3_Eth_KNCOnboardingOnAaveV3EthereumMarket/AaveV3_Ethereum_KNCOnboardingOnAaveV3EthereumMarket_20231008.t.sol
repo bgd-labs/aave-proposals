@@ -16,7 +16,7 @@ contract AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
   AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18308021);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18307004);
     proposal = new AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008();
   }
 
@@ -43,7 +43,6 @@ contract AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
       'preAaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008',
       'postAaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008'
     );
-
     e2eTest(AaveV3Ethereum.POOL);
   }
 }
