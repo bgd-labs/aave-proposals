@@ -26,10 +26,10 @@ This proposal is expected to acquire approximately $1.6M from secondary markets 
 Using the Aave Swap Contract, convert the following asset holdings to GHO:
 
 * [aDAI v2](https://etherscan.io/token/0x028171bca77440897b824ca71d1c56cac55b68a3?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
-* [aBUSD v2](https://etherscan.io/token/0xa361718326c15715591c299427c62086f69923d9?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
+* [TUSD](https://etherscan.io/address/0x0000000000085d4780B73119b644AE5ecd22b376?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
 * [BUSD](https://etherscan.io/token/0x4fabb145d64652a948d72533023f6e7a623c7c53?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
-* [400,000 aEthDAI v3](https://etherscan.io/token/0x018008bfb33d285247a21d44e50697654f754e63?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
-* [400,000 aUSDT v2](https://etherscan.io/token/0x3ed3b47dd13ec9a98b44e6204a523e766b225811?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
+* [370,000 aEthDAI v3](https://etherscan.io/token/0x018008bfb33d285247a21d44e50697654f754e63?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
+* [370,000 aUSDT v2](https://etherscan.io/token/0x3ed3b47dd13ec9a98b44e6204a523e766b225811?a=0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c)
 
 The GHO will be transferred to the [Aave Ethereum Treasury](https://etherscan.io/address/0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c).
 

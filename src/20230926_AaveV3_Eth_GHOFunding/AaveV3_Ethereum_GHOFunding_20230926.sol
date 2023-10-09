@@ -16,7 +16,7 @@ interface aTokenV1 {
 /**
  * @title GHO Funding
  * @author TokenLogic
- * - Snapshot: TODO
+ * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xb094cdc806d407d0cf4ea00e595ae95b8c145f77b77cce165c463326cc757639
  * - Discussion: https://governance.aave.com/t/arfc-treasury-management-gho-funding/14887
  */
 contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
@@ -28,21 +28,18 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     uint256 amount;
   }
 
+  address public constant COLLECTOR = address(AaveV3Ethereum.COLLECTOR);
+  address public constant MILKMAN = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
+  address public constant PRICE_CHECKER = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
+  address public constant GHO_ORACLE = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC; 
+
   function execute() external {
     // DAI v2
     Asset memory DAIv2 = Asset({
       underlying: AaveV2EthereumAssets.DAI_UNDERLYING,
       aToken: AaveV2EthereumAssets.DAI_A_TOKEN,
       oracle: 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9,
-      amount: IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(address(AaveV3Ethereum.COLLECTOR))
-    });
-
-    // BUSD v2
-    Asset memory BUSDv2 = Asset({
-      underlying: AaveV2EthereumAssets.BUSD_UNDERLYING,
-      aToken: AaveV2EthereumAssets.BUSD_A_TOKEN,
-      oracle: 0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A,
-      amount: IERC20(AaveV2EthereumAssets.BUSD_A_TOKEN).balanceOf(address(AaveV3Ethereum.COLLECTOR))
+      amount: IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(COLLECTOR)
     });
 
     // DAI v3
@@ -50,7 +47,7 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
       underlying: AaveV3EthereumAssets.DAI_UNDERLYING,
       aToken: AaveV3EthereumAssets.DAI_A_TOKEN,
       oracle: 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9,
-      amount: 400_000 * 1e18
+      amount: 370_000 * 1e18
     });
 
     // USDT v2
@@ -58,15 +55,23 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
       underlying: AaveV2EthereumAssets.USDT_UNDERLYING,
       aToken: AaveV2EthereumAssets.USDT_A_TOKEN,
       oracle: 0x3E7d1eAB13ad0104d2750B8863b489D65364e32D,
-      amount: 1_100_000 * 1e6
+      amount: 370_000 * 1e6
     });
 
-    // USDT v3
-    Asset memory USDTv3 = Asset({
-      underlying: AaveV3EthereumAssets.USDT_UNDERLYING,
-      aToken: AaveV3EthereumAssets.USDT_A_TOKEN,
-      oracle: 0x3E7d1eAB13ad0104d2750B8863b489D65364e32D,
-      amount: 500_000 * 1e6
+    // BUSD
+    Asset memory BUSD = Asset({
+      underlying: AaveV2EthereumAssets.BUSD_UNDERLYING,
+      aToken: address(0), // not used
+      oracle: 0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A,
+      amount: IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(COLLECTOR)
+    });
+    
+    // TUSD v2
+    Asset memory TUSD = Asset({
+      underlying: AaveV2EthereumAssets.TUSD_UNDERLYING,
+      aToken: address(0), // not used
+      oracle: 0xec746eCF986E2927Abd291a2A1716c940100f8Ba,
+      amount: IERC20(AaveV2EthereumAssets.TUSD_UNDERLYING).balanceOf(COLLECTOR)
     });
 
 
@@ -79,40 +84,31 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
       AaveV3Ethereum.POOL.withdraw(DAIv3.underlying, DAIv3.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
     swapAsset(DAIv2, swapperBalance);
 
-    ////// BUSD v2 & v1 swap //////
-    // transfer max busd to payload
-    swapperBalance = IERC20(BUSDv2.underlying).balanceOf(address(AaveV3Ethereum.COLLECTOR));
-    AaveV3Ethereum.COLLECTOR.transfer(BUSDv2.underlying, address (this), swapperBalance);
-    // transfer specific amount of busdv2 to payload
-    AaveV3Ethereum.COLLECTOR.transfer(BUSDv2.aToken, address(this), BUSDv2.amount);
-    swapperBalance += AaveV2Ethereum.POOL.withdraw(BUSDv2.underlying, BUSDv2.amount, address(this));
-    
-    SafeERC20.safeTransfer(IERC20(BUSDv2.underlying), AaveMisc.AAVE_SWAPPER_ETHEREUM, swapperBalance);
-    swapAsset(BUSDv2, swapperBalance);
+    ////// BUSD swap //////
+    AaveV3Ethereum.COLLECTOR.transfer(BUSD.underlying, AaveMisc.AAVE_SWAPPER_ETHEREUM, BUSD.amount);
+    swapAsset(BUSD, BUSD.amount);
 
-    ////// USDT v2 & v3 swap //////
+    ////// TUSD swap //////
+    AaveV3Ethereum.COLLECTOR.transfer(TUSD.underlying, AaveMisc.AAVE_SWAPPER_ETHEREUM, TUSD.amount);
+    swapAsset(TUSD, TUSD.amount);
+
+    ////// USDT v2 swap //////
     AaveV3Ethereum.COLLECTOR.transfer(USDTv2.aToken, address(this), USDTv2.amount);
-    AaveV3Ethereum.COLLECTOR.transfer(USDTv3.aToken, address(this), USDTv3.amount);
     swapperBalance = 
       AaveV2Ethereum.POOL.withdraw(USDTv2.underlying, USDTv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    swapperBalance += 
-      AaveV3Ethereum.POOL.withdraw(USDTv3.underlying, USDTv3.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
     swapAsset(USDTv2, swapperBalance);
   }
 
   function swapAsset(Asset memory asset, uint256 amount) internal {
-    address milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-    address priceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
-    address ghoOracle = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC; 
     AaveSwapper swapper = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
     swapper.swap(
-      milkman,
-      priceChecker,
+      MILKMAN,
+      PRICE_CHECKER,
       asset.underlying,
       AaveV3EthereumAssets.GHO_UNDERLYING,
       asset.oracle,
-      ghoOracle,
-      address(AaveV3Ethereum.COLLECTOR),
+      GHO_ORACLE,
+      COLLECTOR,
       amount,
       50
     );
