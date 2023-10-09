@@ -18,7 +18,7 @@
 | oracle | [0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d](https://etherscan.io/address/0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d) |
 | oracleDecimals | 8 |
 | oracleDescription | STG / USD |
-| oracleLatestAnswer | 0.43762596 |
+| oracleLatestAnswer | 0.42768706 |
 | usageAsCollateralEnabled | true |
 | ltv | 35 % |
 | liquidationThreshold | 40 % |
@@ -86,7 +86,7 @@
         "oracle": "0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d",
         "oracleDecimals": 8,
         "oracleDescription": "STG / USD",
-        "oracleLatestAnswer": 43762596,
+        "oracleLatestAnswer": 42768706,
         "reserveFactor": 2000,
         "stableBorrowRateEnabled": false,
         "stableDebtToken": "0xc3115D0660b93AeF10F298886ae22E3Dd477E482",

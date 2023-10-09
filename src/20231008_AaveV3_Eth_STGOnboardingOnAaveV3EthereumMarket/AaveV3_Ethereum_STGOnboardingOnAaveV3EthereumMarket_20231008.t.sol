@@ -16,7 +16,7 @@ contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
   AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18307004);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18313652);
     proposal = new AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008();
   }
 
@@ -39,13 +39,7 @@ contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
       _findReserveConfig(allConfigsAfter, proposal.STG())
     );
 
-    // this test fails due to "unexpected Listing" do we have another standard test for this?
-
-    _noReservesConfigsChangesApartFrom(
-      allConfigsBefore,
-      allConfigsAfter,
-      proposal.STG()
-    );
+    _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     diffReports(
       'preAaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008',
