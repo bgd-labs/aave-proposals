@@ -17,8 +17,8 @@ contract AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926_Test is ProtocolV3Te
   AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18222341);
-    proposal = new AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926();
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18314069);
+    proposal = AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926(0x5F8Cb9A8e12377aAe2f534813c51eEC7e36D2772);
   }
 
   function testProposalExecution() public {
@@ -31,7 +31,7 @@ contract AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926_Test is ProtocolV3Te
     // proxy contracts addresses are deterministic, they could be derived via code. 
     // I simulated execution and copy pasted the address for simplicity
     // see https://etherscan.io/address/0x11C76AD590ABDFFCD980afEC9ad951B160F02797#code#L878
-    address daiMilkmanCreatedContract = 0x2414B7eDd549E62e8a5877b73D96C80bAbC30bca;
+    address daiMilkmanCreatedContract = 0x3Df592eae98c2b4f312ADE339C01BBE2C8444618;
 
     AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926 payload = new AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926();
     
