@@ -14,7 +14,7 @@ import {AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008} from './Aa
  */
 contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008_Test is ProtocolV3TestBase {
   AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008 internal proposal;
-  
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 18307004);
     proposal = new AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008();
@@ -32,13 +32,21 @@ contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
       'postAaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008',
       AaveV3Ethereum.POOL
     );
-    
+
     e2eTestAsset(
       AaveV3Ethereum.POOL,
-        _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
-        _findReserveConfig(allConfigsAfter, proposal.STG())
-        );
-        
+      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
+      _findReserveConfig(allConfigsAfter, proposal.STG())
+    );
+
+    // this test fails due to "unexpected Listing" do we have another standard test for this?
+
+    _noReservesConfigsChangesApartFrom(
+      allConfigsBefore,
+      allConfigsAfter,
+      proposal.STG()
+    );
+
     diffReports(
       'preAaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008',
       'postAaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008'
