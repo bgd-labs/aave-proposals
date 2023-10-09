@@ -17,6 +17,7 @@ jobs:
     steps:
       - name: Generate a token
         id: generate_token
+        if: github.event_name != 'pull_request'
         uses: actions/create-github-app-token@v1
         with:
           app_id: ${{ secrets.UPDATE_BOT_APP_ID }}
@@ -25,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ steps.generate_token.outputs.token }}
+          token: ${{ steps.generate_token.outputs.token || github.token }}
           persist-credentials: true
 
       - uses: actions/setup-node@v3
