@@ -35,15 +35,16 @@ interface IWETH {
  * - Discussion: https://governance.aave.com/t/arfc-treasury-manage-gho-liquidity-committee/14914
  */
 contract AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926 is IProposalGenericExecutor {
-  function execute() external {
-    uint256 daiAmount = 406_000e18;
-    uint256 awethAmount = 5 ether;
-    address daiOracle = 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9;
-    address ghoOracle = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC;
-    address milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
-    address priceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
-    address liquidityCommittee = 0x205e795336610f5131Be52F09218AF19f0f3eC60;
 
+  uint256 public constant daiAmount = 406_000e18;
+  uint256 public constant awethAmount = 5 ether;
+  address public constant daiOracle = AaveV3EthereumAssets.DAI_ORACLE;
+  address public constant ghoOracle = 0x3f12643D3f6f874d39C2a4c9f2Cd6f2DbAC877FC;
+  address public constant milkman = 0x11C76AD590ABDFFCD980afEC9ad951B160F02797;
+  address public constant priceChecker = 0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c;
+  address public constant liquidityCommittee = 0x205e795336610f5131Be52F09218AF19f0f3eC60;
+
+  function execute() external {
     AaveSwapper SWAPPER = AaveSwapper(AaveMisc.AAVE_SWAPPER_ETHEREUM);
     
     AaveV3Ethereum.COLLECTOR.transfer(AaveV3EthereumAssets.DAI_A_TOKEN, address(this), daiAmount);
