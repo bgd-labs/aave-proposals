@@ -29,8 +29,8 @@ GLC SAFE Address: [0x205e795336610f5131Be52F09218AF19f0f3eC60](https://etherscan
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Eth_FundGHOLiquidityCommittee/AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Eth_FundGHOLiquidityCommittee/AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/8cca2260671af1fc5831b86d727af555289a389c/src/20230926_AaveV3_Eth_FundGHOLiquidityCommittee/AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/8cca2260671af1fc5831b86d727af555289a389c/src/20230926_AaveV3_Eth_FundGHOLiquidityCommittee/AaveV3_Ethereum_FundGHOLiquidityCommittee_20230926.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x219cf8fbfa806b396728b7bf11e635ac4833ce92c9ea8e34f24a686e3cf0d132)
 - [Discussion](https://governance.aave.com/t/arfc-treasury-manage-gho-liquidity-committee/14914)
 
