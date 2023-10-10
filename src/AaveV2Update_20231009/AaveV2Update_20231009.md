@@ -35,8 +35,8 @@ Following the [v2 deprecation framework](https://governance.aave.com/t/arfc-aave
 ## Implementation
 
 The proposal implements changes using the following payloads:
-  - [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2Update_20231009/AaveV2Ethereum_20231009.sol)
-  - [Ethereum Tests](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2Update_20231009/AaveV2Update_20231009_Test.t.sol)
+  - [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/24c7c4e298c8ae7df15f4b0480b978ec1fce35f1/src/AaveV2Update_20231009/AaveV2Ethereum_20231009.sol)
+  - [Ethereum Tests](https://github.com/bgd-labs/aave-proposals/blob/24c7c4e298c8ae7df15f4b0480b978ec1fce35f1/src/AaveV2Update_20231009/AaveV2Update_20231009_Test.t.sol)
 
 ## References
 
