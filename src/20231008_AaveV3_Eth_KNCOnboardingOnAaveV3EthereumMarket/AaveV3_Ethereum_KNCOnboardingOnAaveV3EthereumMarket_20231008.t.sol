@@ -38,6 +38,8 @@ contract AaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
         _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
         _findReserveConfig(allConfigsAfter, proposal.KNC())
         );
+    
+     _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     diffReports(
       'preAaveV3_Ethereum_KNCOnboardingOnAaveV3EthereumMarket_20231008',
