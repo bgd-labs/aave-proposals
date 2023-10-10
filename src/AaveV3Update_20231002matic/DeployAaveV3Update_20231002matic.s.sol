@@ -13,7 +13,7 @@ import {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildPolygon(address(0));
+    payloads[0] = GovHelpers.buildPolygon(0xff374aD1be52fF54Cf576586253a113d3F48D4B7);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
