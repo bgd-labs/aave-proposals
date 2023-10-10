@@ -15,7 +15,7 @@ contract AaveV2EthereumUpdate20231009Payload is AaveV2PayloadEthereum {
     AaveV2Ethereum.POOL_CONFIGURATOR.configureReserveAsCollateral(
       AaveV2EthereumAssets.ONE_INCH_UNDERLYING,
       0,
-      4000,
+      2400,
       10850
     );
 

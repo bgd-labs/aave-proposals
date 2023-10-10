@@ -13,7 +13,7 @@ Following the [v2 deprecation framework](https://governance.aave.com/t/arfc-aave
 
 | Asset  | Current LT | Rec LT | Current LTV | Rec LTV |
 |--------|--------|--------|-------------|---------|
-| 1INCH  | 40%    | 40%    | 30%         | 0       |
+| 1INCH  | 40%    | 24%    | 30%         | 0       |
 | BAL    | 35%    | 25%    | 0           | 0       |
 | BAT    | 40%    | 1%     | 0           | 0       |
 | CRV    | 45%    | 42%    | 0           | 0       |
@@ -36,6 +36,7 @@ Following the [v2 deprecation framework](https://governance.aave.com/t/arfc-aave
 
 The proposal implements changes using the following payloads:
   - [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2Update_20231009/AaveV2Ethereum_20231009.sol)
+  - [Ethereum Tests](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2Update_20231009/AaveV2Update_20231009_Test.t.sol)
 
 ## References
 
@@ -44,8 +45,6 @@ The proposal implements changes using the following payloads:
 ## Disclaimer
 
 Gauntlet and Chaos have not received any compensation from any third-party in exchange for recommending any of the actions contained in this proposal.
-
-By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos.
 
 ## Copyright
 

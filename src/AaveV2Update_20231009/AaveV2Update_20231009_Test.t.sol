@@ -62,6 +62,7 @@ contract AaveV2EthereumUpdate_20231009_Test is ProtocolV2TestBase {
         AaveV2EthereumAssets.ONE_INCH_UNDERLYING
       );
       ONE_INCH_UNDERLYING_CONFIG.ltv = 0;
+      ONE_INCH_UNDERLYING_CONFIG.liquidationThreshold = 24_00;
       _validateReserveConfig(ONE_INCH_UNDERLYING_CONFIG, allConfigsAfter);
 
       ReserveConfig memory BAL_UNDERLYING_CONFIG = _findReserveConfig(

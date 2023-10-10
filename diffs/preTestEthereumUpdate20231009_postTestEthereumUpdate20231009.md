@@ -28,6 +28,7 @@
 | description | value before | value after |
 | --- | --- | --- |
 | ltv | 30 % | 0 % |
+| liquidationThreshold | 40 % | 24 % |
 
 
 #### DPI ([0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b](https://etherscan.io/address/0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b))
@@ -149,6 +150,10 @@
       }
     },
     "0x111111111117dC0aa78b770fA6A738034120C302": {
+      "liquidationThreshold": {
+        "from": 4000,
+        "to": 2400
+      },
       "ltv": {
         "from": 3000,
         "to": 0
