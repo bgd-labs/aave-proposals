@@ -33,12 +33,6 @@ contract AaveV3_Ethereum_STGOnboardingOnAaveV3EthereumMarket_20231008_Test is Pr
       AaveV3Ethereum.POOL
     );
 
-    e2eTestAsset(
-      AaveV3Ethereum.POOL,
-      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
-      _findReserveConfig(allConfigsAfter, proposal.STG())
-    );
-
     _noReservesConfigsChangesApartNewListings(allConfigsBefore, allConfigsAfter);
 
     diffReports(

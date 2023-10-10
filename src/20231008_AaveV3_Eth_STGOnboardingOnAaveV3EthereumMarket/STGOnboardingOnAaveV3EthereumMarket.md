@@ -5,9 +5,11 @@ discussions: "https://governance.aave.com/t/arfc-stg-onboarding-on-aavev3-ethere
 ---
 
 ## Simple Summary
+
 This ARFC is proposing to add the STG token from Stargate to the AaveV3 Ethereum market in isolation mode.
 
 ## Motivation
+
 Stargate is a composable, omnichain bridge built on top of the LayerZero protocol. Its goal is to bring enhanced utility to users and Dapps by allowing the transfer of assets across chains from unified liquidity with immediate and guaranteed finality.
 
 Having reached $15 Billion in cumulative volume and ranked first in bridged volume over the last month, Stargate is becoming the most used bridge. Its token, the STG is using a linear ve-locking to offer governance power and fee redistribution to it’s users. With a circulating supply of 200M over the 1000M expected it brings the capitalization to $90M.
@@ -17,6 +19,7 @@ Integrating the STG token into the Ethereum Aave v3 will enhance asset diversifi
 This onboarding is considered in isolation mode with conservative LTV and debt ceiling parameters to limit protocol exposure.
 
 ## Specification
+
 We propose the followings parameters in accordfance with the risk providers
 | Parameter | Value |
 | --- | --- |
@@ -44,10 +47,10 @@ We propose the followings parameters in accordfance with the risk providers
 | Flahloanable | Yes |
 | Siloed Borrowing | No |
 | Borrowed in Isolation | No |
+
 - **Ticker**: STG
 - **Contract Address**: [0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6](https://etherscan.io/address/0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6)
 - **Chainlink Oracle STG/USD**: [0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d](https://etherscan.io/address/0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d)
-
 
 ## References
 
