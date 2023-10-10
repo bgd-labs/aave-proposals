@@ -29,8 +29,8 @@ Again, this will help to
 
 The proposal implements changes on Optimism and Arbitrum v3 using the following payloads:
 
-- [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Update_20231002weth/AaveV3Optimism_20231002weth.sol)
-- [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV3Update_20231002weth/AaveV3Arbitrum_20231002weth.sol)
+- [Optimism](https://github.com/bgd-labs/aave-proposals/blob/4a2d4a0b0a6cc580223e66c44a162d756bc43ec7/src/AaveV3Update_20231002weth/AaveV3Optimism_20231002weth.sol)
+- [Arbitrum](https://github.com/bgd-labs/aave-proposals/blob/4a2d4a0b0a6cc580223e66c44a162d756bc43ec7/src/AaveV3Update_20231002weth/AaveV3Arbitrum_20231002weth.sol)
 
 ## References
 
