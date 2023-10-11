@@ -25,10 +25,6 @@ contract CreateLongProposal is EthereumScript {
   }
 }
 
-Avalanche: https://snowtrace.io/address/0xb58e840e1356ed9b7f89d11a03d4cef24f56a1ea
-Metis: https://andromeda-explorer.metis.io/address/0x230E0321Cf38F09e247e50Afc7801EA2351fe56F/
-Base: https://basescan.org/address/0x4959bad86d851378c6bccf07cb8240d55a11c5ac
-
 /**
  * @dev Create Proposal
  * command: make deploy-ledger contract=src/20231010_AaveV3_Multi_GovernanceV3Activation/AaveV3_GovernanceV3Activation_20231010.s.sol:CreateProposal chain=mainnet
