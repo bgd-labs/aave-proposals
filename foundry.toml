@@ -24,5 +24,6 @@ avalanche={key="${ETHERSCAN_API_KEY_AVALANCHE}",chainId=43114}
 polygon={key="${ETHERSCAN_API_KEY_POLYGON}",chainId=137}
 arbitrum={key="${ETHERSCAN_API_KEY_ARBITRUM}",chainId=42161}
 fantom={key="${ETHERSCAN_API_KEY_FANTOM}",chainId=250}
+base={key="${ETHERSCAN_API_KEY_BASE}",chainId=8453}
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config
