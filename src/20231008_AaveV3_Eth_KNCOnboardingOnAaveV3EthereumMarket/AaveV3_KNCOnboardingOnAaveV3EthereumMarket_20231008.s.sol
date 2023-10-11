@@ -22,7 +22,7 @@ contract DeployEthereum is EthereumScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](1);
-    payloads[0] = GovHelpers.buildMainnet(address(0));
+    payloads[0] = GovHelpers.buildMainnet(0x29Ba7784aB57dB44c51CCd3743Aa2B792F8523ac);
     GovHelpers.createProposal(
       payloads,
       GovHelpers.ipfsHashFile(
