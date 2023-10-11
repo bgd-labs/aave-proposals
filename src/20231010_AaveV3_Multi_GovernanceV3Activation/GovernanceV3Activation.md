@@ -12,7 +12,7 @@ Additionally, the a.DI (Aave Delivery Network) and Aave Robot systems are activa
 
 ## Motivation
 
-v3 is a the next iteration for the Aave governance smart contracts systems, controlling in a fully decentralize manner the whole Aave ecosystem.
+v3 is a the next iteration for the Aave governance smart contracts systems, controlling in a fully decentralized manner the whole Aave ecosystem.
 
 Being a replacement on the currently running v2, a set of two proposals on v2 need to be passed to migrate one system to another: once both are passed and executed on the current governance smart contracts, these will stop working, and the new v3 ones will start operating.
 
@@ -20,8 +20,8 @@ Being a replacement on the currently running v2, a set of two proposals on v2 ne
 
 A full specification can be found [HERE](https://governance.aave.com/t/bgd-aave-governance-v3-activation-plan/14993#migration-governance-v2v3-2), but as summary:
 
-- 2 governance proposals need to be created: one running on the Level 1 Executor (Short Executor) and another on the Level 2 Executor.
-- As both proposals need to be atomically executed, a `Mediator`` contract will temporary receive certain permissions, in order to sync both Level 1 and Level 2.
+- 2 governance proposals need to be created: one running on the Level 1 Executor (Short Executor) and another on the Level 2 Executor (Long Executor).
+- As both proposals need to be atomically executed, a ``Mediator`` contract will temporary receive certain permissions, in order to sync both Level 1 and Level 2.
 - High-level, the proposals do the following:
   - Migrate all permissions of the Aave ecosystem smart contracts from the v2 Executors to v3 Executors.
   - Migrate the ownership of the v2 Executors to the v3 Executors, in order to avoid any possible permissions lock.
