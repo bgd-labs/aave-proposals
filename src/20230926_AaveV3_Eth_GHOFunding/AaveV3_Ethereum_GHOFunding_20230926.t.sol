@@ -6,7 +6,6 @@ import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {ProtocolV3TestBase, ReserveConfig} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3_Ethereum_GHOFunding_20230926} from './AaveV3_Ethereum_GHOFunding_20230926.sol';
-import {AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925} from '../20230925_AaveV2_Eth_TUSDOffboardingPlanPartII/AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925.sol';
 import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethereum.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 
@@ -16,7 +15,6 @@ import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
  */
 contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
   AaveV3_Ethereum_GHOFunding_20230926 internal proposal;
-  AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925 internal pastProposal;
 
   struct Swap {
     address proxy;
@@ -25,16 +23,12 @@ contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
   }
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18313824);
-    pastProposal = new AaveV2_Ethereum_TUSDOffboardingPlanPartII_20230925();
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18328137);
     proposal = new AaveV3_Ethereum_GHOFunding_20230926();
   }
 
   function testProposalExecution() public {
     address COLLECTOR = address(AaveV2Ethereum.COLLECTOR);
-
-    // this prop redeems tusd and busd from aave v2, we need it to be executed before we execute ours.
-    GovHelpers.executePayload(vm, address(pastProposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
     Swap[4] memory swaps;
     // milkman creates intermediary contract for each swap

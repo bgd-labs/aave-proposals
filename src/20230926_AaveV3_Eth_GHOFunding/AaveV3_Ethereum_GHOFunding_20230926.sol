@@ -17,7 +17,7 @@ interface aTokenV1 {
  * @title GHO Funding
  * @author TokenLogic
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xb094cdc806d407d0cf4ea00e595ae95b8c145f77b77cce165c463326cc757639
- * - Discussion: https://governance.aave.com/t/arfc-treasury-management-gho-funding/14887
+ * - Discussion: https://governance.aave.com/t/arfc-treasury-management-gho-funding/14887/10
  */
 contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
 
@@ -78,11 +78,11 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     ////// DAI v2 & v3 swap //////
     AaveV3Ethereum.COLLECTOR.transfer(DAIv2.aToken, address(this), DAIv2.amount);
     AaveV3Ethereum.COLLECTOR.transfer(DAIv3.aToken, address(this), DAIv3.amount);
-    uint256 swapperBalance = 
+    uint256 daiAmount = 
       AaveV2Ethereum.POOL.withdraw(DAIv2.underlying, DAIv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    swapperBalance += 
+    daiAmount += 
       AaveV3Ethereum.POOL.withdraw(DAIv3.underlying, DAIv3.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    swapAsset(DAIv2, swapperBalance);
+    swapAsset(DAIv2, daiAmount);
 
     ////// BUSD swap //////
     AaveV3Ethereum.COLLECTOR.transfer(BUSD.underlying, AaveMisc.AAVE_SWAPPER_ETHEREUM, BUSD.amount);
@@ -94,9 +94,9 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
 
     ////// USDT v2 swap //////
     AaveV3Ethereum.COLLECTOR.transfer(USDTv2.aToken, address(this), USDTv2.amount);
-    swapperBalance = 
+    uint256 usdtAmount =  
       AaveV2Ethereum.POOL.withdraw(USDTv2.underlying, USDTv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
-    swapAsset(USDTv2, swapperBalance);
+    swapAsset(USDTv2, usdtAmount);
   }
 
   function swapAsset(Asset memory asset, uint256 amount) internal {
