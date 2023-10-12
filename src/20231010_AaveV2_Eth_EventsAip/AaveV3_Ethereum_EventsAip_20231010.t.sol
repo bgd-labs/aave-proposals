@@ -20,6 +20,10 @@ import 'forge-std/console.sol';
 contract AaveV3_Ethereum_EventsAip_20231010_Test is ProtocolV2TestBase {
   AaveV3_Ethereum_EventsAip_20231010 internal proposal;
 
+  address daiMilkmanCreatedContract = 0x0eB322ac55dB67a5cA0810BA0eDae3501b1B7263;
+  address usdtMilkmanCreatedContract = 0x3Df592eae98c2b4f312ADE339C01BBE2C8444618;
+  address RECEIVER = 0x1c037b3C22240048807cC9d7111be5d455F640bd;
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('mainnet'), 18334762);
     proposal = new AaveV3_Ethereum_EventsAip_20231010();
@@ -27,16 +31,12 @@ contract AaveV3_Ethereum_EventsAip_20231010_Test is ProtocolV2TestBase {
 
   function testProposalExecution() public {
     uint256 FUNDING_AMOUNT = 550_000 * 1e18;
-    address RECEIVER = 0x1c037b3C22240048807cC9d7111be5d455F640bd;
 
     // milkman creates intermediary contract for each swap
     // while swap is not executed the assets will be in these swap-specific proxy addresses instead of aaveSwapper
     // proxy contracts addresses are deterministic, they could be derived via code.
     // I simulated execution and copy pasted the address for simplicity
     // see https://etherscan.io/address/0x11C76AD590ABDFFCD980afEC9ad951B160F02797#code#L878
-
-    address daiMilkmanCreatedContract = 0x0eB322ac55dB67a5cA0810BA0eDae3501b1B7263;
-    address usdtMilkmanCreatedContract = 0x3Df592eae98c2b4f312ADE339C01BBE2C8444618;
 
     address COLLECTOR = address(AaveV3Ethereum.COLLECTOR);
 
@@ -68,9 +68,41 @@ contract AaveV3_Ethereum_EventsAip_20231010_Test is ProtocolV2TestBase {
     assertEq(daiBalanceAfter, daiAmount);
 
     uint256 balaceAfter = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(address(RECEIVER));
+  }
 
-    // Not sure how to simulate this post proxy interaction
-    console.log('balaceAfter', balaceAfter);
-    assertEq(balaceAfter, balaceBefore + FUNDING_AMOUNT);
+  function testGHOTransferFromUSTDSwap() public {
+    vm.startPrank(usdtMilkmanCreatedContract);
+    uint256 amount = 1000 * 1e18;
+    deal(AaveV3EthereumAssets.GHO_UNDERLYING, usdtMilkmanCreatedContract, amount);
+
+    uint256 balanceBefore = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(
+      usdtMilkmanCreatedContract
+    );
+
+    assertEq(balanceBefore, amount);
+
+    IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).transfer(address(RECEIVER), amount);
+
+    uint256 balanceAfter = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(address(RECEIVER));
+    assertEq(balanceAfter, amount);
+    vm.stopPrank();
+  }
+
+  function testGHOTransferFromDAISwap() public {
+    vm.startPrank(daiMilkmanCreatedContract);
+    uint256 amount = 1000 * 1e18;
+    deal(AaveV3EthereumAssets.GHO_UNDERLYING, daiMilkmanCreatedContract, amount);
+
+    uint256 balanceBefore = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(
+      daiMilkmanCreatedContract
+    );
+
+    assertEq(balanceBefore, amount);
+
+    IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).transfer(address(RECEIVER), amount);
+
+    uint256 balanceAfter = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(address(RECEIVER));
+    assertEq(balanceAfter, amount);
+    vm.stopPrank();
   }
 }
