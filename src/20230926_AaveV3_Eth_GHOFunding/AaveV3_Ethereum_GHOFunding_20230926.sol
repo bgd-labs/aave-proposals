@@ -79,9 +79,9 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     AaveV3Ethereum.COLLECTOR.transfer(DAIv2.aToken, address(this), DAIv2.amount);
     AaveV3Ethereum.COLLECTOR.transfer(DAIv3.aToken, address(this), DAIv3.amount);
     uint256 daiAmount = 
-      AaveV2Ethereum.POOL.withdraw(DAIv2.underlying, DAIv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
+      AaveV2Ethereum.POOL.withdraw(DAIv2.underlying, type(uint256).max, AaveMisc.AAVE_SWAPPER_ETHEREUM);
     daiAmount += 
-      AaveV3Ethereum.POOL.withdraw(DAIv3.underlying, DAIv3.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
+      AaveV3Ethereum.POOL.withdraw(DAIv3.underlying, type(uint256).max, AaveMisc.AAVE_SWAPPER_ETHEREUM);
     swapAsset(DAIv2, daiAmount);
 
     ////// BUSD swap //////
@@ -95,7 +95,7 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     ////// USDT v2 swap //////
     AaveV3Ethereum.COLLECTOR.transfer(USDTv2.aToken, address(this), USDTv2.amount);
     uint256 usdtAmount =  
-      AaveV2Ethereum.POOL.withdraw(USDTv2.underlying, USDTv2.amount, AaveMisc.AAVE_SWAPPER_ETHEREUM);
+      AaveV2Ethereum.POOL.withdraw(USDTv2.underlying, type(uint256).max, AaveMisc.AAVE_SWAPPER_ETHEREUM);
     swapAsset(USDTv2, usdtAmount);
   }
 
