@@ -32,7 +32,7 @@ contract CreateLongProposal is EthereumScript {
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
     GovHelpers.Payload[] memory payloads = new GovHelpers.Payload[](6);
-    payloads[0] = GovHelpers.buildMainnet(0xa59262276dB8F997948fdc4a10cBc1448A375636); // https://etherscan.io/address/0xa59262276db8f997948fdc4a10cbc1448a375636
+    payloads[0] = GovHelpers.buildMainnet(0x7fC3ebdB376fF38De2cD597671A6270113c27364); // https://etherscan.io/address/0x7fC3ebdB376fF38De2cD597671A6270113c27364
     payloads[1] = GovHelpers.buildOptimism(0x7fc3FCb14eF04A48Bb0c12f0c39CD74C249c37d8); // https://optimistic.etherscan.io/address/0x7fc3fcb14ef04a48bb0c12f0c39cd74c249c37d8
     payloads[2] = GovHelpers.buildArbitrum(0xFD858c8bC5ac5e10f01018bC78471bb0DC392247); // https://arbiscan.io/address/0xfd858c8bc5ac5e10f01018bc78471bb0dc392247
     payloads[3] = GovHelpers.buildPolygon(0x274a46Efd4364CcBA654Dc74Ddb793F9010B179c); // https://polygonscan.com/address/0x274a46efd4364ccba654dc74ddb793f9010b179c
