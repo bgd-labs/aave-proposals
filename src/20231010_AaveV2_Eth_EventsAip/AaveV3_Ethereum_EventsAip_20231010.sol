@@ -76,7 +76,7 @@ contract AaveV3_Ethereum_EventsAip_20231010 is IProposalGenericExecutor {
       GHO.oracle,
       RECEIVER,
       executorUsdtBalance,
-      100
+      600
     );
 
     swapper.swap(
@@ -88,7 +88,7 @@ contract AaveV3_Ethereum_EventsAip_20231010 is IProposalGenericExecutor {
       GHO.oracle,
       RECEIVER,
       executorDAIBalance,
-      100
+      600
     );
   }
 

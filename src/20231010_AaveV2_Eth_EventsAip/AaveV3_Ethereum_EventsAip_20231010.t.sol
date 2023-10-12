@@ -21,7 +21,7 @@ contract AaveV3_Ethereum_EventsAip_20231010_Test is ProtocolV2TestBase {
   AaveV3_Ethereum_EventsAip_20231010 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18327249);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18334762);
     proposal = new AaveV3_Ethereum_EventsAip_20231010();
   }
 
@@ -67,11 +67,10 @@ contract AaveV3_Ethereum_EventsAip_20231010_Test is ProtocolV2TestBase {
     assertEq(usdtBalanceAfter, usdtAmount);
     assertEq(daiBalanceAfter, daiAmount);
 
-    vm.warp(block.timestamp + 1 days);
-
     uint256 balaceAfter = IERC20(AaveV3EthereumAssets.GHO_UNDERLYING).balanceOf(address(RECEIVER));
-    assertEq(balaceAfter, balaceBefore + FUNDING_AMOUNT);
 
-    console.log('balaceAfter', daiBalanceAfter);
+    // Not sure how to simulate this post proxy interaction
+    console.log('balaceAfter', balaceAfter);
+    assertEq(balaceAfter, balaceBefore + FUNDING_AMOUNT);
   }
 }
