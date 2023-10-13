@@ -12,7 +12,7 @@ import 'forge-std/console.sol';
 
 /**
  * @title events-aip
- * @dev (1) Swap aEthUSDC & aEthUSDT to GHO; (2) Transfer GHO to Aave Co receiver address.
+ * @dev (1) Swap aEthDAI & aEthUSDT to GHO; (2) Transfer GHO to Aave Co receiver address.
  * @author AaveCo
  * - Snapshot: https://snapshot.org/#/aave.eth/proposal/0xdcb072d9782c5160d824ee37919c1be35024bd5aec579a86fdfc024f60213ca1
  * - Discussion: https://governance.aave.com/t/temp-check-aave-events-sponsorship-budget/14953
@@ -36,7 +36,6 @@ contract AaveV3_Ethereum_EventsAip_20231010 is IProposalGenericExecutor {
   }
 
   function _transferTokens() internal {
-    // Asset memory USDC = _getUSDCAsset();
     Asset memory USDT = _getUSDTAsset();
     Asset memory DAI = _getDAIAsset();
 
@@ -46,7 +45,6 @@ contract AaveV3_Ethereum_EventsAip_20231010 is IProposalGenericExecutor {
   }
 
   function _swapTokens() internal {
-    // Asset memory USDC = _getUSDCAsset();
     Asset memory USDT = _getUSDTAsset();
     Asset memory GHO = _getGHOAsset();
     Asset memory DAI = _getDAIAsset();
