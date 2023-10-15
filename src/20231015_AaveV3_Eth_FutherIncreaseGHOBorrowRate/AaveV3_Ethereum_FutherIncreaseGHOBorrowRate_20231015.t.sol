@@ -16,12 +16,12 @@ contract AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015_Test is ProtocolV3
   AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18357143);
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18357212);
     proposal = new AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015();
   }
 
   function testProposalExecution() public {
-    createConfigurationSnapshot(
+    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
       'preAaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015',
       AaveV3Ethereum.POOL
     );
@@ -33,10 +33,12 @@ contract AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015_Test is ProtocolV3
       AaveV3Ethereum.POOL
     );
 
-    e2eTestAsset(
-      AaveV3Ethereum.POOL,
-      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.USDC_UNDERLYING),
-      _findReserveConfig(allConfigsAfter, AaveV3EthereumAssets.GHO_UNDERLYING)
+    e2eTest(AaveV3Ethereum.POOL);
+
+    _noReservesConfigsChangesApartFrom(
+      allConfigsBefore,
+      allConfigsAfter,
+      AaveV3EthereumAssets.GHO_UNDERLYING
     );
 
     diffReports(
