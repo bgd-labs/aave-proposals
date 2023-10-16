@@ -6,11 +6,11 @@ discussions: "https://governance.aave.com/t/arfc-op-risk-parameters-update-aave-
 
 ## Simple Summary
 
-This proposal update the OP lending pool to make it reflect the change voted in a previous AIP
+This proposal update the OP lending pool to make it reflect the change voted in AIP-337.
 
 ## Motivation
 
-While a [previous AIP](https://app.aave.com/governance/proposal/337/) updated the parameters of the lending pool to change the borrow rate, it didn't enable the borrow of the Optimism token. Thus this AIP goal is to add the finishing touch to the previously mentionned AIP.
+While a [previous AIP](https://app.aave.com/governance/proposal/337/) updated the parameters of the Aave V3 Optimism pool for the OP asset, it didn't enable the borrow of the Optimism token. Thus this AIP propose to deliver the second part of the AIP-337 by enabling borrowing of OP tokens matching it's original intent.
 
 ## Specification
 
@@ -19,29 +19,28 @@ While a [previous AIP](https://app.aave.com/governance/proposal/337/) updated th
 
 **New Risk Parameters**:
 
-| Parameter | Value |
-| --- | --- |
-| Asset | OP |
+| Parameter         | Value   |
+| ----------------- | ------- |
+| Asset             | OP      |
 | Enabled to Borrow | Enabled |
 
 As a reminder, here are the previously updated parameters:
 
-| Parameter | Value |
-| --- | --- |
-| Asset | OP |
-| Supply Cap | 10M |
-| Borrow Cap | 500k |
-| Loan To Value (LTV) | 30% |
-| Liquidation Threshold (LT) | 40% |
-| Liquidation Penalty (LP) | 10% |
-| Liquidation Protocol Fee (LPF) | 10% |
-| Stable Borrow | Disabled |
-| Base Variable Rate | 0% |
-| Slope1 | 7% |
-| Slope2 | 300% |
-| Optimal Ratio | 45% |
-| Reserve Factor (RF) | 20% |
-
+| Parameter                      | Value    |
+| ------------------------------ | -------- |
+| Asset                          | OP       |
+| Supply Cap                     | 10M      |
+| Borrow Cap                     | 500k     |
+| Loan To Value (LTV)            | 30%      |
+| Liquidation Threshold (LT)     | 40%      |
+| Liquidation Penalty (LP)       | 10%      |
+| Liquidation Protocol Fee (LPF) | 10%      |
+| Stable Borrow                  | Disabled |
+| Base Variable Rate             | 0%       |
+| Slope1                         | 7%       |
+| Slope2                         | 300%     |
+| Optimal Ratio                  | 45%      |
+| Reserve Factor (RF)            | 20%      |
 
 ## References
 

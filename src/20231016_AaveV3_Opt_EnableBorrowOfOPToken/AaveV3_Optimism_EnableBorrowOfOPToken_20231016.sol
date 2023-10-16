@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import {AaveV3PayloadOptimism, IEngine, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
 import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 
-
 /**
  * @title Enable borrow of OP token
  * @author Alice Rozengarden (@Rozengarden - Aave-chan initiative)
@@ -14,7 +13,7 @@ import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Opti
 contract AaveV3_Optimism_EnableBorrowOfOPToken_20231016 is AaveV3PayloadOptimism {
   function borrowsUpdates() public pure override returns (IEngine.BorrowUpdate[] memory) {
     IEngine.BorrowUpdate[] memory borrowsUpdate = new IEngine.BorrowUpdate[](1);
-    
+
     borrowsUpdate[0] = IEngine.BorrowUpdate({
       asset: AaveV3OptimismAssets.OP_UNDERLYING,
       reserveFactor: EngineFlags.KEEP_CURRENT,
@@ -24,7 +23,7 @@ contract AaveV3_Optimism_EnableBorrowOfOPToken_20231016 is AaveV3PayloadOptimism
       borrowableInIsolation: EngineFlags.KEEP_CURRENT,
       withSiloedBorrowing: EngineFlags.KEEP_CURRENT
     });
-    
+
     return borrowsUpdate;
-    }
+  }
 }
