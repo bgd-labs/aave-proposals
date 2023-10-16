@@ -7,11 +7,6 @@ import {AaveV2Ethereum, AaveV2EthereumAssets} from 'aave-address-book/AaveV2Ethe
 import {AaveSwapper} from 'aave-helpers/swaps/AaveSwapper.sol';
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
-import {SafeERC20} from 'solidity-utils/contracts/oz-common/SafeERC20.sol';
-
-interface aTokenV1 {
-  function redeem(uint256 _amount) external;
-}
 
 /**
  * @title GHO Funding
@@ -38,7 +33,7 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     Asset memory DAIv2 = Asset({
       underlying: AaveV2EthereumAssets.DAI_UNDERLYING,
       aToken: AaveV2EthereumAssets.DAI_A_TOKEN,
-      oracle: 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9,
+      oracle: AaveV3EthereumAssets.DAI_ORACLE,
       amount: IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(COLLECTOR)
     });
 
@@ -46,7 +41,7 @@ contract AaveV3_Ethereum_GHOFunding_20230926 is IProposalGenericExecutor {
     Asset memory DAIv3 = Asset({
       underlying: AaveV3EthereumAssets.DAI_UNDERLYING,
       aToken: AaveV3EthereumAssets.DAI_A_TOKEN,
-      oracle: 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9,
+      oracle: AaveV3EthereumAssets.DAI_ORACLE,
       amount: 370_000 * 1e18
     });
 
