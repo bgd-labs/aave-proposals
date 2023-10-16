@@ -16,7 +16,7 @@ contract AaveV3_Optimism_EnableBorrowOfOPToken_20231016_Test is ProtocolV3TestBa
   AaveV3_Optimism_EnableBorrowOfOPToken_20231016 internal proposal;
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('optimism'), 110935342);
+    vm.createSelectFork(vm.rpcUrl('optimism'), 110936488);
     proposal = new AaveV3_Optimism_EnableBorrowOfOPToken_20231016();
   }
 
