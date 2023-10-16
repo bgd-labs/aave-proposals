@@ -32,7 +32,11 @@ contract AaveV3_Optimism_EnableBorrowOfOPToken_20231016_Test is ProtocolV3TestBa
       'postAaveV3_Optimism_EnableBorrowOfOPToken_20231016',
       AaveV3Optimism.POOL
     );
-
+_noReservesConfigsChangesApartFrom(
+      allConfigsBefore,
+      allConfigsAfter,
+      AaveV3OptimismAssets.OP_UNDERLYING
+    );
     diffReports(
       'preAaveV3_Optimism_EnableBorrowOfOPToken_20231016',
       'postAaveV3_Optimism_EnableBorrowOfOPToken_20231016'
