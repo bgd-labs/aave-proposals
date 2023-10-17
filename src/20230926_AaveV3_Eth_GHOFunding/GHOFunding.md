@@ -35,8 +35,8 @@ The GHO will be transferred to the [Aave Ethereum Treasury](https://etherscan.io
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Eth_GHOFunding/AaveV3_Ethereum_GHOFunding_20230926.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20230926_AaveV3_Eth_GHOFunding/AaveV3_Ethereum_GHOFunding_20230926.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/545b17d8817e8aa86d99db94bfd1e4a2ae575f3d/src/20230926_AaveV3_Eth_GHOFunding/AaveV3_Ethereum_GHOFunding_20230926.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/545b17d8817e8aa86d99db94bfd1e4a2ae575f3d/src/20230926_AaveV3_Eth_GHOFunding/AaveV3_Ethereum_GHOFunding_20230926.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0xb094cdc806d407d0cf4ea00e595ae95b8c145f77b77cce165c463326cc757639)
 - [Discussion](https://governance.aave.com/t/arfc-treasury-management-gho-funding/14887/10)
 
