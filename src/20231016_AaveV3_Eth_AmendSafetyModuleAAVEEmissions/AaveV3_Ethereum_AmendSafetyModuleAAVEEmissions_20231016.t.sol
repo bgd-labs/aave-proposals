@@ -69,7 +69,7 @@ contract AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016_Test is Protoco
     proposal = new AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016();
   }
 
-  function testProposalExecutionPep() public {
+  function testProposalExecution() public {
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 
