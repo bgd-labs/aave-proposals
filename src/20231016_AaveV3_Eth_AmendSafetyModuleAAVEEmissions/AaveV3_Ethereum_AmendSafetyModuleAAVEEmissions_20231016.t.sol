@@ -12,7 +12,7 @@ import {AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016} from './AaveV3_
 import {IAaveEcosystemReserveController, AaveMisc} from "aave-address-book/AaveMisc.sol";
 import {IERC20} from "solidity-utils/contracts/oz-common/interfaces/IERC20.sol";
 
-library DistributionTypes {
+library HelperStructs {
   struct AssetConfigInput {
     uint128 emissionPerSecond;
     uint256 totalStaked;
@@ -34,10 +34,10 @@ library DistributionTypes {
 
 
 interface IAaveDistributionManager {
-  function configureAssets(DistributionTypes.AssetConfigInput[] calldata assetsConfigInput) external;
+  function configureAssets(HelperStructs.AssetConfigInput[] calldata assetsConfigInput) external;
   function STAKED_TOKEN() external returns(address);
   function totalSupply() external returns(uint256);
-  function assets(address asset) external returns(DistributionTypes.AssetResponse memory);
+  function assets(address asset) external returns(HelperStructs.AssetResponse memory);
 }
 
 /**
@@ -77,11 +77,11 @@ contract AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016_Test is Protoco
       Check emission changes, the value should be 385 ether * 86400 seconds on a day
     */
     IAaveDistributionManager aaveManager = IAaveDistributionManager(STKAAVE);
-    DistributionTypes.AssetResponse memory aaveRes = aaveManager.assets(STKAAVE);
+    HelperStructs.AssetResponse memory aaveRes = aaveManager.assets(STKAAVE);
     assertEq(aaveRes.emissionPerSecond, EMISSIONS_PER_SECOND);
 
     IAaveDistributionManager bptManager = IAaveDistributionManager(STKABPT);
-    DistributionTypes.AssetResponse memory bptRes = bptManager.assets(STKABPT);
+    HelperStructs.AssetResponse memory bptRes = bptManager.assets(STKABPT);
     assertEq(bptRes.emissionPerSecond, EMISSIONS_PER_SECOND);
 
     /*

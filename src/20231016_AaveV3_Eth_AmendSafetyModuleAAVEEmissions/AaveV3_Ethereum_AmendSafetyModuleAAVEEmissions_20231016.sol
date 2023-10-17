@@ -6,7 +6,7 @@ import {AaveSafetyModule} from 'aave-address-book/AaveSafetyModule.sol';
 import {AaveV3EthereumAssets} from 'aave-address-book/AaveV3Ethereum.sol';
 import {IAaveEcosystemReserveController, AaveMisc} from "aave-address-book/AaveMisc.sol";
 
-library DistributionTypes {
+library HelperStructs {
   struct AssetConfigInput {
     uint128 emissionPerSecond;
     uint256 totalStaked;
@@ -22,7 +22,7 @@ library DistributionTypes {
 
 
 interface IAaveDistributionManager {
-  function configureAssets(DistributionTypes.AssetConfigInput[] calldata assetsConfigInput) external;
+  function configureAssets(HelperStructs.AssetConfigInput[] calldata assetsConfigInput) external;
   function STAKED_TOKEN() external returns(address);
   function totalSupply() external returns(uint256);
 }
@@ -66,9 +66,9 @@ contract AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016 is IProposalGen
   function _changeEmissions(address asset, uint128 newEmissions) internal {
     IAaveDistributionManager distributionManager = IAaveDistributionManager(asset);
 
-    DistributionTypes.AssetConfigInput[] memory config = new DistributionTypes.AssetConfigInput[](1);
+    HelperStructs.AssetConfigInput[] memory config = new HelperStructs.AssetConfigInput[](1);
 
-    config[0] = DistributionTypes.AssetConfigInput(
+    config[0] = HelperStructs.AssetConfigInput(
       newEmissions, // emissions per second
       distributionManager.totalSupply(), // total staked
       asset // underlying asset
