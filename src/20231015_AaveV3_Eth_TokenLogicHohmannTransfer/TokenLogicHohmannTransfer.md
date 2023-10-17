@@ -10,6 +10,8 @@ This AIP proposes the inclusion of TokenLogic in the "Orbit" delegate platform i
 
 ## Motivation
 
+TokenLogic has been an active and valuable participant in the Aave ecosystem. While they were initially eligible and considered for the Orbit program, they opted to explore the possibility of becoming a service provider to the DAO. However, given their recent decision to re-organize internally and re-evaluate their proposed scope as a service provider, it's appropriate to reconsider their inclusion in the Orbit program.
+
 ## Specification
 
 ### TokenLogic Inclusion
