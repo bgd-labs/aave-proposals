@@ -30,8 +30,8 @@ TokenLogic's compensation will be in line with the Orbit program's guidelines, e
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231015_AaveV3_Eth_TokenLogicHohmannTransfer/AaveV3_Ethereum_TokenLogicHohmannTransfer_20231015.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231015_AaveV3_Eth_TokenLogicHohmannTransfer/AaveV3_Ethereum_TokenLogicHohmannTransfer_20231015.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/be0f7e8eeded8b96ba61ea58f340c0fcfb9480a7/src/20231015_AaveV3_Eth_TokenLogicHohmannTransfer/AaveV3_Ethereum_TokenLogicHohmannTransfer_20231015.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/be0f7e8eeded8b96ba61ea58f340c0fcfb9480a7/src/20231015_AaveV3_Eth_TokenLogicHohmannTransfer/AaveV3_Ethereum_TokenLogicHohmannTransfer_20231015.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x89c3286743dc99b961d40d948c9507fe1005bc6fedf7e34ffb3d1265e0bc4bff)
 - [Discussion](https://governance.aave.com/t/arfc-tokenlogic-hohmann-transfer/15051)
 
