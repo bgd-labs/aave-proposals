@@ -24,6 +24,15 @@ Similarly, Xenophon Labs recommended doubling the slashing percentage from 30% t
 
 ## Specification
 
+The implementation for this proposal will be prepared by ACI. The table below shows the current and proposed daily AAVE Emissions.
+
+| **Collateral**  	| **Current Emissions** 	| **Proposed Emissions** 	|
+|-----------------	|-----------------------	|------------------------	|
+| AAVE            	| 550                   	| 385                    	|
+| B-80AAVE-20wETH 	| 550                   	| 385                    	|
+
+Transition to a 90-day period SM Emission schedule.
+
 ## References
 
 - Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231016_AaveV3_Eth_AmendSafetyModuleAAVEEmissions/AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016.sol)
