@@ -6,7 +6,7 @@ discussions: "https://governance.aave.com/t/arfc-op-risk-parameters-update-aave-
 
 ## Simple Summary
 
-This proposal update the OP lending pool to make it reflect the change voted in AIP-337.
+This proposal updates the OP lending pool to make it reflect the change voted in AIP-337.
 
 ## Motivation
 
