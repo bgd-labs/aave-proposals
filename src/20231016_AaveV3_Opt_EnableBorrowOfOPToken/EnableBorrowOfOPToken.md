@@ -10,7 +10,7 @@ This proposal update the OP lending pool to make it reflect the change voted in 
 
 ## Motivation
 
-While a [previous AIP](https://app.aave.com/governance/proposal/337/) updated the parameters of the Aave V3 Optimism pool for the OP asset, it didn't enable the borrow of the Optimism token. Thus this AIP propose to deliver the second part of the AIP-337 by enabling borrowing of OP tokens matching it's original intent.
+While a [previous AIP](https://app.aave.com/governance/proposal/337/) updated the parameters of the Aave V3 Optimism pool for the OP asset, it didn't enable the borrow of the Optimism token. Thus this AIP proposes to deliver the second part of the AIP-337 by enabling borrowing of OP tokens matching it's original intent.
 
 ## Specification
 
