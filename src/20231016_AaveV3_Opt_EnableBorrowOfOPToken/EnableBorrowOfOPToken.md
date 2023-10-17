@@ -44,8 +44,8 @@ As a reminder, here are the previously updated parameters:
 
 ## References
 
-- Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231016_AaveV3_Opt_EnableBorrowOfOPToken/AaveV3_Optimism_EnableBorrowOfOPToken_20231016.sol)
-- Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231016_AaveV3_Opt_EnableBorrowOfOPToken/AaveV3_Optimism_EnableBorrowOfOPToken_20231016.t.sol)
+- Implementation: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/97699d8b552b7b3d32e58393d1721ed0f9152368/src/20231016_AaveV3_Opt_EnableBorrowOfOPToken/AaveV3_Optimism_EnableBorrowOfOPToken_20231016.sol)
+- Tests: [Optimism](https://github.com/bgd-labs/aave-proposals/blob/97699d8b552b7b3d32e58393d1721ed0f9152368/src/20231016_AaveV3_Opt_EnableBorrowOfOPToken/AaveV3_Optimism_EnableBorrowOfOPToken_20231016.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x617adb838ce95e319f06f72e177ad62cd743c2fe3fd50d6340dfc8606fbdd0b3)
 - [Discussion](https://governance.aave.com/t/arfc-op-risk-parameters-update-aave-v3-optimism-pool/14633)
 
