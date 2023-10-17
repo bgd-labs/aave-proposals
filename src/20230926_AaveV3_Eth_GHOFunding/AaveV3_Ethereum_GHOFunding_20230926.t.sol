@@ -23,8 +23,8 @@ contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
   }
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('mainnet'), 18328137);
-    proposal = new AaveV3_Ethereum_GHOFunding_20230926();
+    vm.createSelectFork(vm.rpcUrl('mainnet'), 18366393);
+    proposal = AaveV3_Ethereum_GHOFunding_20230926(0x121fE3fC3f617ACE9730203d2E27177131C4315e);
   }
 
   function testProposalExecution() public {
@@ -37,25 +37,25 @@ contract AaveV3_Ethereum_GHOFunding_20230926_Test is ProtocolV3TestBase {
     // I simulated execution and copy pasted the address for simplicity
     // see https://etherscan.io/address/0x11C76AD590ABDFFCD980afEC9ad951B160F02797#code#L878
     swaps[0] = Swap({
-      proxy: 0x3Df592eae98c2b4f312ADE339C01BBE2C8444618,
+      proxy: 0x0eB322ac55dB67a5cA0810BA0eDae3501b1B7263,
       underlying: AaveV2EthereumAssets.DAI_UNDERLYING,
       amount: (370_000 * 1e18) + IERC20(AaveV2EthereumAssets.DAI_A_TOKEN).balanceOf(COLLECTOR)
     });
 
     swaps[1] = Swap({
-      proxy: 0x0eB322ac55dB67a5cA0810BA0eDae3501b1B7263,
+      proxy: 0x8F2ca8bE5e06180d36117A8aE3f615837790d59B,
       underlying: AaveV2EthereumAssets.BUSD_UNDERLYING,
       amount: IERC20(AaveV2EthereumAssets.BUSD_UNDERLYING).balanceOf(COLLECTOR)
     });
 
     swaps[2] = Swap({
-      proxy: 0x8F2ca8bE5e06180d36117A8aE3f615837790d59B,
+      proxy: 0xfEc76f65e943239E5A7CDC3CA6a89c26a0803FFd,
       underlying: AaveV2EthereumAssets.TUSD_UNDERLYING,
       amount: IERC20(AaveV2EthereumAssets.TUSD_UNDERLYING).balanceOf(COLLECTOR)
     });
 
     swaps[3] = Swap({
-      proxy: 0xfEc76f65e943239E5A7CDC3CA6a89c26a0803FFd,
+      proxy: 0x08dAB5c1F3AD03b1f2432Ab41eb161A6DBA1f338,
       underlying: AaveV2EthereumAssets.USDT_UNDERLYING,
       amount: 370_000 * 1e6
     });
