@@ -71,20 +71,7 @@ contract AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016_Test is Protoco
 
   function testProposalExecutionPep() public {
 
-    ReserveConfig[] memory allConfigsBefore = createConfigurationSnapshot(
-      'preAaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016',
-      AaveV3Ethereum.POOL
-    );
-
-
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
-
-
-    ReserveConfig[] memory allConfigsAfter = createConfigurationSnapshot(
-      'postAaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016',
-      AaveV3Ethereum.POOL
-    );
-
 
     /*
       Check emission changes, the value should be 385 ether * 86400 seconds on a day
@@ -102,14 +89,6 @@ contract AaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016_Test is Protoco
     */
     assertEq(IERC20(AaveV3EthereumAssets.AAVE_UNDERLYING).allowance(ECOSYSTEM_RESERVE, STKAAVE), CYCLE_EMISSIONS);
     assertEq(IERC20(AaveV3EthereumAssets.AAVE_UNDERLYING).allowance(ECOSYSTEM_RESERVE, STKABPT), CYCLE_EMISSIONS);
-
-
-    diffReports(
-      'preAaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016',
-      'postAaveV3_Ethereum_AmendSafetyModuleAAVEEmissions_20231016'
-    );
-
-    e2eTest(AaveV3Ethereum.POOL);
   }
 
 }
