@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {AaveV3PayloadOptimism, IEngine, EngineFlags} from 'aave-helpers/v3-config-engine/AaveV3PayloadOptimism.sol';
-import {AaveV3Optimism, AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
+import {AaveV3OptimismAssets} from 'aave-address-book/AaveV3Optimism.sol';
 
 /**
  * @title Enable borrow of OP token
