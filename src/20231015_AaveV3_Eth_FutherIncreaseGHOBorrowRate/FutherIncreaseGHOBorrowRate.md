@@ -30,8 +30,8 @@ This proposal also greenlights the ACI for a `direct-to-AIP` process for 50 bps 
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231015_AaveV3_Eth_FutherIncreaseGHOBorrowRate/AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231015_AaveV3_Eth_FutherIncreaseGHOBorrowRate/AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/8d8b2f2385fbfa2ae29c2de814edeba907d54073/src/20231015_AaveV3_Eth_FutherIncreaseGHOBorrowRate/AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/8d8b2f2385fbfa2ae29c2de814edeba907d54073/src/20231015_AaveV3_Eth_FutherIncreaseGHOBorrowRate/AaveV3_Ethereum_FutherIncreaseGHOBorrowRate_20231015.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x25557cd27107c25e5bd55f7e23af7665d16eba3ad8325f4dc5cc8ade9b7c6d1f)
 - [Discussion](https://governance.aave.com/t/arfc-further-increase-gho-borrow-rate/15053)
 
