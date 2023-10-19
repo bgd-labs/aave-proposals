@@ -23,7 +23,7 @@ We are proposing several thoughtful, well-organized and targeted events at DevCo
 This proposal encompasses the following actions:
 
 - Initiate the swap 275,000 aEthDAI to GHO via the Aave Swap Contract
-- Initiate the swap 275,000 aEthUSTD to GHO via the Aave Swap Contract
+- Initiate the swap 275,000 aEthUSDT to GHO via the Aave Swap Contract
 - Transfer 550,000 GHO to receiver address
 
 ## References
