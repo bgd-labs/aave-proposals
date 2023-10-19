@@ -31,7 +31,7 @@ We recommend using [CowSwap's TWAP](https://swap.cow.fi/#/1/advanced/USDC/AURA?t
 
 ## 3. Swap $200,000 worth of AAVE for AURA and 200,000 USDC for AURA in an OTC deal with AURA DAO.
 
-This action can be achieved by transferring 2,965.35 AAVE from the ecosystem reserve and 200,000 USDC from the collector to a token swap contract with properties similar to the one used for the [CRV OTC deal](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_CRV_OTC_Deal_20230508/AaveV2_Eth_CRV_OTC_Deal_20230508.sol).
+This action can be achieved by transferring 2,965.35 AAVE from the ecosystem reserve and 200,000 USDC from the collector to a token swap contract with properties similar to the one used for the [CRV OTC deal](https://github.com/bgd-labs/aave-proposals/blob/e77e5f1bdfd71970bbc752acbad6a1e46af3feaa/src/AaveV2_Eth_CRV_OTC_Deal_20230508/AaveV2_Eth_CRV_OTC_Deal_20230508.sol).
 
 We'd be exchanging 2,965.35 AAVE and 200,000 USDC for 477,088.51 AURA with the AURA DAO. The TWAP prices for AURA and AAVE were calculated for the period from September 29th to October 6th and can be found [here](https://docs.google.com/spreadsheets/d/1_oogFs9V-fZQkxj-dBpO8YCLLHEI2YneFHeCtzL501s/edit?usp=sharing).
 
@@ -49,8 +49,8 @@ https://docs.google.com/spreadsheets/d/1_oogFs9V-fZQkxj-dBpO8YCLLHEI2YneFHeCtzL5
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231017_AaveV3_Eth_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer/AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_20231017.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231017_AaveV3_Eth_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer/AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_20231017.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/e77e5f1bdfd71970bbc752acbad6a1e46af3feaa/src/20231017_AaveV3_Eth_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer/AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_20231017.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/e77e5f1bdfd71970bbc752acbad6a1e46af3feaa/src/20231017_AaveV3_Eth_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer/AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_20231017.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0xd1136b4db12346a95870f5a52ce02ef1bd4fb83cbbbf56c709aa14ae2d38659b)
 - [Discussion](https://governance.aave.com/t/arfc-enhancing-aave-daos-liquidity-incentive-strategy-on-balancer/15061)
 
