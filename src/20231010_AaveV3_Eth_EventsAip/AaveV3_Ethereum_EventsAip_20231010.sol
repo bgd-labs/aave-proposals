@@ -41,13 +41,13 @@ contract AaveV3_Ethereum_EventsAip_20231010 is IProposalGenericExecutor {
     // Withdraws aTokens for swap
     uint256 executorUsdtBalance = AaveV3Ethereum.POOL.withdraw(
       AaveV3EthereumAssets.USDT_UNDERLYING,
-      USDT_AMOUNT,
+      type(uint256).max,
       address(swapper)
     );
 
     uint256 executorDAIBalance = AaveV3Ethereum.POOL.withdraw(
       AaveV3EthereumAssets.DAI_UNDERLYING,
-      DAI_AMOUNT,
+      type(uint256).max,
       address(swapper)
     );
 
