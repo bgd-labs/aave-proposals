@@ -44,9 +44,8 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
     uint256 veBALBalanceBefore = IERC20(VEBAL_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 GLCVEBALBalanceBefore = IERC20(VEBAL_TOKEN).balanceOf(GLC);
 
-    vm.startPrank(AURA_DAO_TREASURY);
+    hoax(AURA_DAO_TREASURY);
     IERC20(AURA_TOKEN).approve(AaveGovernanceV2.SHORT_EXECUTOR, AURA_AMOUNT);
-    vm.stopPrank();
 
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.SHORT_EXECUTOR);
 

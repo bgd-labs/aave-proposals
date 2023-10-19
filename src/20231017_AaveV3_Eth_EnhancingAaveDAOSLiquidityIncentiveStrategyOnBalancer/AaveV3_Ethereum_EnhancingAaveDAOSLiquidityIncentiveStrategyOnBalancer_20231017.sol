@@ -29,7 +29,7 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
   function execute() external {
     // 1. AURA OTC DEAL
 
-    // pull AURA from AURA_DAO_ECOSYSTEM_FUND wallet to collector, this will fail if they don't approve Short_executor
+    // pull AURA from AURA_DAO_TREASURY wallet to collector, this will fail if they don't approve Short_executor
     IERC20(AURA_TOKEN).safeTransferFrom(
       AURA_DAO_TREASURY,
       address(AaveV2Ethereum.COLLECTOR),
@@ -44,19 +44,12 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
       USDC_AMOUNT_TO_AURA
     );
 
-    // withdraw aUSDC and convert it to USDC
+    // withdraw aUSDC to convert it to USDC and transfer it to AURA_DAO_ECOSYSTEM_FUND
 
     AaveV3Ethereum.POOL.withdraw(
       AaveV3EthereumAssets.USDC_UNDERLYING,
       type(uint256).max,
-      address(this)
-    );
-
-    // transfer USDC to AURA_DAO_USDC_RECIPIENT
-
-    IERC20(AaveV3EthereumAssets.USDC_UNDERLYING).transfer(
-      AURA_DAO_ECOSYSTEM_FUND,
-      USDC_AMOUNT_TO_AURA
+      AURA_DAO_ECOSYSTEM_FUND
     );
 
     // transfer AAVE to AURA_DAO_TREASURY from ECOSYSTEM_RESERVE
@@ -78,20 +71,9 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
       USDC_AMOUNT_TO_GLC
     );
 
-    // withdraw aUSDC and convert it to USDC
+    // withdraw aUSDc, convert it to USDC and transfer it to GLC
 
-    AaveV2Ethereum.POOL.withdraw(
-      AaveV2EthereumAssets.USDC_UNDERLYING,
-      type(uint256).max,
-      address(this)
-    );
-
-    // transfer USDC to GLC
-
-    IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).transfer(
-      GLC,
-      IERC20(AaveV2EthereumAssets.USDC_UNDERLYING).balanceOf(address(this))
-    );
+    AaveV2Ethereum.POOL.withdraw(AaveV2EthereumAssets.USDC_UNDERLYING, type(uint256).max, GLC);
 
     // 3. Send veBAL to GLC
 
