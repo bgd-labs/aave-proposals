@@ -16,8 +16,6 @@ Increasing the RF routes a larger portion of the interest paid by users to Aave 
 
 Of the assets with an RF set at 99.99%, there is no change. All other asset reserves will have the RF increased by 5%.
 
-The next AIP will be submitted during the third week of October.[TODO]
-
 ## Specification
 
 The following parameters are to be updated as follows:
