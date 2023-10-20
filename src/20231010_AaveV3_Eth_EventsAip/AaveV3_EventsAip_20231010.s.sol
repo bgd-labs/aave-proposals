@@ -7,7 +7,7 @@ import {AaveV3_Ethereum_EventsAip_20231010} from './AaveV3_Ethereum_EventsAip_20
 
 /**
  * @dev Deploy AaveV3_Ethereum_EventsAip_20231010
- * command: make deploy-ledger contract=src/20231010_AaveV3_Eth_EventsAip/AaveV2_EventsAip_20231010.s.sol:DeployEthereum chain=mainnet
+ * command: make deploy-ledger contract=src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.s.sol:DeployEthereum chain=mainnet
  */
 contract DeployEthereum is EthereumScript {
   function run() external broadcast {
@@ -17,7 +17,7 @@ contract DeployEthereum is EthereumScript {
 
 /**
  * @dev Create Proposal
- * command: make deploy-ledger contract=src/20231010_AaveV3_Eth_EventsAip/AaveV2_EventsAip_20231010.s.sol:CreateProposal chain=mainnet
+ * command: make deploy-ledger contract=src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.s.sol:CreateProposal chain=mainnet
  */
 contract CreateProposal is EthereumScript {
   function run() external broadcast {
