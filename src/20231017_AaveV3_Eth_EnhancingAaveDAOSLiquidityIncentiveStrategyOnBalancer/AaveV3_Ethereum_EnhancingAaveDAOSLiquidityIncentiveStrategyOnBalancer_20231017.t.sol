@@ -39,7 +39,7 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
     uint256 aUSDCV2BalanceBefore = IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
-    uint256 AURABalanceBefore = IERC20(AURA_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
+    uint256 GLCAURABalanceBefore = IERC20(AURA_TOKEN).balanceOf(GLC);
 
     uint256 veBALBalanceBefore = IERC20(VEBAL_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
     uint256 GLCVEBALBalanceBefore = IERC20(VEBAL_TOKEN).balanceOf(GLC);
@@ -55,8 +55,8 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
     uint256 aUSDCV2BalanceAfter = IERC20(AaveV2EthereumAssets.USDC_A_TOKEN).balanceOf(
       address(AaveV2Ethereum.COLLECTOR)
     );
-    uint256 AURABalanceAfter = IERC20(AURA_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
 
+    uint256 GLCAURABalanceAfter = IERC20(AURA_TOKEN).balanceOf(GLC);
     uint256 GLCUSDCBalance = IERC20(AaveV3EthereumAssets.USDC_UNDERLYING).balanceOf(GLC);
     uint256 GLCVEBALBalanceAfter = IERC20(VEBAL_TOKEN).balanceOf(GLC);
     uint256 veBALBalanceAfter = IERC20(VEBAL_TOKEN).balanceOf(address(AaveV2Ethereum.COLLECTOR));
@@ -72,13 +72,13 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
     assertApproxEqAbs(
       aUSDCV2BalanceAfter,
       aUSDCV2BalanceBefore - USDC_AMOUNT_TO_GLC,
-      100 ether,
+      1 ether,
       'aUSDC_V2_LEFTOVER'
     );
 
-    assertApproxEqAbs(AURABalanceAfter, AURABalanceBefore + AURA_AMOUNT, 1500 wei, 'AURA_LEFTOVER');
+    assertApproxEqAbs(GLCAURABalanceAfter, GLCAURABalanceBefore + AURA_AMOUNT, 1500 wei, 'AURA_LEFTOVER');
 
-    assertApproxEqAbs(GLCUSDCBalance, USDC_AMOUNT_TO_GLC, 10 ether, 'GLC_USDC_LEFTOVER');
+    assertApproxEqAbs(GLCUSDCBalance, USDC_AMOUNT_TO_GLC, 1500 wei, 'GLC_USDC_LEFTOVER');
 
     assertEq(veBALBalanceAfter, 0);
     assertEq(GLCVEBALBalanceAfter, GLCVEBALBalanceBefore + veBALBalanceBefore);

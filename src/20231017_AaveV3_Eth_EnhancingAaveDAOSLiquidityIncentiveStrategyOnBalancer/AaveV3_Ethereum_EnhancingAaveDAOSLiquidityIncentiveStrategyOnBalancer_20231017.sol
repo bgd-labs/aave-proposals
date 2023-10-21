@@ -29,10 +29,10 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
   function execute() external {
     // 1. AURA OTC DEAL
 
-    // pull AURA from AURA_DAO_TREASURY wallet to collector, this will fail if they don't approve Short_executor
+    // pull AURA from AURA_DAO_TREASURY wallet to GLC, this will fail if they don't approve Short_executor
     IERC20(AURA_TOKEN).safeTransferFrom(
       AURA_DAO_TREASURY,
-      address(AaveV2Ethereum.COLLECTOR),
+      GLC,
       AURA_AMOUNT
     );
 
