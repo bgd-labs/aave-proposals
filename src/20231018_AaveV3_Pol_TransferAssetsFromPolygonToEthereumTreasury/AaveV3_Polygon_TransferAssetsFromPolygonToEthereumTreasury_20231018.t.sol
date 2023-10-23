@@ -22,8 +22,8 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018_Tes
   event Bridge(address token, uint256 amount);
 
   function setUp() public {
-    vm.createSelectFork(vm.rpcUrl('polygon'), 49058267);
-    proposal = new AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018();
+    vm.createSelectFork(vm.rpcUrl('polygon'), 49062641);
+    proposal = AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018(0xCCAfBbbD68bb9B1A5F1C6ac948ED1944429F360a);
   }
 
   function testProposalExecution() public {
