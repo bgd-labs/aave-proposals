@@ -19,6 +19,8 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018_Tes
 {
   AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018 internal proposal;
 
+  event Bridge(address token, uint256 amount);
+
   function setUp() public {
     vm.createSelectFork(vm.rpcUrl('polygon'), 49058267);
     proposal = new AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018();
@@ -31,7 +33,12 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018_Tes
 
     uint256 daiCollectorBalanceBefore = IERC20(AaveV2PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
 
-    // vm.expectEmit(AaveMisc.AAVE_POL_ETH_BRIDGE);
+    vm.expectEmit(true, true, false, false, AaveMisc.AAVE_POL_ETH_BRIDGE);
+    emit Bridge(AaveV2PolygonAssets.DAI_UNDERLYING, daiAmount);
+    vm.expectEmit(true, true, false, false, AaveMisc.AAVE_POL_ETH_BRIDGE);
+    emit Bridge(AaveV2PolygonAssets.CRV_UNDERLYING, 9514859900351685761386);
+    vm.expectEmit(true, true, false, false, AaveMisc.AAVE_POL_ETH_BRIDGE);
+    emit Bridge(AaveV2PolygonAssets.BAL_UNDERLYING, 1867915444013591329250);
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     uint256 daiCollectorBalanceAfter = IERC20(AaveV2PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
