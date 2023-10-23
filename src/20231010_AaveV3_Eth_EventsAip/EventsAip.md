@@ -27,8 +27,8 @@ This proposal encompasses the following actions:
 ## References
 
 - Payload: [Ethereum](https://etherscan.io/address/0xfa9aF30481942a31E6AE47f199C6c2a3978b5c33#code)
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/b610d5804611e09d75a294e7293b0bf45cb56443/src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/b610d5804611e09d75a294e7293b0bf45cb56443/src/20231010_AaveV3_Eth_EventsAip/AaveV3_Ethereum_EventsAip_20231010.t.sol)
 - [Snapshot TEMP Check](https://snapshot.org/#/aave.eth/proposal/0xdcb072d9782c5160d824ee37919c1be35024bd5aec579a86fdfc024f60213ca1)
 - [Discussion](https://governance.aave.com/t/temp-check-aave-events-sponsorship-budget/14953)
 
