@@ -22,8 +22,8 @@ More specifically, this will affect Aave v1 and all the Aave v2 instances on whi
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/40685b9bb6b61367cc52e261631395f95fbb3c52/src/AaveV2_Eth_RemoveFallbackOracles_20230407/AaveV2EthRemoveFallbackOracles20230407.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/40685b9bb6b61367cc52e261631395f95fbb3c52/src/AaveV2_Eth_UnifyFallbackOracles_20230507/AaveV2EthUnifyFallbackOracles20230507.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_UnifyFallbackOracles_20230507/AaveV2EthUnifyFallbackOracles20230507.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/AaveV2_Eth_UnifyFallbackOracles_20230507/AaveV2EthUnifyFallbackOracles20230507.t.sol)
 - [Discussion](https://governance.aave.com/t/bgd-operational-oracles-update/13213/13)
 
 ## Copyright
