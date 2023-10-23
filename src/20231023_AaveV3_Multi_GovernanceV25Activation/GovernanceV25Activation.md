@@ -8,7 +8,6 @@ discussions: "https://governance.aave.com/t/bgd-aave-governance-v3-activation-pl
 
 Proposal for the partial activation of Aave Governance v3 in an interim Aave Governance v2.5 version, without the new voting mechanism and assets, but including all other components (a.DI, Governance v3 execution layer, Robot).
 
-
 ## Motivation
 
 After noticing a problem with the voting assets implementation included in [proposal 345](https://app.aave.com/governance/proposal/345/), we proceeded to cancel it and expand the security procedures around them.
@@ -17,17 +16,18 @@ As voting (and assets) are a pretty isolated component within the Aave Governanc
 
 ## Specification
 
-Different from proposal 345, this migration to v2.5 only requires a Level 1 (Short) Executor component. An extensive list of actions executed can be found [HERE](), but as summary, the proposal will:
+Different from proposal 345, this migration to v2.5 only requires a Level 1 (Short) Executor component. An extensive list of actions executed can be found [HERE](https://github.com/bgd-labs/gov-v2-v3-migration/blob/main/README.md#list-of-contracts-and-actions), but as summary, the proposal will:
+
 - Migrate all Level 1 (Short) permissions of the Aave ecosystem smart contracts from the v2 Executors to v3 Executors.
 - Fund a.DI.
 - Fund Aave Robot.
 - Fund the Aave Gelato gas tank.
 
 For transparency, high-level, the items not included compared with proposal 345 are:
+
 - Migration of Level 2 (Long) permissions of the Aave ecosystem to the v3 Executors.
 - Migration of the Level 1 (Short) Executor admin to the v3 Executor, in order to keep Governance v2 operative until the final v3 activation.
 - Upgrade of the AAVE, aAAVE and stkAAVE implementations.
-
 
 ## References
 
