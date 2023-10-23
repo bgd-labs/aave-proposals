@@ -84,8 +84,8 @@ Creation of a new stream with the following properties:
 
 ## References
 
-- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231022_AaveV3_Eth_ACIPhaseII/AaveV3_Ethereum_ACIPhaseII_20231022.sol)
-- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231022_AaveV3_Eth_ACIPhaseII/AaveV3_Ethereum_ACIPhaseII_20231022.t.sol)
+- Implementation: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/3d425787648ab2c1a35c9c6a55bee7886f3ebbf2/src/20231022_AaveV3_Eth_ACIPhaseII/AaveV3_Ethereum_ACIPhaseII_20231022.sol)
+- Tests: [Ethereum](https://github.com/bgd-labs/aave-proposals/blob/3d425787648ab2c1a35c9c6a55bee7886f3ebbf2/src/20231022_AaveV3_Eth_ACIPhaseII/AaveV3_Ethereum_ACIPhaseII_20231022.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x04e7059fc5b2c33d4e4554d68d27ef67c1f6d9d310b07493116bdfbf15c25bbc)
 - [Discussion](https://governance.aave.com/t/arfc-aci-phase-ii/15138)
 
