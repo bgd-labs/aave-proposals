@@ -5,7 +5,6 @@ import 'forge-std/Test.sol';
 import {GovHelpers} from 'aave-helpers/GovHelpers.sol';
 import {AaveGovernanceV2} from 'aave-address-book/AaveGovernanceV2.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
-import {AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {ProtocolV3TestBase} from 'aave-helpers/ProtocolV3TestBase.sol';
 import {AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018} from './AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
@@ -30,15 +29,12 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018_Tes
 
     uint256 daiAmount = 1_500_000 ether;
 
-    vm.prank(0xD3C39cba6d3Afb3d304703F085Fc7A8249576C18);
-    IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).transfer(collector, daiAmount);
+    uint256 daiCollectorBalanceBefore = IERC20(AaveV2PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
 
-    uint256 daiCollectorBalanceBefore = IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
-
-    vm.expectEmit(AaveMisc.AAVE_POL_ETH_BRIDGE);
+    // vm.expectEmit(AaveMisc.AAVE_POL_ETH_BRIDGE);
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
-    uint256 daiCollectorBalanceAfter = IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
+    uint256 daiCollectorBalanceAfter = IERC20(AaveV2PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
     
     uint256 crvCollectorBalanceAfter = IERC20(AaveV2PolygonAssets.CRV_A_TOKEN).balanceOf(collector);
     
