@@ -76,7 +76,12 @@ contract AaveV3_Ethereum_EnhancingAaveDAOSLiquidityIncentiveStrategyOnBalancer_2
       'aUSDC_V2_LEFTOVER'
     );
 
-    assertApproxEqAbs(GLCAURABalanceAfter, GLCAURABalanceBefore + AURA_AMOUNT, 1500 wei, 'AURA_LEFTOVER');
+    assertApproxEqAbs(
+      GLCAURABalanceAfter,
+      GLCAURABalanceBefore + AURA_AMOUNT,
+      1500 wei,
+      'AURA_LEFTOVER'
+    );
 
     assertApproxEqAbs(GLCUSDCBalance, USDC_AMOUNT_TO_GLC, 1500 wei, 'GLC_USDC_LEFTOVER');
 
