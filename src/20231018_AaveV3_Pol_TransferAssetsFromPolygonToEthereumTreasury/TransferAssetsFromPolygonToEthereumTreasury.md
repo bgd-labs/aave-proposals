@@ -10,7 +10,7 @@ This publication proposes transferring BAL, CRV, and USDC from the Polygon Treas
 
 ## Motivation
 
-Recently, the Aave DAO has created the [GHO Liquidity Committee](https://governance.aave.com/t/arfc-treasury-manage-gho-liquidity-committee/14914), completed an [AURA tokenswap with Olyympus](https://governance.aave.com/t/arfc-treasury-management-acquire-aura/14683), and is also considering a [tokenswap with Aura Finance](https://snapshot.org/#/aave.eth/proposal/0x94735082d4ba33b53497efb025aa6dbf75a5e4ade71684fd675c03f0e416a294). Each of these proposals has already utilized or is likely to utilize stable coins held in the Ethereum Treasury:
+Recently, the Aave DAO has created the [GHO Liquidity Committee](https://governance.aave.com/t/arfc-treasury-manage-gho-liquidity-committee/14914), completed an [AURA tokenswap with Olympus](https://governance.aave.com/t/arfc-treasury-management-acquire-aura/14683), and is also considering a [tokenswap with Aura Finance](https://snapshot.org/#/aave.eth/proposal/0x94735082d4ba33b53497efb025aa6dbf75a5e4ade71684fd675c03f0e416a294). Each of these proposals has already utilized or is likely to utilize stable coins held in the Ethereum Treasury:
 
 406,000 DAI - GHO Liquidity Committee
 420,159.28 DAI - Olympus DAO token swap

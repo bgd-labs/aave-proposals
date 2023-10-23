@@ -34,7 +34,8 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018_Tes
     IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).transfer(collector, daiAmount);
 
     uint256 daiCollectorBalanceBefore = IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
-    
+
+    vm.expectEmit(AaveMisc.AAVE_POL_ETH_BRIDGE);
     GovHelpers.executePayload(vm, address(proposal), AaveGovernanceV2.POLYGON_BRIDGE_EXECUTOR);
 
     uint256 daiCollectorBalanceAfter = IERC20(AaveV3PolygonAssets.DAI_A_TOKEN).balanceOf(collector);
