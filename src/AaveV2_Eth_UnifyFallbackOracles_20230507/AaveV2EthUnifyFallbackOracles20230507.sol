@@ -9,8 +9,7 @@ import {IAaveOracle} from 'aave-address-book/AaveV2.sol';
 /**
  * @title Prices operational update. Unify disabled fallback oracles
  * @author BGD Labs (@bgdlabs)
- * - Snapshot: TODO
- * - Discussion: TODO
+ * - Discussion: https://governance.aave.com/t/bgd-operational-oracles-update/13213/13
  */
 contract AaveV2EthUnifyFallbackOracles20230507 is IProposalGenericExecutor {
   address public constant AAVE_V1_ORACLE = 0x76B47460d7F7c5222cFb6b6A75615ab10895DDe4;
