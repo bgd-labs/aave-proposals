@@ -32,8 +32,8 @@ Using the transfer the following assets from the Polygon to Ethereum Treasury.
 
 ## References
 
-- Implementation: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231018_AaveV3_Pol_TransferAssetsFromPolygonToEthereumTreasury/AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018.sol)
-- Tests: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/main/src/20231018_AaveV3_Pol_TransferAssetsFromPolygonToEthereumTreasury/AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018.t.sol)
+- Implementation: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/e069a04d94b64a982a0e625ec4197fcdcf58caf3/src/20231018_AaveV3_Pol_TransferAssetsFromPolygonToEthereumTreasury/AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018.sol)
+- Tests: [Polygon](https://github.com/bgd-labs/aave-proposals/blob/e069a04d94b64a982a0e625ec4197fcdcf58caf3/src/20231018_AaveV3_Pol_TransferAssetsFromPolygonToEthereumTreasury/AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018.t.sol)
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x33def6fd7bc3424fc47256ec0abdc3b75235d6f123dc1d15be7349066bc86319)
 - [Discussion](https://governance.aave.com/t/arfc-transfer-assets-from-polygon-to-ethereum-treasury/15044)
 
