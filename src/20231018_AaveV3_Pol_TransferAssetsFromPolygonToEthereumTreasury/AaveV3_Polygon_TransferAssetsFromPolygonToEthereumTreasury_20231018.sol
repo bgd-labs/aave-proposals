@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import {IProposalGenericExecutor} from 'aave-helpers/interfaces/IProposalGenericExecutor.sol';
 import {AaveV2Polygon, AaveV2PolygonAssets} from 'aave-address-book/AaveV2Polygon.sol';
+import {AaveV3Polygon, AaveV3PolygonAssets} from 'aave-address-book/AaveV3Polygon.sol';
 import {IERC20} from 'solidity-utils/contracts/oz-common/interfaces/IERC20.sol';
 import {AaveMisc} from 'aave-address-book/AaveMisc.sol';
 
@@ -29,13 +30,12 @@ contract AaveV3_Polygon_TransferAssetsFromPolygonToEthereumTreasury_20231018 is
     uint256 crvAmount = IERC20(AaveV2PolygonAssets.CRV_A_TOKEN).balanceOf(COLLECTOR);
     uint256 balAmount = IERC20(AaveV2PolygonAssets.BAL_A_TOKEN).balanceOf(COLLECTOR);
 
-    AaveV2Polygon.COLLECTOR.transfer(AaveV2PolygonAssets.DAI_A_TOKEN, address(this), daiAmount);
+    AaveV2Polygon.COLLECTOR.transfer(AaveV3PolygonAssets.DAI_A_TOKEN, address(this), daiAmount);
     AaveV2Polygon.COLLECTOR.transfer(AaveV2PolygonAssets.CRV_A_TOKEN, address(this), crvAmount);
     AaveV2Polygon.COLLECTOR.transfer(AaveV2PolygonAssets.BAL_A_TOKEN, address(this), balAmount);
 
-
     daiAmount = 
-      AaveV2Polygon.POOL.withdraw(AaveV2PolygonAssets.DAI_UNDERLYING, type(uint256).max, AaveMisc.AAVE_POL_ETH_BRIDGE);
+      AaveV3Polygon.POOL.withdraw(AaveV3PolygonAssets.DAI_UNDERLYING, type(uint256).max, AaveMisc.AAVE_POL_ETH_BRIDGE);
 
     crvAmount = 
       AaveV2Polygon.POOL.withdraw(AaveV2PolygonAssets.CRV_UNDERLYING, type(uint256).max, AaveMisc.AAVE_POL_ETH_BRIDGE);
