@@ -47,15 +47,25 @@ contract AaveV2_Polygon_ReserveFactorUpdateOctober2023_20231019_Test is Protocol
     assetsChanged[5] = AaveV2PolygonAssets.WMATIC_UNDERLYING;
     assetsChanged[6] = AaveV2PolygonAssets.BAL_UNDERLYING;
 
+    uint256[] memory reserveFactors = new uint256[](7);
+    reserveFactors[0] = 41_00;
+    reserveFactors[1] = 43_00;
+    reserveFactors[2] = 42_00;
+    reserveFactors[3] = 75_00;
+    reserveFactors[4] = 65_00;
+    reserveFactors[5] = 61_00;
+    reserveFactors[6] = 52_00;
+
     _noReservesConfigsChangesApartFrom(allConfigsBefore, allConfigsAfter, assetsChanged);
 
     for (uint i = 0; i < assetsChanged.length; i++) {
+      ReserveConfig memory cfg = _findReserveConfig(allConfigsAfter, assetsChanged[i]);
+      assertEq(cfg.reserveFactor, reserveFactors[i]);
       if (
         assetsChanged[i] == AaveV2PolygonAssets.BAL_UNDERLYING
       ) {
         continue;
       }
-      ReserveConfig memory cfg = _findReserveConfig(allConfigsAfter, assetsChanged[i]);
       _deposit(cfg, AaveV2Polygon.POOL, address(42), 100);
     }
   }
