@@ -3,6 +3,9 @@
 This repository contains various proposals targeting the Aave governance.
 In addition to the actual proposals this repository also contains tooling to standardize certain protocol tasks. The tooling documentation is co-located with the relevant smart contracts.
 
+# Deprecated ⚰️
+With the coming of Aave Governance v2.5 and v3, this repository has been deprecated and contributors should instead submit PR to the new [aave-proposals-v3](https://github.com/bgd-labs/aave-proposals-v3) repository.
+
 ## Tooling
 
 ### Cross-chain forwarders
